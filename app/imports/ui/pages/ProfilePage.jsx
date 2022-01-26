@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Container,
-  Table,
   Header,
   Loader,
   Card,
@@ -12,7 +11,7 @@ import {
   Segment,
   List,
   Divider,
-  Button
+  Button,
 } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -70,47 +69,6 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
                 <Card.Content extra>
                   User-102211 is a musician and a computer
                   Engineer living in Nashville.
-                </Card.Content>
-              </Card>
-            </Container>
-            <Divider section/>
-            <Container>
-              <Card>
-                <Card.Content>
-                  <Card.Header>Recent Activity</Card.Header>
-                </Card.Content>
-                <Card.Content>
-                  <Feed>
-                    <Feed.Event>
-                      <Feed.Label image='/images/meteor-logo.png' />
-                      <Feed.Content>
-                        <Feed.Date content='1 day ago' />
-                        <Feed.Summary>
-                          You added <a>Jenny Hess</a> to your <a>coworker</a> group.
-                        </Feed.Summary>
-                      </Feed.Content>
-                    </Feed.Event>
-
-                    <Feed.Event>
-                      <Feed.Label image='/images/meteor-logo.png' />
-                      <Feed.Content>
-                        <Feed.Date content='3 days ago' />
-                        <Feed.Summary>
-                          You added <a>Molly Malone</a> as a friend.
-                        </Feed.Summary>
-                      </Feed.Content>
-                    </Feed.Event>
-
-                    <Feed.Event>
-                      <Feed.Label image='/images/meteor-logo.png' />
-                      <Feed.Content>
-                        <Feed.Date content='4 days ago' />
-                        <Feed.Summary>
-                          You added <a>Elliot Baker</a> to your <a>musicians</a> group.
-                        </Feed.Summary>
-                      </Feed.Content>
-                    </Feed.Event>
-                  </Feed>
                 </Card.Content>
               </Card>
             </Container>
@@ -226,15 +184,54 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
                 </List.Content>
               </List.Item>
             </List>
+            <Divider section/>
+            <Container>
+              <Card>
+                <Card.Content>
+                  <Card.Header>Recent Activity</Card.Header>
+                </Card.Content>
+                <Card.Content>
+                  <Feed>
+                    <Feed.Event>
+                      <Feed.Label image='/images/meteor-logo.png' />
+                      <Feed.Content>
+                        <Feed.Date content='1 day ago' />
+                        <Feed.Summary>
+                          You added <a>Jenny Hess</a> to your <a>coworker</a> group.
+                        </Feed.Summary>
+                      </Feed.Content>
+                    </Feed.Event>
+
+                    <Feed.Event>
+                      <Feed.Label image='/images/meteor-logo.png' />
+                      <Feed.Content>
+                        <Feed.Date content='3 days ago' />
+                        <Feed.Summary>
+                          You added <a>Molly Malone</a> as a friend.
+                        </Feed.Summary>
+                      </Feed.Content>
+                    </Feed.Event>
+
+                    <Feed.Event>
+                      <Feed.Label image='/images/meteor-logo.png' />
+                      <Feed.Content>
+                        <Feed.Date content='4 days ago' />
+                        <Feed.Summary>
+                          You added <a>Elliot Baker</a> to your <a>musicians</a> group.
+                        </Feed.Summary>
+                      </Feed.Content>
+                    </Feed.Event>
+                  </Feed>
+                </Card.Content>
+              </Card>
+            </Container>
           </Grid.Column>
 
         </Grid.Row>
       </Grid>
     </Container>
-
-
   </Container>
-) : <Loader active>Getting data</Loader>);
+) : <Loader active>Loading Profile</Loader>);
 
 // Require an array of Stuff documents in the props.
 ProfilePage.propTypes = {
