@@ -1,0 +1,15 @@
+#footerPic {
+  height: 366px;
+  width: 100%;
+  background: linear-gradient(rgba(42, 202, 248, 0.7),rgba(42, 202, 248, 0.7)), url("/images/plantFooter.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position-y: center;
+}
+
+.footer:after {
+  background: #2acaf8;
+}
+/************
+Footer End
+ ***********/
