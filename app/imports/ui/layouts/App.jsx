@@ -18,6 +18,8 @@ import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import ManageDatabase from '../pages/ManageDatabase';
 import { ROLE } from '../../api/role/Role';
+import ProfilePage from '../pages/ProfilePage';
+import EditProfile from '../pages/EditProfile';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -32,6 +34,8 @@ class App extends React.Component {
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
             <ProtectedRoute path="/list" component={ListStuff}/>
+            <ProtectedRoute path="/profile" component={ProfilePage}/>
+            <ProtectedRoute path="/edit-profile/:_id" component={EditProfile}/>
             <ProtectedRoute path="/add" component={AddStuff}/>
             <ProtectedRoute path="/add2" component={AddProfile}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
