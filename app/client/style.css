@@ -1,0 +1,16 @@
+.browse-opp-container-background {
+  background-image: url("https://react.semantic-ui.com/images/avatar/large/daniel.jpg");
+}
+
+
+
+/*::-webkit-scrollbar {*/
+/*  background: #dc3545;*/
+/*}*/
+/*::-webkit-scrollbar-thumb {*/
+/*  background-image: linear-gradient(red, yellow);*/
+/*  border-radius: 25px;*/
+/*}*/
+/*::-webkit-scrollbar-thumb:hover {*/
+/*  background-image: linear-gradient(#ee0970, #ff6a00 );*/
+/*}*/

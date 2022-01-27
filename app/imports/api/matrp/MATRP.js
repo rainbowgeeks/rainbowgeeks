@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../stuff/StuffCollection';
+import { Opportunities } from '../opportunity/OpportunityCollection';
 import { AdminProfiles } from '../user/AdminProfileCollection';
 import { UserProfiles } from '../user/UserProfileCollection';
 
@@ -15,6 +16,7 @@ class MATRPClass {
     this.collections = [
       AdminProfiles,
       Stuffs,
+      Opportunities,
       UserProfiles,
     ];
     /*
@@ -24,6 +26,7 @@ class MATRPClass {
       AdminProfiles,
       UserProfiles,
       Stuffs,
+      Opportunities,
     ];
 
     /*
