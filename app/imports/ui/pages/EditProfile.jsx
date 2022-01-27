@@ -13,7 +13,7 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 const bridge = new SimpleSchema2Bridge(Stuffs._schema);
 
 /** Renders the Page for editing a single document. */
-const EditStuff = ({ doc, ready }) => {
+const EditProfile = ({ doc, ready }) => {
 
   // On successful submit, insert the data.
   const submit = (data) => {
@@ -26,9 +26,9 @@ const EditStuff = ({ doc, ready }) => {
   };
 
   return (ready) ? (
-    <Grid id={PAGE_IDS.EDIT_STUFF} container centered>
+    <Grid id={PAGE_IDS.EDIT_PROFILE} container centered>
       <Grid.Column>
-        <Header as="h2" textAlign="center">Edit Stuff</Header>
+        <Header as="h2" textAlign="center">Edit the Profile Page</Header>
         <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
           <Segment>
             <TextField name='name' />
@@ -45,7 +45,7 @@ const EditStuff = ({ doc, ready }) => {
 };
 
 // Require the presence of a Stuff document in the props object. Uniforms adds 'model' to the props, which we use.
-EditStuff.propTypes = {
+EditProfile.propTypes = {
   doc: PropTypes.object,
   ready: PropTypes.bool.isRequired,
 };
@@ -65,4 +65,4 @@ export default withTracker(() => {
     doc,
     ready,
   };
-})(EditStuff);
+})(EditProfile);

@@ -29,7 +29,7 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
         </Grid.Column>
         <Grid.Column>
           <Container textAlign='right'>
-            <Button icon as='a' href={'/'}>
+            <Button icon>
               <Icon name='setting'/>
             </Button>
 
@@ -46,7 +46,7 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
           <Grid.Column>
             <Container>
               <Card color='blue'>
-                <Image src='/images/meteor-logo.png' wrapped ui={false} />
+                <Image src='/images/meteor-logo.png' wrapped ui={false} as='a' href='#/profile'/>
                 <Card.Content>
                   <Card.Header>User-102211</Card.Header>
                   <Card.Meta>
