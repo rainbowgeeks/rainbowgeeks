@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container, Grid, Header, Segment, Image, Card, Loader } from 'semantic-ui-react';
+import { Container, Grid, Header, Segment, Image, Card, Loader, Tab } from 'semantic-ui-react';
 import { AutoForm, TextField, SelectField } from 'uniforms-semantic';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import CategoryFilter from '../components/CategoryFilter';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import Opportunity from '../components/Opportunity';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
@@ -38,7 +39,29 @@ const formSchema = new SimpleSchema({
 const bridge = new SimpleSchema2Bridge(formSchema);
 const gridHeigth = { height: '400px' };
 
-const ListOpportunities = ({ ready, opportunities }) => ((ready) ? (
+const panes = [
+  {
+    menuItem: 'Filter',
+    // eslint-disable-next-line react/display-name
+    render: () => <Tab.Pane attached={false}>
+      <AutoForm schema={bridge} onSubmit={console.log}>
+        <Segment style={gridHeigth}>
+          <TextField name='name'/>
+          <SelectField name='order'/>
+          <MultiSelectField name='ageGroup'/>
+          <MultiSelectField name='surround'/>
+        </Segment>
+      </AutoForm>
+    </Tab.Pane>,
+  },
+  {
+    menuItem: 'Category',
+    // eslint-disable-next-line react/display-name
+    render: () => <Tab.Pane attached={false}><CategoryFilter/></Tab.Pane>,
+  },
+];
+
+const FilterOpportunities = ({ ready, opportunities }) => ((ready) ? (
   <Container fluid>
     <Header as="h1" textAlign="center">Browse Opportunity</Header>
     <Grid columns={3} centered celled column='equals'>
@@ -48,14 +71,7 @@ const ListOpportunities = ({ ready, opportunities }) => ((ready) ? (
           content="Volunteer Opportunities"
           subheader="Powered by VolunteerAlly"
         />
-        <AutoForm schema={bridge} onSubmit={console.log}>
-          <Segment style={gridHeigth}>
-            <TextField name='name'/>
-            <SelectField name='order'/>
-            <MultiSelectField name='ageGroup'/>
-            <MultiSelectField name='surround'/>
-          </Segment>
-        </AutoForm>
+        <Tab menu={{ secondary: true }} className='filter-tab-position' panes={panes}/>
       </Grid.Column>
       <Grid.Column>
         <Header as="h2" textAlign="center">Result</Header>
@@ -72,7 +88,7 @@ const ListOpportunities = ({ ready, opportunities }) => ((ready) ? (
 ) : <Loader active>Getting Data</Loader>);
 
 // Require an array of Stuff documents in the props.
-ListOpportunities.propTypes = {
+FilterOpportunities.propTypes = {
   opportunities: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
@@ -88,7 +104,7 @@ export default withTracker(() => {
     opportunities,
     ready,
   };
-})(ListOpportunities);
+})(FilterOpportunities);
 
 /**
  * <Form>
