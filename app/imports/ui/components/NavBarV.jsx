@@ -15,46 +15,42 @@ const NavBarV = ({ currentUser }) => {
   const menuStyle = { marginBottom: '10px', backgroundColor: '#0695fa' };
   return (
     <Menu style={menuStyle} attached="top" borderless inverted>
-      <Menu.Item as={NavLink} activeClassName="" exact to="/">
+      <Menu.Item id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/">
         <Header inverted as='h1'>VA</Header>
       </Menu.Item>
-      <Menu.Item position="right" as={NavLink} activeClassName="active" exact to="/add">
+      <Menu.Item id={COMPONENT_IDS.NAVBAR_ADD_STUFF} position="right" as={NavLink} activeClassName="active" exact to="/add">
         Home
       </Menu.Item>
-      <Menu.Item as={NavLink} activeClassName="active" exact to="/filter">
+      <Menu.Item>
         Browse Opportunities
       </Menu.Item>
-      <Menu.Item as={NavLink} activeClassName="active" exact to="/add">
+      <Menu.Item>
         Organization Library
       </Menu.Item>
       <Menu.Item as={NavLink} activeClassName="active" exact to="/list">
         About Us
       </Menu.Item>
-      <Menu.Menu position="right">
+      <Menu.Item position="right">
         {(currentUser !== '') && (currentUser) ? (
-          <Menu.Item>
-            <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} text={currentUser} simple item>
-              <Dropdown.Menu>
-                <Dropdown.Item text="Add Opportunity"/>
-                <Dropdown.Item text="My Opportunity"/>
-                <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile"/>
-                <Dropdown.Item text="My Organization Profile"/>
-                <Dropdown.Item text="Account Settings"/>
-                <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} as={NavLink} text="Sign out" exact to="/signout"/>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu.Item>
+          <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} text={currentUser} pointing="top right" icon={'user'}>
+            <Dropdown.Menu>
+              <Dropdown.Item text="Add Opportunity"/>
+              <Dropdown.Item text="My Opportunity"/>
+              <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile"/>
+              <Dropdown.Item text="My Organization Profile"/>
+              <Dropdown.Item text="Account Settings"/>
+              <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
+            </Dropdown.Menu>
+          </Dropdown>
         ) : (
-          <Menu.Item>
-            <Dropdown text="Login" icon={'user'} simple item>
-              <Dropdown.Menu>
-                <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_IN} icon="user" text="Sign In" as={NavLink} exact to="/signin"/>
-                <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_UP} icon="add user" text="Sign Up" as={NavLink} exact to="/signup"/>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu.Item>
+          <Dropdown id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN} text="Login" icon={'user'} simple item>
+            <Dropdown.Menu>
+              <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_IN} icon="user" text="Sign In" as={NavLink} exact to="/signin"/>
+              <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_UP} icon="add user" text="Sign Up" as={NavLink} exact to="/signup"/>
+            </Dropdown.Menu>
+          </Dropdown>
         )}
-      </Menu.Menu>
+      </Menu.Item>
     </Menu>
   );
 };
