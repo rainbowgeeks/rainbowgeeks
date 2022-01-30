@@ -22,7 +22,7 @@
       "age": "Family-Friendly, Adults", "environment":  "Mixed",
       "cover":  "abc", "location": "4155 Diamond Head Road", "owner": "john@foo.com"
     },
-    { "title": "SuperChill Saturday", "typ": "Event",
+    { "title": "SuperChill Saturdays", "typ": "Event",
       "category": "Child/Family Support, Crisis/Disaster Relief, Environment",
       "age": "Family-Friendly, Adults", "environment":  "Mixed",
       "cover":  "abc", "location": "4155 Diamond Head Road", "owner": "john@foo.com"
