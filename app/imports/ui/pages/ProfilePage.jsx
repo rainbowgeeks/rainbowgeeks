@@ -17,12 +17,12 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Stuffs } from '../../api/stuff/StuffCollection';
-import StuffItem from '../components/StuffItem';
+// import StuffItem from '../components/StuffItem';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
+const ProfilePage = ({ ready }) => ((ready) ? (
   <Container id={PAGE_IDS.PROFILE_PAGE}>
     <Grid columns={'two'} stackable>
       <Grid.Row>
@@ -64,7 +64,7 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
                   </Card.Meta>
                   <Card.Meta>
                     <a>
-                      <Icon name='building' />
+                      <Icon name='building'/>
                       Joined 6 Organizations
                     </a>
                   </Card.Meta>
@@ -85,7 +85,7 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
                 </Container>
               </Header>
               <Divider section/>
-                Interest 1, Interest 2, Interest 3, Interest 4, Interest 5
+              Interest 1, Interest 2, Interest 3, Interest 4, Interest 5
             </Segment>
             <Segment>
               <Header as="h4">
@@ -112,7 +112,7 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
                 </Container>
               </Header>
               <Divider section/>
-               Monday Noon, Tuesday noon , Saturday
+              Monday Noon, Tuesday noon , Saturday
             </Segment>
           </Grid.Column>
 
@@ -128,7 +128,7 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
             <Header as='h3'> List of Organizations</Header>
             <List>
               <List.Item>
-                <Image avatar src='/images/meteor-logo.png' />
+                <Image avatar src='/images/meteor-logo.png'/>
                 <List.Content>
                   <List.Header as='a'>Organization 1</List.Header>
                   <List.Description>
@@ -141,20 +141,20 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
                 </List.Content>
               </List.Item>
               <List.Item>
-                <Image avatar src='/images/meteor-logo.png' />
+                <Image avatar src='/images/meteor-logo.png'/>
                 <List.Content>
                   <List.Header as='a'>Organization 2</List.Header>
                   <List.Description>
                     Last seen watching{' '}
                     <a>
-                      <b>Bob's Burgers</b>
+                      <b>Bob&apos Burgers</b>
                     </a>{' '}
                     10 hours ago.
                   </List.Description>
                 </List.Content>
               </List.Item>
               <List.Item>
-                <Image avatar src='/images/meteor-logo.png' />
+                <Image avatar src='/images/meteor-logo.png'/>
                 <List.Content>
                   <List.Header as='a'>Organization 3</List.Header>
                   <List.Description>
@@ -167,7 +167,7 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
                 </List.Content>
               </List.Item>
               <List.Item>
-                <Image avatar src='/images/meteor-logo.png' />
+                <Image avatar src='/images/meteor-logo.png'/>
                 <List.Content>
                   <List.Header as='a'>Organization 5</List.Header>
                   <List.Description>
@@ -180,7 +180,7 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
                 </List.Content>
               </List.Item>
               <List.Item>
-                <Image avatar src='/images/meteor-logo.png' />
+                <Image avatar src='/images/meteor-logo.png'/>
                 <List.Content>
                   <List.Header as='a'>Organization 6</List.Header>
                   <List.Description>Has not watched anything recently</List.Description>
@@ -196,9 +196,9 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
                 <Card.Content>
                   <Feed>
                     <Feed.Event>
-                      <Feed.Label image='/images/meteor-logo.png' />
+                      <Feed.Label image='/images/meteor-logo.png'/>
                       <Feed.Content>
-                        <Feed.Date content='1 day ago' />
+                        <Feed.Date content='1 day ago'/>
                         <Feed.Summary>
                           You added <a>Jenny Hess</a> to your <a>coworker</a> group.
                         </Feed.Summary>
@@ -206,9 +206,9 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
                     </Feed.Event>
 
                     <Feed.Event>
-                      <Feed.Label image='/images/meteor-logo.png' />
+                      <Feed.Label image='/images/meteor-logo.png'/>
                       <Feed.Content>
-                        <Feed.Date content='3 days ago' />
+                        <Feed.Date content='3 days ago'/>
                         <Feed.Summary>
                           You added <a>Molly Malone</a> as a friend.
                         </Feed.Summary>
@@ -216,9 +216,9 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
                     </Feed.Event>
 
                     <Feed.Event>
-                      <Feed.Label image='/images/meteor-logo.png' />
+                      <Feed.Label image='/images/meteor-logo.png'/>
                       <Feed.Content>
-                        <Feed.Date content='4 days ago' />
+                        <Feed.Date content='4 days ago'/>
                         <Feed.Summary>
                           You added <a>Elliot Baker</a> to your <a>musicians</a> group.
                         </Feed.Summary>
