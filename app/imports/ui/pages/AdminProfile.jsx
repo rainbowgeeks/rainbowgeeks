@@ -1,28 +1,60 @@
 import React from 'react';
-import { Container, Table, Header, Loader } from 'semantic-ui-react';
+import { Container, Loader, Image, Label, Grid, Segment, Table, Icon } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/StuffCollection';
-import StuffItemAdmin from '../components/StuffItemAdmin';
 import { PAGE_IDS } from '../utilities/PageIDs';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const AdminProfile = ({ stuffs, ready }) => ((ready) ? (
   <Container id={PAGE_IDS.ADMIN_PROFILE}>
-    <Header as="h2" textAlign="center">Administrator</Header>
-    <Table celled>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Name</Table.HeaderCell>
-          <Table.HeaderCell>Quantity</Table.HeaderCell>
-          <Table.HeaderCell>Condition</Table.HeaderCell>
-          <Table.HeaderCell>Owner</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {stuffs.map((stuff) => <StuffItemAdmin key={stuff._id} stuff={stuff}/>)}
-      </Table.Body>
-    </Table>
+    <Grid columns={3} celled>
+      <Grid.Column textAlign='center' verticalAlign='top'>
+        <Image src='/images/meteor-logo.png' size='medium' circular/>
+      </Grid.Column>
+      <Grid.Column>
+        <Table celled striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell colSpan='2'>Account</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Name</Table.Cell>
+              <Table.Cell>John Doe</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Email</Table.Cell>
+              <Table.Cell>johndoe@foo.com</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Address</Table.Cell>
+              <Table.Cell>1234 Dole Street</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>
+                <Icon name='github' /> GitHub
+              </Table.Cell>
+              <Table.Cell>Initial commit</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>
+                <Icon name='twitter' /> Twitter
+              </Table.Cell>
+              <Table.Cell>Initial commit</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </Grid.Column>
+      <Grid.Column>
+        <Segment>Content</Segment>
+      </Grid.Column>
+      <Grid.Column>
+        <Label size='big' circular>Administrator</Label>
+      </Grid.Column>
+    </Grid>
   </Container>
 ) : <Loader active>Getting data</Loader>);
 
