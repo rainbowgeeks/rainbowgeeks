@@ -7,7 +7,7 @@ const seetru = { backgroundImage: 'url("https://react.semantic-ui.com/images/ava
 
 /** Renders a single row in the List Stuff table. See pages/BrowseOpportunity.jsx. */
 const Opportunity = ({ opportunity }) => (
-  <Card>
+  <Card href='#'>
     <Card.Content style={seetru}>
       <Card.Header>{opportunity.title}</Card.Header>
       <Card.Meta>{opportunity.age}</Card.Meta>

@@ -37,7 +37,7 @@ const formSchema = new SimpleSchema({
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
-const gridHeigth = { height: '400px' };
+const gridHeigth = { paddingRight: '50px', paddingLeft: '50px' };
 
 const panes = [
   {
@@ -45,7 +45,7 @@ const panes = [
     // eslint-disable-next-line react/display-name
     render: () => <Tab.Pane attached={false}>
       <AutoForm schema={bridge} onSubmit={console.log}>
-        <Segment style={gridHeigth}>
+        <Segment>
           <TextField name='name'/>
           <SelectField name='order'/>
           <MultiSelectField name='ageGroup'/>
@@ -62,9 +62,9 @@ const panes = [
 ];
 
 const FilterOpportunities = ({ ready, opportunities }) => ((ready) ? (
-  <Container fluid>
+  <Container fluid style={gridHeigth}>
     <Header as="h1" textAlign="center">Browse Opportunity</Header>
-    <Grid columns={3} centered celled column='equals'>
+    <Grid columns={3} centered celled column='equals' >
       <Grid.Column>
         <Header
           as="h2" textAlign="center"
@@ -105,29 +105,3 @@ export default withTracker(() => {
     ready,
   };
 })(FilterOpportunities);
-
-/**
- * <Form>
- <Segment>
- <Form.Field control='input'/>
- </Segment>
- <Segment>
- <Form.Group grouped>
- <label>Age Group</label>
- <Form.Field label='Adults' control='input' type='checkbox'/>
- <Form.Field label='Family-Friendly' control='input' type='checkbox'/>
- <Form.Field label='Teens' control='input' type='checkbox'/>
- <Form.Field label='Seniors' control='input' type='checkbox'/>
- </Form.Group>
- </Segment>
- <Segment>
- <Form.Group grouped>
- <label>Environment</label>
- <Form.Field label='Outdoors' control='input' type='checkbox'/>
- <Form.Field label='Indoors' control='input' type='checkbox'/>
- <Form.Field label='Mixed' control='input' type='checkbox'/>
- <Form.Field label='Virtual' control='input' type='checkbox'/>
- </Form.Group>
- </Segment>
- </Form>
- */
