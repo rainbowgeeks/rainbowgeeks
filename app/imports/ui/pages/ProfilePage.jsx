@@ -14,7 +14,6 @@ import {
   Button,
 } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 import StuffItem from '../components/StuffItem';

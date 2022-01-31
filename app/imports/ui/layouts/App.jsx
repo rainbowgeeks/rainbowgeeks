@@ -26,28 +26,27 @@ import EditProfile from '../pages/EditProfile';
 class App extends React.Component {
   render() {
     return (
-        <Router>
-          <div>
-            <NavBarV/>
-            <Switch>
-              <Route exact path="/" component={Landing}/>
-              <Route path="/signin" component={Signin}/>
-              <Route path="/signup" component={Signup}/>
-              <Route path="/signout" component={Signout}/>
-              <ProtectedRoute path="/list" component={ListStuff}/>
-              <ProtectedRoute path="/profile" component={ProfilePage}/>
-              <ProtectedRoute path="/edit/:_id" component={EditProfile}/>
-              <ProtectedRoute path="/add" component={AddStuff}/>
-              <ProtectedRoute path="/add2" component={AddProfile}/>
-              <ProtectedRoute path="/add3" component={AddOrganization}/>
-              <ProtectedRoute path="/" component={EditStuff}/>
-              <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
-              <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
-              <Route component={NotFound}/>
-            </Switch>
-            <Footer/>
-          </div>
-        </Router>
+      <Router>
+        <div>
+          <NavBarV/>
+          <Switch>
+            <Route exact path="/" component={Landing}/>
+            <Route path="/signin" component={Signin}/>
+            <Route path="/signup" component={Signup}/>
+            <Route path="/signout" component={Signout}/>
+            <ProtectedRoute path="/list" component={ListStuff}/>
+            <ProtectedRoute path="/profile" component={ProfilePage}/>
+            <ProtectedRoute path="/edit" component={EditProfile}/>
+            <ProtectedRoute path="/add" component={AddStuff}/>
+            <ProtectedRoute path="/add2" component={AddProfile}/>
+            <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
+            <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
+            <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
+            <Route component={NotFound}/>
+          </Switch>
+          <Footer/>
+        </div>
+      </Router>
     );
   }
 }
