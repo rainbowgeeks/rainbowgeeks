@@ -10,10 +10,12 @@
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.14.8",
+    "@googlemaps/react-wrapper": "^1.1.22",
     "classnames": "^2.3.1",
     "core-js": "^3.16.0",
     "faker": "^5.5.3",
     "fast-check": "^2.17.0",
+    "google-map-react": "^2.1.10",
     "graphql": "^15.5.1",
     "lodash": "^4.17.21",
     "meteor-node-stubs": "^1.1.0",

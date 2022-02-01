@@ -11,6 +11,23 @@
     { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
   ],
+  "defaultOpp": [
+    { "title": "The American Red Cross of Hawaii: Disaster Response - Disaster Action Team", "typ": "Event",
+      "category": "Child/Family Support, Crisis/Disaster, Relief Environment",
+      "age": "Family-Friendly, Adults", "environment":  "Mixed",
+      "cover":  "abc", "location": "4155 Diamond Head Road", "owner": "john@foo.com"
+    },
+    { "title": "HUGS Koa Memorial Garden", "typ": "Event",
+      "category":  "Child/Family Support, Crisis/Disaster Relief, Environment",
+      "age": "Family-Friendly, Adults", "environment":  "Mixed",
+      "cover":  "abc", "location": "4155 Diamond Head Road", "owner": "john@foo.com"
+    },
+    { "title": "SuperChill Saturdays", "typ": "Event",
+      "category": "Child/Family Support, Crisis/Disaster Relief, Environment",
+      "age": "Family-Friendly, Adults", "environment":  "Mixed",
+      "cover":  "abc", "location": "4155 Diamond Head Road", "owner": "john@foo.com"
+    }
+  ],
   "public": {
     "development": true
   }

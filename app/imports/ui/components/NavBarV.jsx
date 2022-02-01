@@ -21,7 +21,7 @@ const NavBarV = ({ currentUser }) => {
       <Menu.Item id={COMPONENT_IDS.NAVBAR_ADD_STUFF} position="right" as={NavLink} activeClassName="active" exact to="/add">
         Home
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item as={NavLink} activeClassName="active" exact to="/filter">
         Browse Opportunities
       </Menu.Item>
       <Menu.Item>
