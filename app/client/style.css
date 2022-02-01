@@ -13,10 +13,18 @@
   background: #2acaf8;
 }
 
-#footerTxt{
+#footerTxt1{
   color: white;
   margin-top: 50px;
   text-align: center;
+  font-size: 3em;
+  font-family: 'Actor', Sans-serif, serif;
+}
+
+#footerTxt2{
+  color: white;
+  text-align: center;
+  font-family: 'Actor', Sans-serif, serif;
 }
 /************
 Footer End

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Grid } from 'semantic-ui-react';
 
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
 const Footer = () => {
@@ -8,14 +8,17 @@ const Footer = () => {
     <footer>
       <div className={'footer'}>
         <div id={'footerPic'}>
-          <div className={'ui equal width grid'}>
-            <div className="column"/>
-            <div className="column">
-              <h1 id={'footerTxt'}>Ready to Get Started?</h1>
-              <Button>Get Started</Button>
-            </div>
-            <div className="column"/>
-          </div>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={3}/>
+              <Grid.Column width={10}>
+                <h1 id={'footerTxt1'}>Ready to Get Started?</h1>
+                <p id={'footerTxt2'}>Sign up now as a volunteer or organization</p>
+                <Button>Get Started</Button>
+              </Grid.Column>
+              <Grid.Column width={3}/>
+            </Grid.Row>
+          </Grid>
         </div>
       </div>
       <div style={divStyle} className="ui equal width grid">
