@@ -1,6 +1,8 @@
 export const COMPONENT_IDS = {
+  LIST_PROFILE_EDIT: 'list-profile-edit',
   LIST_STUFF_EDIT: 'list-stuff-edit',
   NAVBAR_ADD_STUFF: 'navbar-add-stuff',
+  NAVBAR_ADD_PROFILE: 'navbar-add-profile',
   NAVBAR_LIST_STUFF: 'navbar-list-stuff',
   NAVBAR_LIST_STUFF_ADMIN: 'navbar-list-stuff-admin',
   NAVBAR_CURRENT_USER: 'navbar-current-user',
