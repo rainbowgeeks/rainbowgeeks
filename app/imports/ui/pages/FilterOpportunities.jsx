@@ -10,6 +10,7 @@ import CategoryFilter from '../components/CategoryFilter';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import Opportunity from '../components/Opportunity';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
+import Footer from '../components/Footer';
 
 // Create a Schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -63,29 +64,33 @@ const panes = [
 ];
 
 const FilterOpportunities = ({ ready, opportunities }) => ((ready) ? (
-  <Container fluid style={gridHeigth}>
-    <Header as="h1" textAlign="center">Browse Opportunity</Header>
-    <Grid columns={3} centered celled column='equals' >
-      <Grid.Column>
-        <Header
-          as="h2" textAlign="center"
-          content="Volunteer Opportunities"
-          subheader="Powered by VolunteerAlly"
-        />
-        <Tab menu={{ secondary: true }} className='filter-tab-position' panes={panes}/>
-      </Grid.Column>
-      <Grid.Column>
-        <Header as="h2" textAlign="center">Result</Header>
-        <Card.Group centered>
-          {opportunities.map((opportunity) => <Opportunity key={opportunity._id} opportunity={opportunity}/>)}
-        </Card.Group>
-      </Grid.Column>
-      <Grid.Column>
-        <Header as="h2" textAlign="center">Result</Header>
-        <div><GoogleMap/></div>
-      </Grid.Column>
-    </Grid>
-  </Container>
+    <div>
+      <Container fluid style={gridHeigth}>
+        <Header as="h1" textAlign="center">Browse Opportunity</Header>
+        <Grid columns={3} centered celled column='equals' >
+          <Grid.Column>
+            <Header
+                as="h2" textAlign="center"
+                content="Volunteer Opportunities"
+                subheader="Powered by VolunteerAlly"
+            />
+            <Tab menu={{ secondary: true }} className='filter-tab-position' panes={panes}/>
+          </Grid.Column>
+          <Grid.Column>
+            <Header as="h2" textAlign="center">Result</Header>
+            <Card.Group centered>
+              {opportunities.map((opportunity) => <Opportunity key={opportunity._id} opportunity={opportunity}/>)}
+            </Card.Group>
+          </Grid.Column>
+          <Grid.Column>
+            <Header as="h2" textAlign="center">Result</Header>
+            <div><GoogleMap/></div>
+          </Grid.Column>
+        </Grid>
+      </Container>
+    <Footer/>
+    </div>
+
 ) : <Loader active>Getting Data</Loader>);
 
 // Require an array of Stuff documents in the props.

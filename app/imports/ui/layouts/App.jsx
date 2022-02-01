@@ -46,7 +46,7 @@ class App extends React.Component {
             <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
             <Route component={NotFound}/>
           </Switch>
-          <Footer/>
+
         </div>
       </Router>
     );

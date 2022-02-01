@@ -17,10 +17,9 @@ const Landing = () => (
         <p>Now get to work and modify this app!</p>
       </Grid.Column>
     </Grid>
-    <div>
-      <Footer/>
-    </div>
+    <Footer/>
   </div>
+
 );
 
 export default Landing;
