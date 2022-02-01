@@ -78,7 +78,6 @@ const EditProfile = () => (
       </Grid.Column>
     </Grid>
   </Container>
-
 );
 
 export default (EditProfile);
