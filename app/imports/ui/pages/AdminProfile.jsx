@@ -7,7 +7,7 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const AdminProfile = ({ stuffs, ready }) => ((ready) ? (
-  <Grid id={PAGE_IDS.ADMIN_PROFILE} columns={2} celled container>
+  <Grid id={PAGE_IDS.ADMIN_PROFILE} columns={3} celled container>
     <Grid.Column textAlign='center' width={5}>
       <Image src='/images/meteor-logo.png' size='medium' circular centered/>
       <Divider hidden/>
@@ -78,8 +78,37 @@ const AdminProfile = ({ stuffs, ready }) => ((ready) ? (
         </Table.Body>
       </Table>
     </Grid.Column>
-    <Grid.Column>
-      <Segment>Content</Segment>
+    <Grid.Column width={3}>
+      <Table celled>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell colSpan='2'>Site Contents</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>
+              <a href='http://www.google.com'>Manage Users</a>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>
+              <a href='http://www.google.com'>Manage Organizations</a>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>
+              <a href='http://www.google.com'>Site Preferences</a>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>
+              <a href='http://www.google.com'>Analytics</a>
+            </Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
     </Grid.Column>
   </Grid>
 ) : <Loader active>Getting data</Loader>);
