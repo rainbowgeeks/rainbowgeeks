@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container, Grid, Header, Segment, Image, Card, Loader, Tab } from 'semantic-ui-react';
+import { Container, Grid, Header, Segment, Card, Loader, Tab } from 'semantic-ui-react';
 import { AutoForm, TextField, SelectField } from 'uniforms-semantic';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import GoogleMap from '../components/GoogleMap';
 import CategoryFilter from '../components/CategoryFilter';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import Opportunity from '../components/Opportunity';
@@ -81,7 +82,7 @@ const FilterOpportunities = ({ ready, opportunities }) => ((ready) ? (
       </Grid.Column>
       <Grid.Column>
         <Header as="h2" textAlign="center">Result</Header>
-        <Image src='images/oahu-map.jpg'/>
+        <div><GoogleMap/></div>
       </Grid.Column>
     </Grid>
   </Container>
