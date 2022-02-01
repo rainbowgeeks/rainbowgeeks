@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loader, Image, Label, Grid, Segment, Table, Icon, Divider } from 'semantic-ui-react';
+import { Loader, Image, Label, Grid, Segment, Table, Icon, Divider, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/StuffCollection';
@@ -24,31 +24,56 @@ const AdminProfile = ({ stuffs, ready }) => ((ready) ? (
         <Table.Body>
           <Table.Row>
             <Table.Cell>Username</Table.Cell>
-            <Table.Cell>johnd</Table.Cell>
+            <Table.Cell>
+              johnd
+              <Button compact floated='right'>Edit</Button>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Password</Table.Cell>
+            <Table.Cell>
+              ********
+              <Button compact floated='right'>Edit</Button>
+            </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>Name</Table.Cell>
-            <Table.Cell>John Doe</Table.Cell>
+            <Table.Cell>
+              John Doe
+              <Button compact floated='right'>Edit</Button>
+            </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>Email</Table.Cell>
-            <Table.Cell>johndoe@foo.com</Table.Cell>
+            <Table.Cell>
+              johndoe@foo.com
+              <Button compact floated='right'>Edit</Button>
+            </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>Address</Table.Cell>
-            <Table.Cell>1234 Dole Street</Table.Cell>
+            <Table.Cell>
+              1234 Dole Street
+              <Button compact floated='right'>Edit</Button>
+            </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>
               <Icon name='github' /> GitHub
             </Table.Cell>
-            <Table.Cell>Initial commit</Table.Cell>
+            <Table.Cell>
+              johnd
+              <Button compact floated='right'>Edit</Button>
+            </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>
               <Icon name='twitter' /> Twitter
             </Table.Cell>
-            <Table.Cell>Initial commit</Table.Cell>
+            <Table.Cell>
+              johnd
+              <Button compact floated='right'>Edit</Button>
+            </Table.Cell>
           </Table.Row>
         </Table.Body>
       </Table>
