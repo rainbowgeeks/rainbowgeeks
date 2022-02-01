@@ -6,10 +6,17 @@
   background-repeat: no-repeat;
   background-size: 100%;
   background-position-y: center;
+  margin-top: 100px;
 }
 
 .footer:after {
   background: #2acaf8;
+}
+
+#footerTxt{
+  color: white;
+  margin-top: 50px;
+  text-align: center;
 }
 /************
 Footer End
