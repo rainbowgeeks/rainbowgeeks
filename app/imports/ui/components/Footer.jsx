@@ -3,7 +3,7 @@ import { Button, Grid } from 'semantic-ui-react';
 
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
 const Footer = () => {
-  const divStyle = { marginTop: '50px', textAlign: 'center'};
+  const divStyle = { marginTop: '50px', textAlign: 'center', paddingBottom: '30px' };
   return (
     <footer>
       <div className={'footer'}>
