@@ -10,6 +10,7 @@ import Landing from '../pages/Landing';
 import FilterOpportunities from '../pages/FilterOpportunities';
 import ListStuff from '../pages/ListStuff';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
+import AdminProfile from '../pages/AdminProfile';
 import AddStuff from '../pages/AddStuff';
 import AddProfile from '../pages/AddProfile';
 import EditStuff from '../pages/EditStuff';
@@ -42,7 +43,7 @@ class App extends React.Component {
             <ProtectedRoute path="/add" component={AddStuff}/>
             <ProtectedRoute path="/add2" component={AddProfile}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
-            <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
+            <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
             <Route component={NotFound}/>
           </Switch>

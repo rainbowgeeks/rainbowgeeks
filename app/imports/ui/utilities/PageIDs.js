@@ -1,5 +1,6 @@
 /** Define ids for each page. */
 export const PAGE_IDS = {
+  ADMIN_PROFILE: 'admin-profile',
   ADD_STUFF: 'add-stuff',
   ADD_PROFILE: 'add-profile',
   EDIT_STUFF: 'edit-stuff',
