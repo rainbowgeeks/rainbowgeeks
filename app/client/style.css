@@ -26,6 +26,11 @@
   text-align: center;
   font-family: 'Actor', Sans-serif, serif;
 }
+
+.ui.footer.button{
+  background-color: #007ba4;
+  color: white;
+}
 /************
 Footer End
  ***********/

@@ -20,7 +20,7 @@ const Footer = () => {
             </Grid.Row>
             <Grid.Row>
               <Grid.Column textAlign="center">
-                <Button size={'huge'}>Get Started</Button>
+                <Button className={'ui footer button'} size={'massive'}>Get Started</Button>
               </Grid.Column>
             </Grid.Row>
           </Grid>
