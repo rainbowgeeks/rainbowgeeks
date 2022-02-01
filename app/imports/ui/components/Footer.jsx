@@ -3,7 +3,7 @@ import { Button, Grid } from 'semantic-ui-react';
 
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
 const Footer = () => {
-  const divStyle = { paddingTop: '15px' };
+  const divStyle = { marginTop: '50px', textAlign: 'center'};
   return (
     <footer>
       <div className={'footer'}>
@@ -14,14 +14,19 @@ const Footer = () => {
               <Grid.Column width={10}>
                 <h1 id={'footerTxt1'}>Ready to Get Started?</h1>
                 <p id={'footerTxt2'}>Sign up now as a volunteer or organization</p>
-                <Button>Get Started</Button>
+
               </Grid.Column>
               <Grid.Column width={3}/>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column textAlign="center">
+                <Button size={'huge'}>Get Started</Button>
+              </Grid.Column>
             </Grid.Row>
           </Grid>
         </div>
       </div>
-      <div style={divStyle} className="ui equal width grid">
+      <div style={divStyle} >
         <p>
             ©2021-2022 VolunteerAlly. All rights reserved.
           <a href="https://volunteerally.org/privacy-policy"> Privacy Policy.</a>
