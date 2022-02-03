@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Container, Header, Item } from 'semantic-ui-react';
+import { Image, Container, Item } from 'semantic-ui-react';
 import Footer from '../components/Footer';
 
 /** A simple static component to render some text for the landing page. */
