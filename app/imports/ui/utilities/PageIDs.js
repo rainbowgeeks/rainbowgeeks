@@ -1,11 +1,9 @@
 /** Define ids for each page. */
 export const PAGE_IDS = {
-  ADD_STUFF: 'add-stuff',
+  // Page ID's use for VolunterAlly App.
+  FILTER_OPPORTUNITIES: 'filter_opportunities',
   ADD_PROFILE: 'add-profile',
-  EDIT_STUFF: 'edit-stuff',
   LANDING: 'landing',
-  LIST_STUFF: 'list-stuff',
-  LIST_STUFF_ADMIN: 'list-stuff-admin',
   MANAGE_DATABASE: 'manage-database',
   NOT_FOUND: 'not-found',
   PROFILE_PAGE: 'profile-page',
@@ -13,4 +11,10 @@ export const PAGE_IDS = {
   SIGN_IN: 'sigin-in',
   SIGN_OUT: 'sign-out',
   SIGN_UP: 'sign-up',
+
+  // Page ID's use for stuff collection probably will delete later.
+  ADD_STUFF: 'add-stuff',
+  EDIT_STUFF: 'edit-stuff',
+  LIST_STUFF: 'list-stuff',
+  LIST_STUFF_ADMIN: 'list-stuff-admin',
 };

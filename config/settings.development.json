@@ -12,20 +12,77 @@
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
   ],
   "defaultOpp": [
-    { "title": "The American Red Cross of Hawaii: Disaster Response - Disaster Action Team", "typ": "Event",
-      "category": "Child/Family Support, Crisis/Disaster, Relief Environment",
-      "age": "Family-Friendly, Adults", "environment":  "Mixed",
-      "cover":  "abc", "location": "4155 Diamond Head Road", "owner": "john@foo.com"
+    { "title": "The American Red Cross of Hawaii: Disaster Response - Disaster Action Team",
+      "category": ["Child/Family Support", "Crisis/Disaster Relief", "Environment"],
+      "age": ["Family-Friendly", "Adults"], "environment":  ["Mixed"],
+      "cover":  "images/red-cross.jpg", "location": "4155 Diamond Head Road",
+      "date": "11/09/2021", "owner": "john@foo.com"
     },
-    { "title": "HUGS Koa Memorial Garden", "typ": "Event",
-      "category":  "Child/Family Support, Crisis/Disaster Relief, Environment",
-      "age": "Family-Friendly, Adults", "environment":  "Mixed",
-      "cover":  "abc", "location": "4155 Diamond Head Road", "owner": "john@foo.com"
+    { "title": "HUGS Koa Memorial Garden",
+      "category": ["Child/Family-Support"],
+      "age": ["Family-Friendly", "Teens", "Adults", "Seniors"], "environment":  ["Outdoors"],
+      "cover":  "images/volunteerally.jpg", "location": "59-777 Pupukea Road, Haleiwa",
+      "date": "01/16/2022",  "owner": "john@foo.com"
     },
-    { "title": "SuperChill Saturdays", "typ": "Event",
-      "category": "Child/Family Support, Crisis/Disaster Relief, Environment",
-      "age": "Family-Friendly, Adults", "environment":  "Mixed",
-      "cover":  "abc", "location": "4155 Diamond Head Road", "owner": "john@foo.com"
+    { "title": "SuperChill Saturday",
+      "category": ["Education", "Environment"],
+      "age": ["Family-Friendly", "Teens", "Adults", "Seniors"], "environment":  ["Outdoors"],
+      "cover":  "images/volunteerally.jpg", "location": "591 Anolani Street",
+      "date": "12/25/2021",  "owner": "john@foo.com"
+    },
+    { "title": "The American Red Cross of Hawaii: View & Power BI Applications Lead 18+",
+      "category": ["Crisis/Disaster Relief"],
+      "age": ["Adults"], "environment":  ["Indoors"],
+      "cover":  "images/volunteerally.jpg", "location": "Honolulu County",
+      "date": "03/23/2022",  "owner": "john@foo.com"
+    },
+    { "title": "Mauka Missions",
+      "category": ["Education", "Environment"],
+      "age": ["Family-Friendly", "Teens", "Adults", "Seniors"], "environment":  ["Outdoors"],
+      "cover":  "images/volunteerally.jpg", "location": "2746 Kalawao Street",
+      "date": "12/18/2021",  "owner": "john@foo.com"
+    },
+    { "title": "The American Red Cross of Hawaii: Regional Training Instructor",
+      "category": ["Crisis/Disaster Relief"],
+      "age": ["Adults"], "environment":  ["Indoors"],
+      "cover":  "images/volunteerally.jpg", "location": "Honolulu County",
+      "date": "07/10/2022",  "owner": "john@foo.com"
+    },
+    { "title": "Read To Me International: Crafting activity set up and break down",
+      "category": ["Child/Family-Support", "Education"],
+      "age": ["Teens", "Adults", "Seniors"], "environment":  ["Indoors"],
+      "cover":  "images/volunteerally.jpg", "location": "4211 Waialae Avenue",
+      "date": "11/20/2021",  "owner": "john@foo.com"
+    },
+    { "title": "The American Red Cross of Hawaii: Hurricane Evacutation Shelter Volunteers",
+      "category": ["Crisis/Disaster Relief"],
+      "age": ["Adults", "Seniors"], "environment":  ["Mixed"],
+      "cover":  "images/volunteerally.jpg", "location": "Honolulu County",
+      "date": "09/30/2022",  "owner": "john@foo.com"
+    },
+    { "title": "Ho'omaluhia Botanical Garden",
+      "category": ["Environment"],
+      "age": ["Teens", "Adults"], "environment":  ["Outdoors"],
+      "cover":  "images/volunteerally.jpg", "location": "45-680 Luluku Rd. Kane'ohe",
+      "date": "10/30/2021",  "owner": "john@foo.com"
+    },
+    { "title": "Hawaiian Humane Society - Dog Walker",
+      "category": ["Animal Welfare/Rescue"],
+      "age": ["Adults"], "environment":  ["Mixed"],
+      "cover":  "images/volunteerally.jpg", "location": "2700 Waialae Avenue",
+      "date": "10/31/2021",  "owner": "john@foo.com"
+    },
+    { "title": "Test Opportunity",
+      "category": ["Environment"],
+      "age": ["Family-Friendly"], "environment":  ["Outdoors"],
+      "cover":  "images/volunteerally.jpg", "location": "921770b Kunia Road",
+      "date": "01/01/2022",  "owner": "john@foo.com"
+    },
+    { "title": "Office Support",
+      "category": ["Education", "Money"],
+      "age": ["Adults"], "environment":  ["Indoors"],
+      "cover":  "images/volunteerally.jpg", "location": "123 Ino-ah Rd. Honolulu",
+      "date": "02/17/2022",  "owner": "john@foo.com"
     }
   ],
   "public": {

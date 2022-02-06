@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import GoogleMap from '../components/GoogleMap';
-import CategoryFilter from '../components/CategoryFilter';
+import CategoryOpp from '../components/CategoryOpp';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import Opportunity from '../components/Opportunity';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
@@ -15,7 +15,7 @@ import MultiSelectField from '../../forms/controllers/MultiSelectField';
 const formSchema = new SimpleSchema({
   name: { type: String, optional: true },
   order: {
-    type: String,
+    type: String, optional: true,
     allowedValues: ['Upcoming', 'Latest', 'Nearby', 'A-Z'],
     defaultValue: 'Upcoming',
   },
@@ -45,7 +45,7 @@ const panes = [
     menuItem: 'Filter',
     // eslint-disable-next-line react/display-name
     render: () => <Tab.Pane attached={false}>
-      <AutoForm schema={bridge} onSubmit={console.log}>
+      <AutoForm schema={bridge}>
         <Segment>
           <TextField name='name'/>
           <SelectField name='order'/>
@@ -58,30 +58,40 @@ const panes = [
   {
     menuItem: 'Category',
     // eslint-disable-next-line react/display-name
-    render: () => <Tab.Pane attached={false}><CategoryFilter/></Tab.Pane>,
+    render: () => <Tab.Pane attached={false}><CategoryOpp/></Tab.Pane>,
   },
 ];
 
 const FilterOpportunities = ({ ready, opportunities }) => ((ready) ? (
   <Container fluid style={gridHeigth}>
     <Header as="h1" textAlign="center">Browse Opportunity</Header>
-    <Grid columns={3} centered celled column='equals' >
-      <Grid.Column>
+    <Grid columns={3} centered celled column='equals'>
+      <Grid.Column width={4}>
         <Header
           as="h2" textAlign="center"
           content="Volunteer Opportunities"
           subheader="Powered by VolunteerAlly"
         />
-        <Tab menu={{ secondary: true }} className='filter-tab-position' panes={panes}/>
+        <Tab
+          menu={{
+            secondary: true,
+            tabular: true,
+            style: {
+              display: 'flex',
+              justifyContent: 'center',
+            },
+          }}
+          className={'make-scrollable'}
+          panes={panes}
+        />
       </Grid.Column>
-      <Grid.Column>
+      <Grid.Column width={5}>
         <Header as="h2" textAlign="center">Result</Header>
-        <Card.Group centered>
+        <Card.Group className={'make-scrollable'} centered>
           {opportunities.map((opportunity) => <Opportunity key={opportunity._id} opportunity={opportunity}/>)}
         </Card.Group>
       </Grid.Column>
-      <Grid.Column>
-        <Header as="h2" textAlign="center">Result</Header>
+      <Grid.Column width={7}>
         <div><GoogleMap/></div>
       </Grid.Column>
     </Grid>

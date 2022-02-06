@@ -1,19 +1,46 @@
+/* Styling for Opportunity Component. */
 .browse-opp-container-background {
   background-image: url("https://react.semantic-ui.com/images/avatar/large/daniel.jpg");
 }
 
-.filter-tab-position {
-  padding-right: 5px;
+/* Styling for NavbarV Component. */
+.large-font {
+  font-size: 20px;
+}
+
+.navbar-menu-orrientation {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.user-font-diff {
+  font-size: 15px;
+}
+
+.input-search-bar {
+  border-color: whitesmoke;
+  border-style: solid;
+}
+
+.middle-menu-padding {
+  margin-left: 12em;
 }
 
 
-/*::-webkit-scrollbar {*/
-/*  background: #dc3545;*/
-/*}*/
-/*::-webkit-scrollbar-thumb {*/
-/*  background-image: linear-gradient(red, yellow);*/
-/*  border-radius: 25px;*/
-/*}*/
-/*::-webkit-scrollbar-thumb:hover {*/
-/*  background-image: linear-gradient(#ee0970, #ff6a00 );*/
-/*}*/
+/* Styling for Google Map Component. */
+.google-map-border {
+  height: 85vh;
+  width: 100%;
+}
+
+/* Styling for Filter Opportunities Page. */
+.make-scrollable {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 80vh;
+}
+
+/* Styling for Opportunity Component. */
+.card-content-spacing {
+  margin-bottom: 30px;
+}

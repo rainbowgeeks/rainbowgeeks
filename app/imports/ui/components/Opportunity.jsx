@@ -1,20 +1,35 @@
 import React from 'react';
-import { Card } from 'semantic-ui-react';
+import { Card, GridRow } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-const seetru = { backgroundImage: 'url("https://react.semantic-ui.com/images/avatar/large/daniel.jpg")' };
-
 /** Renders a single row in the List Stuff table. See pages/BrowseOpportunity.jsx. */
 const Opportunity = ({ opportunity }) => (
-  <Card href='#'>
-    <Card.Content style={seetru}>
+  <Card fluid href='#'>
+    <Card.Content style={{
+      backgroundImage: `url("${opportunity.cover}")`,
+    }}>
+      <Card.Header className={'card-content-spacing'}>Date: {opportunity.date}</Card.Header>
       <Card.Header>{opportunity.title}</Card.Header>
-      <Card.Meta>{opportunity.age}</Card.Meta>
-      <Card.Description>{opportunity.location}</Card.Description>
+      <Card.Description className={'card-content-spacing'}>
+        Address:  {opportunity.location}
+      </Card.Description>
+      <Card.Meta>
+        <GridRow>
+          Age: {opportunity.age}
+        </GridRow>
+        <GridRow>
+          Category: {opportunity.category}
+        </GridRow>
+        <GridRow>
+          Environment: {opportunity.environment}
+        </GridRow>
+      </Card.Meta>
     </Card.Content>
-    <Card.Content extra>{opportunity.category}</Card.Content>
-    <Card.Content extra>{opportunity.environment}</Card.Content>
+    <Card.Content fluid='true' extra>
+      <br/>
+      <br/>
+    </Card.Content>
   </Card>
 );
 
@@ -22,11 +37,12 @@ const Opportunity = ({ opportunity }) => (
 Opportunity.propTypes = {
   opportunity: PropTypes.shape({
     title: PropTypes.string,
-    typ: PropTypes.string,
-    category: PropTypes.string,
-    age: PropTypes.string,
-    environment: PropTypes.string,
+    category: PropTypes.array,
+    age: PropTypes.array,
+    environment: PropTypes.array,
+    cover: PropTypes.string,
     location: PropTypes.string,
+    date: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
 };

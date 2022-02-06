@@ -3,36 +3,37 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, NavLink } from 'react-router-dom';
-import { Menu, Header, Dropdown } from 'semantic-ui-react';
-// import { Roles } from 'meteor/alanning:roles';
-// import { Role } from '../../api/role/Role';
+import { Menu, Header, Dropdown, Input } from 'semantic-ui-react';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 /** The Navbar appears at the top of every page. Rendered by the App Layout component.
- * Certain Navbar Components will only appear when appropraite aunthentication is inserted.
+ * Certain Navbar Components will only appear when appropriate authentication is inserted.
  */
 const NavBarV = ({ currentUser }) => {
-  const menuStyle = { marginBottom: '10px', backgroundColor: '#0695fa' };
+  const menuStyle = { backgroundColor: '#0695fa', marginBottom: '25px' };
   return (
-    <Menu style={menuStyle} attached="top" borderless inverted>
-      <Menu.Item id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/">
+    <Menu className={'navbar-menu-orrientation'} style={menuStyle} attached='top' borderless inverted>
+      <Menu.Item className={'large-font'} id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/">
         <Header inverted as='h1'>VA</Header>
       </Menu.Item>
-      <Menu.Item id={COMPONENT_IDS.NAVBAR_ADD_STUFF} position="right" as={NavLink} activeClassName="active" exact to="/add">
+      <Menu.Item>
+        <Input className={'input-search-bar'} size='big' action={{ icon: 'search' }} iconPosition='left' placeholder=' Search' transparent />
+      </Menu.Item>
+      <Menu.Item className={'large-font middle-menu-padding'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/add">
         Home
       </Menu.Item>
-      <Menu.Item as={NavLink} activeClassName="active" exact to="/filter">
+      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter">
         Browse Opportunities
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item className={'large-font'}>
         Organization Library
       </Menu.Item>
-      <Menu.Item as={NavLink} activeClassName="active" exact to="/list">
+      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/list">
         About Us
       </Menu.Item>
       <Menu.Item position="right">
         {(currentUser !== '') && (currentUser) ? (
-          <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} text={currentUser} pointing="top right" icon={'user'}>
+          <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} className={'user-font-diff'} text={currentUser} pointing="top right" icon={'user'}>
             <Dropdown.Menu>
               <Dropdown.Item text="Add Opportunity"/>
               <Dropdown.Item text="My Opportunity"/>
