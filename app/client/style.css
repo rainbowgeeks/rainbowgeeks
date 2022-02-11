@@ -85,3 +85,40 @@ landing background
 /*::-webkit-scrollbar-thumb:hover {*/
 /*  background-image: linear-gradient(#ee0970, #ff6a00 );*/
 /*}*/
+
+/************************************************
+below is for org profile page responsiveness
+*/
+@media only screen and (max-width: 2560px) {
+  #greyBack{
+    height: 400px;
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  #greyBack{
+    height: 420px;
+  }
+  #orgLogo{
+    margin-top: 315px;
+    margin-left: 40px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  #greyBack{
+    height: 340px;
+  }
+  #orgLogo{
+    margin-top: 260px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #greyBack{
+    height: 270px;
+  }
+  #orgLogo{
+    margin-top: 210px;
+  }
+}
