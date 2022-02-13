@@ -5,12 +5,11 @@ import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import NavBarV from '../components/NavBarV';
-import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import FilterOpportunities from '../pages/FilterOpportunities';
 import ListStuff from '../pages/ListStuff';
-import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AdminProfile from '../pages/AdminProfile';
+import OrganizationLibrary from '../pages/OrganizationLibrary';
 import AddStuff from '../pages/AddStuff';
 import AddProfile from '../pages/AddProfile';
 import EditStuff from '../pages/EditStuff';
@@ -42,6 +41,7 @@ class App extends React.Component {
             <ProtectedRoute path="/edit" component={EditProfile}/>
             <ProtectedRoute path="/add" component={AddStuff}/>
             <ProtectedRoute path="/add2" component={AddProfile}/>
+            <ProtectedRoute path="/org-library" component={OrganizationLibrary}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
