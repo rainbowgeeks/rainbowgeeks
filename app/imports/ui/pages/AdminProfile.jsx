@@ -1,9 +1,10 @@
 import React from 'react';
-import { Loader, Image, Label, Grid, Segment, Table, Icon, Divider, Button } from 'semantic-ui-react';
+import { Loader, Image, Label, Grid, Menu, Table, Icon, Divider, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 import { PAGE_IDS } from '../utilities/PageIDs';
+import { NavLink } from 'react-router-dom';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const AdminProfile = ({ stuffs, ready }) => ((ready) ? (
@@ -79,36 +80,14 @@ const AdminProfile = ({ stuffs, ready }) => ((ready) ? (
       </Table>
     </Grid.Column>
     <Grid.Column width={3}>
-      <Table celled>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell colSpan='2'>Site Contents</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>
-              <a href='http://www.google.com'>Manage Users</a>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              <a href='http://www.google.com'>Manage Organizations</a>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              <a href='http://www.google.com'>Site Preferences</a>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              <a href='http://www.google.com'>Analytics</a>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+      <Menu vertical fluid>
+        <Menu.Item header>Site Contents</Menu.Item>
+        <Menu.Item>Manage Users</Menu.Item>
+        <Menu.Item as={NavLink} exact to="/manage-org">Manage Organizations</Menu.Item>
+        <Menu.Item>Manage Opportunities</Menu.Item>
+        <Menu.Item>Site Preferences</Menu.Item>
+        <Menu.Item>Analytics</Menu.Item>
+      </Menu>
     </Grid.Column>
   </Grid>
 ) : <Loader active>Getting data</Loader>);
