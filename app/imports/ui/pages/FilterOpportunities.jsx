@@ -11,6 +11,7 @@ import CategoryOpp from '../components/CategoryOpp';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import Opportunity from '../components/Opportunity';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
+import Footer from '../components/Footer';
 
 export const opportunityOrder = ['Upcoming', 'Latest', 'Nearby', 'A-Z'];
 
@@ -109,6 +110,7 @@ const FilterOpportunities = ({ ready }) => {
           <div><GoogleMap/></div>
         </Grid.Column>
       </Grid>
+      <Footer/>
     </Container>
   ) : <Loader active>Getting Data</Loader>);
 };

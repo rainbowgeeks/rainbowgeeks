@@ -15,14 +15,16 @@ import {
 } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Stuffs } from '../../api/stuff/StuffCollection';
-import StuffItem from '../components/StuffItem';
+// import StuffItem from '../components/StuffItem';
 import { PAGE_IDS } from '../utilities/PageIDs';
+import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
+const ProfilePage = ({ ready }) => ((ready) ? (
   <Container id={PAGE_IDS.PROFILE_PAGE}>
-    <Grid columns={'two'}>
+    <Grid columns={'two'} stackable>
       <Grid.Row>
         <Grid.Column>
           <Header as="h2" textAlign="right">PROFILE PAGE</Header>
@@ -30,8 +32,8 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
         <Grid.Column>
           <Container textAlign='right'>
             <Button icon>
-              <Icon name='setting'/>
-              {stuffs.map((stuff) => <StuffItem key={stuff._id} stuff={stuff}/>)}
+              <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={'/edit-profile'}><Icon name='setting'/>
+              </Link>
             </Button>
 
           </Container>
@@ -42,7 +44,7 @@ const ProfilePage = ({ ready, stuffs }) => ((ready) ? (
 
     <Container>
       <Divider/>
-      <Grid columns={'three'} divided>
+      <Grid columns={'three'} divided stackable>
         <Grid.Row>
           <Grid.Column>
             <Container>

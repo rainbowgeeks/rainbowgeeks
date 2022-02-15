@@ -1,4 +1,40 @@
-/* Styling for Opportunity Component. */
+#footerPic {
+  height: 366px;
+  width: 100%;
+  background: linear-gradient(rgba(42, 202, 248, 0.7),rgba(42, 202, 248, 0.7)), url("/images/plantFooter.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position-y: center;
+  margin-top: 100px;
+}
+
+.footer:after {
+  background: #2acaf8;
+}
+
+#footerTxt1{
+  color: white;
+  margin-top: 50px;
+  text-align: center;
+  font-size: 3em;
+  font-family: 'Actor', Sans-serif, serif;
+}
+
+#footerTxt2{
+  color: white;
+  text-align: center;
+  font-family: 'Actor', Sans-serif, serif;
+}
+
+.ui.footer.button{
+  background-color: #007ba4;
+  color: white;
+}
+/************
+Footer End
+ ***********/
+
+
 .browse-opp-container-background {
   background-image: url("https://react.semantic-ui.com/images/avatar/large/daniel.jpg");
 }
@@ -7,7 +43,31 @@
 .large-font {
   font-size: 20px;
 }
+/*
+landing background
+*/
+.grad-background {
+  background: url("https://volunteerally.org/wp-content/uploads/2021/08/joel-muniz-qvzjG2pF4bE-unsplash-scaled.jpg") no-repeat center center;
+  height: 940px;
+  padding-top: 70px;
+  text-align: center;
+}
 
+.logo-center {
+  text-align: center;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 30%;
+}
+
+.h1 {
+  font-size:56px;
+  padding-top: 40px;
+  color: #FFFFFF;
+  font-family: "Actor", Sans-serif;
+}
 .navbar-menu-orrientation {
   padding-top: 30px;
   padding-bottom: 30px;
@@ -24,8 +84,8 @@
 
 .middle-menu-padding {
   margin-left: 12em;
-}
 
+}
 
 /* Styling for Google Map Component. */
 .google-map-border {

@@ -1,11 +1,13 @@
 /** Define ids for each page. */
 export const PAGE_IDS = {
+
   // Page ID's use for VolunterAlly App.
   FILTER_OPPORTUNITIES: 'filter_opportunities',
   ADD_PROFILE: 'add-profile',
   LANDING: 'landing',
   MANAGE_DATABASE: 'manage-database',
   NOT_FOUND: 'not-found',
+  ORG_LIBRARY_PAGE: 'org-library-page',
   PROFILE_PAGE: 'profile-page',
   EDIT_PROFILE: 'edit-profile',
   SIGN_IN: 'sigin-in',
