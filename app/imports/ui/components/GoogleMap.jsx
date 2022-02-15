@@ -12,7 +12,7 @@ const defaultProps = {
 
 const GoogleMap = () => (
   // Important! Always set the container height explicitly
-  <div style={{ height: '70vh', width: '100%' }}>
+  <div className={'google-map-border'}>
     <GoogleMapReact
       bootstrapURLKeys={{ key: '' }}
       defaultCenter={defaultProps.center}
