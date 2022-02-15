@@ -24,10 +24,10 @@ const NavBarV = ({ currentUser }) => {
       <Menu.Item as={NavLink} activeClassName="active" exact to="/filter">
         Browse Opportunities
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item as={NavLink} activeClassName="active" exact to="/org-library">
         Organization Library
       </Menu.Item>
-      <Menu.Item as={NavLink} activeClassName="active" exact to="/org-library">
+      <Menu.Item as={NavLink} activeClassName="active" exact to="/list">
         About Us
       </Menu.Item>
       <Menu.Item position="right">
