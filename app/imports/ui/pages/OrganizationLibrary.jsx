@@ -12,7 +12,7 @@ const OrganizationLibrary = ({ ready, opportunities }) => ((ready) ? (
     <Input fluid placeholder="Search Organizations..."/>
     <List horizontal style={{ paddingBottom: '20px' }}>
       <List.Item>
-        <Header inverted as='h4' style={{ paddingTop: '8px', width: '70px', color: 'white' }}>Filter By: </Header>
+        <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
       </List.Item>
       <List.Item>
         <Button compact size='small'>A-Z</Button>

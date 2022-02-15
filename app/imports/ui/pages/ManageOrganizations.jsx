@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loader, Container, Header, Input, List, Card, Button, Image, Icon } from 'semantic-ui-react';
+import { Loader, Container, Header, Input, List, Card, Button, Image, Icon, Grid, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PAGE_IDS } from '../utilities/PageIDs';
@@ -8,11 +8,11 @@ import { Stuffs } from '../../api/stuff/StuffCollection';
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ManageOrganizations = ({ ready, stuffs }) => ((ready) ? (
   <Container id={PAGE_IDS.ORG_LIBRARY_PAGE}>
-    <Header as="h1" textAlign="center">Organization Library</Header>
+    <Header as="h1" textAlign="center">Manage Organizations</Header>
     <Input fluid placeholder="Search Organizations..."/>
     <List horizontal style={{ paddingBottom: '20px' }}>
       <List.Item>
-        <Header inverted as='h4' style={{ paddingTop: '8px', width: '70px', color: 'white' }}>Filter By: </Header>
+        <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
       </List.Item>
       <List.Item>
         <Button compact size='small'>A-Z</Button>
@@ -39,6 +39,10 @@ const ManageOrganizations = ({ ready, stuffs }) => ((ready) ? (
             <Icon name='calendar alternate outline' />
               10 Opportunities
           </a>
+          <Button.Group floated="right" compact>
+            <Button positive>Edit</Button>
+            <Button negative>Delete</Button>
+          </Button.Group>
         </Card.Content>
       </Card>
 
@@ -53,6 +57,10 @@ const ManageOrganizations = ({ ready, stuffs }) => ((ready) ? (
             <Icon name='calendar alternate outline' />
               15 Opportunities
           </a>
+          <Button.Group floated="right" compact>
+            <Button positive>Edit</Button>
+            <Button negative>Delete</Button>
+          </Button.Group>
         </Card.Content>
       </Card>
 
@@ -67,9 +75,17 @@ const ManageOrganizations = ({ ready, stuffs }) => ((ready) ? (
             <Icon name='calendar alternate outline' />
               20 Opportunities
           </a>
+          <Button.Group floated="right" compact>
+            <Button positive>Edit</Button>
+            <Button negative>Delete</Button>
+          </Button.Group>
         </Card.Content>
       </Card>
     </Card.Group>
+    <Divider hidden></Divider>
+    <Grid centered columns={1} padded>
+      <Button size="big" positive>Add Organization</Button>
+    </Grid>
   </Container>
 ) : <Loader active>Getting data</Loader>);
 
