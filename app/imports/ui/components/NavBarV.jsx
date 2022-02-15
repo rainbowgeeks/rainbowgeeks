@@ -27,7 +27,7 @@ const NavBarV = ({ currentUser }) => {
       <Menu.Item>
         Organization Library
       </Menu.Item>
-      <Menu.Item as={NavLink} activeClassName="active" exact to="/list">
+      <Menu.Item as={NavLink} activeClassName="active" exact to="/org-library">
         About Us
       </Menu.Item>
       <Menu.Item position="right">
