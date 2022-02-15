@@ -6,7 +6,7 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const ManageOrganizations = ({ ready, stuffs }) => ((ready) ? (
+const ManageOrganizations = ({ ready }) => ((ready) ? (
   <Container id={PAGE_IDS.ORG_LIBRARY_PAGE}>
     <Header as="h1" textAlign="center">Manage Organizations</Header>
     <Input fluid placeholder="Search Organizations..."/>

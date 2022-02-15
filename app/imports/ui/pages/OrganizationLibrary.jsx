@@ -6,7 +6,7 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const OrganizationLibrary = ({ ready, opportunities }) => ((ready) ? (
+const OrganizationLibrary = ({ ready }) => ((ready) ? (
   <Container id={PAGE_IDS.ORG_LIBRARY_PAGE}>
     <Header as="h1" textAlign="center">Organization Library</Header>
     <Input fluid placeholder="Search Organizations..."/>

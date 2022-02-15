@@ -2,12 +2,12 @@ import React from 'react';
 import { Loader, Image, Label, Grid, Menu, Table, Icon, Divider, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 import { PAGE_IDS } from '../utilities/PageIDs';
-import { NavLink } from 'react-router-dom';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const AdminProfile = ({ stuffs, ready }) => ((ready) ? (
+const AdminProfile = ({ ready }) => ((ready) ? (
   <Grid id={PAGE_IDS.ADMIN_PROFILE} columns={3} celled container>
     <Grid.Column textAlign='center' width={5}>
       <Image src='/images/meteor-logo.png' size='medium' circular centered/>
