@@ -38,7 +38,6 @@ const NavBarV = ({ currentUser }) => {
               <Dropdown.Item text="Add Opportunity"/>
               <Dropdown.Item text="My Opportunity"/>
               <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile"/>
-              <Dropdown.Item as={NavLink} text="My Organization Profile" exact to={"/OrganizationProfile"}/>
               <Dropdown.Item text="Account Settings"/>
               <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
             </Dropdown.Menu>
