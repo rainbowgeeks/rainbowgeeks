@@ -17,7 +17,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Stuffs } from '../../api/stuff/StuffCollection';
-// import StuffItem from '../components/StuffItem';
+
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
