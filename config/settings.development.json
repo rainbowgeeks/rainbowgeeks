@@ -1,8 +1,18 @@
 {
   "defaultAccounts": [
-    { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN", "firstName": "Admin", "lastName": "MATRP"
-    },
-    { "email": "john@foo.com", "password": "changeme", "role": "USER" , "firstName": "John", "lastName": "Doe" }
+    { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN", "firstName": "Admin", "lastName": "MATRP"},
+    { "email": "john@foo.com", "password": "changeme", "role": "USER" , "firstName": "John", "lastName": "Doe" },
+    { "email": "perkin@foo.com", "password": "changeme", "role": "USER" , "firstName": "Perkin", "lastName": "Dawks" },
+    { "email": "bary@foo.com", "password": "changeme", "role": "USER" , "firstName": "Bary", "lastName": "Widdowson" },
+    { "email": "blakelee@foo.com", "password": "changeme", "role": "USER" , "firstName": "Blakelee", "lastName": "O'Drought" },
+    { "email": "leupold@foo.com", "password": "changeme", "role": "USER" , "firstName": "Leupold", "lastName": "Chappelle" },
+    { "email": "mattie@foo.com", "password": "changeme", "role": "USER" , "firstName": "Mattie", "lastName": "Borless" },
+    { "email": "cullen@foo.com", "password": "changeme", "role": "USER" , "firstName": "Cullen", "lastName": "Merchant" },
+    { "email": "allfie@foo.com", "password": "changeme", "role": "USER" , "firstName": "Allfie", "lastName": "Gideon" },
+    { "email": "annabal@foo.com", "password": "changeme", "role": "USER" , "firstName": "Annabal", "lastName": "Giovanitti" },
+    { "email": "obadiah@foo.com", "password": "changeme", "role": "USER" , "firstName": "Obadiah", "lastName": "Dan" },
+    { "email": "jackie@foo.com", "password": "changeme", "role": "USER" , "firstName": "Jackie", "lastName": "Giraldo" },
+    { "email": "robin@foo.com", "password": "changeme", "role": "USER" , "firstName": "Robin", "lastName": "Wilcox" }
   ],
 
   "defaultData": [
@@ -13,76 +23,76 @@
   ],
   "defaultOpp": [
     { "title": "The American Red Cross of Hawaii: Disaster Response - Disaster Action Team",
-      "category": ["Child/Family Support", "Crisis/Disaster Relief", "Environment"],
-      "age": ["Family-Friendly", "Adults"], "environment":  ["Mixed"],
+      "category": ["Crisis/Disaster Relief"],
+      "age": ["Adults"], "environment":  ["Mixed"],
       "cover":  "images/red-cross.jpg", "location": "4155 Diamond Head Road",
       "date": "11/09/2021", "owner": "john@foo.com"
     },
     { "title": "HUGS Koa Memorial Garden",
       "category": ["Child/Family-Support"],
-      "age": ["Family-Friendly", "Teens", "Adults", "Seniors"], "environment":  ["Outdoors"],
+      "age": ["Teens"], "environment":  ["Outdoors"],
       "cover":  "images/volunteerally.jpg", "location": "59-777 Pupukea Road, Haleiwa",
-      "date": "01/16/2022",  "owner": "john@foo.com"
+      "date": "01/16/2022",  "owner": "perkin@foo.com"
     },
     { "title": "SuperChill Saturday",
-      "category": ["Education", "Environment"],
-      "age": ["Family-Friendly", "Teens", "Adults", "Seniors"], "environment":  ["Outdoors"],
+      "category": ["Education"],
+      "age": ["Seniors"], "environment":  ["Outdoors"],
       "cover":  "images/volunteerally.jpg", "location": "591 Anolani Street",
-      "date": "12/25/2021",  "owner": "john@foo.com"
+      "date": "12/25/2021",  "owner": "bary@foo.com"
     },
     { "title": "The American Red Cross of Hawaii: View & Power BI Applications Lead 18+",
       "category": ["Crisis/Disaster Relief"],
       "age": ["Adults"], "environment":  ["Indoors"],
       "cover":  "images/volunteerally.jpg", "location": "Honolulu County",
-      "date": "03/23/2022",  "owner": "john@foo.com"
+      "date": "03/23/2022",  "owner": "blakelee@foo.com"
     },
     { "title": "Mauka Missions",
-      "category": ["Education", "Environment"],
-      "age": ["Family-Friendly", "Teens", "Adults", "Seniors"], "environment":  ["Outdoors"],
+      "category": ["Environment"],
+      "age": ["Family-Friendly"], "environment":  ["Outdoors"],
       "cover":  "images/volunteerally.jpg", "location": "2746 Kalawao Street",
-      "date": "12/18/2021",  "owner": "john@foo.com"
+      "date": "12/18/2021",  "owner": "leupold@foo.com"
     },
     { "title": "The American Red Cross of Hawaii: Regional Training Instructor",
       "category": ["Crisis/Disaster Relief"],
       "age": ["Adults"], "environment":  ["Indoors"],
       "cover":  "images/volunteerally.jpg", "location": "Honolulu County",
-      "date": "07/10/2022",  "owner": "john@foo.com"
+      "date": "07/10/2022",  "owner": "mattie@foo.com"
     },
     { "title": "Read To Me International: Crafting activity set up and break down",
-      "category": ["Child/Family-Support", "Education"],
-      "age": ["Teens", "Adults", "Seniors"], "environment":  ["Indoors"],
+      "category": ["Education"],
+      "age": ["Teens"], "environment":  ["Indoors"],
       "cover":  "images/volunteerally.jpg", "location": "4211 Waialae Avenue",
-      "date": "11/20/2021",  "owner": "john@foo.com"
+      "date": "11/20/2021",  "owner": "cullen@foo.com"
     },
     { "title": "The American Red Cross of Hawaii: Hurricane Evacutation Shelter Volunteers",
       "category": ["Crisis/Disaster Relief"],
-      "age": ["Adults", "Seniors"], "environment":  ["Mixed"],
+      "age": ["Adults"], "environment":  ["Mixed"],
       "cover":  "images/volunteerally.jpg", "location": "Honolulu County",
-      "date": "09/30/2022",  "owner": "john@foo.com"
+      "date": "09/30/2022",  "owner": "allfie@foo.com"
     },
     { "title": "Ho'omaluhia Botanical Garden",
       "category": ["Environment"],
-      "age": ["Teens", "Adults"], "environment":  ["Outdoors"],
+      "age": ["Teens"], "environment":  ["Outdoors"],
       "cover":  "images/volunteerally.jpg", "location": "45-680 Luluku Rd. Kane'ohe",
-      "date": "10/30/2021",  "owner": "john@foo.com"
+      "date": "10/30/2021",  "owner": "annabal@foo.com"
     },
     { "title": "Hawaiian Humane Society - Dog Walker",
       "category": ["Animal Welfare/Rescue"],
       "age": ["Adults"], "environment":  ["Mixed"],
       "cover":  "images/volunteerally.jpg", "location": "2700 Waialae Avenue",
-      "date": "10/31/2021",  "owner": "john@foo.com"
+      "date": "10/31/2021",  "owner": "obadiah@foo.com"
     },
     { "title": "Test Opportunity",
       "category": ["Environment"],
       "age": ["Family-Friendly"], "environment":  ["Outdoors"],
       "cover":  "images/volunteerally.jpg", "location": "921770b Kunia Road",
-      "date": "01/01/2022",  "owner": "john@foo.com"
+      "date": "01/01/2022",  "owner": "jackie@foo.com"
     },
     { "title": "Office Support",
-      "category": ["Education", "Money"],
+      "category": ["Education"],
       "age": ["Adults"], "environment":  ["Indoors"],
       "cover":  "images/volunteerally.jpg", "location": "123 Ino-ah Rd. Honolulu",
-      "date": "02/17/2022",  "owner": "john@foo.com"
+      "date": "02/17/2022",  "owner": "robin@foo.com"
     }
   ],
   "public": {

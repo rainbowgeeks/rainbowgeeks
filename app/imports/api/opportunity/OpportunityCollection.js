@@ -63,9 +63,8 @@ class OpportunityCollection extends BaseCollection {
        * This subscription publishes only the documents associated with the logged in users.
        */
       Meteor.publish(opportunityPublications.opportunity, function publish() {
-        if (this.userId) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ owner: username });
+        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
+          return instance._collection.find();
         }
         return this.ready();
       });
@@ -73,7 +72,7 @@ class OpportunityCollection extends BaseCollection {
        * This subscription publishes all documents of user, but only if the logged in user is the Admin.
        */
       Meteor.publish(opportunityPublications.opportunityAdmin, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
+        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
           return instance._collection.find();
         }
         return this.ready();

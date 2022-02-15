@@ -35,16 +35,7 @@ const Opportunity = ({ opportunity }) => (
 
 // Require a document to be passed to this component.
 Opportunity.propTypes = {
-  opportunity: PropTypes.shape({
-    title: PropTypes.string,
-    category: PropTypes.array,
-    age: PropTypes.array,
-    environment: PropTypes.array,
-    cover: PropTypes.string,
-    location: PropTypes.string,
-    date: PropTypes.string,
-    _id: PropTypes.string,
-  }).isRequired,
+  opportunity: PropTypes.object.isRequired,
 };
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
