@@ -19,7 +19,7 @@ const NavBarV = ({ currentUser }) => {
       <Menu.Item>
         <Input className={'input-search-bar'} size='big' action={{ icon: 'search' }} iconPosition='left' placeholder=' Search' transparent />
       </Menu.Item>
-      <Menu.Item className={'large-font middle-menu-padding'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/add">
+      <Menu.Item className={'large-font middle-menu-padding'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/">
         Home
       </Menu.Item>
       <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter">
