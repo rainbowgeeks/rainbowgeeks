@@ -18,7 +18,7 @@ if (Stuffs.count() === 0) {
 }
 
 function addOpportunity(data2) {
-  console.log(` Adding: ${data2.title} ${data2.owner}`);
+  console.log(` Adding: ${data2.title} (${data2.owner})`);
   Opportunities.define(data2);
 }
 
