@@ -5,6 +5,7 @@ import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
 export const opportunityPublications = {
+  opportunityAll: 'OpportunityAll',
   opportunity: 'Opportunity',
   opportunityAdmin: 'OpportunityAdmin',
 };
@@ -12,6 +13,9 @@ export const opportunityPublications = {
 class OpportunityCollection extends BaseCollection {
   constructor() {
     super('Opportunities', new SimpleSchema({
+      firstName: String,
+      lastName: String,
+      phoneNumber: String,
       title: String,
       category: Array,
       'category.$': String,
@@ -23,6 +27,7 @@ class OpportunityCollection extends BaseCollection {
       location: String,
       date: String,
       owner: String,
+      description: String,
     }));
   }
 
@@ -37,8 +42,11 @@ class OpportunityCollection extends BaseCollection {
    * @param date the start date of the opportunity.
    * @param owner the owner of the opportunity.
    */
-  define({ title, category, age, environment, cover, location, date, owner }) {
+  define({ firstName, lastName, phoneNumber, title, category, age, environment, cover, location, date, owner, description }) {
     const docID = this._collection.insert({
+      firstName,
+      lastName,
+      phoneNumber,
       title,
       category,
       age,
@@ -47,6 +55,7 @@ class OpportunityCollection extends BaseCollection {
       location,
       date,
       owner,
+      description,
     });
     return docID;
   }
@@ -63,6 +72,16 @@ class OpportunityCollection extends BaseCollection {
        * This subscription publishes only the documents associated with the logged in users.
        */
       Meteor.publish(opportunityPublications.opportunity, function publish() {
+        if (this.userId) {
+          const username = Meteor.users.findOne(this.userId).username;
+          return instance._collection.find({ owner: username });
+        }
+        return this.ready();
+      });
+      /**
+       * This subscription publishes all documents of user, but only if the logged in user is verified.
+       */
+      Meteor.publish(opportunityPublications.opportunityAll, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
           return instance._collection.find();
         }
@@ -72,7 +91,7 @@ class OpportunityCollection extends BaseCollection {
        * This subscription publishes all documents of user, but only if the logged in user is the Admin.
        */
       Meteor.publish(opportunityPublications.opportunityAdmin, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
+        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
           return instance._collection.find();
         }
         return this.ready();
@@ -97,6 +116,17 @@ class OpportunityCollection extends BaseCollection {
   subscribeOpportunityAdmin() {
     if (Meteor.isClient) {
       return Meteor.subscribe(opportunityPublications.opportunityAdmin);
+    }
+    return null;
+  }
+
+  /**
+   * Subscription method for all users.
+   * Subscribes to the entire collection.
+   */
+  subscribeOpportunityAll() {
+    if (Meteor.isClient) {
+      return Meteor.subscribe(opportunityPublications.opportunityAll);
     }
     return null;
   }

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Grid, Header, Segment, Card, Loader, Tab } from 'semantic-ui-react';
 import { AutoForm, TextField, SelectField, SubmitField } from 'uniforms-semantic';
-import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema from 'simpl-schema';
@@ -54,7 +53,6 @@ const FilterOpportunities = ({ ready }) => {
   const { age, environment } = filterParam;
   //
   const newOpportunities = Opportunities.find({ $or: [{ age: { $in: [age] } }, { environment: { $in: [environment] } }] }).fetch();
-  console.log(newOpportunities);
   const panes = [
     {
       menuItem: 'Filter',
@@ -123,7 +121,7 @@ FilterOpportunities.propTypes = {
 //
 export default withTracker(() => {
   // Get access to opportunity documents.
-  const subscription = Opportunities.subscribeOpportunity();
+  const subscription = Opportunities.subscribeOpportunityAll();
   // Determine if the subscription is ready
   const ready = subscription.ready();
   return {
