@@ -10,6 +10,7 @@ import FilterOpportunities from '../pages/FilterOpportunities';
 import ListStuff from '../pages/ListStuff';
 import AdminProfile from '../pages/AdminProfile';
 import OrganizationLibrary from '../pages/OrganizationLibrary';
+import ManageOrganizations from '../pages/ManageOrganizations';
 import AddStuff from '../pages/AddStuff';
 import AddProfile from '../pages/AddProfile';
 import EditStuff from '../pages/EditStuff';
@@ -22,6 +23,7 @@ import { ROLE } from '../../api/role/Role';
 import ProfilePage from '../pages/ProfilePage';
 import EditProfile from '../pages/EditProfile';
 import OrganizationProfile from '../pages/OrganizationProfile';
+import OpportunityPage from '../pages/OpportunityPage';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -33,6 +35,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Landing}/>
             <Route exact path="/filter" component={FilterOpportunities}/>
+            <Route exact path="/event/:_id" component={OpportunityPage}/>
             <Route path="/signin" component={Signin}/>
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
@@ -46,6 +49,7 @@ class App extends React.Component {
             <ProtectedRoute path="/org-library" component={OrganizationLibrary}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
+            <AdminProtectedRoute path="/manage-org" component={ManageOrganizations}/>
             <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
             <Route component={NotFound}/>
           </Switch>
