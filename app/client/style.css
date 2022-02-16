@@ -30,14 +30,7 @@
   background-color: #007ba4;
   color: white;
 }
-/************
-Footer End
- ***********/
-
-
-.browse-opp-container-background {
-  background-image: url("https://react.semantic-ui.com/images/avatar/large/daniel.jpg");
-}
+/* Footer End */
 
 /* Styling for NavbarV Component. */
 .large-font {
@@ -82,19 +75,7 @@ landing background
   border-style: solid;
 }
 
-
-/*::-webkit-scrollbar {*/
-/*  background: #dc3545;*/
-/*}*/
-/*::-webkit-scrollbar-thumb {*/
-/*  background-image: linear-gradient(red, yellow);*/
-/*  border-radius: 25px;*/
-/*}*/
-/*::-webkit-scrollbar-thumb:hover {*/
-/*  background-image: linear-gradient(#ee0970, #ff6a00 );*/
-/*}*/
-
-/************************************************
+/*
 below is for org profile page responsiveness
 */
 @media only screen and (max-width: 2560px) {
@@ -128,7 +109,7 @@ below is for org profile page responsiveness
   }
   #orgLogo{
     margin-top: 210px;
-  }
+  } }
 
 .middle-menu-padding {
   margin-left: 12em;
@@ -151,4 +132,4 @@ below is for org profile page responsiveness
 /* Styling for Opportunity Component. */
 .card-content-spacing {
   margin-bottom: 30px;
-}}
+}

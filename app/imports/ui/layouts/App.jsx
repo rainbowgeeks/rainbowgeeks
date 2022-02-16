@@ -35,7 +35,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Landing}/>
             <Route exact path="/filter" component={FilterOpportunities}/>
-            <Route exact path="/event/:_id" component={OpportunityPage}/>
+            <Route exact path="/event/:owner" component={OpportunityPage}/>
             <Route path="/signin" component={Signin}/>
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>

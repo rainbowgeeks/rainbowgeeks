@@ -10,6 +10,7 @@ import {
   TextField,
 } from 'uniforms-semantic';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import MultiSelectField from '../../forms/controllers/MultiSelectField';
 import { PAGE_IDS } from '../utilities/PageIDs';
 
 const tempSchema = new SimpleSchema({
@@ -21,7 +22,12 @@ const tempSchema = new SimpleSchema({
   oldPassword: { type: String, optional: true },
   newPassword: { type: String, optional: true },
   confirmPassword: { type: String, optional: true },
-  interest: { type: String, optional: true },
+  interest: {
+    type: String,
+    optional: true,
+    label: 'interest',
+    allowedValues: ['INTEREST 1', 'INTEREST 2', 'INTEREST 3', 'INTEREST 4'],
+  },
   specialInterest: { type: String, optional: true },
   environmentalPref: { type: String, optional: true },
   availability: { type: String, optional: true },
@@ -51,7 +57,7 @@ const EditProfile = () => (
                     <TextField name='email' />
                     <LongTextField name='aboutMe' placeholder='Edit About Me'/>
                     <Divider section />
-                    <TextField name='interest' />
+                    <MultiSelectField name='interest' label='interest'/>
                     <TextField name='specialInterest' />
                     <SelectField name= 'environmentalPref' allowedValues={ ['In-person', 'At-Home'] } placeholder='any'/>
                     <SelectField name= 'availability'
