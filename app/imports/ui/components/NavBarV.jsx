@@ -19,13 +19,13 @@ const NavBarV = ({ currentUser }) => {
       <Menu.Item>
         <Input className={'input-search-bar'} size='big' action={{ icon: 'search' }} iconPosition='left' placeholder=' Search' transparent />
       </Menu.Item>
-      <Menu.Item className={'large-font middle-menu-padding'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/add">
+      <Menu.Item className={'large-font middle-menu-padding'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/">
         Home
       </Menu.Item>
       <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter">
         Browse Opportunities
       </Menu.Item>
-      <Menu.Item className={'large-font'}>
+      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-library">
         Organization Library
       </Menu.Item>
       <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/list">
@@ -38,7 +38,6 @@ const NavBarV = ({ currentUser }) => {
               <Dropdown.Item text="Add Opportunity"/>
               <Dropdown.Item text="My Opportunity"/>
               <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile"/>
-              <Dropdown.Item text="My Organization Profile"/>
               <Dropdown.Item text="Account Settings"/>
               <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
             </Dropdown.Menu>

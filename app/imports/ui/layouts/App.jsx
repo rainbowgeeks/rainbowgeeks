@@ -22,6 +22,7 @@ import ManageDatabase from '../pages/ManageDatabase';
 import { ROLE } from '../../api/role/Role';
 import ProfilePage from '../pages/ProfilePage';
 import EditProfile from '../pages/EditProfile';
+import OrganizationProfile from '../pages/OrganizationProfile';
 import OpportunityPage from '../pages/OpportunityPage';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
@@ -40,6 +41,7 @@ class App extends React.Component {
             <Route path="/signout" component={Signout}/>
             <ProtectedRoute path="/list" component={ListStuff}/>
             <ProtectedRoute path="/profile" component={ProfilePage}/>
+            <ProtectedRoute path="/org-profile" component={OrganizationProfile}/>
             <ProtectedRoute path="/edit-profile" component={EditProfile}/>
             <ProtectedRoute path="/edit" component={EditProfile}/>
             <ProtectedRoute path="/add" component={AddStuff}/>
