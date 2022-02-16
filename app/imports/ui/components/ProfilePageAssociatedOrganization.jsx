@@ -1,16 +1,15 @@
 import React from 'react';
 import { Image, List } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
+const styling = { paddingBottom: '10px' };
 /** Renders the List of Organizations Associated with the User. See pages/ProfilePage.jsx. */
 const ProfilePageAssociatedOrganization = () => (
-
   <List.Item>
-    <Image avatar src='/images/meteor-logo.png'/>
+    <Image avatar src='/images/red-cross.jpg'/>
     <List.Content>
-      <List.Header as='a'>Organization 1</List.Header>
-      <List.Description>
+      <List.Header as='a'>The American Red Cross of Hawaii</List.Header>
+      <List.Description style={styling}>
         Last seen watching{' '}
         <a>
           <b>Arrested Development</b>

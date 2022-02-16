@@ -1,41 +1,44 @@
 import React from 'react';
-import { Card, Container, Grid, Icon, Image} from 'semantic-ui-react';
-import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import { Card, CardHeader, Container, Icon, Image } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
+
+const gridLenght = { width: '100%' };
+const cardHeaders = { paddingBottom: '20px' };
+const cardMeta = { paddingBottom: '5px' };
 
 /** Renders the column to display user Information. See pages/ProfilePage.jsx. */
 const ProfilePageUserInformation = () => (
-  <Grid.Column>
-    <Container>
-      <Card color='blue'>
-        <Image src='/images/meteor-logo.png' wrapped ui={false} as='a' href='#/profile'/>
-        <Card.Content>
-          <Card.Header>User-102211</Card.Header>
-          <Card.Meta>
-            <Icon name='mail'/>
-            <span>
+  <Container>
+    <Card color='blue' style={gridLenght}>
+      <Image src='/images/meteor-logo.png' wrapped ui={false} as='a' href='#/profile'/>
+      <Card.Content>
+        <Card.Header style={cardHeaders}>
+            User-102211
+        </Card.Header>
+        <Card.Meta style={cardMeta}>
+          <Icon name='mail'/>
+          <span>
               john@foo.com
-            </span>
-          </Card.Meta>
-          <Card.Meta>
-            <Icon name='calendar'/>
-            <span className='date'>Joined in 2022</span>
-          </Card.Meta>
-          <Card.Meta>
-            <a>
-              <Icon name='building'/>
+          </span>
+        </Card.Meta>
+        <Card.Meta style={cardMeta}>
+          <Icon name='calendar'/>
+          <span className='date'>Joined in 2022</span>
+        </Card.Meta>
+        <Card.Meta style={cardMeta}>
+          <a>
+            <Icon name='building'/>
                 Joined 6 Organizations
-            </a>
-          </Card.Meta>
-        </Card.Content>
-        <Card.Content extra>
+          </a>
+        </Card.Meta>
+      </Card.Content>
+      <Card.Content extra>
+        <CardHeader>About Me</CardHeader>
             User-102211 is a musician and a computer
             Engineer living in Nashville.
-        </Card.Content>
-      </Card>
-    </Container>
-  </Grid.Column>
+      </Card.Content>
+    </Card>
+  </Container>
 );
 
 // Require a document to be passed to this component.
