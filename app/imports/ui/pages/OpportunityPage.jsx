@@ -6,8 +6,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 
-const OpportunityPage = ({ ready, event }) => {
-  console.log(event);
+const OpportunityPage = ({ event, ready }) => {
   const gridLenght = { height: '67%' };
   const gridHeigth = { paddingRight: '1px', paddingLeft: '1px' };
   return (ready) ? (
@@ -64,12 +63,11 @@ OpportunityPage.propTypes = {
 };
 
 const OpportunityPageContainer = withTracker(() => {
-  const { owner } = useParams();
-  const documentId = owner;
-  const subscription = Opportunities.subscribeOpportunity();
+  const subscription = Opportunities.subscribeOpportunityAll();
   const ready = subscription.ready();
-  const event = Opportunities.findOne(documentId);
-  console.log(event);
+  const { owner } = useParams();
+  // console.log(_id);
+  const event = Opportunities.findOne({ owner });
   return {
     event,
     ready,
