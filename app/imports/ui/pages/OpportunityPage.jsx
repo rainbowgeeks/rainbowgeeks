@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Loader, Item, Image } from 'semantic-ui-react';
+import { Container, Grid, Loader, Header, Segment, Table } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -7,51 +7,77 @@ import { useParams } from 'react-router';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 
 const OpportunityPage = ({ event, ready }) => {
-  const gridLenght = { height: '67%' };
-  const gridHeigth = { paddingRight: '1px', paddingLeft: '1px' };
+  const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
   return (ready) ? (
-    <Container style={gridHeigth}>
-      <Grid container celled>
-        <Image src={event.cover}/>
+    <Container>
+      <Grid container style={{
+        backgroundImage: `url('${event.cover}')`, height: '45vh',
+        backgroundPosition: 'center' }}>
       </Grid>
+      <Grid container columns={2} style={gridHeigth}>
+        <Grid.Row>
+          <Grid.Column>
+            <Header as='h3' icon='pencil alternate' content='Description' attached='top'/>
+            <Segment attached>{event.description}</Segment>
 
-      <Grid container columns={2} celled>
-        <Grid.Row>
-          <Grid.Column style={gridLenght}>
-            <Item.Description>{event.description}</Item.Description>
+            <Table>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell style={{ borderStyle: 'none' }}>
+                    <Header as='h5' icon='users' content={`${event.age}`}/>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell style={{ borderStyle: 'none' }}>
+                    <Header as='h5' icon='map pin' content={`${event.environment}`}/>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+
+            <Table>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>
+                    <Header as='h5' icon={`${event.icon}`} content={`${event.category}`}/>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
           </Grid.Column>
+
           <Grid.Column>
-            <Item.Content>{event.firstName} {event.lastName}</Item.Content>
-            <Item.Content>{event.owner}</Item.Content>
-            <Item.Content>{event.phoneNumber}</Item.Content>
+            <Table>
+              <Table.Header>
+                <Table.Row>
+                  <Table.Cell style={{ borderStyle: 'none' }}>
+                    <Header as='h3' icon='address book outline' content='Contact Information'/>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Header>
+
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell style={{ borderStyle: 'none' }}>
+                    <Header
+                      as='h5' icon='user circle' content={`${event.firstName} ${event.lastName}`}/>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell style={{ borderStyle: 'none' }}>
+                    <Header as='h5' icon='mail' content={`${event.owner}`}/>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell style={{ borderStyle: 'none' }}>
+                    <Header as='h5' icon='phone' content={`${event.phoneNumber}`}/>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Item.Content>{event.age}</Item.Content>
-            <Item.Content>{event.environment}</Item.Content>
-            <Item.Content>{}</Item.Content>
-          </Grid.Column>
-          <Grid.Column>
-            Contact Info
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Item.Content>{event.category}</Item.Content>
-          </Grid.Column>
-          <Grid.Column>
-            Google Map
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            upcoming events
-          </Grid.Column>
-          <Grid.Column>
-            Rsvp
-          </Grid.Column>
-        </Grid.Row>
+
       </Grid>
     </Container>
   ) : <Loader active>Fetching Event</Loader>;
@@ -65,9 +91,9 @@ OpportunityPage.propTypes = {
 const OpportunityPageContainer = withTracker(() => {
   const subscription = Opportunities.subscribeOpportunityAll();
   const ready = subscription.ready();
-  const { owner } = useParams();
-  // console.log(_id);
-  const event = Opportunities.findOne({ owner });
+  const { _id } = useParams();
+  const event = Opportunities.findOne({ _id: _id });
+  console.log(event);
   return {
     event,
     ready,

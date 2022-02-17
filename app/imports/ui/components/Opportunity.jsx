@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/BrowseOpportunity.jsx. */
 const Opportunity = ({ opportunity }) => (
-  <Card fluid href={`#/event/${opportunity.owner}`}>
+  <Card fluid href={`#/event/${opportunity._id}`}>
     <Card.Content style={{
       backgroundImage: `url("${opportunity.cover}")`,
     }}>
