@@ -26,6 +26,7 @@ import EditProfile from '../pages/EditProfile';
 import OrganizationProfile from '../pages/OrganizationProfile';
 import OpportunityPage from '../pages/OpportunityPage';
 import UserTrackingHoursPage from '../pages/UserTrackingHoursPage';
+import AboutUs from '../pages/AboutUs';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -41,6 +42,7 @@ class App extends React.Component {
             <Route path="/signin" component={Signin}/>
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
+            <Route path="/about" component={AboutUs}/>
             <ProtectedRoute path="/list" component={ListStuff}/>
             <ProtectedRoute path="/profile" component={ProfilePage}/>
             <ProtectedRoute path="/track-hours" component={UserTrackingHoursPage}/>

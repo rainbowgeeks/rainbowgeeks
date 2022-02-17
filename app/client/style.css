@@ -112,6 +112,22 @@ landing background
   margin-left: 650px;
 }
 
+.about {
+  background: url("https://cdn.discordapp.com/attachments/441780757967405067/943881257316671488/unknown.png") no-repeat center;
+  background-size: cover;
+  margin: auto;
+  margin-top: -22px;
+  height: 450px;
+}
+
+.h1About {
+  font-size:56px;
+  padding-top: 150px;
+  color: #FFFFFF;
+  font-family: 'Actor', Sans-serif, serif;
+  text-shadow: 1px 1px black;
+}
+
 .navbar-menu-orrientation {
   padding-top: 30px;
   padding-bottom: 30px;

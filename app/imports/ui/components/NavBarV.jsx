@@ -28,7 +28,7 @@ const NavBarV = ({ currentUser }) => {
       <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-library">
         Organization Library
       </Menu.Item>
-      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/list">
+      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/about">
         About Us
       </Menu.Item>
       <Menu.Item className={'large-font'} position="right">
