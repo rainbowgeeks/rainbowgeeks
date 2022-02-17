@@ -8,6 +8,7 @@ export const PAGE_IDS = {
   MANAGE_DATABASE: 'manage-database',
   NOT_FOUND: 'not-found',
   ORG_LIBRARY_PAGE: 'org-library-page',
+  USER_LIBRARY_PAGE: 'user-library-page',
   PROFILE_PAGE: 'profile-page',
   EDIT_PROFILE: 'edit-profile',
   SIGN_IN: 'sigin-in',
