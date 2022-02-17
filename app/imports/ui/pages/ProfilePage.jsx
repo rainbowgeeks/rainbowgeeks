@@ -9,7 +9,6 @@ import {
   Segment,
   List,
   Divider,
-  Button,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { PAGE_IDS } from '../utilities/PageIDs';
@@ -29,11 +28,11 @@ const ProfilePage = () => (
         </Grid.Column>
         <Grid.Column>
           <Container textAlign='right'>
-            <Button icon>
-              <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={'/edit-profile'}>
-                <Icon name='setting'/>
-              </Link>
-            </Button>
+
+            <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={'/edit-profile'}>
+              <Icon name='setting'/>
+            </Link>
+
           </Container>
         </Grid.Column>
       </Grid.Row>
@@ -63,14 +62,15 @@ const ProfilePage = () => (
           <Grid.Column>
             <Segment padded='very'>
               <Container textAlign={'center'}>
-                <Header as='h2'>
-                  Total Hours 20
-                </Header>
+                <Header as='h2'>Total Hours 20</Header>
+                <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={'/track-hours'}>
+                  Additional Information
+                </Link>
               </Container>
             </Segment>
 
             <Divider section/>
-            <Header as='h3'> List of Organizations</Header>
+            <Header as='h3' textAlign='centered'>Recommended Organization</Header>
             <List>
               <ProfilePageAssociatedOrganization/>
               <ProfilePageAssociatedOrganization/>
