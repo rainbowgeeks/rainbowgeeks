@@ -34,11 +34,6 @@
 Footer End
  ***********/
 
-
-/* Styling for NavbarV Component. */
-.large-font {
-  font-size: 20px;
-}
 /*
 landing background
 */
@@ -115,8 +110,7 @@ landing background
 .about {
   background: url("https://cdn.discordapp.com/attachments/441780757967405067/943881257316671488/unknown.png") no-repeat center;
   background-size: cover;
-  margin: auto;
-  margin-top: -22px;
+  margin: -22px auto auto;
   height: 450px;
 }
 
@@ -144,19 +138,6 @@ landing background
   padding-right: 350px;
 }
 
-.navbar-menu-orrientation {
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
-
-.user-font-diff {
-  font-size: 15px;
-}
-
-.input-search-bar {
-  border-color: whitesmoke;
-  border-style: solid;
-}
 
 /************************************************
 
@@ -220,4 +201,23 @@ below is for org profile page responsiveness
 /* Styling for Opportunity Component. */
 .card-content-spacing {
   margin-bottom: 30px;
+}
+
+/* Styling for NavbarV Component. */
+.large-font {
+  font-size: 20px;
+}
+
+.navbar-menu-orrientation {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.user-font-diff {
+  font-size: 15px;
+}
+
+.input-search-bar {
+  border-color: whitesmoke;
+  border-style: solid;
 }

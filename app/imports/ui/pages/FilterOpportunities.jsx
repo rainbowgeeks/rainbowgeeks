@@ -13,6 +13,7 @@ import MultiSelectField from '../../forms/controllers/MultiSelectField';
 import Footer from '../components/Footer';
 
 export const opportunityOrder = ['Upcoming', 'Latest', 'Nearby', 'A-Z'];
+export const opportunityDay = ['One Term', 'Short Term', 'Long Term'];
 
 // Create a Schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -37,6 +38,11 @@ const formSchema = new SimpleSchema({
   'environment.$': {
     type: String,
     allowedValues: ['Outdoors', 'Indoors', 'Mixed', 'Virtual'],
+  },
+  time: {
+    type: String, optional: true,
+    allowedValues: opportunityDay,
+    defaultValue: opportunityDay[0],
   },
 });
 //
@@ -64,6 +70,7 @@ const FilterOpportunities = ({ ready }) => {
             <SelectField name='order'/>
             <MultiSelectField name='age'/>
             <MultiSelectField name='environment'/>
+            <SelectField name='time'/>
             <SubmitField value='Submit'/>
           </Segment>
         </AutoForm>
