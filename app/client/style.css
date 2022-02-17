@@ -43,10 +43,12 @@ Footer End
 landing background
 */
 .grad-background {
-  background: url("https://volunteerally.org/wp-content/uploads/2021/08/joel-muniz-qvzjG2pF4bE-unsplash-scaled.jpg") no-repeat center center;
-  height: 940px;
-  padding-top: 70px;
+  background: url("https://cdn.discordapp.com/attachments/441780757967405067/943844389187358740/landingBackground.jpg") no-repeat center;
+  background-size: cover;
+  height: 1080px;
+  margin-top: -22px;
   text-align: center;
+  padding-bottom: 50px;
 }
 
 .logo-center {
@@ -56,14 +58,60 @@ landing background
   align-items: center;
   margin: auto;
   width: 30%;
+  padding-top: 300px;
 }
 
 .h1 {
   font-size:56px;
-  padding-top: 40px;
+  padding-top: 50px;
   color: #FFFFFF;
-  font-family: "Actor", Sans-serif;
+  font-family: 'Actor', Sans-serif, serif;
+  text-shadow: 1px 1px black;
 }
+
+.h2 {
+  font-size:24px;
+  padding-top: 20px;
+  line-height: 1.2;
+  color: #FFFFFF;
+  font-family: 'Actor', Sans-serif, serif;
+  text-shadow: 1px 1px black;
+}
+
+.landingBot {
+  margin-top: 40px;
+}
+
+.h1Bot {
+  font-size:56px;
+  padding-top: 50px;
+  color: #007ba4;
+  font-family: 'Actor', Sans-serif, serif;
+  margin: auto;
+}
+
+.h2Bot {
+  font-size:24px;
+  padding-top: 20px;
+  line-height: 1.2;
+  color: black;
+  font-family: 'Actor', Sans-serif, serif;
+  padding-left: 650px;
+  padding-right: 100px;
+}
+
+.desc {
+  padding-left: 650px;
+  font-size: 16px;
+  padding-right: 100px;
+}
+
+.ui.footer.button.bot{
+  background-color: #007ba4;
+  color: white;
+  margin-left: 650px;
+}
+
 .navbar-menu-orrientation {
   padding-top: 30px;
   padding-bottom: 30px;
