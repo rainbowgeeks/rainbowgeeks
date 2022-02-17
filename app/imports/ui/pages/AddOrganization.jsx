@@ -30,34 +30,34 @@ const AddOrganization = () => {
     const collectionName = Stuffs.getCollectionName();
     const definitionData = { name, email, image, availability, interests, owner };
     defineMethod.callPromise({ collectionName, definitionData })
-        .catch(error => swal('Error', error.message, 'error'))
-        .then(() => {
-          swal('Success', 'Item added successfully', 'success');
-          formRef.reset();
-        });
+      .catch(error => swal('Error', error.message, 'error'))
+      .then(() => {
+        swal('Success', 'Item added successfully', 'success');
+        formRef.reset();
+      });
   };
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   let fRef = null;
   return (
-      <Grid id={PAGE_IDS.ADD_ORGANIZATION} container centered>
-        <Grid.Column>
-          <Header as="h2" textAlign="center">Add ORGANIZATION</Header>
-          <AutoForm ref={ref => {
-            fRef = ref;
-          }} schema={bridge} onSubmit={data => submit(data, fRef)}>
-            <Segment>
-              <TextField name='name' id="profile-name"/>
-              <TextField name='email' id="profile-email"/>
-              <TextField name='image' id="profile-image"/>
-              <LongTextField name='availability' id="profile-availability"/>
-              <TextField name='interests' id="profile-interests"/>
-              <SubmitField value='Submit' />
-              <ErrorsField />
-            </Segment>
-          </AutoForm>
-        </Grid.Column>
-      </Grid>
+    <Grid id={PAGE_IDS.ADD_ORGANIZATION} container centered>
+      <Grid.Column>
+        <Header as="h2" textAlign="center">Add ORGANIZATION</Header>
+        <AutoForm ref={ref => {
+          fRef = ref;
+        }} schema={bridge} onSubmit={data => submit(data, fRef)}>
+          <Segment>
+            <TextField name='name' id="profile-name"/>
+            <TextField name='email' id="profile-email"/>
+            <TextField name='image' id="profile-image"/>
+            <LongTextField name='availability' id="profile-availability"/>
+            <TextField name='interests' id="profile-interests"/>
+            <SubmitField value='Submit' />
+            <ErrorsField />
+          </Segment>
+        </AutoForm>
+      </Grid.Column>
+    </Grid>
   );
 };
 

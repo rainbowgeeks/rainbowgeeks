@@ -11,6 +11,7 @@ import ListStuff from '../pages/ListStuff';
 import AdminProfile from '../pages/AdminProfile';
 import OrganizationLibrary from '../pages/OrganizationLibrary';
 import ManageOrganizations from '../pages/ManageOrganizations';
+import ManageUsers from '../pages/ManageUsers';
 import AddStuff from '../pages/AddStuff';
 import AddProfile from '../pages/AddProfile';
 import EditStuff from '../pages/EditStuff';
@@ -22,6 +23,10 @@ import ManageDatabase from '../pages/ManageDatabase';
 import { ROLE } from '../../api/role/Role';
 import ProfilePage from '../pages/ProfilePage';
 import EditProfile from '../pages/EditProfile';
+import OrganizationProfile from '../pages/OrganizationProfile';
+import OpportunityPage from '../pages/OpportunityPage';
+import UserTrackingHoursPage from '../pages/UserTrackingHoursPage';
+import AboutUs from '../pages/AboutUs';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -33,11 +38,15 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Landing}/>
             <Route exact path="/filter" component={FilterOpportunities}/>
+            <Route exact path="/event/:_id" component={OpportunityPage}/>
             <Route path="/signin" component={Signin}/>
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
+            <Route path="/about" component={AboutUs}/>
             <ProtectedRoute path="/list" component={ListStuff}/>
             <ProtectedRoute path="/profile" component={ProfilePage}/>
+            <ProtectedRoute path="/track-hours" component={UserTrackingHoursPage}/>
+            <ProtectedRoute path="/org-profile" component={OrganizationProfile}/>
             <ProtectedRoute path="/edit-profile" component={EditProfile}/>
             <ProtectedRoute path="/edit" component={EditProfile}/>
             <ProtectedRoute path="/add" component={AddStuff}/>
@@ -46,6 +55,7 @@ class App extends React.Component {
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-org" component={ManageOrganizations}/>
+            <AdminProtectedRoute path="/manage-user" component={ManageUsers}/>
             <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
             <Route component={NotFound}/>
           </Switch>

@@ -1,9 +1,7 @@
-
 #footerPic {
   height: 366px;
   width: 100%;
-  background: linear-gradient(rgba(42, 202, 248, 0.7),rgba(42, 202, 248, 0.7)), url("/images/plantFooter.jpg");
-  background-repeat: no-repeat;
+  background: linear-gradient(rgba(42, 202, 248, 0.7), rgba(42, 202, 248, 0.7)), url("/images/plantFooter.jpg") no-repeat;
   background-size: 100%;
   background-position-y: center;
   margin-top: 100px;
@@ -31,25 +29,26 @@
   background-color: #007ba4;
   color: white;
 }
+
 /************
 Footer End
  ***********/
 
-.browse-opp-container-background {
-  background-image: url("https://react.semantic-ui.com/images/avatar/large/daniel.jpg");
-}
 
-.filter-tab-position {
-  padding-right: 5px;
+/* Styling for NavbarV Component. */
+.large-font {
+  font-size: 20px;
 }
 /*
 landing background
 */
 .grad-background {
-  background: url("https://volunteerally.org/wp-content/uploads/2021/08/joel-muniz-qvzjG2pF4bE-unsplash-scaled.jpg") no-repeat center center;
-  height: 940px;
-  padding-top: 70px;
+  background: url("https://cdn.discordapp.com/attachments/441780757967405067/943844389187358740/landingBackground.jpg") no-repeat center;
+  background-size: cover;
+  height: 1080px;
+  margin-top: -22px;
   text-align: center;
+  padding-bottom: 50px;
 }
 
 .logo-center {
@@ -59,29 +58,166 @@ landing background
   align-items: center;
   margin: auto;
   width: 30%;
+  padding-top: 300px;
 }
 
 .h1 {
   font-size:56px;
-  padding-top: 40px;
+  padding-top: 50px;
   color: #FFFFFF;
-  font-family: "Actor", Sans-serif;
+  font-family: 'Actor', Sans-serif, serif;
+  text-shadow: 1px 1px black;
 }
 
 .h2 {
-  font-size: 21px;
-  padding-top: 40px;
+  font-size:24px;
+  padding-top: 20px;
+  line-height: 1.2;
   color: #FFFFFF;
-  font-family: "Actor", Sans-serif;
+  font-family: 'Actor', Sans-serif, serif;
+  text-shadow: 1px 1px black;
 }
 
-/*::-webkit-scrollbar {*/
-/*  background: #dc3545;*/
-/*}*/
-/*::-webkit-scrollbar-thumb {*/
-/*  background-image: linear-gradient(red, yellow);*/
-/*  border-radius: 25px;*/
-/*}*/
-/*::-webkit-scrollbar-thumb:hover {*/
-/*  background-image: linear-gradient(#ee0970, #ff6a00 );*/
-/*}*/
+.landingBot {
+  margin-top: 40px;
+}
+
+.h1Bot {
+  font-size:56px;
+  padding-top: 50px;
+  color: #007ba4;
+  font-family: 'Actor', Sans-serif, serif;
+  margin: auto;
+}
+
+.h2Bot {
+  font-size:24px;
+  padding-top: 20px;
+  line-height: 1.2;
+  color: black;
+  font-family: 'Actor', Sans-serif, serif;
+  padding-left: 500px;
+  padding-right: 100px;
+}
+
+.desc {
+  padding-left: 500px;
+  font-size: 16px;
+  padding-right: 100px;
+}
+
+.ui.footer.button.bot{
+  background-color: #007ba4;
+  color: white;
+  margin-left: 500px;
+}
+
+.about {
+  background: url("https://cdn.discordapp.com/attachments/441780757967405067/943881257316671488/unknown.png") no-repeat center;
+  background-size: cover;
+  margin: auto;
+  margin-top: -22px;
+  height: 450px;
+}
+
+.h1About {
+  font-size:56px;
+  padding-top: 150px;
+  color: #FFFFFF;
+  font-family: 'Actor', Sans-serif, serif;
+  text-shadow: 1px 1px black;
+}
+
+.h2About {
+  font-size:36px;
+  padding-top: 50px;
+  color: #007ba4;
+  font-family: 'Actor', Sans-serif, serif;
+  padding-left: 350px;
+}
+
+.h3About {
+  font-size:16px;
+  color: #7a7a7a;
+  font-family: 'Actor', Sans-serif, serif;
+  padding-left: 350px;
+  padding-right: 350px;
+}
+
+.navbar-menu-orrientation {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.user-font-diff {
+  font-size: 15px;
+}
+
+.input-search-bar {
+  border-color: whitesmoke;
+  border-style: solid;
+}
+
+/************************************************
+
+below is for org profile page responsiveness
+*/
+@media only screen and (max-width: 2560px) {
+  #greyBack{
+    height: 400px;
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  #greyBack{
+    height: 420px;
+  }
+  #orgLogo{
+    margin-top: 315px;
+    margin-left: 40px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  #greyBack{
+    height: 340px;
+  }
+  #orgLogo{
+    margin-top: 260px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #greyBack{
+    height: 270px;
+  }
+  #orgLogo{
+    margin-top: 210px;
+
+  }
+}
+
+
+/* Styling for Navbar Component. */
+.middle-menu-padding {
+  margin-left: 12em;
+
+}
+
+/* Styling for Google Map Component. */
+.google-map-border {
+  height: 85vh;
+  width: 100%;
+}
+
+/* Styling for Filter Opportunities Page. */
+.make-scrollable {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 80vh;
+}
+
+/* Styling for Opportunity Component. */
+.card-content-spacing {
+  margin-bottom: 30px;
+}

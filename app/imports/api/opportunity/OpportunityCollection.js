@@ -4,12 +4,8 @@ import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
-// export const opportunityTyp = ['Event', 'Ongoing'];
-// export const opportunityCategory = ['Animal Welfare/Rescue', 'Child/Family Support', 'COVID-19 Recovery',
-//   'Crisis/Disaster Relief', 'Education', 'Elderly/Senior Care', 'Environment', 'Food Insecurity'];
-// export const opportunityAge = ['Family-Friendly', 'Teens', 'Adults', 'Seniors'];
-// export const opportunityEnvironment = ['Indoors', 'Outdoors', 'Mixed', 'Virtual'];
 export const opportunityPublications = {
+  opportunityAll: 'OpportunityAll',
   opportunity: 'Opportunity',
   opportunityAdmin: 'OpportunityAdmin',
 };
@@ -17,38 +13,51 @@ export const opportunityPublications = {
 class OpportunityCollection extends BaseCollection {
   constructor() {
     super('Opportunities', new SimpleSchema({
+      firstName: String,
+      lastName: String,
+      phoneNumber: String,
       title: String,
-      typ: String,
-      category: String,
-      age: String,
-      environment: String,
+      category: Array,
+      'category.$': String,
+      age: Array,
+      'age.$': String,
+      environment: Array,
+      'environment.$': String,
       cover: String,
       location: String,
+      date: String,
       owner: String,
+      icon: String,
+      description: String,
     }));
   }
 
   /**
    * Defines a new opportunity.
    * @param title the name of the opportunity.
-   * @param typ the type of opportunity.
    * @param category the category of the opportunity.
    * @param age the age group of the opportunity.
    * @param environment the domain of the opportunity.
    * @param cover the cover image of the opportunity.
    * @param location the address of the opportunity.
+   * @param date the start date of the opportunity.
    * @param owner the owner of the opportunity.
    */
-  define({ title, typ, category, age, environment, cover, location, owner }) {
+  define({ firstName, lastName, phoneNumber, title, category, age, environment, cover, location, date, owner, icon, description }) {
     const docID = this._collection.insert({
+      firstName,
+      lastName,
+      phoneNumber,
       title,
-      typ,
       category,
       age,
       environment,
       cover,
       location,
+      date,
       owner,
+      icon,
+      description,
     });
     return docID;
   }
@@ -68,6 +77,15 @@ class OpportunityCollection extends BaseCollection {
         if (this.userId) {
           const username = Meteor.users.findOne(this.userId).username;
           return instance._collection.find({ owner: username });
+        }
+        return this.ready();
+      });
+      /**
+       * This subscription publishes all documents of user, but only if the logged in user is verified.
+       */
+      Meteor.publish(opportunityPublications.opportunityAll, function publish() {
+        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
+          return instance._collection.find();
         }
         return this.ready();
       });
@@ -105,10 +123,21 @@ class OpportunityCollection extends BaseCollection {
   }
 
   /**
-   * Default implementation of assertValidRoleMethod. Asserts the userId is looged in as an Admin or User.
+   * Subscription method for all users.
+   * Subscribes to the entire collection.
+   */
+  subscribeOpportunityAll() {
+    if (Meteor.isClient) {
+      return Meteor.subscribe(opportunityPublications.opportunityAll);
+    }
+    return null;
+  }
+
+  /**
+   * Default implementation of assertValidRoleMethod. Asserts the userId is logged in as an Admin or User.
    * Used in define Meteor methods associated with each class.
-   * @param userId the userId of the looged in user. Can be null or undefined.
-   * @throws { Meteor.Error } If thereis no looged in user, or the user is not an Admin or User.
+   * @param userId the userId of the logged in user. Can be null or undefined.
+   * @throws { Meteor.Error } If there is no logged in user, or the user is not an Admin or User.
    */
   assertValidRoleMethod(userId) {
     this.assertRole(userId, [ROLE.ADMIN, ROLE.USER]);
