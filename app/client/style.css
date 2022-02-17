@@ -96,12 +96,12 @@ landing background
   line-height: 1.2;
   color: black;
   font-family: 'Actor', Sans-serif, serif;
-  padding-left: 650px;
+  padding-left: 500px;
   padding-right: 100px;
 }
 
 .desc {
-  padding-left: 650px;
+  padding-left: 500px;
   font-size: 16px;
   padding-right: 100px;
 }
@@ -109,7 +109,7 @@ landing background
 .ui.footer.button.bot{
   background-color: #007ba4;
   color: white;
-  margin-left: 650px;
+  margin-left: 500px;
 }
 
 .navbar-menu-orrientation {
