@@ -21,21 +21,15 @@ import ProfilePageRecentEvent from '../components/ProfilePageRecentEvent';
 /** Renders the User's Profile. Profile Page is broken down into 4 components */
 const ProfilePage = () => (
   <Container id={PAGE_IDS.PROFILE_PAGE}>
-    <Grid columns={'two'} stackable>
-      <Grid.Row>
-        <Grid.Column>
-          <Header as="h2" textAlign="right">PROFILE PAGE</Header>
-        </Grid.Column>
-        <Grid.Column>
-          <Container textAlign='right'>
-
-            <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={'/edit-profile'}>
-              <Icon name='setting'/>
-            </Link>
-
-          </Container>
-        </Grid.Column>
-      </Grid.Row>
+    <Grid>
+      <Grid.Column floated='left' width={9}>
+        <Header as="h2" textAlign="right">My Profile Page </Header>
+      </Grid.Column>
+      <Grid.Column floated='right' width={1}>
+        <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={'/edit-profile'}>
+          <Icon name='setting' size='large'/>
+        </Link>
+      </Grid.Column>
     </Grid>
 
     <Container>

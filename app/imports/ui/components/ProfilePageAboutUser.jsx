@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Divider, Grid, Header, Segment } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 /** Renders the column to display about the user. See pages/ProfilePage.jsx. */

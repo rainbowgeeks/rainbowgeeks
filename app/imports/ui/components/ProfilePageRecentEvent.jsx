@@ -1,6 +1,5 @@
 import React from 'react';
 import { Feed } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 /** Renders the List of Recent events associated with the user. See pages/ProfilePage.jsx. */
