@@ -31,7 +31,7 @@ const NavBarV = ({ currentUser }) => {
       <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/list">
         About Us
       </Menu.Item>
-      <Menu.Item position="right">
+      <Menu.Item className={'large-font'} position="right">
         {(currentUser !== '') && (currentUser) ? (
           <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} className={'user-font-diff'} text={currentUser} pointing="top right" icon={'user'}>
             <Dropdown.Menu>

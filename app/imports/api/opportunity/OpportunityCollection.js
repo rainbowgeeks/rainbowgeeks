@@ -27,6 +27,7 @@ class OpportunityCollection extends BaseCollection {
       location: String,
       date: String,
       owner: String,
+      icon: String,
       description: String,
     }));
   }
@@ -42,7 +43,7 @@ class OpportunityCollection extends BaseCollection {
    * @param date the start date of the opportunity.
    * @param owner the owner of the opportunity.
    */
-  define({ firstName, lastName, phoneNumber, title, category, age, environment, cover, location, date, owner, description }) {
+  define({ firstName, lastName, phoneNumber, title, category, age, environment, cover, location, date, owner, icon, description }) {
     const docID = this._collection.insert({
       firstName,
       lastName,
@@ -55,6 +56,7 @@ class OpportunityCollection extends BaseCollection {
       location,
       date,
       owner,
+      icon,
       description,
     });
     return docID;

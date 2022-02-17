@@ -1,8 +1,7 @@
 #footerPic {
   height: 366px;
   width: 100%;
-  background: linear-gradient(rgba(42, 202, 248, 0.7),rgba(42, 202, 248, 0.7)), url("/images/plantFooter.jpg");
-  background-repeat: no-repeat;
+  background: linear-gradient(rgba(42, 202, 248, 0.7), rgba(42, 202, 248, 0.7)), url("/images/plantFooter.jpg") no-repeat;
   background-size: 100%;
   background-position-y: center;
   margin-top: 100px;
@@ -30,7 +29,11 @@
   background-color: #007ba4;
   color: white;
 }
-/* Footer End */
+
+/************
+Footer End
+ ***********/
+
 
 /* Styling for NavbarV Component. */
 .large-font {
@@ -75,7 +78,8 @@ landing background
   border-style: solid;
 }
 
-/*
+/************************************************
+
 below is for org profile page responsiveness
 */
 @media only screen and (max-width: 2560px) {
@@ -109,8 +113,12 @@ below is for org profile page responsiveness
   }
   #orgLogo{
     margin-top: 210px;
-  } }
 
+  }
+}
+
+
+/* Styling for Navbar Component. */
 .middle-menu-padding {
   margin-left: 12em;
 
