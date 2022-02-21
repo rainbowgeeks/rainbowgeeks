@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
+import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 /* eslint-disable no-console */
 
 // Initialize the database with a default data document.
@@ -26,5 +27,16 @@ if (Opportunities.count() === 0) {
   if (Meteor.settings.defaultOpp) {
     console.log('Creating default opportunity.');
     Meteor.settings.defaultOpp.map(data2 => addOpportunity(data2));
+  }
+}
+
+function addProfileData(profileData) {
+  console.log(` Adding: ${profileData.firstName} (${profileData.owner})`);
+  UserProfileData.define(profileData);
+}
+
+if (UserProfileData.count() === 0) {
+  if (Meteor.settings.defaultProfileData) {
+    Meteor.settings.defaultProfileData.map(profileData => addProfileData(profileData));
   }
 }

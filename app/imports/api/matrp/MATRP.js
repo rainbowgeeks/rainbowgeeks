@@ -3,6 +3,7 @@ import { Stuffs } from '../stuff/StuffCollection';
 import { Opportunities } from '../opportunity/OpportunityCollection';
 import { AdminProfiles } from '../user/AdminProfileCollection';
 import { UserProfiles } from '../user/UserProfileCollection';
+import { UserProfileData } from '../profile/ProfilePageCollection';
 
 class MATRPClass {
   collections;
@@ -18,6 +19,7 @@ class MATRPClass {
       Stuffs,
       Opportunities,
       UserProfiles,
+      UserProfileData,
     ];
     /*
      * A list of collection class instances in the order required for them to be sequentially loaded from a file.
@@ -27,6 +29,7 @@ class MATRPClass {
       UserProfiles,
       Stuffs,
       Opportunities,
+      UserProfileData,
     ];
 
     /*
