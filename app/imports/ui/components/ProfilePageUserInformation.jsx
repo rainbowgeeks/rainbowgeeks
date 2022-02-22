@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader, Container, Icon, Image } from 'semantic-ui-react';
+import { Card, CardHeader, Container, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -8,14 +8,12 @@ const cardHeaders = { paddingBottom: '20px' };
 const cardMeta = { paddingBottom: '5px' };
 
 /** Renders the column to display user Information. See pages/ProfilePage.jsx. */
-// eslint-disable-next-line react/prop-types
 const ProfilePageUserInformation = ({ aboutUser }) => (
   <Container>
     <Card color='blue' style={gridLenght}>
-      <Image src='/images/meteor-logo.png' wrapped ui={false} as='a' href='#/profile'/>
+      <img src={aboutUser.profileImage} alt="imges/volunteerally.jpg" width='357px' height='350px'/>
       <Card.Content>
         <Card.Header style={cardHeaders}>
-          {/* eslint-disable-next-line react/prop-types */}
           {aboutUser.firstName} {aboutUser.lastName}
         </Card.Header>
         <Card.Meta style={cardMeta}>
@@ -48,6 +46,7 @@ ProfilePageUserInformation.propTypes = {
   aboutUser: PropTypes.shape({
     firstName: PropTypes.string,
     lastName: PropTypes.string,
+    profileImage: PropTypes.string,
     owner: PropTypes.string,
     aboutUser: PropTypes.string,
     _id: PropTypes.string,

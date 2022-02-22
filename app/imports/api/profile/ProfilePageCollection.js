@@ -4,7 +4,8 @@ import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
-export const profilePageAvailability = ['mon', 'tues', 'weds', 'thurs', 'fri', 'sat', 'sun', 'week-days', 'weekends', 'no-pref'];
+export const profilePageAvailability = ['mon', 'tues', 'weds', 'thurs', 'fri', 'sat', 'sun', 'week-days', 'weekends',
+  'no-pref'];
 export const profilePageEnvironmentalPref = ['on-campus', 'at-home', 'no-pref'];
 export const profilePageInterest = ['Int-1', 'Int-2', 'Int-3', 'Int-3', 'mis'];
 export const ProfilePagePublication = {
@@ -36,12 +37,27 @@ class ProfilePageCollection extends BaseCollection {
         allowedValues: profilePageAvailability,
         defaultValue: 'no-pref',
       },
+      profileImage: String,
       aboutUser: String,
     }));
   }
 
-  define({ owner,firstName, lastName, phoneNumber, interest, specialInterest, environmentalPref, availability,
-    aboutUser }) {
+  /**
+   * Defines a new profile data
+   * @param owner the owner of the profile data
+   * @param firstName the first name of the user
+   * @param lastName the last name of the user
+   * @param phoneNumber the phone number of the user
+   * @param interest the interest of the user
+   * @param specialInterest the additional interest of the user
+   * @param environmentalPref the environmental preference of the user
+   * @param availability the availability of the user
+   * @param profileImage the profile-image of the user
+   * @param aboutUser the information of the user
+   * @returns the docID of the defined collection
+   */
+  define({ owner, firstName, lastName, phoneNumber, interest, specialInterest, environmentalPref, availability,
+    profileImage, aboutUser }) {
     const docID = this._collection.insert({
       owner,
       firstName,
@@ -51,6 +67,7 @@ class ProfilePageCollection extends BaseCollection {
       specialInterest,
       environmentalPref,
       availability,
+      profileImage,
       aboutUser,
     });
     return docID;
@@ -87,7 +104,7 @@ class ProfilePageCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for the opportunity owned by the current user.
+   * Subscription method for the user-profile data owned by the current user.
    */
   subscribeUserProfile() {
     if (Meteor.isClient) {
