@@ -6,6 +6,7 @@ import { OpportunitiesEnvs } from '../opportunity/OpportunitiesEnvCollection';
 import { Ages } from '../age/AgeCollection';
 import { AdminProfiles } from '../user/AdminProfileCollection';
 import { UserProfiles } from '../user/UserProfileCollection';
+import { UserProfileData } from '../profile/ProfilePageCollection';
 
 class MATRPClass {
   collections;
@@ -24,6 +25,7 @@ class MATRPClass {
       OpportunitiesAges,
       OpportunitiesEnvs,
       UserProfiles,
+      UserProfileData,
     ];
     /*
      * A list of collection class instances in the order required for them to be sequentially loaded from a file.

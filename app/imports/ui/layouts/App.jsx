@@ -27,7 +27,6 @@ import OrganizationProfile from '../pages/OrganizationProfile';
 import OpportunityPage from '../pages/OpportunityPage';
 import UserTrackingHoursPage from '../pages/UserTrackingHoursPage';
 import AboutUs from '../pages/AboutUs';
-import AddOpportunity from '../pages/AddOpportunity';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -37,7 +36,7 @@ class App extends React.Component {
         <div>
           <NavBarV/>
           <Switch>
-            <Route exact path="/" component={AddOpportunity}/>
+            <Route exact path="/" component={Landing}/>
             <Route exact path="/filter" component={FilterOpportunities}/>
             <Route exact path="/event/:_id" component={OpportunityPage}/>
             <Route path="/signin" component={Signin}/>
