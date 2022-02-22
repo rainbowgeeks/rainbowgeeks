@@ -11,6 +11,9 @@ export const opportunityPublications = {
   opportunityAdmin: 'OpportunityAdmin',
 };
 
+/**
+ * changes.
+ */
 class OpportunityCollection extends BaseCollection {
   constructor() {
     super('Opportunities', new SimpleSchema({
