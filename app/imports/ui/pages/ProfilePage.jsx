@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { UserProfileData } from '../../api/profile/ProfilePageCollection'
+import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import ProfilePageAboutUser from '../components/ProfilePageAboutUser';
 import ProfilePageUserInformation from '../components/ProfilePageUserInformation';
 import ProfilePageAssociatedOrganization from '../components/ProfilePageAssociatedOrganization';
