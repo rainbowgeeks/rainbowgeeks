@@ -12,7 +12,7 @@ const Opportunity = ({ opportunity }) => (
       <Card.Header className={'card-content-spacing'}>Date: {opportunity.date}</Card.Header>
       <Card.Header>{opportunity.title}</Card.Header>
       <Card.Description className={'card-content-spacing'}>
-        Address:  {opportunity.location}
+        Addresssss:  {opportunity.location}
       </Card.Description>
       <Card.Meta>
         <GridRow>
