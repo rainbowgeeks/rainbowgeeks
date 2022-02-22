@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 const gridLenght = { width: '100%' };
+const paddBottom = { paddingBottom: '5px' };
 const cardHeaders = { paddingBottom: '20px' };
 const cardMeta = { paddingBottom: '5px' };
 
@@ -34,8 +35,14 @@ const ProfilePageUserInformation = ({ aboutUser }) => (
         </Card.Meta>
       </Card.Content>
       <Card.Content extra>
-        <CardHeader>About Me</CardHeader>
-        {aboutUser.aboutUser}
+        <CardHeader style={paddBottom}>About Me</CardHeader>
+        <Card.Description>
+          <Container textAlign='justified'>
+              {aboutUser.aboutUser}
+          </Container>
+        </Card.Description>
+
+
       </Card.Content>
     </Card>
   </Container>

@@ -43,19 +43,6 @@ const ProfilePage = ({ ready, userData }) => ((ready) ? (
           <Grid.Column>
             {/* eslint-disable-next-line react/prop-types */}
             {userData.map((data) => <ProfilePageUserInformation key={data._id} aboutUser={data}/>)}
-            <Divider section/>
-            <Card>
-              <Card.Content>
-                <Card.Header>Recent Activity</Card.Header>
-              </Card.Content>
-              <Card.Content>
-                <Feed>
-                  <ProfilePageRecentEvent/>
-                  <ProfilePageRecentEvent/>
-                  <ProfilePageRecentEvent/>
-                </Feed>
-              </Card.Content>
-            </Card>
           </Grid.Column>
           <ProfilePageAboutUser/>
           <Grid.Column>
@@ -78,7 +65,19 @@ const ProfilePage = ({ ready, userData }) => ((ready) ? (
               <ProfilePageAssociatedOrganization/>
               <ProfilePageAssociatedOrganization/>
             </List>
-
+            <Divider section/>
+            <Card>
+              <Card.Content>
+                <Card.Header>Recent Activity</Card.Header>
+              </Card.Content>
+              <Card.Content>
+                <Feed>
+                  <ProfilePageRecentEvent/>
+                  <ProfilePageRecentEvent/>
+                  <ProfilePageRecentEvent/>
+                </Feed>
+              </Card.Content>
+            </Card>
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -95,7 +94,7 @@ ProfilePage.propTypes = {
 export default withTracker(() => {
   const subscription = UserProfileData.subscribeUserProfile();
   const ready = subscription.ready();
-  const userData = UserProfileData.find({}, { sort: { firstName: 1 } }).fetch();
+  const userData = UserProfileData.find({}, { sort: { lastName: 1 } }).fetch();
   return {
     userData,
     ready,
