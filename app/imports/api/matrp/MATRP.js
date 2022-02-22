@@ -1,6 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../stuff/StuffCollection';
 import { Opportunities } from '../opportunity/OpportunityCollection';
+import { OpportunitiesAges } from '../opportunity/OpportunitiesAgeCollection';
+import { OpportunitiesEnvs } from '../opportunity/OpportunitiesEnvCollection';
+import { Ages } from '../age/AgeCollection';
 import { AdminProfiles } from '../user/AdminProfileCollection';
 import { UserProfiles } from '../user/UserProfileCollection';
 
@@ -17,6 +20,9 @@ class MATRPClass {
       AdminProfiles,
       Stuffs,
       Opportunities,
+      Ages,
+      OpportunitiesAges,
+      OpportunitiesEnvs,
       UserProfiles,
     ];
     /*
@@ -27,6 +33,9 @@ class MATRPClass {
       UserProfiles,
       Stuffs,
       Opportunities,
+      Ages,
+      OpportunitiesAges,
+      OpportunitiesEnvs,
     ];
 
     /*
