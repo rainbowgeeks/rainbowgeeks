@@ -82,7 +82,7 @@ const ManageOrganizations = ({ ready }) => ((ready) ? (
         </Card.Content>
       </Card>
     </Card.Group>
-    <Divider hidden></Divider>
+    <Divider hidden/>
     <Grid centered columns={1} padded>
       <Button size="big" positive>Add Organization</Button>
     </Grid>
