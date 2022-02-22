@@ -16,12 +16,12 @@ const ProfilePageUserInformation = ({ aboutUser }) => (
       <Card.Content>
         <Card.Header style={cardHeaders}>
           {/* eslint-disable-next-line react/prop-types */}
-          { aboutUser._id}
+          {aboutUser.firstName} {aboutUser.lastName}
         </Card.Header>
         <Card.Meta style={cardMeta}>
           <Icon name='mail'/>
           <span>
-            My Email
+            {aboutUser.owner}
           </span>
         </Card.Meta>
         <Card.Meta style={cardMeta}>
@@ -37,8 +37,7 @@ const ProfilePageUserInformation = ({ aboutUser }) => (
       </Card.Content>
       <Card.Content extra>
         <CardHeader>About Me</CardHeader>
-            User-102211 is a musician and a computer
-            Engineer living in Nashville.
+        {aboutUser.aboutUser}
       </Card.Content>
     </Card>
   </Container>

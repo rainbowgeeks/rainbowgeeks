@@ -96,7 +96,6 @@ export default withTracker(() => {
   const subscription = UserProfileData.subscribeUserProfile();
   const ready = subscription.ready();
   const userData = UserProfileData.find({}, { sort: { firstName: 1 } }).fetch();
-  console.log(userData);
   return {
     userData,
     ready,
