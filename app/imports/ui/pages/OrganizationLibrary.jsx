@@ -81,7 +81,7 @@ OrganizationLibrary.propTypes = {
 
 export default withTracker(() => {
   // Get access to opportunity documents.
-  const subscription = Opportunities.subscribeOpportunityPublic();
+  const subscription = Opportunities.subscribeOpportunity();
   // Determine if the subscription is ready
   const ready = subscription.ready();
   // Get the Opportunity documents

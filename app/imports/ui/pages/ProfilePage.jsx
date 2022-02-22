@@ -8,22 +8,18 @@ import {
   Grid,
   Segment,
   List,
-  Divider, Loader,
+  Divider,
 } from 'semantic-ui-react';
-import { withTracker } from 'meteor/react-meteor-data';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import ProfilePageAboutUser from '../components/ProfilePageAboutUser';
 import ProfilePageUserInformation from '../components/ProfilePageUserInformation';
 import ProfilePageAssociatedOrganization from '../components/ProfilePageAssociatedOrganization';
 import ProfilePageRecentEvent from '../components/ProfilePageRecentEvent';
 
 /** Renders the User's Profile. Profile Page is broken down into 4 components */
-const ProfilePage = ({ ready, userData }) => ((ready) ? (
+const ProfilePage = () => (
   <Container id={PAGE_IDS.PROFILE_PAGE}>
     <Grid>
       <Grid.Column floated='left' width={9}>
@@ -41,8 +37,20 @@ const ProfilePage = ({ ready, userData }) => ((ready) ? (
       <Grid columns={'three'} divided stackable>
         <Grid.Row>
           <Grid.Column>
-            {/* eslint-disable-next-line react/prop-types */}
-            {userData.map((data) => <ProfilePageUserInformation key={data._id} aboutUser={data}/>)}
+            <ProfilePageUserInformation/>
+            <Divider section/>
+            <Card>
+              <Card.Content>
+                <Card.Header>Recent Activity</Card.Header>
+              </Card.Content>
+              <Card.Content>
+                <Feed>
+                  <ProfilePageRecentEvent/>
+                  <ProfilePageRecentEvent/>
+                  <ProfilePageRecentEvent/>
+                </Feed>
+              </Card.Content>
+            </Card>
           </Grid.Column>
           <ProfilePageAboutUser/>
           <Grid.Column>
@@ -65,38 +73,13 @@ const ProfilePage = ({ ready, userData }) => ((ready) ? (
               <ProfilePageAssociatedOrganization/>
               <ProfilePageAssociatedOrganization/>
             </List>
-            <Divider section/>
-            <Card>
-              <Card.Content>
-                <Card.Header>Recent Activity</Card.Header>
-              </Card.Content>
-              <Card.Content>
-                <Feed>
-                  <ProfilePageRecentEvent/>
-                  <ProfilePageRecentEvent/>
-                  <ProfilePageRecentEvent/>
-                </Feed>
-              </Card.Content>
-            </Card>
+
           </Grid.Column>
         </Grid.Row>
       </Grid>
     </Container>
   </Container>
-) : <Loader active>Getting User Data!</Loader>);
-
-ProfilePage.propTypes = {
-  userData: PropTypes.array.isRequired,
-  ready: PropTypes.bool.isRequired,
-};
+);
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-export default withTracker(() => {
-  const subscription = UserProfileData.subscribeUserProfile();
-  const ready = subscription.ready();
-  const userData = UserProfileData.find({}, { sort: { lastName: 1 } }).fetch();
-  return {
-    userData,
-    ready,
-  };
-})(ProfilePage);
+export default ProfilePage;

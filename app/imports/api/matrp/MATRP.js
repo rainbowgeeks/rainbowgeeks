@@ -1,12 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../stuff/StuffCollection';
 import { Opportunities } from '../opportunity/OpportunityCollection';
-import { OpportunitiesAges } from '../opportunity/OpportunitiesAgeCollection';
-import { OpportunitiesEnvs } from '../opportunity/OpportunitiesEnvCollection';
-import { Ages } from '../age/AgeCollection';
 import { AdminProfiles } from '../user/AdminProfileCollection';
 import { UserProfiles } from '../user/UserProfileCollection';
-import { UserProfileData } from '../profile/ProfilePageCollection';
 
 class MATRPClass {
   collections;
@@ -21,11 +17,7 @@ class MATRPClass {
       AdminProfiles,
       Stuffs,
       Opportunities,
-      Ages,
-      OpportunitiesAges,
-      OpportunitiesEnvs,
       UserProfiles,
-      UserProfileData,
     ];
     /*
      * A list of collection class instances in the order required for them to be sequentially loaded from a file.
@@ -35,9 +27,6 @@ class MATRPClass {
       UserProfiles,
       Stuffs,
       Opportunities,
-      Ages,
-      OpportunitiesAges,
-      OpportunitiesEnvs,
     ];
 
     /*

@@ -5,109 +5,92 @@ import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
 export const opportunityPublications = {
-  opportunityPublic: 'OpportunityPublic',
-  opportunityUser: 'OpportunityUser',
-  opportunityOrganization: 'OpportunityOrganization',
+  opportunityAll: 'OpportunityAll',
+  opportunity: 'Opportunity',
   opportunityAdmin: 'OpportunityAdmin',
 };
 
 class OpportunityCollection extends BaseCollection {
   constructor() {
     super('Opportunities', new SimpleSchema({
-      organizerEmail: { type: String, index: true, unique: true },
+      firstName: String,
+      lastName: String,
+      phoneNumber: String,
       title: String,
+      category: Array,
+      'category.$': String,
+      age: Array,
+      'age.$': String,
+      environment: Array,
+      'environment.$': String,
       cover: String,
       location: String,
       date: String,
+      owner: String,
+      icon: String,
       description: String,
     }));
   }
 
   /**
-   * Defines a new opportunitiy.
-   * @param organizerEmail the point of contact for the opportunity.
-   * @param title the title of the opportunitiy.
-   * @param description the summary of the opportunitiy.
-   * @return {String} the docID of the new opportunity.
+   * Defines a new opportunity.
+   * @param title the name of the opportunity.
+   * @param category the category of the opportunity.
+   * @param age the age group of the opportunity.
+   * @param environment the domain of the opportunity.
+   * @param cover the cover image of the opportunity.
+   * @param location the address of the opportunity.
+   * @param date the start date of the opportunity.
+   * @param owner the owner of the opportunity.
    */
-  define({ organizerEmail, title, cover, location, date, description }) {
+  define({ firstName, lastName, phoneNumber, title, category, age, environment, cover, location, date, owner, icon, description }) {
     const docID = this._collection.insert({
-      organizerEmail,
+      firstName,
+      lastName,
+      phoneNumber,
       title,
+      category,
+      age,
+      environment,
       cover,
       location,
       date,
+      owner,
+      icon,
       description,
     });
     return docID;
   }
 
   /**
-   * Updates the given document.
-   * @param docID the id of the document to update.
-   * @param organizerEmail the new point of contact for the opportunity.
-   * @param title the new title of the opportunity.
-   * @param description the new summary of the opportunity.
-   */
-  update(docID, { title, description }) {
-    const updateData = {};
-    if (title) {
-      updateData.title = title;
-    }
-    if (description) {
-      updateData.description = description;
-    }
-    this._collection.update(docID, { $set: updateData });
-  }
-
-  /**
-   * Remove the opportunity with matching docID.
-   */
-
-  /**
    * Default publication method for entities.
-   * It publishes the entire collection for public, users, organizations, and admin.
-   * Admin and Organization have more authority to the collection.
+   * It publishes the entire collection for admin and just the collection associated to an owner.
    */
   publish() {
     if (Meteor.isServer) {
       // get the OpportunityCollection instance.
       const instance = this;
-
       /**
-       * This subscription publishes all documents regardless of Roles.
+       * This subscription publishes only the documents associated with the logged in users.
        */
-      Meteor.publish(opportunityPublications.opportunityPublic, function publish() {
-        if (Meteor.isServer) {
-          return instance._collection.find();
-        }
-        return this.ready();
-      });
-
-      /**
-       * This subscription publishes documents associated with the user logged in.
-       */
-      Meteor.publish(opportunityPublications.opportunityUser, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ organizerEmail: username });
-        }
-        return this.ready();
-      });
-
-      /**
-       * This subscription publishes documents associated with the organization logged in.
-       */
-      Meteor.publish(opportunityPublications.opportunityOrganization, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
+      Meteor.publish(opportunityPublications.opportunity, function publish() {
+        if (this.userId) {
           const username = Meteor.users.findOne(this.userId).username;
           return instance._collection.find({ owner: username });
         }
         return this.ready();
       });
-
       /**
-       * This subscription publishes documents associated with the admin.
+       * This subscription publishes all documents of user, but only if the logged in user is verified.
+       */
+      Meteor.publish(opportunityPublications.opportunityAll, function publish() {
+        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
+          return instance._collection.find();
+        }
+        return this.ready();
+      });
+      /**
+       * This subscription publishes all documents of user, but only if the logged in user is the Admin.
        */
       Meteor.publish(opportunityPublications.opportunityAdmin, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
@@ -119,37 +102,18 @@ class OpportunityCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for the opportunity available for public.
+   * Subscription method for the opportunity owned by the current user.
    */
-  subscribeOpportunityPublic() {
+  subscribeOpportunity() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunityPublications.opportunityPublic);
+      return Meteor.subscribe(opportunityPublications.opportunity);
     }
     return null;
   }
 
   /**
-   * Subscription method for the opportunity available for Current Users.
-   */
-  subscribeOpportunityUser() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(opportunityPublications.opportunityUser);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for the opportunity available for Current Organization.
-   */
-  subscribeOpportunityOrganization() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(opportunityPublications.opportunityOrganization);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for the opportunity available for Admin.
+   * Subscription method for admin users.
+   * Subscribes to the entire collection.
    */
   subscribeOpportunityAdmin() {
     if (Meteor.isClient) {
@@ -159,13 +123,24 @@ class OpportunityCollection extends BaseCollection {
   }
 
   /**
-   * Default implementation of assertValidRoleMethod. Asserts that userId is logged in as an Organization or Admin.
-   * This is used in the define, update, and removeIt.
-   * @param userId The userId of the logged in user. Can be null or undefined
-   * @throws { Meteor.Error } If there is no logged in organization or Admin.
+   * Subscription method for all users.
+   * Subscribes to the entire collection.
    */
-  assertValidRoleForMethod(userId) {
-    this.assertRole(userId, [ROLE.ORGANIZATION, ROLE.ADMIN, ROLE.USER]);
+  subscribeOpportunityAll() {
+    if (Meteor.isClient) {
+      return Meteor.subscribe(opportunityPublications.opportunityAll);
+    }
+    return null;
+  }
+
+  /**
+   * Default implementation of assertValidRoleMethod. Asserts the userId is logged in as an Admin or User.
+   * Used in define Meteor methods associated with each class.
+   * @param userId the userId of the logged in user. Can be null or undefined.
+   * @throws { Meteor.Error } If there is no logged in user, or the user is not an Admin or User.
+   */
+  assertValidRoleMethod(userId) {
+    this.assertRole(userId, [ROLE.ADMIN, ROLE.USER]);
   }
 }
 

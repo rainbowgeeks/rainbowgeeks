@@ -1,26 +1,24 @@
 import React from 'react';
-import { Card, CardHeader, Container, Icon } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
+import { Card, CardHeader, Container, Icon, Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 
 const gridLenght = { width: '100%' };
-const paddBottom = { paddingBottom: '5px' };
 const cardHeaders = { paddingBottom: '20px' };
 const cardMeta = { paddingBottom: '5px' };
 
 /** Renders the column to display user Information. See pages/ProfilePage.jsx. */
-const ProfilePageUserInformation = ({ aboutUser }) => (
+const ProfilePageUserInformation = () => (
   <Container>
     <Card color='blue' style={gridLenght}>
-      <img src={aboutUser.profileImage} alt="imges/volunteerally.jpg" width='357px' height='350px'/>
+      <Image src='/images/meteor-logo.png' wrapped ui={false} as='a' href='#/profile'/>
       <Card.Content>
         <Card.Header style={cardHeaders}>
-          {aboutUser.firstName} {aboutUser.lastName}
+            User-102211
         </Card.Header>
         <Card.Meta style={cardMeta}>
           <Icon name='mail'/>
           <span>
-            {aboutUser.owner}
+              john@foo.com
           </span>
         </Card.Meta>
         <Card.Meta style={cardMeta}>
@@ -35,29 +33,15 @@ const ProfilePageUserInformation = ({ aboutUser }) => (
         </Card.Meta>
       </Card.Content>
       <Card.Content extra>
-        <CardHeader style={paddBottom}>About Me</CardHeader>
-        <Card.Description>
-          <Container textAlign='justified'>
-            {aboutUser.aboutUser}
-          </Container>
-        </Card.Description>
-
+        <CardHeader>About Me</CardHeader>
+            User-102211 is a musician and a computer
+            Engineer living in Nashville.
       </Card.Content>
     </Card>
   </Container>
 );
 
 // Require a document to be passed to this component.
-ProfilePageUserInformation.propTypes = {
-  aboutUser: PropTypes.shape({
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    profileImage: PropTypes.string,
-    owner: PropTypes.string,
-    aboutUser: PropTypes.string,
-    _id: PropTypes.string,
-  }).isRequired,
-};
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
 export default withRouter(ProfilePageUserInformation);

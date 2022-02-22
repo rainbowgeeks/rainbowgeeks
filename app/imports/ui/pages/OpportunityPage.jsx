@@ -5,19 +5,14 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
-import { PAGE_IDS } from '../utilities/PageIDs';
 
 const OpportunityPage = ({ event, ready }) => {
   const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
   return (ready) ? (
-    <Container id={PAGE_IDS.OPPORTUNITY_PAGE}>
+    <Container>
       <Grid container style={{
         backgroundImage: `url('${event.cover}')`, height: '45vh',
         backgroundPosition: 'center' }}>
-        <Grid.Column>
-          <Header as='h2' content={`${event.title}`} style={{ paddingTop: '300px' }}/>
-          <Header as='h2' content={`${event.date}`}/>
-        </Grid.Column>
       </Grid>
       <Grid container columns={2} style={gridHeigth}>
         <Grid.Row>
@@ -94,7 +89,7 @@ OpportunityPage.propTypes = {
 };
 
 const OpportunityPageContainer = withTracker(() => {
-  const subscription = Opportunities.subscribeOpportunityPublic();
+  const subscription = Opportunities.subscribeOpportunityAll();
   const ready = subscription.ready();
   const { _id } = useParams();
   const event = Opportunities.findOne({ _id: _id });
