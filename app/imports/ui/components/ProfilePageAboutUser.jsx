@@ -1,9 +1,10 @@
 import React from 'react';
 import { Container, Divider, Grid, Header, Segment } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 /** Renders the column to display about the user. See pages/ProfilePage.jsx. */
-const ProfilePageAboutUser = () => (
+const ProfilePageAboutUser = ({userInfo}) => (
   <Grid.Column>
     <Segment>
       <Header as="h4">
@@ -12,7 +13,9 @@ const ProfilePageAboutUser = () => (
         </Container>
       </Header>
       <Divider section/>
-        Interest 1, Interest 2, Interest 3, Interest 4, Interest 5
+      <Container textAlign='center'>
+        {userInfo.interest.join(', ')}
+      </Container>
     </Segment>
     <Segment>
       <Header as="h4">
@@ -21,7 +24,7 @@ const ProfilePageAboutUser = () => (
         </Container>
       </Header>
       <Divider section/>
-        Special Interest 1, Special Interest 2, Special Interest 3, Special Interest 4, Special Interest 5
+      {userInfo.specialInterest}
     </Segment>
     <Segment>
       <Header as="h4">
@@ -30,7 +33,7 @@ const ProfilePageAboutUser = () => (
         </Container>
       </Header>
       <Divider section/>
-        Environmental Preference 1, Environmental Preference 2
+      {userInfo.environmentalPref}
     </Segment>
     <Segment>
       <Header as="h4">
@@ -39,12 +42,23 @@ const ProfilePageAboutUser = () => (
         </Container>
       </Header>
       <Divider section/>
-        Monday Noon, Tuesday noon , Saturday
+      <Segment>
+        {userInfo.availability.join(', ')}
+      </Segment>
     </Segment>
   </Grid.Column>
 );
 
 // Require a document to be passed to this component.
+ProfilePageAboutUser.propTypes = {
+  userInfo: PropTypes.shape({
+    owner: PropTypes.string,
+    interest: PropTypes.string,
+    specialInterest: PropTypes.string,
+    environmentalPref: PropTypes.string,
+    availability: PropTypes.string,
+  }).isRequired,
+};
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
 export default withRouter(ProfilePageAboutUser);

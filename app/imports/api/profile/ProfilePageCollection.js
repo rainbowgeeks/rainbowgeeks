@@ -22,20 +22,29 @@ class ProfilePageCollection extends BaseCollection {
       lastName: String,
       phoneNumber: String,
       interest: {
+        type: Array,
+        defaultValue: 'mis',
+      },
+      'interest.$': {
         type: String,
         allowedValues: profilePageInterest,
-        defaultValue: 'mis',
       },
       specialInterest: String,
       environmentalPref: {
-        type: String,
-        allowedValues: profilePageEnvironmentalPref,
+        type: Array,
         defaultValue: 'no-pref',
       },
+      'environmentalPref.$': {
+        type: String,
+        allowedValues: profilePageEnvironmentalPref,
+      },
       availability: {
+        type: Array,
+        defaultValue: 'no-pref',
+      },
+      'availability.$': {
         type: String,
         allowedValues: profilePageAvailability,
-        defaultValue: 'no-pref',
       },
       profileImage: String,
       aboutUser: String,
@@ -79,7 +88,7 @@ class ProfilePageCollection extends BaseCollection {
    */
   publish() {
     if (Meteor.isServer) {
-      // get the OpportunityCollection instance.
+      // get the UserProfile Collection instance.
       const instance = this;
       /**
        * This subscription publishes only the documents associated with the logged in users.

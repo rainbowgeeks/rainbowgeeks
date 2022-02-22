@@ -44,7 +44,7 @@ const ProfilePage = ({ ready, userData }) => ((ready) ? (
             {/* eslint-disable-next-line react/prop-types */}
             {userData.map((data) => <ProfilePageUserInformation key={data._id} aboutUser={data}/>)}
           </Grid.Column>
-          <ProfilePageAboutUser/>
+          {userData.map((data) => <ProfilePageAboutUser key={data._id} userInfo={data}/>)}
           <Grid.Column>
             <Segment padded='very'>
               <Container textAlign={'center'}>
