@@ -38,10 +38,9 @@ const ProfilePageUserInformation = ({ aboutUser }) => (
         <CardHeader style={paddBottom}>About Me</CardHeader>
         <Card.Description>
           <Container textAlign='justified'>
-              {aboutUser.aboutUser}
+            {aboutUser.aboutUser}
           </Container>
         </Card.Description>
-
 
       </Card.Content>
     </Card>
