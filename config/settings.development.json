@@ -65,7 +65,7 @@
       "cover":  "images/volunteerally.jpg", "location": "59-777 Pupukea Road, Haleiwa",
       "date": "01/16/2022", "owner": "john@foo.com",
       "description": "This event requires orientation and training, please revert to website for additional information.* Disaster Action Team volunteers help local families cope with emergencies. Home fires and other disasters can occur at any time, any place. As a Disaster Action Team volunteer, you'll provide emotional support, financial assistance, and information to help families begin the process of recovery. After your initial training, your shifts will include responding to emergencies within 2 hours, night or day, rain or shine, either on the scene or coordinating remotely to provide immediate compassion and care. Location will vary base on the situation.",
-      "age": ["Family-Friendly", "Adults"], "environment": ["Outdoor", "Mixed"]
+      "age": ["Family-Friendly", "Adults"], "environment": ["Outdoors", "Mixed"]
     },
     {
       "title": "HUGS Koa Memorial Garden",

@@ -55,12 +55,15 @@ const gridHeigth = { paddingRight: '50px', paddingLeft: '50px' };
 function getOpportunities(emails) {
   const data = Opportunities.findOne({ organizerEmail: emails });
   const age = _.pluck(OpportunitiesAges.find({ owner: emails }).fetch(), 'age');
+  // console.log(age);
   const environment = _.pluck(OpportunitiesEnvs.find({ owner: emails }).fetch(), 'environment');
+  // const data2 = _.extend({ }, data, { age, environment });
+  // console.log(data2);
   return _.extend({ }, data, { age, environment });
 }
 //
 const FilterOpportunities = ({ ready, opportunities }) => {
-  console.log(opportunities);
+  // console.log(opportunities);
   //
   const [filterParam, setFilterParam] = useState({
     order: '',
@@ -77,7 +80,7 @@ const FilterOpportunities = ({ ready, opportunities }) => {
   const getEmails = _.pluck(getAge, 'owner').concat(_.pluck(getEnvironment, 'owner'));
   // console.log(getEmails);
   const newOpportunities = getEmails ? _.uniq(getEmails).map(emails => getOpportunities(emails, opportunities)) : opportunities;
-  console.log(newOpportunities);
+  // console.log(newOpportunities);
   const panes = [
     {
       menuItem: 'Filter',
