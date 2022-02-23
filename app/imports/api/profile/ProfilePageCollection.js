@@ -4,31 +4,70 @@ import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
+export const profilePageAvailability = ['mon', 'tues', 'weds', 'thurs', 'fri', 'sat', 'sun', 'week-days', 'weekends',
+  'no-pref'];
+export const profilePageEnvironmentalPref = ['on-campus', 'at-home', 'no-pref'];
+export const profilePageInterest = ['Int-1', 'Int-2', 'Int-3', 'Int-3', 'mis'];
 export const ProfilePagePublication = {
   profile: 'Profile',
+  profileAll: 'ProfileAll',
   ProfileAdmin: 'ProfileAdmin',
 };
 
 class ProfilePageCollection extends BaseCollection {
   constructor() {
     super('ProfilePage', new SimpleSchema({
+      owner: String,
       firstName: String,
       lastName: String,
       phoneNumber: String,
-      interest: String,
-      environmentalPref: String,
-      availability: Date,
+      interest: {
+        type: String,
+        allowedValues: profilePageInterest,
+        defaultValue: 'mis',
+      },
+      specialInterest: String,
+      environmentalPref: {
+        type: String,
+        allowedValues: profilePageEnvironmentalPref,
+        defaultValue: 'no-pref',
+      },
+      availability: {
+        type: String,
+        allowedValues: profilePageAvailability,
+        defaultValue: 'no-pref',
+      },
+      profileImage: String,
+      aboutUser: String,
     }));
   }
 
-  define({ firstName, lastName, phoneNumber, interest, environmentalPref, availability }) {
+  /**
+   * Defines a new profile data
+   * @param owner the owner of the profile data
+   * @param firstName the first name of the user
+   * @param lastName the last name of the user
+   * @param phoneNumber the phone number of the user
+   * @param interest the interest of the user
+   * @param specialInterest the additional interest of the user
+   * @param environmentalPref the environmental preference of the user
+   * @param availability the availability of the user
+   * @param profileImage the profile-image of the user
+   * @param aboutUser the information of the user
+   * @returns the docID of the defined collection
+   */
+  define({ owner, firstName, lastName, phoneNumber, interest, specialInterest, environmentalPref, availability, profileImage, aboutUser }) {
     const docID = this._collection.insert({
+      owner,
       firstName,
       lastName,
       phoneNumber,
       interest,
+      specialInterest,
       environmentalPref,
       availability,
+      profileImage,
+      aboutUser,
     });
     return docID;
   }
@@ -64,9 +103,9 @@ class ProfilePageCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for the opportunity owned by the current user.
+   * Subscription method for the user-profile data owned by the current user.
    */
-  subscribeOpportunity() {
+  subscribeUserProfile() {
     if (Meteor.isClient) {
       return Meteor.subscribe(ProfilePagePublication.profile);
     }
@@ -77,9 +116,20 @@ class ProfilePageCollection extends BaseCollection {
    * Subscription method for admin users.
    * Subscribes to the entire collection.
    */
-  subscribeOpportunityAdmin() {
+  subscribeAdminProfile() {
     if (Meteor.isClient) {
       return Meteor.subscribe(ProfilePagePublication.ProfileAdmin);
+    }
+    return null;
+  }
+
+  /**
+   * Subscription method for all users.
+   * Subscribes to the entire collection.
+   */
+  subscribeAllUser() {
+    if (Meteor.isClient) {
+      return Meteor.subscribe(ProfilePagePublication.profileAll);
     }
     return null;
   }
@@ -95,4 +145,4 @@ class ProfilePageCollection extends BaseCollection {
   }
 }
 
-export const ProfilePage = new ProfilePageCollection();
+export const UserProfileData = new ProfilePageCollection();

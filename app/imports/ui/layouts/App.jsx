@@ -4,14 +4,13 @@ import { Meteor } from 'meteor/meteor';
 import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import NavBarV from '../components/NavBarV';
+import NavBar from '../components/NavBar';
 import Landing from '../pages/Landing';
 import FilterOpportunities from '../pages/FilterOpportunities';
 import ListStuff from '../pages/ListStuff';
 import AdminProfile from '../pages/AdminProfile';
 import OrganizationLibrary from '../pages/OrganizationLibrary';
 import ManageOrganizations from '../pages/ManageOrganizations';
-import ManageOpportunities from '../pages/ManageOpportunities';
 import ManageUsers from '../pages/ManageUsers';
 import AddStuff from '../pages/AddStuff';
 import AddProfile from '../pages/AddProfile';
@@ -35,7 +34,7 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <NavBarV/>
+          <NavBar/>
           <Switch>
             <Route exact path="/" component={Landing}/>
             <Route exact path="/filter" component={FilterOpportunities}/>
@@ -57,7 +56,6 @@ class App extends React.Component {
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-org" component={ManageOrganizations}/>
             <AdminProtectedRoute path="/manage-user" component={ManageUsers}/>
-            <AdminProtectedRoute path="/manage-opps" component={ManageOpportunities}/>
             <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
             <Route component={NotFound}/>
           </Switch>
