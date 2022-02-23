@@ -9,6 +9,7 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import GoogleMap from '../components/GoogleMap';
 import CategoryOpp from '../components/CategoryOpp';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
+import { Ages } from '../../api/age/AgeCollection';
 import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
 import Opportunity from '../components/Opportunity';
@@ -62,9 +63,8 @@ function getOpportunities(emails) {
   return _.extend({ }, data, { age, environment });
 }
 //
-const FilterOpportunities = ({ ready, opportunities }) => {
+const FilterOpportunities = ({ ready }) => {
   // console.log(opportunities);
-  //
   const [filterParam, setFilterParam] = useState({
     order: '',
     age: [''],
@@ -79,7 +79,7 @@ const FilterOpportunities = ({ ready, opportunities }) => {
   // console.log(getAge);
   const getEmails = _.pluck(getAge, 'owner').concat(_.pluck(getEnvironment, 'owner'));
   // console.log(getEmails);
-  const newOpportunities = getEmails ? _.uniq(getEmails).map(emails => getOpportunities(emails, opportunities)) : opportunities;
+  const newOpportunities = _.uniq(getEmails).map(emails => getOpportunities(emails));
   // console.log(newOpportunities);
   const panes = [
     {
@@ -144,7 +144,6 @@ const FilterOpportunities = ({ ready, opportunities }) => {
 
 // Require an array of Stuff documents in the props.
 FilterOpportunities.propTypes = {
-  opportunities: PropTypes.object,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -152,16 +151,16 @@ FilterOpportunities.propTypes = {
 export default withTracker(() => {
   // Get access to opportunity documents.
   const subscription1 = Opportunities.subscribeOpportunityPublic();
-  // Get access to age documents.
+  // Get access to oppAge documents.
   const subscription2 = OpportunitiesAges.subscribeOpportunitiesAgeAll();
-  // Get access to environmnet documents.
+  // Get access to oppEnvironment documents.
   const subscription3 = OpportunitiesEnvs.subscribeOpportunitiesEnvAll();
+  // Get access to age documents..
+  const subscription4 = Ages.subscribeAgeAll();
   // Determine if the subscription is ready
-  const ready = subscription1.ready() && subscription2.ready() && subscription3.ready();
+  const ready = subscription1.ready() && subscription2.ready() && subscription3.ready() && subscription4.ready();
   //
-  const opportunities = Opportunities.find({}).fetch();
   return {
-    opportunities,
     ready,
   };
 })(FilterOpportunities);

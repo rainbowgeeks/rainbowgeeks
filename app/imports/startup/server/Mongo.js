@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
+// import { _ } from 'meteor/underscore';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
-// import { Ages } from '../../api/age/AgeCollection';
+import { Ages } from '../../api/age/AgeCollection';
 import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
@@ -21,19 +22,22 @@ if (Stuffs.count() === 0) {
   }
 }
 
-// function addAges(ages) {
-//   console.log(`${ages}`);
-//   const collectionName = Ages.getCollectionName();
-//   const updateData = { id: }
-//    Ages.define({ age: ages });
-// }
+function addAges(ages) {
+  // console.log(`${ages}`);
+  // const ageID = _.pluck(Ages.find({ }).fetch(), 'age');
+  // console.log(ageID);
+  // if (!(_.contains(ageID, ages))) {
+  // console.log('1');
+  Ages.define({ age: ages });
+  // }
+}
 
 function addOpportunity({ owner, title, cover, location, date, description, age, environment }) {
   console.log(` Adding: ${title} (${owner})`);
   Opportunities.define({ organizerEmail: owner, title, cover, location, date, description });
   age.map(ages => OpportunitiesAges.define({ owner: owner, age: ages }));
   environment.map(environments => OpportunitiesEnvs.define({ owner: owner, environment: environments }));
-  // age.map(ages => addAges(ages));
+  age.map(ages => addAges(ages));
 }
 
 if (Opportunities.count() === 0) {

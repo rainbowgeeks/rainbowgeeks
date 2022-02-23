@@ -5,9 +5,10 @@ import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
 export const opportunitiesAgePublications = {
-  opportunitiesAgeAll: 'OpportunitiesAgeAll',
-  opportunitiesAgeOrg: 'OpportunityAgeOrg',
+  opportunitiesAgePublic: 'OpportunitiesAgePublic',
   opportunitiesAgeUser: 'OpportunityAgeUser',
+  opportunitiesAgeOrganization: 'OpportunityAgeOrganization',
+  opportunitiesAgeAdmin: 'OpportunityAgeAdmin',
 };
 
 class OpportunitiesAgeCollection extends BaseCollection {
@@ -40,7 +41,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
       /**
        * This subscription publishes all documents regarding Roles.
        */
-      Meteor.publish(opportunitiesAgePublications.opportunitiesAgeAll, function publish() {
+      Meteor.publish(opportunitiesAgePublications.opportunitiesAgePublic, function publish() {
         if (Meteor.isServer) {
           return instance._collection.find();
         }
@@ -49,8 +50,8 @@ class OpportunitiesAgeCollection extends BaseCollection {
       /**
        * This subscription publishes documents regarding the organization.
        */
-      Meteor.publish(opportunitiesAgePublications.opportunitiesAgeOrg, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
+      Meteor.publish(opportunitiesAgePublications.opportunitiesAgeUser, function publish() {
+        if (this.userId && Roles.userIsInRole(this.userId, ROLE.User)) {
           const username = Meteor.users.findOne(this.userId).username;
           return instance._collection.find({ owner: username });
         }
@@ -59,10 +60,20 @@ class OpportunitiesAgeCollection extends BaseCollection {
       /**
        * This subscription publishes documents regarding the organization.
        */
-      Meteor.publish(opportunitiesAgePublications.opportunitiesAgeUser, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
+      Meteor.publish(opportunitiesAgePublications.opportunitiesAgeOrganization, function publish() {
+        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
           const username = Meteor.users.findOne(this.userId).username;
           return instance._collection.find({ owner: username });
+        }
+        return this.ready();
+      });
+
+      /**
+       * This subscription publishes documents regarding the organization.
+       */
+      Meteor.publish(opportunitiesAgePublications.opportunitiesAgeAdmin, function publish() {
+        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
+          return instance._collection.find();
         }
         return this.ready();
       });

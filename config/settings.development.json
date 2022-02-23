@@ -1,8 +1,8 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN", "firstName": "Admin", "lastName": "MATRP"},
-    { "email": "john@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "John", "lastName": "Doe" },
-    { "email": "perkin@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Perkin", "lastName": "Dawks" },
+    { "email": "john@foo.com", "password": "changeme", "role": "USER" , "firstName": "John", "lastName": "Doe" },
+    { "email": "perkin@foo.com", "password": "changeme", "role": "USER" , "firstName": "Perkin", "lastName": "Dawks" },
     { "email": "bary@foo.com", "password": "changeme", "role": "USER" , "firstName": "Bary", "lastName": "Widdowson" },
     { "email": "blakelee@foo.com", "password": "changeme", "role": "USER" , "firstName": "Blakelee", "lastName": "O'Drought" },
     { "email": "leupold@foo.com", "password": "changeme", "role": "USER" , "firstName": "Leupold", "lastName": "Chappelle" },
