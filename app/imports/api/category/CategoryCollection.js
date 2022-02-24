@@ -4,44 +4,44 @@ import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
-export const agePublications = {
-  agePublic: 'AgePublic',
-  ageUser: 'AgeUser',
-  ageOrganization: 'AgeOrganization',
-  ageAdmin: 'AgeAdmin',
+export const categoryPublications = {
+  categoryPublic: 'CategoryPublic',
+  categoryUser: 'CategoryUser',
+  categoryOrganization: 'CategoryOrganization',
+  categoryAdmin: 'CategoryAdmin',
 };
 
-class AgeCollection extends BaseCollection {
+class CategoryCollection extends BaseCollection {
   constructor() {
-    super('Ages', new SimpleSchema({
-      age: { type: String, index: true, unique: true },
+    super('Categories', new SimpleSchema({
+      category: { type: String, index: true, unique: true },
     }));
   }
 
   /**
-   * Defines a new age for a opportunity.
-   * @param age the age restriction of the opportunity.
+   * Defines a new category document.
+   * @param category the new category document.
    * @return {String} the docID of the new document.
    */
-  define({ age }) {
-    const docID = this.findOne({ age });
+  define({ category }) {
+    const docID = this.findOne({ category });
     if (docID) {
       return docID._id;
     }
     return this._collection.insert({
-      age: age,
+      category: category,
     });
   }
 
   /**
-   * Updates the give document.
-   * @param docId the id of the document to update.
-   * @param age the new age.
+   * Updates the given document.
+   * @param docID the id of the document to update.
+   * @param category the new category.
    */
-  update(docID, { age }) {
+  update(docID, { category }) {
     const updateData = {};
-    if (age) {
-      updateData.age = age;
+    if (category) {
+      updateData.category = category;
     }
     this._collection.update(docID, { $set: updateData });
   }
@@ -53,30 +53,30 @@ class AgeCollection extends BaseCollection {
     if (Meteor.isServer) {
       const instance = this;
 
-      Meteor.publish(agePublications.agePublic, function publish() {
+      Meteor.publish(categoryPublications.categoryPublic, function publish() {
         if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();
       });
 
-      Meteor.publish(agePublications.ageUser, function publish() {
+      Meteor.publish(categoryPublications.categoryUser, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ age: username });
+          const _id = Meteor.users.findOne(this.userId)._id;
+          return instance._collection.find({ _id: _id });
         }
         return this.ready();
       });
 
-      Meteor.publish(agePublications.ageOrganization, function publish() {
+      Meteor.publish(categoryPublications.categoryOrganization, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ age: username });
+          const _id = Meteor.users.findOne(this.userId)._id;
+          return instance._collection.find({ _id: _id });
         }
         return this.ready();
       });
 
-      Meteor.publish(agePublications.ageAdmin, function publish() {
+      Meteor.publish(categoryPublications.categoryAdmin, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
           return instance._collection.find();
         }
@@ -86,41 +86,41 @@ class AgeCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for age owned by the current organization.
+   * Subscription
    */
-  subscribeAgePublic() {
+  subscribeCategoryPublic() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(agePublications.agePublic);
+      return Meteor.subscribe(categoryPublications.categoryPublic);
     }
     return null;
   }
 
   /**
-   * Subscriptions
+   * Subscription
    */
-  subscribeAgeUser() {
+  subscribeCategoryUser() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(agePublications.ageUser);
+      return Meteor.subscribe(categoryPublications.categoryUser);
     }
     return null;
   }
 
   /**
-   * Subscriptions
+   * Subscription
    */
-  subscribeAgeOrganization() {
+  subscribeCategoryOrganization() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(agePublications.ageOrganization);
+      return Meteor.subscribe(categoryPublications.categoryOrganization);
     }
     return null;
   }
 
   /**
-   * Subscriptions
+   * Subscription
    */
-  subscribeAgeAdmin() {
+  subscribeCategoryAdmin() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(agePublications.ageAdmin);
+      return Meteor.subscribe(categoryPublications.categoryAdmin);
     }
     return null;
   }
@@ -136,4 +136,4 @@ class AgeCollection extends BaseCollection {
   }
 }
 
-export const Ages = new AgeCollection();
+export const Categories = new CategoryCollection();

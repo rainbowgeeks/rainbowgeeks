@@ -13,14 +13,14 @@ const Opportunity = ({ opportunity }) => (
       <Card.Header className={'card-content-spacing'}>Date: {opportunity.date}</Card.Header>
       <Card.Header>{opportunity.title}</Card.Header>
       <Card.Description className={'card-content-spacing'}>
-        Addresssss:  {opportunity.location}
+        Address:  {opportunity.location}
       </Card.Description>
       <Card.Meta>
         <GridRow>
           Age: {_.map(opportunity.age, (age, index) => <Label key={index} size='tiny' color='teal'>{age}</Label>)}
         </GridRow>
         <GridRow>
-          Category: {opportunity.category}
+          Category: {_.map(opportunity.category, (category, index) => <Label key={index} size='tiny' color='teal'>{category}</Label>)}
         </GridRow>
         <GridRow>
           Environment: {_.map(opportunity.environment, (environment, index) => <Label key={index} size='tiny' color='teal'>{environment}</Label>)}
