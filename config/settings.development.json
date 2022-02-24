@@ -3,16 +3,17 @@
     { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN", "firstName": "Admin", "lastName": "MATRP"},
     { "email": "john@foo.com", "password": "changeme", "role": "USER" , "firstName": "John", "lastName": "Doe" },
     { "email": "perkin@foo.com", "password": "changeme", "role": "USER" , "firstName": "Perkin", "lastName": "Dawks" },
-    { "email": "bary@foo.com", "password": "changeme", "role": "USER" , "firstName": "Bary", "lastName": "Widdowson" },
-    { "email": "blakelee@foo.com", "password": "changeme", "role": "USER" , "firstName": "Blakelee", "lastName": "O'Drought" },
-    { "email": "leupold@foo.com", "password": "changeme", "role": "USER" , "firstName": "Leupold", "lastName": "Chappelle" },
-    { "email": "mattie@foo.com", "password": "changeme", "role": "USER" , "firstName": "Mattie", "lastName": "Borless" },
-    { "email": "cullen@foo.com", "password": "changeme", "role": "USER" , "firstName": "Cullen", "lastName": "Merchant" },
-    { "email": "allfie@foo.com", "password": "changeme", "role": "USER" , "firstName": "Allfie", "lastName": "Gideon" },
-    { "email": "annabal@foo.com", "password": "changeme", "role": "USER" , "firstName": "Annabal", "lastName": "Giovanitti" },
-    { "email": "obadiah@foo.com", "password": "changeme", "role": "USER" , "firstName": "Obadiah", "lastName": "Dan" },
-    { "email": "jackie@foo.com", "password": "changeme", "role": "USER" , "firstName": "Jackie", "lastName": "Giraldo" },
-    { "email": "robin@foo.com", "password": "changeme", "role": "USER" , "firstName": "Robin", "lastName": "Wilcox" }
+    { "email": "robin@foo.com", "password": "changeme", "role": "USER" , "firstName": "Robin", "lastName": "Wilcox" },
+    { "email": "bary@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Bary", "lastName": "Widdowson" },
+    { "email": "blakelee@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Blakelee", "lastName": "O'Drought" },
+    { "email": "leupold@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Leupold", "lastName": "Chappelle" },
+    { "email": "mattie@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Mattie", "lastName": "Borless" },
+    { "email": "cullen@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Cullen", "lastName": "Merchant" },
+    { "email": "annabal@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Annabal", "lastName": "Giovanitti" },
+    { "email": "obadiah@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Obadiah", "lastName": "Dan" },
+    { "email": "jackie@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Jackie", "lastName": "Giraldo" },
+    { "email": "mac@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Mac", "lastName": "Book" },
+    { "email": "felix@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Felix", "lastName": "Grey" }
   ],
   "defaultData": [
     { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
@@ -63,86 +64,98 @@
     {
       "title": "The American Red Cross of Hawaii: Disaster Response - Disaster Action Team",
       "cover":  "images/volunteerally.jpg", "location": "59-777 Pupukea Road, Haleiwa",
-      "date": "01/16/2022", "owner": "john@foo.com",
+      "date": "01/16/2022", "owner": "barry@foo.com",
       "description": "This event requires orientation and training, please revert to website for additional information.* Disaster Action Team volunteers help local families cope with emergencies. Home fires and other disasters can occur at any time, any place. As a Disaster Action Team volunteer, you'll provide emotional support, financial assistance, and information to help families begin the process of recovery. After your initial training, your shifts will include responding to emergencies within 2 hours, night or day, rain or shine, either on the scene or coordinating remotely to provide immediate compassion and care. Location will vary base on the situation.",
-      "age": ["Family-Friendly", "Adults"], "environment": ["Outdoors", "Mixed"]
+      "age": ["Family-Friendly", "Adults"], "environment": ["Outdoors", "Mixed"],
+      "category": ["Crisis/Disaster Relief", "Education"]
     },
     {
       "title": "HUGS Koa Memorial Garden",
       "cover":  "images/volunteerally.jpg", "location": "59-777 Pupukea Road, Haleiwa",
-      "date": "01/16/2022",  "owner": "perkin@foo.com",
+      "date": "01/16/2022",  "owner": "mac@foo.com",
       "description": "SuperChill Saturdays on the 4th Saturday is an introduction, tour & light maintenance of our restoration area. All tools & gloves are provided. Light weeding & a hike around our site\n\nWe will meet in the cul de sac at the top of Anolani St. 8:30am then walk together to site.\n\nParking: We are asking if possible to park at the shopping center and carpool to Anolani street to minimize traffic and crowding. Please be respectful to our neighbors and keep our voices down and not to block the turn around in the cul de sac, their trash bins or mailboxes.\n\nIf you must park on Anolani, park across the street from the homes.\n\nWe are going to try and not gather in the cul de sac. Instead we will guide you up as soon as you check in.\n\nAnnual Liability Waiver for must be completed prior to arrival (once a year)\n\nLiability Waiver Link: https://waiver.fr/p-aKgCw\n\nPLEASE  Watch the  required video Touch Plants 101 :\n\nhttps://youtu.be/3ia7GirZaos\n\nWhat to bring:\n\n– SHOES ARE REQUIRED.  – Clothing that can get dirty (long sleeve shirt and pants highly recommended!!) – Hat, sunglasses    and sunscreen – Reusable water bottle(s) and plenty of water (1/2 gallon recommended) – Snacks and any medications      needed\n\n– Rain jacket (in case of inclement weather)\n\nPlease Note: There are no bathrooms at the site. Participants will need to trek in the bushes or drive to the nearest bathroom at Kawaikui Beach Park.\n\nTOOLS: All community tools and gloves have been sanitized, we will provide tools and gloves but you are welcome to bring your own tools/gloves.\n\nACTIVITIES: Short hike to the restoration site. Clearing grasses, small branches, and planting/watering native seedlings. Risks include uneven terrain, loose soil, and hot weather conditions, chances of landslides or falling boulders.",
-      "age": ["Adults","Teens"], "environment":  ["Outdoors", "Mixed"]
+      "age": ["Adults","Teens"], "environment":  ["Outdoors", "Mixed"],
+      "category": ["Child/Family-Support", "Education"]
     },
     {
       "title": "SuperChill Saturday",
       "cover":  "images/volunteerally.jpg", "location": "591 Anolani Street",
-      "date": "12/25/2021",  "owner": "bary@foo.com",
+      "date": "12/25/2021",  "owner": "felix@foo.com",
       "description": "SuperChill Saturdays on the 4th Saturday is an introduction, tour & light maintenance of our restoration area. All tools & gloves are provided. Light weeding & a hike around our site\n\nWe will meet in the cul de sac at the top of Anolani St. 8:30am then walk together to site.\n\nParking: We are asking if possible to park at the shopping center and carpool to Anolani street to minimize traffic and crowding. Please be respectful to our neighbors and keep our voices down and not to block the turn around in the cul de sac, their trash bins or mailboxes.\n\nIf you must park on Anolani, park across the street from the homes.\n\nWe are going to try and not gather in the cul de sac. Instead we will guide you up as soon as you check in.\n\nAnnual Liability Waiver for must be completed prior to arrival (once a year)\n\nLiability Waiver Link: https://waiver.fr/p-aKgCw\n\nPLEASE  Watch the  required video Touch Plants 101 :\n\nhttps://youtu.be/3ia7GirZaos\n\nWhat to bring:\n\n– SHOES ARE REQUIRED.  – Clothing that can get dirty (long sleeve shirt and pants highly recommended!!) – Hat, sunglasses    and sunscreen – Reusable water bottle(s) and plenty of water (1/2 gallon recommended) – Snacks and any medications      needed\n\n– Rain jacket (in case of inclement weather)\n\nPlease Note: There are no bathrooms at the site. Participants will need to trek in the bushes or drive to the nearest bathroom at Kawaikui Beach Park.\n\nTOOLS: All community tools and gloves have been sanitized, we will provide tools and gloves but you are welcome to bring your own tools/gloves.\n\nACTIVITIES: Short hike to the restoration site. Clearing grasses, small branches, and planting/watering native seedlings. Risks include uneven terrain, loose soil, and hot weather conditions, chances of landslides or falling boulders.",
-      "age": ["Seniors"], "environment":  ["Outdoors"]
+      "age": ["Seniors"], "environment":  ["Outdoors"],
+      "category": ["Education", "Covid-19 Recovery"]
     },
     {
       "title": "The American Red Cross of Hawaii: View & Power BI Applications Lead 18+",
       "cover":  "images/volunteerally.jpg", "location": "Honolulu County",
-      "date": "03/23/2022",  "owner": "blakelee@foo.com",
+      "date": "03/23/2022",  "owner": "barry@foo.com",
       "description": "SuperChill Saturdays on the 4th Saturday is an introduction, tour & light maintenance of our restoration area. All tools & gloves are provided. Light weeding & a hike around our site\n\nWe will meet in the cul de sac at the top of Anolani St. 8:30am then walk together to site.\n\nParking: We are asking if possible to park at the shopping center and carpool to Anolani street to minimize traffic and crowding. Please be respectful to our neighbors and keep our voices down and not to block the turn around in the cul de sac, their trash bins or mailboxes.\n\nIf you must park on Anolani, park across the street from the homes.\n\nWe are going to try and not gather in the cul de sac. Instead we will guide you up as soon as you check in.\n\nAnnual Liability Waiver for must be completed prior to arrival (once a year)\n\nLiability Waiver Link: https://waiver.fr/p-aKgCw\n\nPLEASE  Watch the  required video Touch Plants 101 :\n\nhttps://youtu.be/3ia7GirZaos\n\nWhat to bring:\n\n– SHOES ARE REQUIRED.  – Clothing that can get dirty (long sleeve shirt and pants highly recommended!!) – Hat, sunglasses    and sunscreen – Reusable water bottle(s) and plenty of water (1/2 gallon recommended) – Snacks and any medications      needed\n\n– Rain jacket (in case of inclement weather)\n\nPlease Note: There are no bathrooms at the site. Participants will need to trek in the bushes or drive to the nearest bathroom at Kawaikui Beach Park.\n\nTOOLS: All community tools and gloves have been sanitized, we will provide tools and gloves but you are welcome to bring your own tools/gloves.\n\nACTIVITIES: Short hike to the restoration site. Clearing grasses, small branches, and planting/watering native seedlings. Risks include uneven terrain, loose soil, and hot weather conditions, chances of landslides or falling boulders.",
-      "age": ["Adults", "Teens", "Seniors"], "environment":  ["Indoors"]
+      "age": ["Adults", "Teens", "Seniors"], "environment":  ["Indoors"],
+      "category": ["Crisis/Disaster Relief", "Education"]
     },
     {
       "title": "Mauka Missions",
       "cover":  "images/volunteerally.jpg", "location": "2746 Kalawao Street",
       "date": "12/18/2021",  "owner": "leupold@foo.com",
       "description": "SuperChill Saturdays on the 4th Saturday is an introduction, tour & light maintenance of our restoration area. All tools & gloves are provided. Light weeding & a hike around our site\n\nWe will meet in the cul de sac at the top of Anolani St. 8:30am then walk together to site.\n\nParking: We are asking if possible to park at the shopping center and carpool to Anolani street to minimize traffic and crowding. Please be respectful to our neighbors and keep our voices down and not to block the turn around in the cul de sac, their trash bins or mailboxes.\n\nIf you must park on Anolani, park across the street from the homes.\n\nWe are going to try and not gather in the cul de sac. Instead we will guide you up as soon as you check in.\n\nAnnual Liability Waiver for must be completed prior to arrival (once a year)\n\nLiability Waiver Link: https://waiver.fr/p-aKgCw\n\nPLEASE  Watch the  required video Touch Plants 101 :\n\nhttps://youtu.be/3ia7GirZaos\n\nWhat to bring:\n\n– SHOES ARE REQUIRED.  – Clothing that can get dirty (long sleeve shirt and pants highly recommended!!) – Hat, sunglasses    and sunscreen – Reusable water bottle(s) and plenty of water (1/2 gallon recommended) – Snacks and any medications      needed\n\n– Rain jacket (in case of inclement weather)\n\nPlease Note: There are no bathrooms at the site. Participants will need to trek in the bushes or drive to the nearest bathroom at Kawaikui Beach Park.\n\nTOOLS: All community tools and gloves have been sanitized, we will provide tools and gloves but you are welcome to bring your own tools/gloves.\n\nACTIVITIES: Short hike to the restoration site. Clearing grasses, small branches, and planting/watering native seedlings. Risks include uneven terrain, loose soil, and hot weather conditions, chances of landslides or falling boulders.",
-      "age": ["Family-Friendly"], "environment":  ["Outdoors"]
+      "age": ["Family-Friendly"], "environment":  ["Outdoors"],
+      "category": ["Environment", "Education"]
     },
     {
       "title": "The American Red Cross of Hawaii: Regional Training Instructor",
       "cover":  "images/volunteerally.jpg", "location": "Honolulu County",
-      "date": "07/10/2022",  "owner": "mattie@foo.com",
+      "date": "07/10/2022",  "owner": "barry@foo.com",
       "description": "SuperChill Saturdays on the 4th Saturday is an introduction, tour & light maintenance of our restoration area. All tools & gloves are provided. Light weeding & a hike around our site\n\nWe will meet in the cul de sac at the top of Anolani St. 8:30am then walk together to site.\n\nParking: We are asking if possible to park at the shopping center and carpool to Anolani street to minimize traffic and crowding. Please be respectful to our neighbors and keep our voices down and not to block the turn around in the cul de sac, their trash bins or mailboxes.\n\nIf you must park on Anolani, park across the street from the homes.\n\nWe are going to try and not gather in the cul de sac. Instead we will guide you up as soon as you check in.\n\nAnnual Liability Waiver for must be completed prior to arrival (once a year)\n\nLiability Waiver Link: https://waiver.fr/p-aKgCw\n\nPLEASE  Watch the  required video Touch Plants 101 :\n\nhttps://youtu.be/3ia7GirZaos\n\nWhat to bring:\n\n– SHOES ARE REQUIRED.  – Clothing that can get dirty (long sleeve shirt and pants highly recommended!!) – Hat, sunglasses    and sunscreen – Reusable water bottle(s) and plenty of water (1/2 gallon recommended) – Snacks and any medications      needed\n\n– Rain jacket (in case of inclement weather)\n\nPlease Note: There are no bathrooms at the site. Participants will need to trek in the bushes or drive to the nearest bathroom at Kawaikui Beach Park.\n\nTOOLS: All community tools and gloves have been sanitized, we will provide tools and gloves but you are welcome to bring your own tools/gloves.\n\nACTIVITIES: Short hike to the restoration site. Clearing grasses, small branches, and planting/watering native seedlings. Risks include uneven terrain, loose soil, and hot weather conditions, chances of landslides or falling boulders.",
-      "age": ["Adults", "Family-Friendly"], "environment":  ["Indoors"]
+      "age": ["Adults", "Family-Friendly"], "environment":  ["Indoors"],
+      "category": ["Crisis/Disaster Relief", "Child/Family-Support"]
     },
     {
       "title": "Read To Me International: Crafting activity set up and break down",
       "cover":  "images/volunteerally.jpg", "location": "4211 Waialae Avenue",
       "date": "11/20/2021",  "owner": "cullen@foo.com",
       "description": "SuperChill Saturdays on the 4th Saturday is an introduction, tour & light maintenance of our restoration area. All tools & gloves are provided. Light weeding & a hike around our site\n\nWe will meet in the cul de sac at the top of Anolani St. 8:30am then walk together to site.\n\nParking: We are asking if possible to park at the shopping center and carpool to Anolani street to minimize traffic and crowding. Please be respectful to our neighbors and keep our voices down and not to block the turn around in the cul de sac, their trash bins or mailboxes.\n\nIf you must park on Anolani, park across the street from the homes.\n\nWe are going to try and not gather in the cul de sac. Instead we will guide you up as soon as you check in.\n\nAnnual Liability Waiver for must be completed prior to arrival (once a year)\n\nLiability Waiver Link: https://waiver.fr/p-aKgCw\n\nPLEASE  Watch the  required video Touch Plants 101 :\n\nhttps://youtu.be/3ia7GirZaos\n\nWhat to bring:\n\n– SHOES ARE REQUIRED.  – Clothing that can get dirty (long sleeve shirt and pants highly recommended!!) – Hat, sunglasses    and sunscreen – Reusable water bottle(s) and plenty of water (1/2 gallon recommended) – Snacks and any medications      needed\n\n– Rain jacket (in case of inclement weather)\n\nPlease Note: There are no bathrooms at the site. Participants will need to trek in the bushes or drive to the nearest bathroom at Kawaikui Beach Park.\n\nTOOLS: All community tools and gloves have been sanitized, we will provide tools and gloves but you are welcome to bring your own tools/gloves.\n\nACTIVITIES: Short hike to the restoration site. Clearing grasses, small branches, and planting/watering native seedlings. Risks include uneven terrain, loose soil, and hot weather conditions, chances of landslides or falling boulders.",
-      "age": ["Teens"], "environment":  ["Indoors", "Virtual"]
+      "age": ["Teens"], "environment":  ["Indoors", "Virtual"],
+      "category": ["Education", "Ongoing Positions"]
     },
     {
       "title": "The American Red Cross of Hawaii: Hurricane Evacuation Shelter Volunteers",
       "cover":  "images/volunteerally.jpg", "location": "Honolulu County",
-      "date": "09/30/2022",  "owner": "allfie@foo.com",
+      "date": "09/30/2022",  "owner": "barry@foo.com",
       "description": "SuperChill Saturdays on the 4th Saturday is an introduction, tour & light maintenance of our restoration area. All tools & gloves are provided. Light weeding & a hike around our site\n\nWe will meet in the cul de sac at the top of Anolani St. 8:30am then walk together to site.\n\nParking: We are asking if possible to park at the shopping center and carpool to Anolani street to minimize traffic and crowding. Please be respectful to our neighbors and keep our voices down and not to block the turn around in the cul de sac, their trash bins or mailboxes.\n\nIf you must park on Anolani, park across the street from the homes.\n\nWe are going to try and not gather in the cul de sac. Instead we will guide you up as soon as you check in.\n\nAnnual Liability Waiver for must be completed prior to arrival (once a year)\n\nLiability Waiver Link: https://waiver.fr/p-aKgCw\n\nPLEASE  Watch the  required video Touch Plants 101 :\n\nhttps://youtu.be/3ia7GirZaos\n\nWhat to bring:\n\n– SHOES ARE REQUIRED.  – Clothing that can get dirty (long sleeve shirt and pants highly recommended!!) – Hat, sunglasses    and sunscreen – Reusable water bottle(s) and plenty of water (1/2 gallon recommended) – Snacks and any medications      needed\n\n– Rain jacket (in case of inclement weather)\n\nPlease Note: There are no bathrooms at the site. Participants will need to trek in the bushes or drive to the nearest bathroom at Kawaikui Beach Park.\n\nTOOLS: All community tools and gloves have been sanitized, we will provide tools and gloves but you are welcome to bring your own tools/gloves.\n\nACTIVITIES: Short hike to the restoration site. Clearing grasses, small branches, and planting/watering native seedlings. Risks include uneven terrain, loose soil, and hot weather conditions, chances of landslides or falling boulders.",
-      "age": ["Adults"], "environment":  ["Mixed", "Indoors"]
+      "age": ["Adults"], "environment":  ["Mixed", "Indoors"],
+      "category": ["Crisis/Disaster Relief", "Environment", "Child/Family Support"]
     },
     {
       "title": "Ho'omaluhia Botanical Garden",
       "cover":  "images/volunteerally.jpg", "location": "45-680 Luluku Rd. Kane'ohe",
       "date": "10/30/2021",  "owner": "annabal@foo.com",
       "description": "SuperChill Saturdays on the 4th Saturday is an introduction, tour & light maintenance of our restoration area. All tools & gloves are provided. Light weeding & a hike around our site\n\nWe will meet in the cul de sac at the top of Anolani St. 8:30am then walk together to site.\n\nParking: We are asking if possible to park at the shopping center and carpool to Anolani street to minimize traffic and crowding. Please be respectful to our neighbors and keep our voices down and not to block the turn around in the cul de sac, their trash bins or mailboxes.\n\nIf you must park on Anolani, park across the street from the homes.\n\nWe are going to try and not gather in the cul de sac. Instead we will guide you up as soon as you check in.\n\nAnnual Liability Waiver for must be completed prior to arrival (once a year)\n\nLiability Waiver Link: https://waiver.fr/p-aKgCw\n\nPLEASE  Watch the  required video Touch Plants 101 :\n\nhttps://youtu.be/3ia7GirZaos\n\nWhat to bring:\n\n– SHOES ARE REQUIRED.  – Clothing that can get dirty (long sleeve shirt and pants highly recommended!!) – Hat, sunglasses    and sunscreen – Reusable water bottle(s) and plenty of water (1/2 gallon recommended) – Snacks and any medications      needed\n\n– Rain jacket (in case of inclement weather)\n\nPlease Note: There are no bathrooms at the site. Participants will need to trek in the bushes or drive to the nearest bathroom at Kawaikui Beach Park.\n\nTOOLS: All community tools and gloves have been sanitized, we will provide tools and gloves but you are welcome to bring your own tools/gloves.\n\nACTIVITIES: Short hike to the restoration site. Clearing grasses, small branches, and planting/watering native seedlings. Risks include uneven terrain, loose soil, and hot weather conditions, chances of landslides or falling boulders.",
-      "age": ["Teens"], "environment":  ["Outdoors"]
+      "age": ["Teens"], "environment":  ["Outdoors"],
+      "category": ["Environment", "Covid-19 Recovery"]
     },
     {
       "title": "Hawaiian Humane Society - Dog Walker",
       "cover":  "images/volunteerally.jpg", "location": "2700 Waialae Avenue",
       "date": "10/31/2021",  "owner": "obadiah@foo.com",
       "description": "SuperChill Saturdays on the 4th Saturday is an introduction, tour & light maintenance of our restoration area. All tools & gloves are provided. Light weeding & a hike around our site\n\nWe will meet in the cul de sac at the top of Anolani St. 8:30am then walk together to site.\n\nParking: We are asking if possible to park at the shopping center and carpool to Anolani street to minimize traffic and crowding. Please be respectful to our neighbors and keep our voices down and not to block the turn around in the cul de sac, their trash bins or mailboxes.\n\nIf you must park on Anolani, park across the street from the homes.\n\nWe are going to try and not gather in the cul de sac. Instead we will guide you up as soon as you check in.\n\nAnnual Liability Waiver for must be completed prior to arrival (once a year)\n\nLiability Waiver Link: https://waiver.fr/p-aKgCw\n\nPLEASE  Watch the  required video Touch Plants 101 :\n\nhttps://youtu.be/3ia7GirZaos\n\nWhat to bring:\n\n– SHOES ARE REQUIRED.  – Clothing that can get dirty (long sleeve shirt and pants highly recommended!!) – Hat, sunglasses    and sunscreen – Reusable water bottle(s) and plenty of water (1/2 gallon recommended) – Snacks and any medications      needed\n\n– Rain jacket (in case of inclement weather)\n\nPlease Note: There are no bathrooms at the site. Participants will need to trek in the bushes or drive to the nearest bathroom at Kawaikui Beach Park.\n\nTOOLS: All community tools and gloves have been sanitized, we will provide tools and gloves but you are welcome to bring your own tools/gloves.\n\nACTIVITIES: Short hike to the restoration site. Clearing grasses, small branches, and planting/watering native seedlings. Risks include uneven terrain, loose soil, and hot weather conditions, chances of landslides or falling boulders.",
-      "age": ["Adults"], "environment":  ["Mixed"]
+      "age": ["Adults"], "environment":  ["Mixed"],
+      "category": ["Animal Welfare/Rescue"]
     },
     {
       "title": "Test Opportunity",
       "cover":  "images/volunteerally.jpg", "location": "921770b Kunia Road",
       "date": "01/01/2022",  "owner": "jackie@foo.com",
       "description": "SuperChill Saturdays on the 4th Saturday is an introduction, tour & light maintenance of our restoration area. All tools & gloves are provided. Light weeding & a hike around our site\n\nWe will meet in the cul de sac at the top of Anolani St. 8:30am then walk together to site.\n\nParking: We are asking if possible to park at the shopping center and carpool to Anolani street to minimize traffic and crowding. Please be respectful to our neighbors and keep our voices down and not to block the turn around in the cul de sac, their trash bins or mailboxes.\n\nIf you must park on Anolani, park across the street from the homes.\n\nWe are going to try and not gather in the cul de sac. Instead we will guide you up as soon as you check in.\n\nAnnual Liability Waiver for must be completed prior to arrival (once a year)\n\nLiability Waiver Link: https://waiver.fr/p-aKgCw\n\nPLEASE  Watch the  required video Touch Plants 101 :\n\nhttps://youtu.be/3ia7GirZaos\n\nWhat to bring:\n\n– SHOES ARE REQUIRED.  – Clothing that can get dirty (long sleeve shirt and pants highly recommended!!) – Hat, sunglasses    and sunscreen – Reusable water bottle(s) and plenty of water (1/2 gallon recommended) – Snacks and any medications      needed\n\n– Rain jacket (in case of inclement weather)\n\nPlease Note: There are no bathrooms at the site. Participants will need to trek in the bushes or drive to the nearest bathroom at Kawaikui Beach Park.\n\nTOOLS: All community tools and gloves have been sanitized, we will provide tools and gloves but you are welcome to bring your own tools/gloves.\n\nACTIVITIES: Short hike to the restoration site. Clearing grasses, small branches, and planting/watering native seedlings. Risks include uneven terrain, loose soil, and hot weather conditions, chances of landslides or falling boulders.",
-      "age": ["Family-Friendly"], "environment":  ["Outdoors"]
+      "age": ["Family-Friendly"], "environment":  ["Outdoors"],
+      "category": ["Education"]
     },
     {
-      "title": "Office Support",
+      "title": "The American Red Cross: Office Support",
       "cover":  "images/volunteerally.jpg", "location": "123 Ino-ah Rd. Honolulu",
-      "date": "02/17/2022",  "owner": "robin@foo.com",
+      "date": "02/17/2022",  "owner": "barry@foo.com",
       "description": "SuperChill Saturdays on the 4th Saturday is an introduction, tour & light maintenance of our restoration area. All tools & gloves are provided. Light weeding & a hike around our site\n\nWe will meet in the cul de sac at the top of Anolani St. 8:30am then walk together to site.\n\nParking: We are asking if possible to park at the shopping center and carpool to Anolani street to minimize traffic and crowding. Please be respectful to our neighbors and keep our voices down and not to block the turn around in the cul de sac, their trash bins or mailboxes.\n\nIf you must park on Anolani, park across the street from the homes.\n\nWe are going to try and not gather in the cul de sac. Instead we will guide you up as soon as you check in.\n\nAnnual Liability Waiver for must be completed prior to arrival (once a year)\n\nLiability Waiver Link: https://waiver.fr/p-aKgCw\n\nPLEASE  Watch the  required video Touch Plants 101 :\n\nhttps://youtu.be/3ia7GirZaos\n\nWhat to bring:\n\n– SHOES ARE REQUIRED.  – Clothing that can get dirty (long sleeve shirt and pants highly recommended!!) – Hat, sunglasses    and sunscreen – Reusable water bottle(s) and plenty of water (1/2 gallon recommended) – Snacks and any medications      needed\n\n– Rain jacket (in case of inclement weather)\n\nPlease Note: There are no bathrooms at the site. Participants will need to trek in the bushes or drive to the nearest bathroom at Kawaikui Beach Park.\n\nTOOLS: All community tools and gloves have been sanitized, we will provide tools and gloves but you are welcome to bring your own tools/gloves.\n\nACTIVITIES: Short hike to the restoration site. Clearing grasses, small branches, and planting/watering native seedlings. Risks include uneven terrain, loose soil, and hot weather conditions, chances of landslides or falling boulders.",
-      "age": ["Adults"], "environment":  ["Indoors"]
+      "age": ["Adults"], "environment":  ["Indoors"],
+      "category": ["Environment"]
     }
   ],
   "public": {

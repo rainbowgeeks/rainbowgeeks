@@ -11,14 +11,11 @@ export const opportunityPublications = {
   opportunityAdmin: 'OpportunityAdmin',
 };
 
-/**
- * changes.
- */
 class OpportunityCollection extends BaseCollection {
   constructor() {
     super('Opportunities', new SimpleSchema({
-      organizerEmail: { type: String, index: true, unique: true },
-      title: String,
+      title: { type: String, index: true, unique: true },
+      owner: String,
       cover: String,
       location: String,
       date: String,
@@ -28,15 +25,15 @@ class OpportunityCollection extends BaseCollection {
 
   /**
    * Defines a new opportunitiy.
-   * @param organizerEmail the point of contact for the opportunity.
    * @param title the title of the opportunitiy.
+   * @param owner the point of contact for the opportunity.
    * @param description the summary of the opportunitiy.
    * @return {String} the docID of the new opportunity.
    */
-  define({ organizerEmail, title, cover, location, date, description }) {
+  define({ title, owner, cover, location, date, description }) {
     const docID = this._collection.insert({
-      organizerEmail,
       title,
+      owner,
       cover,
       location,
       date,
@@ -52,10 +49,13 @@ class OpportunityCollection extends BaseCollection {
    * @param title the new title of the opportunity.
    * @param description the new summary of the opportunity.
    */
-  update(docID, { title, description }) {
+  update(docID, { title, owner, description }) {
     const updateData = {};
     if (title) {
       updateData.title = title;
+    }
+    if (owner) {
+      updateData.owner = owner;
     }
     if (description) {
       updateData.description = description;

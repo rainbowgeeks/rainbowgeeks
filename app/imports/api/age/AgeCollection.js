@@ -68,7 +68,7 @@ class AgeCollection extends BaseCollection {
         return this.ready();
       });
 
-      Meteor.publish(agePublications.ageUser, function publish() {
+      Meteor.publish(agePublications.ageOrganization, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
           const username = Meteor.users.findOne(this.userId).username;
           return instance._collection.find({ age: username });
@@ -76,7 +76,7 @@ class AgeCollection extends BaseCollection {
         return this.ready();
       });
 
-      Meteor.publish(agePublications.ageUser, function publish() {
+      Meteor.publish(agePublications.ageAdmin, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
           return instance._collection.find();
         }

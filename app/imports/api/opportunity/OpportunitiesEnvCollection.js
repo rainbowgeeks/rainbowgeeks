@@ -14,6 +14,7 @@ export const opportunitiesEnvPublications = {
 class OpportunitiesEnvCollection extends BaseCollection {
   constructor() {
     super('OpportunitiesEnvs', new SimpleSchema({
+      title: String,
       owner: String,
       environment: String,
     }));
@@ -21,12 +22,13 @@ class OpportunitiesEnvCollection extends BaseCollection {
 
   /**
    * Defines a new item.
-   * @param owner the email of the item.
+   * @param title the title of the item.
    * @param environment the chosen environment.
    * @return {String} the docID of the new document.
    */
-  define({ owner, environment }) {
+  define({ title, owner, environment }) {
     const docID = this._collection.insert({
+      title,
       owner,
       environment,
     });
@@ -36,11 +38,14 @@ class OpportunitiesEnvCollection extends BaseCollection {
   /**
    * Updates the given document.
    * @param docID the id of the document to update.
-   * @param owner the new email (optional).
+   * @param title the new title (optional).
    * @param environment the new environment (optional).
    */
-  update(docID, { owner, environment }) {
+  update(docID, { title, owner, environment }) {
     const updateData = {};
+    if (title) {
+      updateData.title = title;
+    }
     if (owner) {
       updateData.owner = owner;
     }
@@ -51,13 +56,13 @@ class OpportunitiesEnvCollection extends BaseCollection {
   }
 
   /**
-   * Default publication method for entities.
-   * it publishes the collection depending on the roles.
+   * It publishes the collection depending on the roles.
    */
   publish() {
     if (Meteor.isServer) {
       // get the collection instance.
       const instance = this;
+
       /**
        * This subscription publishes entire collection associated with all users/public.
        */
@@ -67,6 +72,7 @@ class OpportunitiesEnvCollection extends BaseCollection {
         }
         return this.ready();
       });
+
       /**
        * This subscription publishes only the documents associated with the logged in organization.
        */
@@ -77,6 +83,7 @@ class OpportunitiesEnvCollection extends BaseCollection {
         }
         return this.ready();
       });
+
       /**
        * This subscription publishes only the documents associated with the logged in organization.
        */
@@ -87,6 +94,7 @@ class OpportunitiesEnvCollection extends BaseCollection {
         }
         return this.ready();
       });
+
       /**
        * This subscription publishes entire collection associated with all users/public.
        */

@@ -4,9 +4,12 @@ import { Roles } from 'meteor/alanning:roles';
 import _ from 'lodash';
 import { Stuffs } from '../stuff/StuffCollection';
 import { Opportunities } from '../opportunity/OpportunityCollection';
+import { Categories } from '../category/CategoryCollection';
 import { Ages } from '../age/AgeCollection';
+import { Environments } from '../environment/EnvironmentCollection';
 import { OpportunitiesAges } from '../opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesEnvs } from '../opportunity/OpportunitiesEnvCollection';
+import { OpportunitiesCats } from '../opportunity/OpportunitiesCatCollection';
 
 /**
  * Represents a user, which is someone who has a Meteor account.
@@ -113,6 +116,16 @@ class UserCollection {
   }
 
   /**
+   * Returns true if user is referenced by other "public" entities. Specifically user owns Stuff.
+   * Used to determine if user can be deleted.
+   * @param user
+   * @return {boolean}
+   */
+  isCategoryReferenced(user) {
+    return Categories.find({ organizerEmail: user }).fetch().length > 0;
+  }
+
+  /**
    * Returns true if user is referenced by other "public" entities. Specifically user owns Age.
    * Used to determine if user can be deleted.
    * @param user
@@ -120,6 +133,26 @@ class UserCollection {
    */
   isAgeReferenced(user) {
     return Ages.find({ age: user }).fetch().length > 0;
+  }
+
+  /**
+   * Returns true if user is referenced by other "public" entities. Specifically user owns Age.
+   * Used to determine if user can be deleted.
+   * @param user
+   * @return {boolean}
+   */
+  isEnvironmentReferenced(user) {
+    return Environments.find({ environment: user }).fetch().length > 0;
+  }
+
+  /**
+   * Returns true if user is referenced by other "public" entities. Specifically user owns Age.
+   * Used to determine if user can be deleted.
+   * @param user
+   * @return {boolean}
+   */
+  isOpportunitiesCatReferenced(user) {
+    return OpportunitiesCats.find({ owner: user }).fetch().length > 0;
   }
 
   /**

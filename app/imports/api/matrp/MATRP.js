@@ -1,9 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../stuff/StuffCollection';
 import { Opportunities } from '../opportunity/OpportunityCollection';
+import { Categories } from '../category/CategoryCollection';
+import { Ages } from '../age/AgeCollection';
+import { Environments } from '../environment/EnvironmentCollection';
+import { OpportunitiesCats } from '../opportunity/OpportunitiesCatCollection';
 import { OpportunitiesAges } from '../opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesEnvs } from '../opportunity/OpportunitiesEnvCollection';
-import { Ages } from '../age/AgeCollection';
 import { AdminProfiles } from '../user/AdminProfileCollection';
 import { UserProfiles } from '../user/UserProfileCollection';
 import { UserProfileData } from '../profile/ProfilePageCollection';
@@ -19,26 +22,32 @@ class MATRPClass {
     // list of all the MATRP collections
     this.collections = [
       AdminProfiles,
+      Ages,
+      Categories,
+      Environments,
       Stuffs,
       Opportunities,
-      Ages,
+      OpportunitiesCats,
       OpportunitiesAges,
       OpportunitiesEnvs,
-      UserProfiles,
       UserProfileData,
+      UserProfiles,
     ];
     /*
      * A list of collection class instances in the order required for them to be sequentially loaded from a file.
      */
     this.collectionLoadSequence = [
       AdminProfiles,
-      UserProfiles,
+      Ages,
+      Categories,
+      Environments,
       Stuffs,
       Opportunities,
-      Ages,
+      OpportunitiesCats,
       OpportunitiesAges,
       OpportunitiesEnvs,
       UserProfileData,
+      UserProfiles,
     ];
 
     /*
