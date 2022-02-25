@@ -9,6 +9,7 @@ import { OpportunitiesAges } from '../opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesEnvs } from '../opportunity/OpportunitiesEnvCollection';
 import { AdminProfiles } from '../user/AdminProfileCollection';
 import { UserProfiles } from '../user/UserProfileCollection';
+import { OrganizationProfiles } from '../user/OrganizationProfileCollection';
 import { UserProfileData } from '../profile/ProfilePageCollection';
 
 class MATRPClass {
@@ -30,6 +31,7 @@ class MATRPClass {
       OpportunitiesCats,
       OpportunitiesAges,
       OpportunitiesEnvs,
+      OrganizationProfiles,
       UserProfileData,
       UserProfiles,
     ];
@@ -46,6 +48,7 @@ class MATRPClass {
       OpportunitiesCats,
       OpportunitiesAges,
       OpportunitiesEnvs,
+      OrganizationProfiles,
       UserProfileData,
       UserProfiles,
     ];

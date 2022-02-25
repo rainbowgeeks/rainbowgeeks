@@ -159,14 +159,14 @@ export default withTracker(() => {
   const sub2 = OpportunitiesAges.subscribeOpportunitiesAgePublic();
   // Get access to oppEnvironment documents.
   const sub3 = OpportunitiesEnvs.subscribeOpportunitiesEnvPublic();
+  // Get access to oppCategory documents
+  const sub4 = OpportunitiesCats.subscribeOpportunitiesCatPublic();
   // Get access to age documents..
-  const sub4 = Ages.subscribeAgePublic();
+  const sub5 = Ages.subscribeAgePublic();
   // Get access to category documents.
-  const sub5 = Categories.subscribeCategoryPublic();
+  const sub6 = Categories.subscribeCategoryPublic();
   // Get access to environment documents.
-  const sub6 = Environments.subscribeEnvironmentPublic();
-  // Get access to category documents
-  const sub7 = OpportunitiesCats.subscribeOpportunitiesCatPublic();
+  const sub7 = Environments.subscribeEnvironmentPublic();
   // Determine if the subscription is ready
   const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready();
   //

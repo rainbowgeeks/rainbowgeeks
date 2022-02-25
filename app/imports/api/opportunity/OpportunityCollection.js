@@ -168,7 +168,7 @@ class OpportunityCollection extends BaseCollection {
    * @throws { Meteor.Error } If there is no logged in organization or Admin.
    */
   assertValidRoleForMethod(userId) {
-    this.assertRole(userId, [ROLE.ORGANIZATION, ROLE.ADMIN, ROLE.USER]);
+    this.assertRole(userId, [ROLE.ORGANIZATION, ROLE.ADMIN]);
   }
 }
 
