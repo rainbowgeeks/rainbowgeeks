@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import { useParams } from 'react-router';
 import SimpleSchema from 'simpl-schema';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { Categories } from '../../api/category/CategoryCollection';
@@ -104,6 +105,11 @@ AddOpportunity.propTypes = {
 };
 
 export default withTracker(() => {
+  // Ge the documentID from the URL field.
+  const { _id } = useParams();
+  const documentId = _id;
+  console.log(useParams());
+  console.log(documentId);
   // Get access to opportunity documents.
   const sub1 = Opportunities.subscribeOpportunityOrganization();
   // Get access to oppAge documents.

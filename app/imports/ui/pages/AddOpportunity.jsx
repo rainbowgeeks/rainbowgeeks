@@ -44,25 +44,22 @@ const AddOpportunity = ({ ready }) => {
     // const user = Meteor.user().username;
     let collectionName = Opportunities.getCollectionName();
     let definitionData = { owner: owner, title: title, cover: cover, date: date, location: location, description: description };
-    defineMethod.callPromise({ collectionName, definitionData }).catch(error => swal('Error', error.message, 'error')).then(() => {
-      swal('Success', 'Opportunity added successfully', 'success');
-      age.forEach(ages => {
-        collectionName = OpportunitiesAges.getCollectionName();
-        definitionData = { title: title, owner: owner, age: ages };
-        defineMethod.callPromise({ collectionName, definitionData });
-      });
-      environment.forEach(environments => {
-        collectionName = OpportunitiesEnvs.getCollectionName();
-        definitionData = { title: title, owner: owner, environment: environments };
-        defineMethod.callPromise({ collectionName, definitionData });
-      });
-      category.forEach(categories => {
-        collectionName = OpportunitiesCats.getCollectionName();
-        definitionData = { title: title, owner: owner, category: categories };
-        defineMethod.callPromise({ collectionName, definitionData });
-      });
-      formRef.reset();
-    });
+    defineMethod.callPromise({ collectionName, definitionData }).then(() => age.forEach(ages => {
+      collectionName = OpportunitiesAges.getCollectionName();
+      definitionData = { title: title, owner: owner, age: ages };
+      defineMethod.callPromise({ collectionName, definitionData });
+    })).then(() => environment.forEach(environments => {
+      collectionName = OpportunitiesEnvs.getCollectionName();
+      definitionData = { title: title, owner: owner, environment: environments };
+      defineMethod.callPromise({ collectionName, definitionData });
+    })).then(() => category.forEach(categories => {
+      collectionName = OpportunitiesCats.getCollectionName();
+      definitionData = { title: title, owner: owner, category: categories };
+      defineMethod.callPromise({ collectionName, definitionData });
+    }))
+      .then(() => swal('Success', 'Opportunity added successfully', 'success'))
+      .catch(error => swal('Error', error.message, 'error'));
+    formRef.reset();
   };
 
   const getAge = _.pluck(Ages.find().fetch(), 'age');
