@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 /** Renders the column to display about the user. See pages/ProfilePage.jsx. */
-const ProfilePageAboutUser = ({userInfo}) => (
+const ProfilePageAboutUser = ({ userInfo }) => (
   <Grid.Column>
     <Segment>
       <Header as="h4">
@@ -24,7 +24,9 @@ const ProfilePageAboutUser = ({userInfo}) => (
         </Container>
       </Header>
       <Divider section/>
-      {userInfo.specialInterest}
+      <Container textAlign='center'>
+        {userInfo.specialInterest}
+      </Container>
     </Segment>
     <Segment>
       <Header as="h4">
@@ -33,7 +35,9 @@ const ProfilePageAboutUser = ({userInfo}) => (
         </Container>
       </Header>
       <Divider section/>
-      {userInfo.environmentalPref}
+      <Container textAlign='center'>
+        {userInfo.environmentalPref.join(', ')}
+      </Container>
     </Segment>
     <Segment>
       <Header as="h4">
@@ -42,9 +46,9 @@ const ProfilePageAboutUser = ({userInfo}) => (
         </Container>
       </Header>
       <Divider section/>
-      <Segment>
+      <Container textAlign={'center'}>
         {userInfo.availability.join(', ')}
-      </Segment>
+      </Container>
     </Segment>
   </Grid.Column>
 );
