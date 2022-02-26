@@ -1,9 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
-// import { Ages } from '../../api/age/AgeCollection';
+import { Categories } from '../../api/category/CategoryCollection';
+import { Ages } from '../../api/age/AgeCollection';
+import { Environments } from '../../api/environment/EnvironmentCollection';
 import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
+import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 /* eslint-disable no-console */
 
@@ -21,27 +24,33 @@ if (Stuffs.count() === 0) {
   }
 }
 
-// function addAges(ages) {
-//   console.log(`${ages}`);
-//   const collectionName = Ages.getCollectionName();
-//   const updateData = { id: }
-//    Ages.define({ age: ages });
-// }
+function addAges(ages) {
+  Ages.define({ age: ages });
+}
 
-function addOpportunity({ owner, title, cover, location, date, description, age, environment }) {
+function addEnvironments(environments) {
+  Environments.define({ environment: environments });
+}
+
+function addCategories(categories) {
+  Categories.define({ category: categories });
+}
+
+function addOpportunity({ owner, title, cover, location, date, description, age, environment, category }) {
   console.log(` Adding: ${title} (${owner})`);
-  Opportunities.define({ organizerEmail: owner, title, cover, location, date, description });
-  age.map(ages => OpportunitiesAges.define({ owner: owner, age: ages }));
-  environment.map(environments => OpportunitiesEnvs.define({ owner: owner, environment: environments }));
-  // age.map(ages => addAges(ages));
+  Opportunities.define({ title: title, owner, cover, location, date, description });
+  age.map(ages => OpportunitiesAges.define({ title: title, owner: owner, age: ages }));
+  environment.map(environments => OpportunitiesEnvs.define({ title: title, owner: owner, environment: environments }));
+  category.map(categories => OpportunitiesCats.define({ title: title, owner: owner, category: categories }));
+  age.map(ages => addAges(ages));
+  environment.map(environments => addEnvironments(environments));
+  category.map(categories => addCategories(categories));
 }
 
 if (Opportunities.count() === 0) {
   if (Meteor.settings.defaultOpp) {
     console.log('Creating default opportunity.');
     Meteor.settings.defaultOpp.map(data2 => addOpportunity(data2));
-    // console.log('Creating Age Collection');
-    // Meteor.settings.defaultOpp.map(data2 => addAges(data2));
   }
 }
 

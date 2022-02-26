@@ -9,8 +9,12 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import GoogleMap from '../components/GoogleMap';
 import CategoryOpp from '../components/CategoryOpp';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
+import { Categories } from '../../api/category/CategoryCollection';
+import { Environments } from '../../api/environment/EnvironmentCollection';
+import { Ages } from '../../api/age/AgeCollection';
 import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
+import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import Opportunity from '../components/Opportunity';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 import Footer from '../components/Footer';
@@ -52,16 +56,19 @@ const formSchema = new SimpleSchema({
 const bridge = new SimpleSchema2Bridge(formSchema);
 const gridHeigth = { paddingRight: '50px', paddingLeft: '50px' };
 //
-function getOpportunities(emails) {
-  const data = Opportunities.findOne({ organizerEmail: emails });
-  const age = _.pluck(OpportunitiesAges.find({ owner: emails }).fetch(), 'age');
-  const environment = _.pluck(OpportunitiesEnvs.find({ owner: emails }).fetch(), 'environment');
-  return _.extend({ }, data, { age, environment });
+function getOpportunities(titles) {
+  const data = Opportunities.findOne({ title: titles });
+  const age = _.pluck(OpportunitiesAges.find({ title: titles }).fetch(), 'age');
+  // console.log(age);
+  const environment = _.pluck(OpportunitiesEnvs.find({ title: titles }).fetch(), 'environment');
+  const category = _.pluck(OpportunitiesCats.find({ title: titles}).fetch(), 'category');
+  // const data2 = _.extend({ }, data, { age, environment });
+  // console.log(data2);
+  return _.extend({ }, data, { age, environment, category });
 }
 //
-const FilterOpportunities = ({ ready, opportunities }) => {
-  console.log(opportunities);
-  //
+const FilterOpportunities = ({ ready }) => {
+  // console.log(opportunities);
   const [filterParam, setFilterParam] = useState({
     order: '',
     age: [''],
@@ -74,10 +81,10 @@ const FilterOpportunities = ({ ready, opportunities }) => {
   const getEnvironment = environment ? _.flatten(environment.map(environments => OpportunitiesEnvs.find({ environment: { $in: [environments] } }).fetch())) : '';
   // console.log(getEnvironment);
   // console.log(getAge);
-  const getEmails = _.pluck(getAge, 'owner').concat(_.pluck(getEnvironment, 'owner'));
+  const getTitle = _.pluck(getAge, 'title').concat(_.pluck(getEnvironment, 'title'));
   // console.log(getEmails);
-  const newOpportunities = getEmails ? _.uniq(getEmails).map(emails => getOpportunities(emails, opportunities)) : opportunities;
-  console.log(newOpportunities);
+  const newOpportunities = _.uniq(getTitle).map(titles => getOpportunities(titles));
+  // console.log(newOpportunities);
   const panes = [
     {
       menuItem: 'Filter',
@@ -141,24 +148,29 @@ const FilterOpportunities = ({ ready, opportunities }) => {
 
 // Require an array of Stuff documents in the props.
 FilterOpportunities.propTypes = {
-  opportunities: PropTypes.object,
   ready: PropTypes.bool.isRequired,
 };
 
 //
 export default withTracker(() => {
   // Get access to opportunity documents.
-  const subscription1 = Opportunities.subscribeOpportunityPublic();
-  // Get access to age documents.
-  const subscription2 = OpportunitiesAges.subscribeOpportunitiesAgeAll();
-  // Get access to environmnet documents.
-  const subscription3 = OpportunitiesEnvs.subscribeOpportunitiesEnvAll();
+  const sub1 = Opportunities.subscribeOpportunityPublic();
+  // Get access to oppAge documents.
+  const sub2 = OpportunitiesAges.subscribeOpportunitiesAgePublic();
+  // Get access to oppEnvironment documents.
+  const sub3 = OpportunitiesEnvs.subscribeOpportunitiesEnvPublic();
+  // Get access to age documents..
+  const sub4 = Ages.subscribeAgePublic();
+  // Get access to category documents.
+  const sub5 = Categories.subscribeCategoryPublic();
+  // Get access to environment documents.
+  const sub6 = Environments.subscribeEnvironmentPublic();
+  // Get access to category documents
+  const sub7 = OpportunitiesCats.subscribeOpportunitiesCatPublic();
   // Determine if the subscription is ready
-  const ready = subscription1.ready() && subscription2.ready() && subscription3.ready();
+  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready();
   //
-  const opportunities = Opportunities.find({}).fetch();
   return {
-    opportunities,
     ready,
   };
 })(FilterOpportunities);

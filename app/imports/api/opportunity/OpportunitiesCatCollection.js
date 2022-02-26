@@ -4,19 +4,19 @@ import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
-export const opportunitiesAgePublications = {
-  opportunitiesAgePublic: 'OpportunitiesAgePublic',
-  opportunitiesAgeUser: 'OpportunityAgeUser',
-  opportunitiesAgeOrganization: 'OpportunityAgeOrganization',
-  opportunitiesAgeAdmin: 'OpportunityAgeAdmin',
+export const opportunitiesCatPublications = {
+  opportunitiesCatPublic: 'OpportunitiesCatPublic',
+  opportunitiesCatUser: 'OpportunitiesCatUser',
+  opportunitiesCatOrganization: 'OpportunitiesCatOrganization',
+  opportunitiesCatAdmin: 'OpportunitiesCatAdmin',
 };
 
-class OpportunitiesAgeCollection extends BaseCollection {
+class OpportunitiesCatCollection extends BaseCollection {
   constructor() {
-    super('OpportunitiesAges', new SimpleSchema({
+    super('OpportunitiesCats', new SimpleSchema({
       title: String,
       owner: String,
-      age: String,
+      category: String,
     }));
   }
 
@@ -25,11 +25,11 @@ class OpportunitiesAgeCollection extends BaseCollection {
    * @param title the email address.
    * @param age the age related to the opportunity.
    */
-  define({ title, owner, age }) {
+  define({ title, owner, category }) {
     const docID = this._collection.insert({
       title,
       owner,
-      age,
+      category,
     });
     return docID;
   }
@@ -38,9 +38,9 @@ class OpportunitiesAgeCollection extends BaseCollection {
    * Updates the given document.
    * @param docID the id of the document to update.
    * @param title the new title (optional).
-   * @param age the new age (optional).
+   * @param category the new category (optional).
    */
-  update(docID, { title, owner, age }) {
+  update(docID, { title, owner, category }) {
     const updateData = {};
     if (title) {
       updateData.title = title;
@@ -48,8 +48,8 @@ class OpportunitiesAgeCollection extends BaseCollection {
     if (owner) {
       updateData.owner = owner;
     }
-    if (age) {
-      updateData.age = age;
+    if (category) {
+      updateData.category = category;
     }
     this._collection.update(docID, { $set: updateData });
   }
@@ -63,7 +63,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
       /**
        * This subscription publishes all documents regarding Roles.
        */
-      Meteor.publish(opportunitiesAgePublications.opportunitiesAgePublic, function publish() {
+      Meteor.publish(opportunitiesCatPublications.opportunitiesCatPublic, function publish() {
         if (Meteor.isServer) {
           return instance._collection.find();
         }
@@ -72,7 +72,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
       /**
        * This subscription publishes documents regarding the organization.
        */
-      Meteor.publish(opportunitiesAgePublications.opportunitiesAgeUser, function publish() {
+      Meteor.publish(opportunitiesCatPublications.opportunitiesCatUser, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.User)) {
           const username = Meteor.users.findOne(this.userId).username;
           return instance._collection.find({ owner: username });
@@ -82,7 +82,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
       /**
        * This subscription publishes documents regarding the organization.
        */
-      Meteor.publish(opportunitiesAgePublications.opportunitiesAgeOrganization, function publish() {
+      Meteor.publish(opportunitiesCatPublications.opportunitiesCatOrganization, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
           const username = Meteor.users.findOne(this.userId).username;
           return instance._collection.find({ owner: username });
@@ -93,7 +93,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
       /**
        * This subscription publishes documents regarding the organization.
        */
-      Meteor.publish(opportunitiesAgePublications.opportunitiesAgeAdmin, function publish() {
+      Meteor.publish(opportunitiesCatPublications.opportunitiesCatAdmin, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
           return instance._collection.find();
         }
@@ -105,9 +105,9 @@ class OpportunitiesAgeCollection extends BaseCollection {
   /**
    * Subscription method for the documents.
    */
-  subscribeOpportunitiesAgePublic() {
+  subscribeOpportunitiesCatPublic() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesAgePublications.opportunitiesAgePublic);
+      return Meteor.subscribe(opportunitiesCatPublications.opportunitiesCatPublic);
     }
     return null;
   }
@@ -115,9 +115,9 @@ class OpportunitiesAgeCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeOpportunitiesAgeUser() {
+  subscribeOpportunitiesCatUser() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesAgePublications.opportunitiesAgeUser);
+      return Meteor.subscribe(opportunitiesCatPublications.opportunitiesCatUser);
     }
     return null;
   }
@@ -125,9 +125,9 @@ class OpportunitiesAgeCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeOpportunitiesAgeOrganization() {
+  subscribeOpportunitiesCatOrganization() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesAgePublications.opportunitiesAgeOrganization);
+      return Meteor.subscribe(opportunitiesCatPublications.opportunitiesCatOrganization);
     }
     return null;
   }
@@ -135,9 +135,9 @@ class OpportunitiesAgeCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeOpportunitiesAgeAdmin() {
+  subscribeOpportunitiesCatAdmin() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesAgePublications.opportunitiesAgeAdmin);
+      return Meteor.subscribe(opportunitiesCatPublications.opportunitiesCatAdmin);
     }
     return null;
   }
@@ -153,4 +153,4 @@ class OpportunitiesAgeCollection extends BaseCollection {
   }
 }
 
-export const OpportunitiesAges = new OpportunitiesAgeCollection();
+export const OpportunitiesCats = new OpportunitiesCatCollection();

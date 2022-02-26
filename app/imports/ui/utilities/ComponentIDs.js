@@ -1,7 +1,6 @@
 export const COMPONENT_IDS = {
-  LIST_FILTER_OPPORTUNITIES: 'list-filter-opportunities',
-  LIST_FILTER_CATEGORIES: 'list-filter-categories',
   NAVBAR_ADD_PROFILE: 'navbar-add-profile',
+
   NAVBAR_CURRENT_USER: 'navbar-current-user',
   NAVBAR_LANDING_PAGE: 'navbar-landing-page',
   NAVBAR_LOGIN_DROPDOWN: 'navbar-login-dropdown',

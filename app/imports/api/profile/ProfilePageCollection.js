@@ -65,8 +65,7 @@ class ProfilePageCollection extends BaseCollection {
    * @param aboutUser the information of the user
    * @returns the docID of the defined collection
    */
-  define({ owner, firstName, lastName, phoneNumber, interest, specialInterest, environmentalPref, availability,
-    profileImage, aboutUser }) {
+  define({ owner, firstName, lastName, phoneNumber, interest, specialInterest, environmentalPref, availability, profileImage, aboutUser }) {
     const docID = this._collection.insert({
       owner,
       firstName,
