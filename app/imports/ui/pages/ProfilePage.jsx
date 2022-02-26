@@ -41,7 +41,6 @@ const ProfilePage = ({ ready, userData }) => ((ready) ? (
       <Grid columns={'three'} divided stackable>
         <Grid.Row>
           <Grid.Column>
-            {/* eslint-disable-next-line react/prop-types */}
             {userData.map((data) => <ProfilePageUserInformation key={data._id} aboutUser={data}/>)}
           </Grid.Column>
           {userData.map((data) => <ProfilePageAboutUser key={data._id} userInfo={data}/>)}
