@@ -11,7 +11,7 @@ const ProfilePageHeader = ({ linkData }) => (
       <Header as="h2" textAlign="right">My Profile Page </Header>
     </Grid.Column>
     <Grid.Column floated='right' width={1}>
-      <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={`/edit-profile/${linkData._id}`}>
+      <Link className={COMPONENT_IDS.LIST_PROFILE_EDIT} to={`/edit-profile/${linkData._id}`}>
         <Icon name='setting' size='large'/>
       </Link>
     </Grid.Column>
