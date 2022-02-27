@@ -21,21 +21,12 @@ import ProfilePageAboutUser from '../components/ProfilePageAboutUser';
 import ProfilePageUserInformation from '../components/ProfilePageUserInformation';
 import ProfilePageAssociatedOrganization from '../components/ProfilePageAssociatedOrganization';
 import ProfilePageRecentEvent from '../components/ProfilePageRecentEvent';
+import ProfilePageHeader from '../components/ProfilePageHeader';
 
 /** Renders the User's Profile. Profile Page is broken down into 4 components */
 const ProfilePage = ({ ready, userData }) => ((ready) ? (
   <Container id={PAGE_IDS.PROFILE_PAGE}>
-    <Grid>
-      <Grid.Column floated='left' width={9}>
-        <Header as="h2" textAlign="right">My Profile Page </Header>
-      </Grid.Column>
-      <Grid.Column floated='right' width={1}>
-        <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={'/edit-profile'}>
-          <Icon name='setting' size='large'/>
-        </Link>
-      </Grid.Column>
-    </Grid>
-
+    {userData.map((data) => <ProfilePageHeader key={data._id} linkData={data}/>)}
     <Container>
       <Divider/>
       <Grid columns={'three'} divided stackable>
