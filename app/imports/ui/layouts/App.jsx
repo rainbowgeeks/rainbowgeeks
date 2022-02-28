@@ -27,6 +27,8 @@ import OrganizationProfile from '../pages/OrganizationProfile';
 import OpportunityPage from '../pages/OpportunityPage';
 import UserTrackingHoursPage from '../pages/UserTrackingHoursPage';
 import AboutUs from '../pages/AboutUs';
+import AddOpportunity from '../pages/AddOpportunity';
+import EditOpportunity from '../pages/EditOpportunity';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -36,9 +38,9 @@ class App extends React.Component {
         <div>
           <NavBar/>
           <Switch>
-            <Route exact path="/" component={Landing}/>
-            <Route exact path="/filter" component={FilterOpportunities}/>
-            <Route exact path="/event/:_id" component={OpportunityPage}/>
+            <Route exact path="/" component={EditOpportunity}/>
+            <Route path="/filter" component={FilterOpportunities}/>
+            <Route path="/event/:_id" component={OpportunityPage}/>
             <Route path="/signin" component={Signin}/>
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
@@ -53,6 +55,8 @@ class App extends React.Component {
             <ProtectedRoute path="/add2" component={AddProfile}/>
             <ProtectedRoute path="/org-library" component={OrganizationLibrary}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
+            <OrganizationProtectedRoute path="/add-opp" component={AddOpportunity}/>
+            <OrganizationProtectedRoute path="/edit-opp/:_id" component={EditOpportunity}/>
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-org" component={ManageOrganizations}/>
             <AdminProtectedRoute path="/manage-user" component={ManageUsers}/>
@@ -103,6 +107,25 @@ const AdminProtectedRoute = ({ component: Component, ...rest }) => (
   />
 );
 
+/**
+ * OrganizationProtectedRoute (see React Router v4 sample)
+ * Checks for Meteor login and admin role before routing to the requested page, otherwise goes to signin page.
+ * @param {any} { component: Component, ...rest }
+ */
+const OrganizationProtectedRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) => {
+      const isLogged = Meteor.userId() !== null;
+      const isOrganization = Roles.userIsInRole(Meteor.userId(), ROLE.ORGANIZATION);
+      return (isLogged && isOrganization) ?
+        (<Component {...props} />) :
+        (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
+        );
+    }}
+  />
+);
+
 // Require a component and location to be passed to each ProtectedRoute.
 ProtectedRoute.propTypes = {
   component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -111,6 +134,12 @@ ProtectedRoute.propTypes = {
 
 // Require a component and location to be passed to each AdminProtectedRoute.
 AdminProtectedRoute.propTypes = {
+  component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  location: PropTypes.object,
+};
+
+// Require a component and location to be passed to each OrganizationProtectedRoute.
+OrganizationProtectedRoute.propTypes = {
   component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   location: PropTypes.object,
 };

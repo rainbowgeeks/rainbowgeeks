@@ -112,7 +112,7 @@ class UserCollection {
    * @return {boolean}
    */
   isOpportunityReferenced(user) {
-    return Opportunities.find({ organizerEmail: user }).fetch().length > 0;
+    return Opportunities.find({ owner: user }).fetch().length > 0;
   }
 
   /**
@@ -122,7 +122,7 @@ class UserCollection {
    * @return {boolean}
    */
   isCategoryReferenced(user) {
-    return Categories.find({ organizerEmail: user }).fetch().length > 0;
+    return Categories.find({ owner: user }).fetch().length > 0;
   }
 
   /**
@@ -132,7 +132,7 @@ class UserCollection {
    * @return {boolean}
    */
   isAgeReferenced(user) {
-    return Ages.find({ age: user }).fetch().length > 0;
+    return Ages.find({ owner: user }).fetch().length > 0;
   }
 
   /**
@@ -142,7 +142,7 @@ class UserCollection {
    * @return {boolean}
    */
   isEnvironmentReferenced(user) {
-    return Environments.find({ environment: user }).fetch().length > 0;
+    return Environments.find({ owner: user }).fetch().length > 0;
   }
 
   /**

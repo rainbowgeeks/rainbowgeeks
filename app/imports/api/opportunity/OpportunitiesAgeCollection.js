@@ -149,7 +149,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
    * @throws { Meteor.Error } If there is no logged in organization or Admin.
    */
   assertValidRoleForMethod(userId) {
-    this.assertRole(userId, [ROLE.USER, ROLE.ORGANIZATION, ROLE.ADMIN]);
+    this.assertRole(userId, [ROLE.ORGANIZATION, ROLE.ADMIN]);
   }
 }
 
