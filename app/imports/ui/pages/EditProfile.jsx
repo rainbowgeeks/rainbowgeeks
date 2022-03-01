@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SimpleSchema from 'simpl-schema';
 import { Container, Divider, Form, Header, Loader, Segment } from 'semantic-ui-react';
 import {
@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
+import { Redirect } from 'react-router-dom';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
@@ -23,7 +24,7 @@ const bridge = new SimpleSchema2Bridge(UserProfileData._schema);
 
 /** Renders the Page for editing a single profile document. */
 const EditProfile = ({ doc, ready }) => {
-
+  const [redirectToReferer, setRedirectToReferer] = useState(false);
   const submit = (data) => {
     const {
       firstName,
@@ -39,8 +40,17 @@ const EditProfile = ({ doc, ready }) => {
     console.log(updateData);
     updateMethod.callPromise({ collectionName, updateData })
       .catch(error => swal('Error', error.message, 'error'))
-      .then(() => swal('Success', 'Item updated successfully', 'success'));
+      .then(() => {
+        swal('Success', 'Profile Page Had Successfully Been Updated', 'success');
+        setRedirectToReferer(true);
+      });
   };
+
+  const { from } = { from: { pathname: '/profile' } };
+  if (redirectToReferer) {
+    return <Redirect to={from} />;
+  }
+
   return (ready) ? (
     <Container id={PAGE_IDS.EDIT_PROFILE}>
       <Header as='h1' size='Large' textAlign='center'> UPDATE MY PROFILE </Header>
