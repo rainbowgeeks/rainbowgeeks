@@ -38,7 +38,7 @@ class App extends React.Component {
         <div>
           <NavBar/>
           <Switch>
-            <Route exact path="/" component={EditOpportunity}/>
+            <Route exact path="/" component={Landing}/>
             <Route path="/filter" component={FilterOpportunities}/>
             <Route path="/event/:_id" component={OpportunityPage}/>
             <Route path="/signin" component={Signin}/>

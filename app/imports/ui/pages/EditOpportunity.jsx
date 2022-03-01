@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Segment, Header, Loader } from 'semantic-ui-react';
 import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField } from 'uniforms-semantic';
 import swal from 'sweetalert';
-import { Meteor } from 'meteor/meteor';
+// import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -16,17 +16,17 @@ import { Environments } from '../../api/environment/EnvironmentCollection';
 import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
-import { defineMethod } from '../../api/base/BaseCollection.methods';
+import { defineMethod, removeItMethod, updateMethod } from '../../api/base/BaseCollection.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = (getAge, getEnvironment, getCategory) => new SimpleSchema({
-  owner: String,
-  title: String,
-  cover: String,
-  date: String,
-  location: String,
+  owner: { type: String, optional: true },
+  title: { type: String, optional: true },
+  cover: { type: String, optional: true },
+  date: { type: String, optional: true },
+  location: { type: String, optional: true },
   description: { type: String, optional: true },
   age: { type: Array, label: 'Age' },
   'age.$': { type: String, allowedValues: getAge },
@@ -37,50 +37,59 @@ const formSchema = (getAge, getEnvironment, getCategory) => new SimpleSchema({
 });
 
 /** Renders the Page for adding a document. */
-const AddOpportunity = ({ ready }) => {
+const EditOpportunity = ({ ready, _id }) => {
 
   // On submit, insert the data.
-  const submit = (data, formRef) => {
+  const submit = (data) => {
     const { owner, title, cover, date, location, description, age, environment, category } = data;
     // const user = Meteor.user().username;
     let collectionName = Opportunities.getCollectionName();
-    let definitionData = { owner: owner, title: title, cover: cover, date: date, location: location, description: description };
-    defineMethod.callPromise({ collectionName, definitionData }).catch(error => swal('Error', error.message, 'error')).then(() => {
-      swal('Success', 'Opportunity added successfully', 'success');
-      age.forEach(ages => {
-        collectionName = OpportunitiesAges.getCollectionName();
-        definitionData = { title: title, owner: owner, age: ages };
-        defineMethod.callPromise({ collectionName, definitionData });
-      });
-      environment.forEach(environments => {
-        collectionName = OpportunitiesEnvs.getCollectionName();
-        definitionData = { title: title, owner: owner, environment: environments };
-        defineMethod.callPromise({ collectionName, definitionData });
-      });
-      category.forEach(categories => {
+    let updateData = { id: _id, owner, title, cover, date, location, description };
+    updateMethod.callPromise({ collectionName, updateData }).then(() => {
+      collectionName = OpportunitiesAges.getCollectionName();
+      const instance = { title };
+      removeItMethod.callPromise({ collectionName, instance });
+    }).then(() => age.forEach(ages => {
+      collectionName = OpportunitiesAges.getCollectionName();
+      const definitionData = { title: title, owner: owner, age: ages };
+      defineMethod.callPromise({ collectionName, definitionData });
+    })).then(() => environment.forEach(environments => {
+      collectionName = OpportunitiesEnvs.getCollectionName();
+      updateData = { title: title, owner: owner, environment: environments };
+      updateMethod.callPromise({ collectionName, updateData });
+    }))
+      .then(() => category.forEach(categories => {
         collectionName = OpportunitiesCats.getCollectionName();
-        definitionData = { title: title, owner: owner, category: categories };
-        defineMethod.callPromise({ collectionName, definitionData });
-      });
-      formRef.reset();
-    });
+        updateData = { title: title, owner: owner, category: categories };
+        updateMethod.callPromise({ collectionName, updateData });
+      }))
+      .then(() => swal('Success', 'Opportunity edited successfully', 'success'))
+      .catch(error => swal('Error', error.message, 'error'));
   };
-
+  // For creating a form schema.
   const getAge = _.pluck(Ages.find().fetch(), 'age');
   const getEnvironment = _.pluck(Environments.find().fetch(), 'environment');
   const getCategory = _.pluck(Categories.find().fetch(), 'category');
   const makeSchema = formSchema(getAge, getEnvironment, getCategory);
   const bridge = new SimpleSchema2Bridge(makeSchema);
+  // For pulling opportunity related to the _id
+  const opportunity = Opportunities.find({ _id: _id }).fetch();
+  const [newOpp] = opportunity;
+  // console.log(newOpp);
+  const [getTitle] = _.pluck(opportunity, 'title');
+  // console.log(getTitle2);
+  const age = _.pluck(OpportunitiesAges.find({ title: getTitle }).fetch(), 'age');
+  const category = _.pluck(OpportunitiesCats.find({ title: getTitle }).fetch(), 'category');
+  const environment = _.pluck(OpportunitiesEnvs.find({ title: getTitle }).fetch(), 'environment');
+  const model = _.extend({}, newOpp, { age, environment, category });
+  // console.log(model);
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
-  let fRef = null;
   return ((ready) ? (
     <Grid container centered>
       <Grid.Column>
-        <Header as="h2" textAlign="center">Add ORGANIZATION</Header>
-        <AutoForm ref={ref => {
-          fRef = ref;
-        }} schema={bridge} onSubmit={data => submit(data, fRef)}>
+        <Header as="h2" textAlign="center">Edit Opportunity</Header>
+        <AutoForm model={model} schema={bridge} onSubmit={data => submit(data)}>
           <Segment>
             <TextField name='owner'/>
             <TextField name='title'/>
@@ -100,24 +109,22 @@ const AddOpportunity = ({ ready }) => {
   ) : <Loader active>Getting Data</Loader>);
 };
 
-AddOpportunity.propTypes = {
+EditOpportunity.propTypes = {
+  _id: PropTypes.string,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
   // Ge the documentID from the URL field.
   const { _id } = useParams();
-  const documentId = _id;
-  console.log(useParams());
-  console.log(documentId);
   // Get access to opportunity documents.
   const sub1 = Opportunities.subscribeOpportunityOrganization();
   // Get access to oppAge documents.
-  const sub2 = OpportunitiesAges.subscribeOpportunitiesAgeOrganization();
+  const sub2 = OpportunitiesAges.subscribeOpportunitiesAgePublic();
   // Get access to oppEnvironment documents.
-  const sub3 = OpportunitiesEnvs.subscribeOpportunitiesEnvOrganization();
+  const sub3 = OpportunitiesEnvs.subscribeOpportunitiesEnvPublic();
   // Get access to oppCategory documents
-  const sub4 = OpportunitiesCats.subscribeOpportunitiesCatOrganization();
+  const sub4 = OpportunitiesCats.subscribeOpportunitiesCatPublic();
   // Get access to age documents..
   const sub5 = Ages.subscribeAgePublic();
   // Get access to category documents.
@@ -128,6 +135,7 @@ export default withTracker(() => {
   const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready();
   //
   return {
+    _id,
     ready,
   };
-})(AddOpportunity);
+})(EditOpportunity);

@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
+import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
@@ -55,6 +56,18 @@ class OpportunitiesAgeCollection extends BaseCollection {
   }
 
   /**
+   * A Stricter form of remove that throws an error if the document or docID could not be found in the collection.
+   * @param { String | Object } name A document or docID in the collection.
+   * @returns true
+   */
+  removeIt(name) {
+    const doc = this.findDoc(name);
+    check(doc, Object);
+    this._collection.remove(doc._id);
+    return true;
+  }
+
+  /**
    * Default publication method for entities.
    */
   publish() {
@@ -84,8 +97,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
        */
       Meteor.publish(opportunitiesAgePublications.opportunitiesAgeOrganization, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ owner: username });
+          return instance._collection.find({});
         }
         return this.ready();
       });
@@ -150,6 +162,20 @@ class OpportunitiesAgeCollection extends BaseCollection {
    */
   assertValidRoleForMethod(userId) {
     this.assertRole(userId, [ROLE.ORGANIZATION, ROLE.ADMIN]);
+  }
+
+  /**
+   * Returns an object representing the definition of docID  in a format appropriate to the restoreOne or define function.
+   * @param docID.
+   * @return {{title, owner, cover, age }}
+   */
+  dumpOne(docID) {
+    const doc = this.findDoc(docID);
+    const title = doc.title;
+    const owner = doc.owner;
+    const age = doc.age;
+
+    return { title, owner, age };
   }
 }
 
