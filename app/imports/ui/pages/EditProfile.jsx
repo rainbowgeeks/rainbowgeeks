@@ -1,6 +1,6 @@
 import React from 'react';
 import SimpleSchema from 'simpl-schema';
-import { Container, Divider, Form, Header, Segment } from 'semantic-ui-react';
+import { Container, Divider, Form, Header, Loader, Segment } from 'semantic-ui-react';
 import {
   AutoForm,
   ErrorsField,
@@ -9,67 +9,78 @@ import {
   SubmitField,
   TextField,
 } from 'uniforms-semantic';
+import { withTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
+import { useParams } from 'react-router';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import swal from 'sweetalert';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 import { PAGE_IDS } from '../utilities/PageIDs';
+import { UserProfileData } from '../../api/profile/ProfilePageCollection';
+import { updateMethod } from '../../api/base/BaseCollection.methods';
 
-const tempSchema = new SimpleSchema({
-  firstName: { type: String, optional: true },
-  lastName: { type: String, optional: true },
-  email: { type: String, optional: true },
-  phoneNumber: { type: String, optional: true },
-  aboutMe: { type: String, optional: true },
-  pictureUrl: { type: String, optional: true },
-  interest: {
-    type: String,
-    optional: true,
-    label: 'interest',
-    allowedValues: ['INTEREST 1', 'INTEREST 2', 'INTEREST 3', 'INTEREST 4'],
-  },
-  additionalInterest: { type: String, optional: true },
-  environmentalPref: { type: String, optional: true },
-  availability: {
-    type: String,
-    optional: true,
-    label: 'availability',
-    allowedValues: ['MON', 'TUES', 'WEDS', 'THURS', 'FRI', 'SAT', 'SUN'],
-  },
-});
-
-const bridge = new SimpleSchema2Bridge(tempSchema);
+const bridge = new SimpleSchema2Bridge(UserProfileData._schema);
 
 /** Renders the Page for editing a single profile document. */
-const EditProfile = () => (
-  <Container id={PAGE_IDS.EDIT_PROFILE}>
-    <Header as='h1' size='Large' textAlign='center'> UPDATE MY PROFILE </Header>
-    <Divider/>
-    <AutoForm schema={bridge} >
-      <Segment>
-        <Header as="h3" textAlign="center">Update My Information</Header>
-        <Segment padded>
-          <Form.Group widths='equal'>
-            <TextField name='firstName' />
-            <TextField name='lastName' />
-            <TextField name='phoneNumber' />
-          </Form.Group>
-          <TextField name='email' />
-          <LongTextField name='aboutMe' placeholder='Edit About Me'/>
-        </Segment>
-        <Divider section />
-        <Segment>
-          <Header as="h3" textAlign="center">Update My Prefrences</Header>
-          <MultiSelectField name='interest' label='interest'/>
-          <TextField name='additionalInterest' />
-          <SelectField name= 'environmentalPref' allowedValues={ ['In-person', 'At-Home'] } placeholder='any'/>
-          <MultiSelectField name='availability' label='availability'/>
-        </Segment>
-      </Segment>
-      <Container textAlign='right'>
-        <SubmitField id='submit-update-profile' value='update' />
-      </Container>
-      <ErrorsField />
-    </AutoForm>
-  </Container>
-);
+const EditProfile = ({ doc, ready }) => {
 
-export default (EditProfile);
+  const submit = (data) => {
+    const {
+      firstName,
+      lastName,
+      phoneNumber,
+      aboutUser, _id } = data;
+    const collectionName = UserProfileData.getCollectionName();
+    const updateData = { id: _id,
+      firstName,
+      lastName,
+      phoneNumber,
+      aboutUser };
+    console.log(updateData);
+    updateMethod.callPromise({ collectionName, updateData })
+      .catch(error => swal('Error', error.message, 'error'))
+      .then(() => swal('Success', 'Item updated successfully', 'success'));
+  };
+  return (ready) ? (
+    <Container id={PAGE_IDS.EDIT_PROFILE}>
+      <Header as='h1' size='Large' textAlign='center'> UPDATE MY PROFILE </Header>
+      <Divider/>
+      <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
+        <Segment>
+          <Header as="h3" textAlign="center">Update My Information</Header>
+          <Segment padded>
+            <Form.Group widths='equal'>
+              <TextField name='firstName' />
+              <TextField name='lastName' />
+              <TextField name='phoneNumber' />
+            </Form.Group>
+            <LongTextField name='aboutUser' placeholder='Edit About Me'/>
+          </Segment>
+        </Segment>
+        <Container textAlign='right'>
+          <SubmitField id='submit-update-profile' value='update' />
+        </Container>
+        <ErrorsField />
+      </AutoForm>
+    </Container>
+  ) : <Loader active>Getting data</Loader>;
+};
+
+EditProfile.propTypes = {
+  doc: PropTypes.object,
+  ready: PropTypes.bool.isRequired,
+};
+
+export default withTracker(() => {
+  // get docID from the URL
+  const { _id } = useParams();
+  const documentId = _id;
+  const subscription = UserProfileData.subscribeUserProfile();
+  const ready = subscription.ready();
+  // get the doc
+  const doc = UserProfileData.findDoc(documentId);
+  return {
+    doc,
+    ready,
+  };
+})(EditProfile);
