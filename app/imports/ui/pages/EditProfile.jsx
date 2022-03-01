@@ -74,11 +74,11 @@ const EditProfile = ({ doc, ready }) => {
         <Segment>
           <Header as='h3' textAlign='center'>Update My Preferences</Header>
           <Segment>
-            <SelectField name='environmentalPref'/>
+            <TextField name='environmentalPref'/>
           </Segment>
         </Segment>
         <Container textAlign='right'>
-          <SubmitField id='submit-update-profile' value='update' />
+          <SubmitField id='submit-update-profile' value='submit' />
         </Container>
         <ErrorsField />
         <HiddenField name='owner'/>
@@ -99,7 +99,7 @@ export default withTracker(() => {
   const subscription = UserProfileData.subscribeUserProfile();
   const ready = subscription.ready();
   // get the doc
-  const doc = UserProfileData.findDoc(documentId);
+  const doc = UserProfileData.findOne({ _id: documentId }, {});
   return {
     doc,
     ready,
