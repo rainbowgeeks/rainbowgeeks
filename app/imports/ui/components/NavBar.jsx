@@ -12,18 +12,16 @@ import { COMPONENT_IDS } from '../utilities/ComponentIDs';
  * Certain Navbar Components will only appear when appropriate authentication is inserted.
  */
 const NavBar = ({ currentUser }) => {
-  const menuStyle = { backgroundColor: '#0695fa', marginBottom: '25px' };
+  const menuStyle = { paddingBottom: '50px' };
   return (
-    <Menu className={'navbar-menu-orrientation'} style={menuStyle} attached='top' borderless inverted stackable>
+    <Menu className={'navbar-menu-orrientation'} style={menuStyle} attached='top' borderless stackable>
       <Menu.Item className={'large-font'} id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/">
-        <Header inverted as='h1'>VA</Header>
+        <Header as='h1'>VA</Header>
       </Menu.Item>
       <Menu.Item>
-        <Input inverted action={{ icon: 'search' }} placeholder='Search...' />
+        <Input action={{ icon: 'search' }} placeholder='Search...' />
       </Menu.Item>
-      <Menu.Item className={'large-font middle-menu-padding'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/">
-        Home
-      </Menu.Item>
+      <Menu.Item position={'right'} className={'large-font'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/">Home</Menu.Item>
       {Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN]) ? (
         [<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-org" key="manage-org">
           Manage Organization

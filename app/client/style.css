@@ -153,11 +153,6 @@ landing background
   font-size: 15px;
 }
 
-/*.input-search-bar {*/
-/*  border-color: whitesmoke;*/
-/*  border-style: solid;*/
-/*}*/
-
 /************************************************
 
 below is for org profile page responsiveness
@@ -197,12 +192,6 @@ below is for org profile page responsiveness
   }
 }
 
-
-/* Styling for Navbar Component. */
-.middle-menu-padding {
-  margin-left: 12em;
-
-}
 
 /* Styling for Google Map Component. */
 .google-map-border {
