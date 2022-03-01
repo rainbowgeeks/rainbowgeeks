@@ -3,7 +3,6 @@ import {
   Container,
   Header,
   Card,
-  Icon,
   Feed,
   Grid,
   Segment,
@@ -13,7 +12,7 @@ import {
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router';
+// import { useParams } from 'react-router';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
