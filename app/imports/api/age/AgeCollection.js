@@ -47,7 +47,6 @@ class AgeCollection extends BaseCollection {
     this._collection.update(docID, { $set: updateData });
   }
 
-
   /**
    * A Stricter form of remove that throws an error if the document or docID could not be found in the collection.
    * @param { String | Object } name A document or docID in the collection.

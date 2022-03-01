@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
+import { _ } from 'meteor/underscore';
 import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
@@ -61,9 +62,13 @@ class OpportunitiesCatCollection extends BaseCollection {
    * @returns true
    */
   removeIt(name) {
-    const doc = this.findDoc(name);
-    check(doc, Object);
-    this._collection.remove(doc._id);
+    const ageID = _.pluck(this._collection.find(name).fetch(), 'title');
+    // eslint-disable-next-line no-shadow,no-restricted-syntax,no-unused-vars
+    for (const temp of ageID) {
+      const doc = this.findDoc(name);
+      check(doc, Object);
+      this._collection.remove(doc._id);
+    }
     return true;
   }
 

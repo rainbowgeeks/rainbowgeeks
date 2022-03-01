@@ -36,36 +36,48 @@ const formSchema = (getAge, getEnvironment, getCategory) => new SimpleSchema({
   'category.$': { type: String, allowedValues: getCategory },
 });
 
-/** Renders the Page for adding a document. */
+/** Renders the Page for editing a document. */
 const EditOpportunity = ({ ready, _id }) => {
 
   // On submit, insert the data.
   const submit = (data) => {
     const { owner, title, cover, date, location, description, age, environment, category } = data;
     // const user = Meteor.user().username;
+    let definitionData;
     let collectionName = Opportunities.getCollectionName();
-    let updateData = { id: _id, owner, title, cover, date, location, description };
-    updateMethod.callPromise({ collectionName, updateData }).then(() => {
-      collectionName = OpportunitiesAges.getCollectionName();
-      const instance = { title };
-      removeItMethod.callPromise({ collectionName, instance });
-    }).then(() => age.forEach(ages => {
-      collectionName = OpportunitiesAges.getCollectionName();
-      const definitionData = { title: title, owner: owner, age: ages };
-      defineMethod.callPromise({ collectionName, definitionData });
-    })).then(() => environment.forEach(environments => {
-      collectionName = OpportunitiesEnvs.getCollectionName();
-      updateData = { title: title, owner: owner, environment: environments };
-      updateMethod.callPromise({ collectionName, updateData });
-    }))
-      .then(() => category.forEach(categories => {
+    const updateData = { id: _id, owner, title, cover, date, location, description };
+    updateMethod.callPromise({ collectionName, updateData })
+      .then(() => {
+        collectionName = OpportunitiesAges.getCollectionName();
+        const instance = { title };
+        removeItMethod.callPromise({ collectionName, instance });
+      })
+      .then(() => age.forEach(ages => {
+        definitionData = { title: title, owner: owner, age: ages };
+        defineMethod.callPromise({ collectionName, definitionData });
+      }))
+      .then(() => {
+        collectionName = OpportunitiesEnvs.getCollectionName();
+        const instance = { title };
+        removeItMethod.callPromise({ collectionName, instance });
+      })
+      .then(() => environment.forEach(environments => {
+        definitionData = { title: title, owner: owner, environment: environments };
+        defineMethod.callPromise({ collectionName, definitionData });
+      }))
+      .then(() => {
         collectionName = OpportunitiesCats.getCollectionName();
-        updateData = { title: title, owner: owner, category: categories };
-        updateMethod.callPromise({ collectionName, updateData });
+        const instance = { title };
+        removeItMethod.callPromise({ collectionName, instance });
+      })
+      .then(() => category.forEach(categories => {
+        definitionData = { title: title, owner: owner, category: categories };
+        defineMethod.callPromise({ collectionName, definitionData });
       }))
       .then(() => swal('Success', 'Opportunity edited successfully', 'success'))
       .catch(error => swal('Error', error.message, 'error'));
   };
+
   // For creating a form schema.
   const getAge = _.pluck(Ages.find().fetch(), 'age');
   const getEnvironment = _.pluck(Environments.find().fetch(), 'environment');
@@ -77,7 +89,6 @@ const EditOpportunity = ({ ready, _id }) => {
   const [newOpp] = opportunity;
   // console.log(newOpp);
   const [getTitle] = _.pluck(opportunity, 'title');
-  // console.log(getTitle2);
   const age = _.pluck(OpportunitiesAges.find({ title: getTitle }).fetch(), 'age');
   const category = _.pluck(OpportunitiesCats.find({ title: getTitle }).fetch(), 'category');
   const environment = _.pluck(OpportunitiesEnvs.find({ title: getTitle }).fetch(), 'environment');
