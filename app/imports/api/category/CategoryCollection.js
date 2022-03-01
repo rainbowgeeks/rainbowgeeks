@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
+import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
@@ -44,6 +45,18 @@ class CategoryCollection extends BaseCollection {
       updateData.category = category;
     }
     this._collection.update(docID, { $set: updateData });
+  }
+
+  /**
+   * A Stricter form of remove that throws an error if the document or docID could not be found in the collection.
+   * @param { String | Object } name A document or docID in the collection.
+   * @returns true
+   */
+  removeIt(name) {
+    const doc = this.findDoc(name);
+    check(doc, Object);
+    this._collection.remove(doc._id);
+    return true;
   }
 
   /**
@@ -133,6 +146,18 @@ class CategoryCollection extends BaseCollection {
    */
   assertValidRoleForMethod(userId) {
     this.assertRole(userId, [ROLE.ORGANIZATION, ROLE.ADMIN]);
+  }
+
+  /**
+   * Returns an object representing the definition of docID  in a format appropriate to the restoreOne or define function.
+   * @param docID.
+   * @return {{ environment }}
+   */
+  dumpOne(docID) {
+    const doc = this.findDoc(docID);
+    const environment = doc.environment;
+
+    return { environment };
   }
 }
 
