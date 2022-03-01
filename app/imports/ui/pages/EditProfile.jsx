@@ -3,7 +3,7 @@ import SimpleSchema from 'simpl-schema';
 import { Container, Divider, Form, Header, Loader, Segment } from 'semantic-ui-react';
 import {
   AutoForm,
-  ErrorsField,
+  ErrorsField, HiddenField,
   LongTextField,
   SelectField,
   SubmitField,
@@ -30,13 +30,17 @@ const EditProfile = ({ doc, ready }) => {
       firstName,
       lastName,
       phoneNumber,
-      aboutUser, _id } = data;
+      aboutUser,
+      environmentalPref,
+      _id } = data;
     const collectionName = UserProfileData.getCollectionName();
     const updateData = { id: _id,
       firstName,
       lastName,
       phoneNumber,
-      aboutUser };
+      aboutUser,
+      environmentalPref,
+    };
     console.log(updateData);
     updateMethod.callPromise({ collectionName, updateData })
       .catch(error => swal('Error', error.message, 'error'))
@@ -67,10 +71,17 @@ const EditProfile = ({ doc, ready }) => {
             <LongTextField name='aboutUser' placeholder='Edit About Me'/>
           </Segment>
         </Segment>
+        <Segment>
+          <Header as='h3' textAlign='center'>Update My Preferences</Header>
+          <Segment>
+            <SelectField name='environmentalPref'/>
+          </Segment>
+        </Segment>
         <Container textAlign='right'>
           <SubmitField id='submit-update-profile' value='update' />
         </Container>
         <ErrorsField />
+        <HiddenField name='owner'/>
       </AutoForm>
     </Container>
   ) : <Loader active>Getting data</Loader>;
