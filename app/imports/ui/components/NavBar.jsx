@@ -14,7 +14,7 @@ import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 const NavBar = ({ currentUser }) => {
   const menuStyle = { paddingBottom: '50px' };
   return (
-    <Menu className={'navbar-menu-orrientation'} style={menuStyle} attached='top' borderless stackable>
+    <Menu className={'navbar-menu-orrientation'} size={'tiny'} style={menuStyle} attached='top' borderless stackable>
       <Menu.Item className={'large-font'} id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/">
         <Header as='h1'>VA</Header>
       </Menu.Item>
