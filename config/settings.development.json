@@ -4,7 +4,7 @@
     { "email": "john@foo.com", "password": "changeme", "role": "USER" , "firstName": "John", "lastName": "Doe" },
     { "email": "perkin@foo.com", "password": "changeme", "role": "USER" , "firstName": "Perkin", "lastName": "Dawks" },
     { "email": "robin@foo.com", "password": "changeme", "role": "USER" , "firstName": "Robin", "lastName": "Wilcox" },
-    { "email": "bary@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Bary", "lastName": "Widdowson" },
+    { "email": "org@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Organization", "lastName": "User" },
     { "email": "blakelee@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Blakelee", "lastName": "O'Drought" },
     { "email": "leupold@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Leupold", "lastName": "Chappelle" },
     { "email": "mattie@foo.com", "password": "changeme", "role": "ORGANIZATION" , "firstName": "Mattie", "lastName": "Borless" },
