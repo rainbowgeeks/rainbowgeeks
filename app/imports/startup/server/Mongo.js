@@ -61,6 +61,7 @@ function addProfileData(profileData) {
 
 if (UserProfileData.count() === 0) {
   if (Meteor.settings.defaultProfileData) {
+    console.log('Creating default profile-users.');
     Meteor.settings.defaultProfileData.map(profileData => addProfileData(profileData));
   }
 }
