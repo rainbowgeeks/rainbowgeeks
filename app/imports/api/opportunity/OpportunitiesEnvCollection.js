@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
+import { _ } from 'meteor/underscore';
 import { Roles } from 'meteor/alanning:roles';
+import { check } from 'meteor/check';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
@@ -56,6 +58,22 @@ class OpportunitiesEnvCollection extends BaseCollection {
   }
 
   /**
+   * A Stricter form of remove that throws an error if the document or docID could not be found in the collection.
+   * @param { String | Object } name A document or docID in the collection.
+   * @returns true
+   */
+  removeIt(name) {
+    const ageID = _.pluck(this._collection.find(name).fetch(), 'title');
+    // eslint-disable-next-line no-shadow,no-restricted-syntax,no-unused-vars
+    for (const temp of ageID) {
+      const doc = this.findDoc(name);
+      check(doc, Object);
+      this._collection.remove(doc._id);
+    }
+    return true;
+  }
+
+  /**
    * It publishes the collection depending on the roles.
    */
   publish() {
@@ -89,8 +107,7 @@ class OpportunitiesEnvCollection extends BaseCollection {
        */
       Meteor.publish(opportunitiesEnvPublications.opportunitiesEnvOrganization, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ owner: username });
+          return instance._collection.find({});
         }
         return this.ready();
       });
@@ -155,6 +172,20 @@ class OpportunitiesEnvCollection extends BaseCollection {
    */
   assertValidRoleForMethod(userId) {
     this.assertRole(userId, [ROLE.ORGANIZATION, ROLE.ADMIN]);
+  }
+
+  /**
+   * Returns an object representing the definition of docID  in a format appropriate to the restoreOne or define function.
+   * @param docID.
+   * @return {{title, owner, cover, environment }}
+   */
+  dumpOne(docID) {
+    const doc = this.findDoc(docID);
+    const title = doc.title;
+    const owner = doc.owner;
+    const environment = doc.environment;
+
+    return { title, owner, environment };
   }
 }
 
