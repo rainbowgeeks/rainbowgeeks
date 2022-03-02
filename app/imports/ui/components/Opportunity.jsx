@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, GridRow } from 'semantic-ui-react';
+import { Card, GridRow, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { _ } from 'meteor/underscore';
 import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/BrowseOpportunity.jsx. */
@@ -16,13 +17,13 @@ const Opportunity = ({ opportunity }) => (
       </Card.Description>
       <Card.Meta>
         <GridRow>
-          Age: {opportunity.age}
+          Age: {_.map(opportunity.age, (age, index) => <Label key={index} size='tiny' color='teal'>{age}</Label>)}
         </GridRow>
         <GridRow>
-          Category: {opportunity.category}
+          Category: {_.map(opportunity.category, (category, index) => <Label key={index} size='tiny' color='teal'>{category}</Label>)}
         </GridRow>
         <GridRow>
-          Environment: {opportunity.environment}
+          Environment: {_.map(opportunity.environment, (environment, index) => <Label key={index} size='tiny' color='teal'>{environment}</Label>)}
         </GridRow>
       </Card.Meta>
     </Card.Content>

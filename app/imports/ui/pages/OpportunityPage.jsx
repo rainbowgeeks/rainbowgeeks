@@ -1,18 +1,50 @@
 import React from 'react';
-import { Container, Grid, Loader, Header, Segment, Table } from 'semantic-ui-react';
+import { Container, Grid, Loader, Header, Segment, Table, Button, Icon } from 'semantic-ui-react';
+import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
+import { PAGE_IDS } from '../utilities/PageIDs';
+import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+
+// eslint-disable-next-line no-unused-vars
+function isLoggedInUser(profileOwner) {
+  const { _id } = useParams();
+  // console.log(param1);
+  if (profileOwner === Meteor.user().username) {
+    return (
+      <Grid.Row column={1}>
+        <Grid.Column>
+          <Header inverted as='h2'>
+            <Button>
+              <Link to={`#/edit-opp/${_id}`}>
+                Edit Profile
+              </Link>
+            </Button>
+          </Header>
+        </Grid.Column>
+      </Grid.Row>
+    );
+  }
+  return null;
+}
 
 const OpportunityPage = ({ event, ready }) => {
   const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
   return (ready) ? (
-    <Container>
+    <Container id={PAGE_IDS.OPPORTUNITY_PAGE}>
       <Grid container style={{
         backgroundImage: `url('${event.cover}')`, height: '45vh',
         backgroundPosition: 'center' }}>
+        <Grid.Column>
+          <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={`/edit-opp/${event._id}`}>
+            <Icon name='setting' size='large'/>
+          </Link>
+          <Header as='h2' content={`${event.title}`} style={{ paddingTop: '300px' }}/>
+          <Header as='h2' content={`${event.date}`}/>
+        </Grid.Column>
       </Grid>
       <Grid container columns={2} style={gridHeigth}>
         <Grid.Row>
@@ -77,7 +109,6 @@ const OpportunityPage = ({ event, ready }) => {
             </Table>
           </Grid.Column>
         </Grid.Row>
-
       </Grid>
     </Container>
   ) : <Loader active>Fetching Event</Loader>;
@@ -89,11 +120,13 @@ OpportunityPage.propTypes = {
 };
 
 const OpportunityPageContainer = withTracker(() => {
-  const subscription = Opportunities.subscribeOpportunityAll();
+  const subscription = Opportunities.subscribeOpportunityPublic();
   const ready = subscription.ready();
   const { _id } = useParams();
+  console.log(useParams());
   const event = Opportunities.findOne({ _id: _id });
   console.log(event);
+  console.log('Now');
   return {
     event,
     ready,
