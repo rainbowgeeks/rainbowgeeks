@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import SimpleSchema from 'simpl-schema';
 import { Container, Divider, Form, Header, Loader, Segment } from 'semantic-ui-react';
 import {
   AutoForm,
-  ErrorsField, HiddenField,
+  ErrorsField,
   LongTextField,
   SelectField,
   SubmitField,
@@ -71,24 +70,24 @@ const EditProfile = ({ doc, ready }) => {
           <Header as="h3" textAlign="center">Update My Information</Header>
           <Segment padded>
             <Form.Group widths='equal'>
-              <TextField name='firstName' />
+              <TextField name='firstName' showinline/>
               <TextField name='lastName' />
               <TextField name='phoneNumber' />
             </Form.Group>
             <LongTextField name='aboutUser' placeholder='Edit About Me'/>
-            <SubmitField id='submit-update-profile' value='Submit' />
           </Segment>
         </Segment>
         <Segment>
           <Header as='h3' textAlign='center'>Update My Preferences</Header>
           <Segment>
             <TextField name='specialInterest'/>
-            <TextField name='interest'/>
-            <TextField name='environmentalPref'/>
+            <MultiSelectField name='interest'/>
+            <SelectField name='environmentalPref' checkboxes/>
+            <SelectField name='availability' checkboxes/>
           </Segment>
         </Segment>
         <Container textAlign='right'>
-
+          <SubmitField id='submit-update-profile' value='Submit' />
         </Container>
         <ErrorsField />
       </AutoForm>
