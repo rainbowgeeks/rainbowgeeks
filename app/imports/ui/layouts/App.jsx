@@ -11,6 +11,7 @@ import ListStuff from '../pages/ListStuff';
 import AdminProfile from '../pages/AdminProfile';
 import OrganizationLibrary from '../pages/OrganizationLibrary';
 import ManageOrganizations from '../pages/ManageOrganizations';
+import ManageOpportunities from '../pages/ManageOpportunities';
 import ManageUsers from '../pages/ManageUsers';
 import AddStuff from '../pages/AddStuff';
 import AddProfile from '../pages/AddProfile';
@@ -60,6 +61,7 @@ class App extends React.Component {
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-org" component={ManageOrganizations}/>
             <AdminProtectedRoute path="/manage-user" component={ManageUsers}/>
+            <AdminProtectedRoute path="/manage-opps" component={ManageOpportunities}/>
             <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
             <Route component={NotFound}/>
           </Switch>
