@@ -18,34 +18,45 @@ const NavBar = ({ currentUser }) => {
       {Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN]) ? (
         [<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-org" key="manage-org">
           Manage Organization
-        </Menu.Item>, <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-user" key="manage-user">
+        </Menu.Item>,
+        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-user" key="manage-user">
             Manage Users
+        </Menu.Item>,
+          <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-opps" key='org-manage'>
+          Manage Events
         </Menu.Item>]
-      ) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ? (
-        [<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-profile" key='org-profile'>
-        Manage Events
-        </Menu.Item>]) : [<Menu.Item className={'large-font'} id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/" key="home1">
-        <Header as='h1'>VA</Header>
-      </Menu.Item>,
-      <Menu.Item key="search">
-        <Input action={{ icon: 'search' }} placeholder='Search...' />
-      </Menu.Item>,
-      <Menu.Item key="home2" position={'right'} className={'large-font'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/">Home</Menu.Item>,
-      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter" key="filter">
-        Browse Opportunities</Menu.Item>, <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-library" key="org-library">
-          Organization Library </Menu.Item>]}
-      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/about">
-        About Us
-      </Menu.Item>
+      ) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ?
+        ([<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-profile" key='org-profile'>
+        Manage Profile
+        </Menu.Item>,
+        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-org" key='org-manage'>
+          Manage Events
+        </Menu.Item>]) : [
+          <Menu.Item className={'large-font'} id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/" key="home1">
+            <Header as='h1'>VA</Header>
+          </Menu.Item>,
+          <Menu.Item key="search">
+            <Input action={{ icon: 'search' }} placeholder='Search...' />
+          </Menu.Item>,
+          <Menu.Item key="home2" position={'right'} className={'large-font'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/">
+            Home
+          </Menu.Item>,
+          <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter" key="filter">
+        Browse Opportunities</Menu.Item>,
+          <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-library" key="org-library">
+          Organization Library </Menu.Item>,
+          <Menu.Item key='about' className={'large-font'} as={NavLink} activeClassName="active" exact to="/about">
+          About Us
+          </Menu.Item>]}
+
       <Menu.Item className={'large-font'} position="right">
         {(currentUser !== '') && (currentUser) ? (
           <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} className={'user-font-diff'} text={currentUser} pointing="top right" icon={'user'}>
             <Dropdown.Menu>
               {Roles.userIsInRole(Meteor.userId(), [ROLE.USER]) ? (
                 [<Dropdown.Item text="My OpportunityItem" key="/my-opportunity"/>,
-                  <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile" key="profile"/>]) :
-                Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ? ([]) :
-                  [<Dropdown.Item as={NavLink} text="Admin Profile" exact to="/admin" key="admin"/>]}
+                  <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile" key="profile"/>]) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ? ([]) :
+                [<Dropdown.Item as={NavLink} text="Admin Profile" exact to="/admin" key="admin"/>]}
               <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
             </Dropdown.Menu>
           </Dropdown>
