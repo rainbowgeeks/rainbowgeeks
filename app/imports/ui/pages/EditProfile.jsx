@@ -31,17 +31,24 @@ const EditProfile = ({ doc, ready }) => {
       lastName,
       phoneNumber,
       aboutUser,
+      specialInterest,
+      interest,
       environmentalPref,
+      availability,
       _id } = data;
+
     const collectionName = UserProfileData.getCollectionName();
-    const updateData = { id: _id,
+    const updateData = {
+      id: _id,
       firstName,
       lastName,
       phoneNumber,
       aboutUser,
+      specialInterest,
+      interest,
       environmentalPref,
+      availability,
     };
-    console.log(updateData);
     updateMethod.callPromise({ collectionName, updateData })
       .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
@@ -69,19 +76,21 @@ const EditProfile = ({ doc, ready }) => {
               <TextField name='phoneNumber' />
             </Form.Group>
             <LongTextField name='aboutUser' placeholder='Edit About Me'/>
+            <SubmitField id='submit-update-profile' value='Submit' />
           </Segment>
         </Segment>
         <Segment>
           <Header as='h3' textAlign='center'>Update My Preferences</Header>
           <Segment>
+            <TextField name='specialInterest'/>
+            <TextField name='interest'/>
             <TextField name='environmentalPref'/>
           </Segment>
         </Segment>
         <Container textAlign='right'>
-          <SubmitField id='submit-update-profile' value='submit' />
+
         </Container>
         <ErrorsField />
-        <HiddenField name='owner'/>
       </AutoForm>
     </Container>
   ) : <Loader active>Getting data</Loader>;
