@@ -61,7 +61,7 @@ function getOpportunities(titles) {
   const age = _.pluck(OpportunitiesAges.find({ title: titles }).fetch(), 'age');
   // console.log(age);
   const environment = _.pluck(OpportunitiesEnvs.find({ title: titles }).fetch(), 'environment');
-  const category = _.pluck(OpportunitiesCats.find({ title: titles}).fetch(), 'category');
+  const category = _.pluck(OpportunitiesCats.find({ title: titles }).fetch(), 'category');
   // const data2 = _.extend({ }, data, { age, environment });
   // console.log(data2);
   return _.extend({ }, data, { age, environment, category });
