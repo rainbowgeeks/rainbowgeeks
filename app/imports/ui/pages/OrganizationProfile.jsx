@@ -124,7 +124,7 @@ const OrganizationProfile = () => (
         <Grid.Column width={3}>
           <Menu vertical fluid>
             <Menu.Item header>Preferences</Menu.Item>
-            <Menu.Item as={NavLink} exact to="/manage-opps">Manage Opportunities</Menu.Item>
+            <Menu.Item as={NavLink} exact to="/manage-opps">Manage Events</Menu.Item>
             <Menu.Item>Manage Requests</Menu.Item>
             <Menu.Item>Analytics</Menu.Item>
           </Menu>
