@@ -82,32 +82,33 @@ class ProfilePageCollection extends BaseCollection {
   }
 
   update(docID, { firstName, lastName, phoneNumber, aboutUser, specialInterest, environmentalPref, availability, interest }) {
-    const updateData = {};
+    const updateUserData = {};
+
     if (firstName) {
-      updateData.firstName = firstName;
+      updateUserData.firstName = firstName;
     }
     if (lastName) {
-      updateData.lastName = lastName;
+      updateUserData.lastName = lastName;
     }
     if (phoneNumber) {
-      updateData.phoneNumber = phoneNumber;
+      updateUserData.phoneNumber = phoneNumber;
     }
     if (aboutUser) {
-      updateData.aboutUser = aboutUser;
+      updateUserData.aboutUser = aboutUser;
     }
     if (specialInterest) {
-      updateData.specialInterest = specialInterest;
+      updateUserData.specialInterest = specialInterest;
     }
     if (environmentalPref) {
-      updateData.environmentalPref = environmentalPref;
+      updateUserData.environmentalPref = environmentalPref;
     }
     if (availability) {
-      updateData.availability = availability;
+      updateUserData.availability = availability;
     }
     if (interest) {
-      updateData.interest = interest;
+      updateUserData.interest = interest;
     }
-    this._collection.update(docID, { $set: updateData });
+    this._collection.update(docID, { $set: updateUserData });
   }
 
   /**
