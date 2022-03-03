@@ -180,7 +180,7 @@ class ProfilePageCollection extends BaseCollection {
    * @throws { Meteor.Error } If thereis no looged in user, or the user is not an Admin or User.
    */
   assertValidRoleForMethod(userId) {
-    this.assertRole(userId, [ROLE.USER]);
+    this.assertRole(userId, [ROLE.USER, '']);
   }
 }
 

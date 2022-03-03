@@ -22,4 +22,8 @@ export const COMPONENT_IDS = {
   NAVBAR_ADD_STUFF: 'navbar-add-stuff',
   NAVBAR_LIST_STUFF: 'navbar-list-stuff',
   NAVBAR_LIST_STUFF_ADMIN: 'navbar-list-stuff-admin',
+
+
+  SIGN_UP_FORM_FIRST_NAME: 'sign-up-form-first-name',
+  SIGN_UP_FORM_LAST_NAME: 'sign-up-form-last-name',
 };

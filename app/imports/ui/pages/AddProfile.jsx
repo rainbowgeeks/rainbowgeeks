@@ -1,6 +1,14 @@
 import React from 'react';
-import { Grid, Segment, Header } from 'semantic-ui-react';
-import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField } from 'uniforms-semantic';
+import { Grid, Segment, Header, Form, Container } from 'semantic-ui-react';
+import {
+  AutoForm,
+  ErrorsField,
+  SubmitField,
+  TextField,
+  LongTextField,
+  SelectField,
+  HiddenField
+} from 'uniforms-semantic';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -9,6 +17,7 @@ import { Stuffs } from '../../api/stuff/StuffCollection';
 import { defineMethod } from '../../api/base/BaseCollection.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
+import MultiSelectField from '../../forms/controllers/MultiSelectField';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -26,10 +35,31 @@ const AddProfile = () => {
 
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { name, email, image, availability, interests } = data;
+    const {
+      firstName,
+      lastName,
+      phoneNumber,
+      interest,
+      specialInterest,
+      environmentalPref,
+      availability,
+      profileImage,
+      aboutUser } = data;
     const owner = Meteor.user().username;
-    const collectionName = Stuffs.getCollectionName();
-    const definitionData = { name, email, image, availability, interests, owner };
+    console.log(owner);
+    const collectionName = UserProfileData.getCollectionName();
+    const definitionData = {
+      owner,
+      firstName,
+      lastName,
+      phoneNumber,
+      interest,
+      specialInterest,
+      environmentalPref,
+      availability,
+      profileImage,
+      aboutUser };
+    definitionData.profileImage = 'https://react.semantic-ui.com/images/avatar/large/matthew.png';
     defineMethod.callPromise({ collectionName, definitionData })
       .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
@@ -46,16 +76,34 @@ const AddProfile = () => {
         <Header as="h2" textAlign="center">Add Profile</Header>
         <AutoForm ref={ref => {
           fRef = ref;
-        }} schema={bridge}>
+        }} schema={bridge}
+        onSubmit={data => submit(data, fRef)}>
           <Segment>
-            <TextField name='firstName'/>
-            <TextField name='lastName'/>
-            <TextField name='profileImage'/>
-            <LongTextField name='aboutUser'/>
-            <TextField name='specialInterest'/>
+            <Header as="h2" textAlign="center">Profile Information</Header>
+            <Segment padded>
+              <Form.Group widths='equal'>
+                <TextField name='firstName' showinline/>
+                <TextField name='owner'/>
+                <TextField name='lastName' />
+                <TextField name='phoneNumber' />
+                <TextField name='profileImage' placeholder='https://react.semantic-ui.com/images/avatar/large/matthew.png'/>
+              </Form.Group>
+              <LongTextField name='aboutUser' placeholder='Edit About Me'/>
+            </Segment>
+          </Segment>
+          <Segment>
+            <Header as='h3' textAlign='center'>My Prefrence</Header>
+            <Segment>
+              <TextField name='specialInterest'/>
+              <MultiSelectField name='interest'/>
+              <SelectField name='environmentalPref' checkboxes/>
+              <SelectField name='availability' checkboxes/>
+            </Segment>
+          </Segment>
+          <Container textAlign='right'>
             <SubmitField value='Submit'/>
             <ErrorsField/>
-          </Segment>
+          </Container>
         </AutoForm>
       </Grid.Column>
     </Grid>
