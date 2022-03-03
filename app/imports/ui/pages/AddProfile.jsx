@@ -7,7 +7,6 @@ import {
   TextField,
   LongTextField,
   SelectField,
-  HiddenField,
 } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
