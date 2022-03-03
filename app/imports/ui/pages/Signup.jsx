@@ -9,6 +9,7 @@ import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-semantic
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { signUpNewUserMethod } from '../../api/user/UserProfileCollection.methods';
+import Footer2 from '../components/Footer2';
 
 const formSchema = new SimpleSchema({
   firstName: String,
@@ -76,6 +77,7 @@ const Signup = ({ location }) => {
           </Message>
         </Grid.Column>
       </Grid>
+      <Footer2/>
     </Container>
   );
 };
