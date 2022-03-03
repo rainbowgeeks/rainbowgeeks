@@ -8,6 +8,7 @@ import SimpleSchema from 'simpl-schema';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 import { defineMethod } from '../../api/base/BaseCollection.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
+import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -18,7 +19,7 @@ const formSchema = new SimpleSchema({
   interests: String,
 });
 
-const bridge = new SimpleSchema2Bridge(formSchema);
+const bridge = new SimpleSchema2Bridge(UserProfileData._schema);
 
 /** Renders the Page for adding a document. */
 const AddProfile = () => {
@@ -45,13 +46,13 @@ const AddProfile = () => {
         <Header as="h2" textAlign="center">Add Profile</Header>
         <AutoForm ref={ref => {
           fRef = ref;
-        }} schema={bridge} onSubmit={data => submit(data, fRef)}>
+        }} schema={bridge}>
           <Segment>
-            <TextField name='name' id="profile-name"/>
-            <TextField name='email' id="profile-email"/>
-            <TextField name='image' id="profile-image"/>
-            <LongTextField name='availability' id="profile-availability"/>
-            <TextField name='interests' id="profile-interests"/>
+            <TextField name='firstName'/>
+            <TextField name='lastName'/>
+            <TextField name='profileImage'/>
+            <LongTextField name='aboutUser'/>
+            <TextField name='specialInterest'/>
             <SubmitField value='Submit'/>
             <ErrorsField/>
           </Segment>
@@ -61,4 +62,4 @@ const AddProfile = () => {
   );
 };
 
-export default AddProfile;
+export default (AddProfile);
