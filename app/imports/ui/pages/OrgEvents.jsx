@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { Stuffs } from '../../api/stuff/StuffCollection';
+import { NavLink } from 'react-router-dom';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const OrgEvents = ({ ready }) => ((ready) ? (
@@ -90,7 +91,7 @@ const OrgEvents = ({ ready }) => ((ready) ? (
     </Item.Group>
     <Divider hidden/>
     <Grid centered columns={1} padded>
-      <Button size="big" positive>Add Opportunity</Button>
+      <Button as={NavLink} exact to={'edit-opp/:_id'} size="big" positive>Add Opportunity</Button>
     </Grid>
   </Container>
 ) : <Loader active>Getting data</Loader>);
