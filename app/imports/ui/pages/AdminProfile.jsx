@@ -86,7 +86,7 @@ const AdminProfile = ({ ready }) => ((ready) ? (
         <Menu.Item as={NavLink} exact to="/manage-org">Manage Organizations</Menu.Item>
         <Menu.Item as={NavLink} exact to="/manage-opps">Manage Opportunities</Menu.Item>
         <Menu.Item>Site Preferences</Menu.Item>
-        <Menu.Item>Analytics</Menu.Item>
+        <Menu.Item as={NavLink} exact to="/admin-analytics">Analytics</Menu.Item>
       </Menu>
     </Grid.Column>
   </Grid>

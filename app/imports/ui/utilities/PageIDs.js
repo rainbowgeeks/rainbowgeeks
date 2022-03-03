@@ -17,6 +17,7 @@ export const PAGE_IDS = {
   SIGN_OUT: 'sign-out',
   SIGN_UP: 'sign-up',
   ORGANIZATION_PROFILE: 'org-profile',
+  ADMIN_ANALYTICS: 'admin-analytics',
 
   // Page ID's use for stuff collection probably will delete later.
   ADD_STUFF: 'add-stuff',
