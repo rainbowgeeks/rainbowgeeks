@@ -7,13 +7,11 @@ import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import NavBar from '../components/NavBar';
 import Landing from '../pages/Landing';
 import FilterOpportunities from '../pages/FilterOpportunities';
-import ListStuff from '../pages/ListStuff';
 import AdminProfile from '../pages/AdminProfile';
 import OrganizationLibrary from '../pages/OrganizationLibrary';
 import ManageOrganizations from '../pages/ManageOrganizations';
 import ManageOpportunities from '../pages/ManageOpportunities';
 import ManageUsers from '../pages/ManageUsers';
-import AddStuff from '../pages/AddStuff';
 import AddProfile from '../pages/AddProfile';
 import EditStuff from '../pages/EditStuff';
 import NotFound from '../pages/NotFound';
@@ -30,6 +28,7 @@ import UserTrackingHoursPage from '../pages/UserTrackingHoursPage';
 import AboutUs from '../pages/AboutUs';
 import AddOpportunity from '../pages/AddOpportunity';
 import EditOpportunity from '../pages/EditOpportunity';
+import OrgEvents from '../pages/OrgEvents';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -57,6 +56,7 @@ class App extends React.Component {
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
             <OrganizationProtectedRoute path="/add-opp" component={AddOpportunity}/>
             <OrganizationProtectedRoute path="/edit-opp/:_id" component={EditOpportunity}/>
+            <OrganizationProtectedRoute path="/manage-events" component={OrgEvents}/>
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-org" component={ManageOrganizations}/>
             <AdminProtectedRoute path="/manage-user" component={ManageUsers}/>

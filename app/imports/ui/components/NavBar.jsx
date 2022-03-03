@@ -15,6 +15,7 @@ const NavBar = ({ currentUser }) => {
   const menuStyle = { paddingBottom: '50px' };
   return (
     <Menu className={'navbar-menu-orrientation'} size={'tiny'} style={menuStyle} attached='top' borderless stackable>
+      {/* eslint-disable-next-line no-nested-ternary */}
       {Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN]) ? (
         [<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-org" key="manage-org">
           Manage Organization
@@ -22,16 +23,20 @@ const NavBar = ({ currentUser }) => {
         <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-user" key="manage-user">
             Manage Users
         </Menu.Item>,
-          <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-opps" key='org-manage'>
+        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-opps" key='org-manage'>
           Manage Events
         </Menu.Item>]
       ) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ?
         ([<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-profile" key='org-profile'>
         Manage Profile
         </Menu.Item>,
-        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-org" key='org-manage'>
+        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-events" key='org-manage'>
           Manage Events
-        </Menu.Item>]) : [
+        </Menu.Item>,
+        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/edit-opp/:_id" key='add-event'>
+            Add Event
+        </Menu.Item>,
+        ]) : [
           <Menu.Item className={'large-font'} id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/" key="home1">
             <Header as='h1'>VA</Header>
           </Menu.Item>,
@@ -53,6 +58,7 @@ const NavBar = ({ currentUser }) => {
         {(currentUser !== '') && (currentUser) ? (
           <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} className={'user-font-diff'} text={currentUser} pointing="top right" icon={'user'}>
             <Dropdown.Menu>
+              {/* eslint-disable-next-line no-nested-ternary */}
               {Roles.userIsInRole(Meteor.userId(), [ROLE.USER]) ? (
                 [<Dropdown.Item text="My OpportunityItem" key="/my-opportunity"/>,
                   <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile" key="profile"/>]) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ? ([]) :
