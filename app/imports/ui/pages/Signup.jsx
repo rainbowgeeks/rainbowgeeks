@@ -27,7 +27,6 @@ const Signup = ({ location }) => {
 
   /* Handle Signup submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (data, formRef) => {
-    console.log(data);
     signUpNewUserMethod.callPromise(data)
       .catch(error => {
         swal('Error', error.message, 'error');

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Segment, Header, Form, Container } from 'semantic-ui-react';
 import {
   AutoForm,
@@ -7,32 +7,22 @@ import {
   TextField,
   LongTextField,
   SelectField,
-  HiddenField
+  HiddenField,
 } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import SimpleSchema from 'simpl-schema';
-import { Stuffs } from '../../api/stuff/StuffCollection';
+import { Redirect } from 'react-router-dom';
 import { defineMethod } from '../../api/base/BaseCollection.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 
-// Create a schema to specify the structure of the data to appear in the form.
-const formSchema = new SimpleSchema({
-  name: String,
-  email: String,
-  image: String,
-  availability: String,
-  interests: String,
-});
-
 const bridge = new SimpleSchema2Bridge(UserProfileData._schema);
 
 /** Renders the Page for adding a document. */
 const AddProfile = () => {
-
+  const [redirectToReferer, setRedirectToReferer] = useState(false);
   // On submit, insert the data.
   const submit = (data, formRef) => {
     const {
@@ -46,7 +36,6 @@ const AddProfile = () => {
       profileImage,
       aboutUser } = data;
     const owner = Meteor.user().username;
-    console.log(owner);
     const collectionName = UserProfileData.getCollectionName();
     const definitionData = {
       owner,
@@ -64,10 +53,14 @@ const AddProfile = () => {
       .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
         swal('Success', 'Item added successfully', 'success');
+        setRedirectToReferer(true);
         formRef.reset();
       });
   };
-
+  const { from } = { from: { pathname: '/profile' } };
+  if (redirectToReferer) {
+    return <Redirect to={from}/>;
+  }
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   let fRef = null;
   return (
