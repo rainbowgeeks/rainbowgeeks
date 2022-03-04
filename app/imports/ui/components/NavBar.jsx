@@ -22,15 +22,13 @@ const NavBar = ({ currentUser }) => {
         <Input action={{ icon: 'search' }} placeholder='Search...' />
       </Menu.Item>
       <Menu.Item position={'right'} className={'large-font'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/">Home</Menu.Item>
-      {Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN]) ? (
-        [<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-org" key="manage-org">
-          Manage Organization
-        </Menu.Item>, <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-user" key="manage-user">
-            Manage Users
-        </Menu.Item>]
-      ) : [<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter" key="filter">
+      {Roles.userIsInRole(Meteor.userId(), [ROLE.USER]) ? (
+        [<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter" key="filter">
+          Browse Opportunities</Menu.Item>, <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-library" key="org-library">
+          Organization Library </Menu.Item>]
+      ) : ([<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter" key="filter">
         Browse Opportunities</Menu.Item>, <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-library" key="org-library">
-          Organization Library </Menu.Item>]}
+          Organization Library </Menu.Item>])}
       <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/about">
         About Us
       </Menu.Item>
@@ -41,7 +39,7 @@ const NavBar = ({ currentUser }) => {
               {Roles.userIsInRole(Meteor.userId(), [ROLE.USER]) ? (
                 [<Dropdown.Item text="My OpportunityItem" key="/my-opportunity"/>,
                   <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile" key="profile"/>]) :
-                [<Dropdown.Item as={NavLink} text="Admin Profile" exact to="/admin" key="admin"/>]}
+                ([<Dropdown.Item as={NavLink} text="Admin Profile" exact to="/admin" key="admin"/>])}
               <Dropdown.Item text="Account Settings"/>
               <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
             </Dropdown.Menu>

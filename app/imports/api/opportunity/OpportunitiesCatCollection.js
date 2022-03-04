@@ -1,37 +1,40 @@
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
-import { _ } from 'meteor/underscore';
 import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
+import { Opportunities } from './OpportunityCollection';
+import { Categories } from '../category/CategoryCollection';
 import { ROLE } from '../role/Role';
 
-export const opportunitiesCatPublications = {
-  opportunitiesCatPublic: 'OpportunitiesCatPublic',
-  opportunitiesCatUser: 'OpportunitiesCatUser',
-  opportunitiesCatOrganization: 'OpportunitiesCatOrganization',
-  opportunitiesCatAdmin: 'OpportunitiesCatAdmin',
+export const opportunitiesCategoryPublications = {
+  opportunitiesCategory: 'OpportunitiesCategory',
+  opportunitiesCategoryAdmin: 'OpportunitiesCategoryAdmin',
 };
 
 class OpportunitiesCatCollection extends BaseCollection {
   constructor() {
     super('OpportunitiesCats', new SimpleSchema({
-      title: String,
-      owner: String,
-      category: String,
+      oppID: String,
+      catID: String,
     }));
   }
 
   /**
    * Defines a new query collection.
-   * @param title the email address.
-   * @param age the age related to the opportunity.
+   * @param oppID the oppID of the item.
+   * @param catID the catID of the item.
+   * @return {String} the docID of the document.
    */
-  define({ title, owner, category }) {
+  define({ title, location, date, category }) {
+    const opp = Opportunities.findDoc({ title, location, date });
+    const cat = Categories.findDoc({ category });
+    const oppID = opp._id;
+    const catID = cat._id;
+
     const docID = this._collection.insert({
-      title,
-      owner,
-      category,
+      oppID,
+      catID,
     });
     return docID;
   }
@@ -39,19 +42,13 @@ class OpportunitiesCatCollection extends BaseCollection {
   /**
    * Updates the given document.
    * @param docID the id of the document to update.
-   * @param title the new title (optional).
+   * @param catID the new catID (optional).
    * @param category the new category (optional).
    */
-  update(docID, { title, owner, category }) {
+  update(docID, { catID }) {
     const updateData = {};
-    if (title) {
-      updateData.title = title;
-    }
-    if (owner) {
-      updateData.owner = owner;
-    }
-    if (category) {
-      updateData.category = category;
+    if (catID) {
+      updateData.catID = catID;
     }
     this._collection.update(docID, { $set: updateData });
   }
@@ -62,13 +59,9 @@ class OpportunitiesCatCollection extends BaseCollection {
    * @returns true
    */
   removeIt(name) {
-    const ageID = _.pluck(this._collection.find(name).fetch(), 'title');
-    // eslint-disable-next-line no-shadow,no-restricted-syntax,no-unused-vars
-    for (const temp of ageID) {
-      const doc = this.findDoc(name);
-      check(doc, Object);
-      this._collection.remove(doc._id);
-    }
+    const doc = this.findDoc(name);
+    check(doc, Object);
+    this._collection.remove(doc._id);
     return true;
   }
 
@@ -81,8 +74,8 @@ class OpportunitiesCatCollection extends BaseCollection {
       /**
        * This subscription publishes all documents regarding Roles.
        */
-      Meteor.publish(opportunitiesCatPublications.opportunitiesCatPublic, function publish() {
-        if (Meteor.isServer) {
+      Meteor.publish(opportunitiesCategoryPublications.opportunitiesCategory, function publish() {
+        if (this.userId) {
           return instance._collection.find();
         }
         return this.ready();
@@ -90,27 +83,7 @@ class OpportunitiesCatCollection extends BaseCollection {
       /**
        * This subscription publishes documents regarding the organization.
        */
-      Meteor.publish(opportunitiesCatPublications.opportunitiesCatUser, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.User)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ owner: username });
-        }
-        return this.ready();
-      });
-      /**
-       * This subscription publishes documents regarding the organization.
-       */
-      Meteor.publish(opportunitiesCatPublications.opportunitiesCatOrganization, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
-          return instance._collection.find({});
-        }
-        return this.ready();
-      });
-
-      /**
-       * This subscription publishes documents regarding the organization.
-       */
-      Meteor.publish(opportunitiesCatPublications.opportunitiesCatAdmin, function publish() {
+      Meteor.publish(opportunitiesCategoryPublications.opportunitiesCatAdmin, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
           return instance._collection.find();
         }
@@ -122,9 +95,9 @@ class OpportunitiesCatCollection extends BaseCollection {
   /**
    * Subscription method for the documents.
    */
-  subscribeOpportunitiesCatPublic() {
+  subscribeOpportunitiesCategory() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesCatPublications.opportunitiesCatPublic);
+      return Meteor.subscribe(opportunitiesCategoryPublications.opportunitiesCategory);
     }
     return null;
   }
@@ -132,29 +105,9 @@ class OpportunitiesCatCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeOpportunitiesCatUser() {
+  subscribeOpportunitiesCategoryAdmin() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesCatPublications.opportunitiesCatUser);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for all documents.
-   */
-  subscribeOpportunitiesCatOrganization() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesCatPublications.opportunitiesCatOrganization);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for all documents.
-   */
-  subscribeOpportunitiesCatAdmin() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesCatPublications.opportunitiesCatAdmin);
+      return Meteor.subscribe(opportunitiesCategoryPublications.opportunitiesCategoryAdmin);
     }
     return null;
   }

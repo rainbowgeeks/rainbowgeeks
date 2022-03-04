@@ -23,68 +23,79 @@ export const opportunityOrder = ['Upcoming', 'Latest', 'Nearby', 'A-Z'];
 export const opportunityDay = ['One Term', 'Short Term', 'Long Term'];
 
 // Create a Schema to specify the structure of the data to appear in the form.
-const formSchema = new SimpleSchema({
-  name: { type: String, optional: true },
-  order: {
+const makeSchema = (schemaAge, schemaEnv) => new SimpleSchema({
+  names: { type: String, optional: true },
+  orders: {
     type: String, optional: true,
     allowedValues: opportunityOrder,
     defaultValue: opportunityOrder[0],
   },
-  age: {
+  ages: {
     type: Array, optional: true,
     label: 'Age Group',
   },
-  'age.$': {
+  'ages.$': {
     type: String,
-    allowedValues: ['Adults', 'Family-Friendly', 'Teens', 'Seniors'],
+    allowedValues: _.pluck(schemaAge, 'age'),
   },
-  environment: {
+  environments: {
     type: Array, optional: true,
     label: 'Environment',
   },
-  'environment.$': {
+  'environments.$': {
     type: String,
-    allowedValues: ['Outdoors', 'Indoors', 'Mixed', 'Virtual'],
+    allowedValues: _.pluck(schemaEnv, 'environment'),
   },
-  time: {
+  times: {
     type: String, optional: true,
     allowedValues: opportunityDay,
     defaultValue: opportunityDay[0],
   },
 });
 //
-const bridge = new SimpleSchema2Bridge(formSchema);
 const gridHeigth = { paddingRight: '50px', paddingLeft: '50px' };
 //
-function getOpportunities(titles) {
-  const data = Opportunities.findOne({ title: titles });
-  const age = _.pluck(OpportunitiesAges.find({ title: titles }).fetch(), 'age');
-  // console.log(age);
-  const environment = _.pluck(OpportunitiesEnvs.find({ title: titles }).fetch(), 'environment');
-  const category = _.pluck(OpportunitiesCats.find({ title: titles }).fetch(), 'category');
-  // const data2 = _.extend({ }, data, { age, environment });
-  // console.log(data2);
-  return _.extend({ }, data, { age, environment, category });
+function ageIDD(_id) {
+  const age = Ages.findOne({ _id: _id });
+  return age.age;
+}
+//
+function environmentIDD(_id) {
+  const environment = Environments.findOne({ _id: _id });
+  return environment.environment;
+}
+//
+function getOpportunities(oppID) {
+  const opportunity = Opportunities.findOne({ _id: oppID });
+  const age = _.pluck(OpportunitiesAges.find({ oppID: oppID }).fetch(), 'ageID');
+  const ageID = age.map(ages => ageIDD(ages));
+  const environment = _.pluck(OpportunitiesEnvs.find({ oppID: oppID }).fetch(), 'envID');
+  const environmentID = environment.map(environments => environmentIDD(environments));
+  // const temp = _.extend({}, opportunity, { ageID, environmentID });
+  return _.extend({}, opportunity, { ageID, environmentID });
 }
 //
 const FilterOpportunities = ({ ready }) => {
-  // console.log(opportunities);
+
+  const schemaAge = Ages.find({}).fetch();
+  const schemaEnv = Environments.find({}).fetch();
+  const formSchema = makeSchema(schemaAge, schemaEnv);
+  const bridge = new SimpleSchema2Bridge(formSchema);
+
   const [filterParam, setFilterParam] = useState({
     order: '',
     age: [''],
     environment: [''],
   });
-  const { age, environment } = filterParam;
-  // console.log(age, environment);
-  //
-  const getAge = age ? _.flatten(age.map(ages => OpportunitiesAges.find({ age: { $in: [ages] } }).fetch())) : '';
-  const getEnvironment = environment ? _.flatten(environment.map(environments => OpportunitiesEnvs.find({ environment: { $in: [environments] } }).fetch())) : '';
-  // console.log(getEnvironment);
-  // console.log(getAge);
-  const getTitle = _.pluck(getAge, 'title').concat(_.pluck(getEnvironment, 'title'));
-  // console.log(getEmails);
-  const newOpportunities = _.uniq(getTitle).map(titles => getOpportunities(titles));
-  // console.log(newOpportunities);
+
+  const { ages, environments } = filterParam;
+  const getAge = ages ? _.pluck(ages.map(age => Ages.findDoc({ age })), '_id') : '';
+  const getEnv = environments ? _.pluck(environments.map(environment => Environments.findDoc({ environment })), '_id') : '';
+  const ageOppIds = getAge ? getAge.map(getAges => OpportunitiesAges.find({ ageID: getAges }).fetch()) : '';
+  const envOppIds = getEnv ? getEnv.map(getEnvs => OpportunitiesEnvs.find({ envID: getEnvs }).fetch()) : '';
+  const getIds = _.pluck(_.flatten(ageOppIds.concat(envOppIds)), 'oppID');
+  const newOpportunities = _.uniq(getIds).map(ids => getOpportunities(ids));
+
   const panes = [
     {
       menuItem: 'Filter',
@@ -92,11 +103,11 @@ const FilterOpportunities = ({ ready }) => {
       render: () => <Tab.Pane attached={false}>
         <AutoForm schema={bridge} onSubmit={data => setFilterParam(data)}>
           <Segment>
-            <TextField name='name'/>
-            <SelectField name='order'/>
-            <MultiSelectField name='age'/>
-            <MultiSelectField name='environment'/>
-            <SelectField name='time'/>
+            <TextField name='names'/>
+            <SelectField name='orders'/>
+            <MultiSelectField name='ages'/>
+            <MultiSelectField name='environments'/>
+            <SelectField name='times'/>
             <SubmitField value='Submit'/>
           </Segment>
         </AutoForm>
@@ -108,6 +119,7 @@ const FilterOpportunities = ({ ready }) => {
       render: () => <Tab.Pane attached={false}><CategoryOpp/></Tab.Pane>,
     },
   ];
+
   return ((ready) ? (
     <Container fluid style={gridHeigth}>
       <Header as="h1" textAlign="center">Browse Opportunity</Header>
@@ -134,7 +146,7 @@ const FilterOpportunities = ({ ready }) => {
         <Grid.Column width={5}>
           <Header as="h2" textAlign="center">Result</Header>
           <Card.Group className={'make-scrollable'} centered>
-            {newOpportunities.map((opportunity) => <Opportunity key={opportunity._id} opportunity={opportunity}/>)}
+            {newOpportunities.map(opportunities => <Opportunity key={opportunities._id} opportunity={opportunities}/>)}
           </Card.Group>
         </Grid.Column>
         <Grid.Column width={7}>
@@ -154,19 +166,19 @@ FilterOpportunities.propTypes = {
 //
 export default withTracker(() => {
   // Get access to opportunity documents.
-  const sub1 = Opportunities.subscribeOpportunityPublic();
+  const sub1 = Opportunities.subscribeOpportunity();
   // Get access to oppAge documents.
-  const sub2 = OpportunitiesAges.subscribeOpportunitiesAgePublic();
+  const sub2 = OpportunitiesAges.subscribeOpportunitiesAge();
   // Get access to oppEnvironment documents.
-  const sub3 = OpportunitiesEnvs.subscribeOpportunitiesEnvPublic();
+  const sub3 = OpportunitiesEnvs.subscribeOpportunitiesEnvironment();
   // Get access to oppCategory documents
-  const sub4 = OpportunitiesCats.subscribeOpportunitiesCatPublic();
+  const sub4 = OpportunitiesCats.subscribeOpportunitiesCategory();
   // Get access to age documents..
-  const sub5 = Ages.subscribeAgePublic();
+  const sub5 = Ages.subscribeAge();
   // Get access to category documents.
-  const sub6 = Categories.subscribeCategoryPublic();
+  const sub6 = Categories.subscribeCategory();
   // Get access to environment documents.
-  const sub7 = Environments.subscribeEnvironmentPublic();
+  const sub7 = Environments.subscribeEnvironment();
   // Determine if the subscription is ready
   const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready();
   //

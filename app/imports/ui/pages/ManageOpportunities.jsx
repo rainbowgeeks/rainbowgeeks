@@ -1,15 +1,15 @@
 import React from 'react';
-import { Loader, Container, Header, Input, List, Button, Item, Grid, Divider } from 'semantic-ui-react';
+import { Loader, Container, Header, Input, List, Card, Button, Image, Icon, Grid, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 
-/** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
+/** Renders a table containing all of the Opportunities documents. */
 const ManageOpportunities = ({ ready }) => ((ready) ? (
-  <Container id={PAGE_IDS.ORG_LIBRARY_PAGE}>
+  <Container id={PAGE_IDS.USER_LIBRARY_PAGE}>
     <Header as="h1" textAlign="center">Manage Opportunities</Header>
-    <Input fluid placeholder="Search Opportunities..."/>
+    <Input fluid placeholder="Search Profiles..."/>
     <List horizontal style={{ paddingBottom: '20px' }}>
       <List.Item>
         <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
@@ -21,76 +21,18 @@ const ManageOpportunities = ({ ready }) => ((ready) ? (
         <Button compact size='small'>Category</Button>
       </List.Item>
       <List.Item>
-        <Button compact size='small'>Age</Button>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small'>Environment</Button>
-      </List.Item>
-      <List.Item>
         <Button compact size='small'>Newest</Button>
       </List.Item>
+      <List.Item>
+        <Button compact size='small'>Popular</Button>
+      </List.Item>
     </List>
-    <Item.Group>
-      <Item>
-        <Item.Image size='tiny' src='/images/meteor-logo.png'/>
-        <Item.Content>
-          <Item.Header>Title</Item.Header>
-          <Item.Meta>
-            <span>date</span>
-            <span>address</span>
-          </Item.Meta>
-          <Item.Description>Description</Item.Description>
-          <Item.Extra>
-            <span>age</span>
-            <span>category</span>
-            <span>environment</span>
-            <Button floated='right' negative>Delete</Button>
-            <Button floated='right' positive>Edit</Button>
-          </Item.Extra>
-        </Item.Content>
-      </Item>
+    <Card.Group stackable centered itemsPerRow={3}>
 
-      <Item>
-        <Item.Image size='tiny' src='/images/meteor-logo.png'/>
-        <Item.Content>
-          <Item.Header>Title</Item.Header>
-          <Item.Meta>
-            <span>date</span>
-            <span>address</span>
-          </Item.Meta>
-          <Item.Description>Description</Item.Description>
-          <Item.Extra>
-            <span>age</span>
-            <span>category</span>
-            <span>environment</span>
-            <Button floated='right' negative>Delete</Button>
-            <Button floated='right' positive>Edit</Button>
-          </Item.Extra>
-        </Item.Content>
-      </Item>
-
-      <Item>
-        <Item.Image size='tiny' src='/images/meteor-logo.png'/>
-        <Item.Content>
-          <Item.Header>Title</Item.Header>
-          <Item.Meta>
-            <span>date</span>
-            <span>address</span>
-          </Item.Meta>
-          <Item.Description>Description</Item.Description>
-          <Item.Extra>
-            <span>age</span>
-            <span>category</span>
-            <span>environment</span>
-            <Button floated='right' negative>Delete</Button>
-            <Button floated='right' positive>Edit</Button>
-          </Item.Extra>
-        </Item.Content>
-      </Item>
-    </Item.Group>
-    <Divider hidden/>
+    </Card.Group>
+    <Divider hidden></Divider>
     <Grid centered columns={1} padded>
-      <Button size="big" positive>Add Opportunity</Button>
+      <Button size="big" positive>Add Profile</Button>
     </Grid>
   </Container>
 ) : <Loader active>Getting data</Loader>);

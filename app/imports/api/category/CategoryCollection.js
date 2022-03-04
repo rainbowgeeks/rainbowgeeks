@@ -6,9 +6,7 @@ import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
 export const categoryPublications = {
-  categoryPublic: 'CategoryPublic',
-  categoryUser: 'CategoryUser',
-  categoryOrganization: 'CategoryOrganization',
+  category: 'Category',
   categoryAdmin: 'CategoryAdmin',
 };
 
@@ -66,25 +64,12 @@ class CategoryCollection extends BaseCollection {
     if (Meteor.isServer) {
       const instance = this;
 
-      Meteor.publish(categoryPublications.categoryPublic, function publish() {
-        if (Meteor.isServer) {
+      /**
+       * Publications for the entire collection for users.
+       */
+      Meteor.publish(categoryPublications.category, function publish() {
+        if (this.userId) {
           return instance._collection.find();
-        }
-        return this.ready();
-      });
-
-      Meteor.publish(categoryPublications.categoryUser, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
-          const _id = Meteor.users.findOne(this.userId)._id;
-          return instance._collection.find({ _id: _id });
-        }
-        return this.ready();
-      });
-
-      Meteor.publish(categoryPublications.categoryOrganization, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
-          const _id = Meteor.users.findOne(this.userId)._id;
-          return instance._collection.find({ _id: _id });
         }
         return this.ready();
       });
@@ -99,37 +84,17 @@ class CategoryCollection extends BaseCollection {
   }
 
   /**
-   * Subscription
+   * Subscription for user collection.
    */
-  subscribeCategoryPublic() {
+  subscribeCategory() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(categoryPublications.categoryPublic);
+      return Meteor.subscribe(categoryPublications.category);
     }
     return null;
   }
 
   /**
-   * Subscription
-   */
-  subscribeCategoryUser() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(categoryPublications.categoryUser);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription
-   */
-  subscribeCategoryOrganization() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(categoryPublications.categoryOrganization);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription
+   * Subscription for admin.
    */
   subscribeCategoryAdmin() {
     if (Meteor.isClient) {

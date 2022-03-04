@@ -17,13 +17,10 @@ const Opportunity = ({ opportunity }) => (
       </Card.Description>
       <Card.Meta>
         <GridRow>
-          Age: {_.map(opportunity.age, (age, index) => <Label key={index} size='tiny' color='teal'>{age}</Label>)}
+          Age: {_.map(opportunity.ageID, (age, index) => <Label key={index} size='tiny' color='teal'>{age}</Label>)}
         </GridRow>
         <GridRow>
-          Category: {_.map(opportunity.category, (category, index) => <Label key={index} size='tiny' color='teal'>{category}</Label>)}
-        </GridRow>
-        <GridRow>
-          Environment: {_.map(opportunity.environment, (environment, index) => <Label key={index} size='tiny' color='teal'>{environment}</Label>)}
+          Environment: {_.map(opportunity.environmentID, (environment, index) => <Label key={index} size='tiny' color='teal'>{environment}</Label>)}
         </GridRow>
       </Card.Meta>
     </Card.Content>

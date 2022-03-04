@@ -6,16 +6,14 @@ import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
 export const opportunityPublications = {
-  opportunityPublic: 'OpportunityPublic',
-  opportunityUser: 'OpportunityUser',
-  opportunityOrganization: 'OpportunityOrganization',
+  opportunity: 'Opportunity',
   opportunityAdmin: 'OpportunityAdmin',
 };
 
 class OpportunityCollection extends BaseCollection {
   constructor() {
     super('Opportunities', new SimpleSchema({
-      title: { type: String, index: true, unique: true },
+      title: String,
       owner: String,
       cover: String,
       location: String,
@@ -101,28 +99,7 @@ class OpportunityCollection extends BaseCollection {
       /**
        * This subscription publishes all documents regardless of Roles.
        */
-      Meteor.publish(opportunityPublications.opportunityPublic, function publish() {
-        if (Meteor.isServer) {
-          return instance._collection.find();
-        }
-        return this.ready();
-      });
-
-      /**
-       * This subscription publishes documents associated with the user logged in.
-       */
-      Meteor.publish(opportunityPublications.opportunityUser, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ owner: username });
-        }
-        return this.ready();
-      });
-
-      /**
-       * This subscription publishes documents associated with the organization logged in.
-       */
-      Meteor.publish(opportunityPublications.opportunityOrganization, function publish() {
+      Meteor.publish(opportunityPublications.opportunity, function publish() {
         if (this.userId) {
           return instance._collection.find();
         }
@@ -144,29 +121,9 @@ class OpportunityCollection extends BaseCollection {
   /**
    * Subscription method for the opportunity available for public.
    */
-  subscribeOpportunityPublic() {
+  subscribeOpportunity() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunityPublications.opportunityPublic);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for the opportunity available for Current Users.
-   */
-  subscribeOpportunityUser() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(opportunityPublications.opportunityUser);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for the opportunity available for Current Organization.
-   */
-  subscribeOpportunityOrganization() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(opportunityPublications.opportunityOrganization);
+      return Meteor.subscribe(opportunityPublications.opportunity);
     }
     return null;
   }
