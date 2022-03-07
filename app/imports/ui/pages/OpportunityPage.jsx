@@ -120,13 +120,10 @@ OpportunityPage.propTypes = {
 };
 
 const OpportunityPageContainer = withTracker(() => {
-  const subscription = Opportunities.subscribeOpportunityPublic();
+  const subscription = Opportunities.subscribeOpportunity();
   const ready = subscription.ready();
   const { _id } = useParams();
-  console.log(useParams());
   const event = Opportunities.findOne({ _id: _id });
-  console.log(event);
-  console.log('Now');
   return {
     event,
     ready,

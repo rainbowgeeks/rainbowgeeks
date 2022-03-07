@@ -1,36 +1,42 @@
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { check } from 'meteor/check';
-import { _ } from 'meteor/underscore';
 import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
+import { Opportunities } from './OpportunityCollection';
+import { Ages } from '../age/AgeCollection';
 import { ROLE } from '../role/Role';
 
 export const opportunitiesAgePublications = {
-  opportunitiesAgePublic: 'OpportunitiesAgePublic',
-  opportunitiesAgeUser: 'OpportunityAgeUser',
-  opportunitiesAgeOrganization: 'OpportunityAgeOrganization',
+  opportunitiesAge: 'OpportunityAge',
   opportunitiesAgeAdmin: 'OpportunityAgeAdmin',
 };
 
 class OpportunitiesAgeCollection extends BaseCollection {
   constructor() {
     super('OpportunitiesAges', new SimpleSchema({
-      title: String,
-      owner: String,
+      oppID: String,
+      ageID: String,
       age: String,
     }));
   }
 
   /**
    * Defines a new query collection.
-   * @param title the email address.
-   * @param age the age related to the opportunity.
+   * @param oppID the oppID of the item.
+   * @param ageID the ageID of the item.
+   * @param age the ageID of the item.
+   * @return {String} the docID of the new document.
    */
-  define({ title, owner, age }) {
+  define({ title, location, date, age }) {
+    const opp = Opportunities.findDoc({ title, location, date });
+    const ages = Ages.findDoc({ age });
+    const oppID = opp._id;
+    const ageID = ages._id;
+
     const docID = this._collection.insert({
-      title,
-      owner,
+      oppID,
+      ageID,
       age,
     });
     return docID;
@@ -39,16 +45,12 @@ class OpportunitiesAgeCollection extends BaseCollection {
   /**
    * Updates the given document.
    * @param docID the id of the document to update.
-   * @param title the new title (optional).
-   * @param age the new age (optional).
+   * @param ageOD the new ageID (optional).
    */
-  update(docID, { title, owner, age }) {
+  update(docID, { ageID, age }) {
     const updateData = {};
-    if (title) {
-      updateData.title = title;
-    }
-    if (owner) {
-      updateData.owner = owner;
+    if (ageID) {
+      updateData.ageID = ageID;
     }
     if (age) {
       updateData.age = age;
@@ -62,13 +64,9 @@ class OpportunitiesAgeCollection extends BaseCollection {
    * @returns true
    */
   removeIt(name) {
-    const ageID = _.pluck(this._collection.find(name).fetch(), 'title');
-    // eslint-disable-next-line no-shadow,no-restricted-syntax,no-unused-vars
-    for (const temp of ageID) {
-      const doc = this.findDoc(name);
-      check(doc, Object);
-      this._collection.remove(doc._id);
-    }
+    const doc = this.findDoc(name);
+    check(doc, Object);
+    this._collection.remove(doc._id);
     return true;
   }
 
@@ -79,30 +77,11 @@ class OpportunitiesAgeCollection extends BaseCollection {
     if (Meteor.isServer) {
       const instance = this;
       /**
-       * This subscription publishes all documents regarding Roles.
+       * This subscription publishes documents regarding the organization.
        */
-      Meteor.publish(opportunitiesAgePublications.opportunitiesAgePublic, function publish() {
-        if (Meteor.isServer) {
+      Meteor.publish(opportunitiesAgePublications.opportunitiesAge, function publish() {
+        if (this.userId) {
           return instance._collection.find();
-        }
-        return this.ready();
-      });
-      /**
-       * This subscription publishes documents regarding the organization.
-       */
-      Meteor.publish(opportunitiesAgePublications.opportunitiesAgeUser, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.User)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ owner: username });
-        }
-        return this.ready();
-      });
-      /**
-       * This subscription publishes documents regarding the organization.
-       */
-      Meteor.publish(opportunitiesAgePublications.opportunitiesAgeOrganization, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
-          return instance._collection.find({});
         }
         return this.ready();
       });
@@ -120,31 +99,11 @@ class OpportunitiesAgeCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for the documents.
-   */
-  subscribeOpportunitiesAgePublic() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesAgePublications.opportunitiesAgePublic);
-    }
-    return null;
-  }
-
-  /**
    * Subscription method for all documents.
    */
-  subscribeOpportunitiesAgeUser() {
+  subscribeOpportunitiesAge() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesAgePublications.opportunitiesAgeUser);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for all documents.
-   */
-  subscribeOpportunitiesAgeOrganization() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesAgePublications.opportunitiesAgeOrganization);
+      return Meteor.subscribe(opportunitiesAgePublications.opportunitiesAge);
     }
     return null;
   }

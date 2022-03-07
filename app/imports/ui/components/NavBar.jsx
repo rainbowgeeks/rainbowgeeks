@@ -53,7 +53,6 @@ const NavBar = ({ currentUser }) => {
           <Menu.Item key='about' className={'large-font'} as={NavLink} activeClassName="active" exact to="/about">
           About Us
           </Menu.Item>]}
-
       <Menu.Item className={'large-font'} position="right">
         {(currentUser !== '') && (currentUser) ? (
           <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} className={'user-font-diff'} text={currentUser} pointing="top right" icon={'user'}>
@@ -63,6 +62,7 @@ const NavBar = ({ currentUser }) => {
                 [<Dropdown.Item text="My OpportunityItem" key="/my-opportunity"/>,
                   <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile" key="profile"/>]) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ? ([]) :
                 [<Dropdown.Item as={NavLink} text="Admin Profile" exact to="/admin" key="admin"/>]}
+
               <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
             </Dropdown.Menu>
           </Dropdown>

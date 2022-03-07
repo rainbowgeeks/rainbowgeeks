@@ -37,14 +37,14 @@ function addCategories(categories) {
 }
 
 function addOpportunity({ owner, title, cover, location, date, description, age, environment, category }) {
-  console.log(` Adding: ${title} (${owner})`);
-  Opportunities.define({ title: title, owner, cover, location, date, description });
-  age.map(ages => OpportunitiesAges.define({ title: title, owner: owner, age: ages }));
-  environment.map(environments => OpportunitiesEnvs.define({ title: title, owner: owner, environment: environments }));
-  category.map(categories => OpportunitiesCats.define({ title: title, owner: owner, category: categories }));
   age.map(ages => addAges(ages));
   environment.map(environments => addEnvironments(environments));
   category.map(categories => addCategories(categories));
+  console.log(` Adding: ${title} (${owner})`);
+  Opportunities.define({ title: title, owner, cover, location, date, description });
+  age.map(ages => OpportunitiesAges.define({ title: title, location: location, date: date, age: ages }));
+  environment.map(environments => OpportunitiesEnvs.define({ title: title, location: location, date: date, environment: environments }));
+  category.map(categories => OpportunitiesCats.define({ title: title, location: location, date: date, category: categories }));
 }
 
 if (Opportunities.count() === 0) {

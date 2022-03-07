@@ -102,19 +102,19 @@ AddOpportunity.propTypes = {
 
 export default withTracker(() => {
   // Get access to opportunity documents.
-  const sub1 = Opportunities.subscribeOpportunityOrganization();
+  const sub1 = Opportunities.subscribeOpportunity();
   // Get access to oppAge documents.
-  const sub2 = OpportunitiesAges.subscribeOpportunitiesAgeOrganization();
+  const sub2 = OpportunitiesAges.subscribeOpportunitiesAge();
   // Get access to oppEnvironment documents.
-  const sub3 = OpportunitiesEnvs.subscribeOpportunitiesEnvOrganization();
+  const sub3 = OpportunitiesEnvs.subscribeOpportunitiesEnvironment();
   // Get access to oppCategory documents
-  const sub4 = OpportunitiesCats.subscribeOpportunitiesCatOrganization();
+  const sub4 = OpportunitiesCats.subscribeOpportunitiesCategory();
   // Get access to age documents..
-  const sub5 = Ages.subscribeAgePublic();
+  const sub5 = Ages.subscribeAge();
   // Get access to category documents.
-  const sub6 = Categories.subscribeCategoryPublic();
+  const sub6 = Categories.subscribeCategory();
   // Get access to environment documents.
-  const sub7 = Environments.subscribeEnvironmentPublic();
+  const sub7 = Environments.subscribeEnvironment();
   // Determine if the subscription is ready
   const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready();
   //
