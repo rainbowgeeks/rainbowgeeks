@@ -8,7 +8,7 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const AdminProfile = ({ ready }) => ((ready) ? (
-  <Grid id={PAGE_IDS.ADMIN_PROFILE} columns={3} celled container>
+  <Grid id={PAGE_IDS.ADMIN_PROFILE} columns={3} padded='vertically' container>
     <Grid.Column textAlign='center' width={5}>
       <Image src='/images/meteor-logo.png' size='medium' circular centered/>
       <Divider hidden/>
@@ -86,7 +86,7 @@ const AdminProfile = ({ ready }) => ((ready) ? (
         <Menu.Item as={NavLink} exact to="/manage-org">Manage Organizations</Menu.Item>
         <Menu.Item as={NavLink} exact to="/manage-opps">Manage Opportunities</Menu.Item>
         <Menu.Item>Site Preferences</Menu.Item>
-        <Menu.Item>Analytics</Menu.Item>
+        <Menu.Item as={NavLink} exact to="/admin-analytics">Analytics</Menu.Item>
       </Menu>
     </Grid.Column>
   </Grid>

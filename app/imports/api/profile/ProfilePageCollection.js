@@ -81,6 +81,36 @@ class ProfilePageCollection extends BaseCollection {
     return docID;
   }
 
+  update(docID, { firstName, lastName, phoneNumber, aboutUser, specialInterest, environmentalPref, availability, interest }) {
+    const updateUserData = {};
+
+    if (firstName) {
+      updateUserData.firstName = firstName;
+    }
+    if (lastName) {
+      updateUserData.lastName = lastName;
+    }
+    if (phoneNumber) {
+      updateUserData.phoneNumber = phoneNumber;
+    }
+    if (aboutUser) {
+      updateUserData.aboutUser = aboutUser;
+    }
+    if (specialInterest) {
+      updateUserData.specialInterest = specialInterest;
+    }
+    if (environmentalPref) {
+      updateUserData.environmentalPref = environmentalPref;
+    }
+    if (availability) {
+      updateUserData.availability = availability;
+    }
+    if (interest) {
+      updateUserData.interest = interest;
+    }
+    this._collection.update(docID, { $set: updateUserData });
+  }
+
   /**
    * Default publication method for entities.
    * It publishes the entire collection for admin and just the collection associated to an owner.
@@ -144,13 +174,13 @@ class ProfilePageCollection extends BaseCollection {
   }
 
   /**
-   * Default implementation of assertValidRoleMethod. Asserts the userId is looged in as an Admin or User.
+   * Default implementation of assertValidRoleMethod. Asserts the userId is logged in as an Admin or User.
    * Used in define Meteor methods associated with each class.
-   * @param userId the userId of the looged in user. Can be null or undefined.
+   * @param userId the userId of the logged in user. Can be null or undefined.
    * @throws { Meteor.Error } If thereis no looged in user, or the user is not an Admin or User.
    */
-  assertValidRoleMethod(userId) {
-    this.assertRole(userId, [ROLE.ADMIN, ROLE.USER]);
+  assertValidRoleForMethod(userId) {
+    this.assertRole(userId, [ROLE.USER, '']);
   }
 }
 

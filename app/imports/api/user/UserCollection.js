@@ -10,6 +10,7 @@ import { Environments } from '../environment/EnvironmentCollection';
 import { OpportunitiesAges } from '../opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesEnvs } from '../opportunity/OpportunitiesEnvCollection';
 import { OpportunitiesCats } from '../opportunity/OpportunitiesCatCollection';
+import { UserProfileData } from '../profile/ProfilePageCollection';
 
 /**
  * Represents a user, which is someone who has a Meteor account.
@@ -103,6 +104,10 @@ class UserCollection {
    */
   isReferenced(user) {
     return Stuffs.find({ owner: user }).fetch().length > 0;
+  }
+
+  isUserProfileRefrenced(user) {
+    return UserProfileData.find( {owner: user}).fetch().length > 0;
   }
 
   /**
