@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Segment, Header, Loader } from 'semantic-ui-react';
 import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField } from 'uniforms-semantic';
 import swal from 'sweetalert';
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import { Redirect } from 'react-router-dom';
 import { useParams } from 'react-router';
 import SimpleSchema from 'simpl-schema';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
@@ -20,36 +21,15 @@ import { defineMethod, removeItMethod, updateMethod } from '../../api/base/BaseC
 // import { PAGE_IDS } from '../utilities/PageIDs';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 
-function ageIDD(_id) {
-  const getAge = Ages.findOne({ _id: _id });
-  return getAge.age;
-}
-
-//
-function envIDD(_id) {
-  const getEnvironment = Environments.findOne({ _id: _id });
-  return getEnvironment.environment;
-}
-
-//
-function catIDD(_id) {
-  const getCategory = Categories.findOne({ _id: _id });
-  return getCategory.category;
-}
-
-function getOpportunities(oppID) {
-  const [opportunity] = Opportunities.find({ _id: oppID }).fetch();
-  const ageID = _.pluck(OpportunitiesAges.find({ oppID: oppID }).fetch(), 'ageID');
-  const age = ageID.map(ages => ageIDD(ages));
-  const environmentID = _.pluck(OpportunitiesEnvs.find({ oppID: oppID }).fetch(), 'envID');
-  const environment = environmentID.map(environments => envIDD(environments));
-  const categoryID = _.pluck(OpportunitiesCats.find({ oppID: oppID }).fetch(), 'catID');
-  const category = categoryID.map(categories => catIDD(categories));
-  return _.extend({}, opportunity, { age, environment, category });
-}
+export const schemaAge = ['Adults', 'Family-Friendly', 'Teens', 'Seniors'];
+export const schemaEnv = ['Indoors', 'Mixed', 'Outdoors', 'Virtual'];
+export const schemaCat = ['Crisis/Disaster Relief', 'Food Insecurity', 'Environment',
+  'Child/Family Support', 'Education', 'Ongoing Position',
+  'Animal Welfare/ Rescue', 'Covid-19 Recovery',
+];
 
 // Create a schema to specify the structure of the data to appear in the form.
-const formSchema = (getAge, getEnvironment, getCategory) => new SimpleSchema({
+const formSchema = new SimpleSchema({
   owner: { type: String, optional: true },
   title: { type: String, optional: true },
   cover: { type: String, optional: true },
@@ -57,15 +37,23 @@ const formSchema = (getAge, getEnvironment, getCategory) => new SimpleSchema({
   location: { type: String, optional: true },
   description: { type: String, optional: true },
   age: { type: Array, label: 'Age' },
-  'age.$': { type: String, allowedValues: getAge },
+  'age.$': { type: String, allowedValues: schemaAge },
   environment: { type: Array, label: 'Environment' },
-  'environment.$': { type: String, allowedValues: getEnvironment },
+  'environment.$': { type: String, allowedValues: schemaEnv },
   category: { type: Array, label: 'Category' },
-  'category.$': { type: String, allowedValues: getCategory },
+  'category.$': { type: String, allowedValues: schemaCat },
 });
 
 /** Renders the Page for editing a document. */
 const EditOpportunity = ({ ready, _id }) => {
+  const [redirectToReferer, setRedirectToReferer] = useState(false);
+  const getOpportunities = (oppID) => {
+    const [opportunity] = Opportunities.find({ _id: oppID }).fetch();
+    const age = _.pluck(OpportunitiesAges.find({ oppID: oppID }).fetch(), 'age');
+    const environment = _.pluck(OpportunitiesEnvs.find({ oppID: oppID }).fetch(), 'environment');
+    const category = _.pluck(OpportunitiesCats.find({ oppID: oppID }).fetch(), 'category');
+    return _.extend({}, opportunity, { age, environment, category });
+  };
 
   // On submit, insert the data.
   const submit = (data) => {
@@ -113,15 +101,16 @@ const EditOpportunity = ({ ready, _id }) => {
       }))
       .then(() => swal('Success', 'Opportunity edited successfully', 'success'))
       .catch(error => swal('Error', error.message, 'error'));
+    setRedirectToReferer(true);
   };
 
-  // For creating a form schema.
-  const getAge = _.pluck(Ages.find({}).fetch(), 'age');
-  const getEnvironment = _.pluck(Environments.find({}).fetch(), 'environment');
-  const getCategory = _.pluck(Categories.find({}).fetch(), 'category');
-  const makeSchema = formSchema(getAge, getEnvironment, getCategory);
-  const bridge = new SimpleSchema2Bridge(makeSchema);
+  const { from } = { from: { pathname: '/org-profile' } };
+  if (redirectToReferer) {
+    return <Redirect to={from}/>;
+  }
 
+  // For creating a form schema.
+  const bridge = new SimpleSchema2Bridge(formSchema);
   // For pulling opportunity related to the _id
   const model = getOpportunities(_id);
 

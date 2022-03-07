@@ -28,13 +28,10 @@ const NavBar = ({ currentUser }) => {
         </Menu.Item>]
       ) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ?
         ([<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-profile" key='org-profile'>
-        Manage Profile
+        My Profile
         </Menu.Item>,
-        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-events" key='org-manage'>
-          Manage Events
-        </Menu.Item>,
-        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/edit-opp/:_id" key='add-event'>
-            Add Event
+        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-opp" key='manage-opp'>
+          Manage Opportunities
         </Menu.Item>,
         ]) : [
           <Menu.Item className={'large-font'} id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/" key="home1">

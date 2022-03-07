@@ -9,28 +9,6 @@ import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
-// eslint-disable-next-line no-unused-vars
-function isLoggedInUser(profileOwner) {
-  const { _id } = useParams();
-  // console.log(param1);
-  if (profileOwner === Meteor.user().username) {
-    return (
-      <Grid.Row column={1}>
-        <Grid.Column>
-          <Header inverted as='h2'>
-            <Button>
-              <Link to={`#/edit-opp/${_id}`}>
-                Edit Profile
-              </Link>
-            </Button>
-          </Header>
-        </Grid.Column>
-      </Grid.Row>
-    );
-  }
-  return null;
-}
-
 const OpportunityPage = ({ event, ready }) => {
   const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
   return (ready) ? (

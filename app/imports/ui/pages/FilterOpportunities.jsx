@@ -82,7 +82,6 @@ const FilterOpportunities = ({ ready }) => {
       opportunity = _.uniq(IDS);
     } else {
       opportunity = _.uniq(_.pluck(Opportunities.find({}).fetch(), '_id'));
-      console.log(opportunity);
     }
     return opportunity.map(opportunities => makeOpportunities(opportunities));
   };
@@ -96,7 +95,6 @@ const FilterOpportunities = ({ ready }) => {
   });
 
   const newOpportunities = getOpportunities(filterParam);
-  console.log(newOpportunities);
 
   const panes = [
     {
