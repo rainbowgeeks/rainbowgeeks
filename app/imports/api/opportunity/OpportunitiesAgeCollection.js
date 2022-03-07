@@ -17,6 +17,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
     super('OpportunitiesAges', new SimpleSchema({
       oppID: String,
       ageID: String,
+      age: String,
     }));
   }
 
@@ -24,6 +25,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
    * Defines a new query collection.
    * @param oppID the oppID of the item.
    * @param ageID the ageID of the item.
+   * @param age the ageID of the item.
    * @return {String} the docID of the new document.
    */
   define({ title, location, date, age }) {
@@ -35,6 +37,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
     const docID = this._collection.insert({
       oppID,
       ageID,
+      age,
     });
     return docID;
   }
@@ -44,10 +47,13 @@ class OpportunitiesAgeCollection extends BaseCollection {
    * @param docID the id of the document to update.
    * @param ageOD the new ageID (optional).
    */
-  update(docID, { ageID }) {
+  update(docID, { ageID, age }) {
     const updateData = {};
     if (ageID) {
       updateData.ageID = ageID;
+    }
+    if (age) {
+      updateData.age = age;
     }
     this._collection.update(docID, { $set: updateData });
   }

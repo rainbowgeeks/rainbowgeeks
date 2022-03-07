@@ -17,6 +17,7 @@ class OpportunitiesCatCollection extends BaseCollection {
     super('OpportunitiesCats', new SimpleSchema({
       oppID: String,
       catID: String,
+      category: String,
     }));
   }
 
@@ -24,6 +25,7 @@ class OpportunitiesCatCollection extends BaseCollection {
    * Defines a new query collection.
    * @param oppID the oppID of the item.
    * @param catID the catID of the item.
+   * @param category the category of the item.
    * @return {String} the docID of the document.
    */
   define({ title, location, date, category }) {
@@ -35,6 +37,7 @@ class OpportunitiesCatCollection extends BaseCollection {
     const docID = this._collection.insert({
       oppID,
       catID,
+      category,
     });
     return docID;
   }
@@ -45,10 +48,13 @@ class OpportunitiesCatCollection extends BaseCollection {
    * @param catID the new catID (optional).
    * @param category the new category (optional).
    */
-  update(docID, { catID }) {
+  update(docID, { catID, category }) {
     const updateData = {};
     if (catID) {
       updateData.catID = catID;
+    }
+    if (category) {
+      updateData.category = category;
     }
     this._collection.update(docID, { $set: updateData });
   }

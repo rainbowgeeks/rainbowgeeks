@@ -17,6 +17,7 @@ class OpportunitiesEnvCollection extends BaseCollection {
     super('OpportunitiesEnvs', new SimpleSchema({
       oppID: String,
       envID: String,
+      environment: String,
     }));
   }
 
@@ -24,6 +25,7 @@ class OpportunitiesEnvCollection extends BaseCollection {
    * Defines a new item.
    * @param oppID the oppID of the item.
    * @param envID the envID of the item.
+   * @param environment the environment of the item.
    * @return {String} the docID of the new document.
    */
   define({ title, location, date, environment }) {
@@ -35,6 +37,7 @@ class OpportunitiesEnvCollection extends BaseCollection {
     const docID = this._collection.insert({
       oppID,
       envID,
+      environment,
     });
     return docID;
   }
@@ -43,11 +46,15 @@ class OpportunitiesEnvCollection extends BaseCollection {
    * Updates the given document.
    * @param docID the id of the document to update.
    * @param envID the new envID (optional).
+   * @param environment the new environment.
    */
-  update(docID, { envID }) {
+  update(docID, { envID, environment }) {
     const updateData = {};
     if (envID) {
       updateData.envID = envID;
+    }
+    if (environment) {
+      updateData.environment = environment;
     }
     this._collection.update(docID, { $set: updateData });
   }
