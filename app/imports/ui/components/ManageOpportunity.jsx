@@ -3,7 +3,7 @@ import { Button, Card, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-const OpportunitiyItem = ({ opportunity }) => (
+const ManageOpportunity = ({ opportunity }) => (
   <Card>
     <Card.Content>
       <Card.Header>
@@ -27,8 +27,8 @@ const OpportunitiyItem = ({ opportunity }) => (
   </Card>
 );
 
-OpportunitiyItem.propTypes = {
+ManageOpportunity.propTypes = {
   opportunity: PropTypes.object.isRequired,
 };
 
-export default withRouter(OpportunitiyItem);
+export default withRouter(ManageOpportunity);
