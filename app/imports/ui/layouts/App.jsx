@@ -38,7 +38,7 @@ class App extends React.Component {
         <div>
           <NavBar/>
           <Switch>
-            <Route exact path="/" component={ManageOpportunities}/>
+            <Route exact path="/" component={Landing}/>
             <Route path="/filter" component={FilterOpportunities}/>
             <Route path="/event/:_id" component={OpportunityPage}/>
             <Route path="/signin" component={Signin}/>
@@ -55,6 +55,7 @@ class App extends React.Component {
             <ProtectedRoute path="/org-library" component={OrganizationLibrary}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
             <OrganizationProtectedRoute path="/add-opp" component={AddOpportunity}/>
+            <OrganizationProtectedRoute path="/manage-opp" component={ManageOpportunities}/>
             <OrganizationProtectedRoute path="/edit-opp/:_id" component={EditOpportunity}/>
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-org" component={ManageOrganizations}/>

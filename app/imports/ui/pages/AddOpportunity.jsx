@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Segment, Header, Loader } from 'semantic-ui-react';
 import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField } from 'uniforms-semantic';
 import swal from 'sweetalert';
-// import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
-import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
+import { Redirect } from 'react-router-dom';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { Categories } from '../../api/category/CategoryCollection';
 import { Ages } from '../../api/age/AgeCollection';
@@ -19,8 +18,15 @@ import { defineMethod } from '../../api/base/BaseCollection.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 
+export const schemaAge = ['Adults', 'Family-Friendly', 'Teens', 'Seniors'];
+export const schemaEnv = ['Indoors', 'Mixed', 'Outdoors', 'Virtual'];
+export const schemaCat = ['Crisis/Disaster Relief', 'Food Insecurity', 'Environment',
+  'Child/Family Support', 'Education', 'Ongoing Position',
+  'Animal Welfare/ Rescue', 'Covid-19 Recovery',
+];
+
 // Create a schema to specify the structure of the data to appear in the form.
-const formSchema = (getAge, getEnvironment, getCategory) => new SimpleSchema({
+const formSchema = new SimpleSchema({
   owner: String,
   title: String,
   cover: String,
@@ -28,16 +34,16 @@ const formSchema = (getAge, getEnvironment, getCategory) => new SimpleSchema({
   location: String,
   description: { type: String, optional: true },
   age: { type: Array, label: 'Age' },
-  'age.$': { type: String, allowedValues: getAge },
+  'age.$': { type: String, allowedValues: schemaAge },
   environment: { type: Array, label: 'Environment' },
-  'environment.$': { type: String, allowedValues: getEnvironment },
+  'environment.$': { type: String, allowedValues: schemaEnv },
   category: { type: Array, label: 'Category' },
-  'category.$': { type: String, allowedValues: getCategory },
+  'category.$': { type: String, allowedValues: schemaCat },
 });
 
 /** Renders the Page for adding a document. */
 const AddOpportunity = ({ ready }) => {
-
+  const [redirectToReferer, setRedirectToReferer] = useState(false);
   // On submit, insert the data.
   const submit = (data, formRef) => {
     const { owner, title, cover, date, location, description, age, environment, category } = data;
@@ -60,20 +66,22 @@ const AddOpportunity = ({ ready }) => {
       .then(() => swal('Success', 'Opportunity added successfully', 'success'))
       .catch(error => swal('Error', error.message, 'error'));
     formRef.reset();
+    setRedirectToReferer(true);
   };
 
-  const getAge = _.pluck(Ages.find().fetch(), 'age');
-  const getEnvironment = _.pluck(Environments.find().fetch(), 'environment');
-  const getCategory = _.pluck(Categories.find().fetch(), 'category');
-  const makeSchema = formSchema(getAge, getEnvironment, getCategory);
-  const bridge = new SimpleSchema2Bridge(makeSchema);
+  const { from } = { from: { pathname: '/org-profile' } };
+  if (redirectToReferer) {
+    return <Redirect to={from} />;
+  }
+
+  const bridge = new SimpleSchema2Bridge(formSchema);
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   let fRef = null;
   return ((ready) ? (
     <Grid container centered>
       <Grid.Column>
-        <Header as="h2" textAlign="center">Add ORGANIZATION</Header>
+        <Header as="h2" textAlign="center">Add Opportunity</Header>
         <AutoForm ref={ref => {
           fRef = ref;
         }} schema={bridge} onSubmit={data => submit(data, fRef)}>
