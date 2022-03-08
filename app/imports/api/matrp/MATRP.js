@@ -1,5 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../stuff/StuffCollection';
+import { Organizations } from '../organization/OrganizationCollection';
+import { OrganizationPocs } from '../organization/OrganizationPocCollection';
+import { OpportunitiesPocs } from '../opportunity/OpportunitiesPocCollection';
+import { PointOfContacts } from '../point-of-contact/PointOfContactCollection';
 import { Opportunities } from '../opportunity/OpportunityCollection';
 import { Categories } from '../category/CategoryCollection';
 import { Ages } from '../age/AgeCollection';
@@ -27,11 +31,15 @@ class MATRPClass {
       Categories,
       Environments,
       Stuffs,
+      Organizations,
+      OrganizationPocs,
       Opportunities,
+      OpportunitiesPocs,
       OpportunitiesCats,
       OpportunitiesAges,
       OpportunitiesEnvs,
       OrganizationProfiles,
+      PointOfContacts,
       UserProfileData,
       UserProfiles,
     ];
@@ -44,11 +52,15 @@ class MATRPClass {
       Categories,
       Environments,
       Stuffs,
+      Organizations,
+      OrganizationPocs,
       Opportunities,
+      OpportunitiesPocs,
       OpportunitiesCats,
       OpportunitiesAges,
       OpportunitiesEnvs,
       OrganizationProfiles,
+      PointOfContacts,
       UserProfileData,
       UserProfiles,
     ];
