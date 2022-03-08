@@ -9,6 +9,10 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import GoogleMap from '../components/GoogleMap';
 import CategoryOpp from '../components/CategoryOpp';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
+import { Organizations } from '../../api/organization/OrganizationCollection';
+import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
+import { OpportunitiesPocs } from '../../api/opportunity/OpportunitiesPocCollection';
+import { PointOfContacts } from '../../api/point-of-contact/PointOfContactCollection';
 import { Categories } from '../../api/category/CategoryCollection';
 import { Environments } from '../../api/environment/EnvironmentCollection';
 import { Ages } from '../../api/age/AgeCollection';
@@ -180,7 +184,11 @@ export default withTracker(() => {
   // Get access to environment documents.
   const sub7 = Environments.subscribeEnvironment();
   // Determine if the subscription is ready
-  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready();
+  const sub8 = Organizations.subscribeOrganization();
+  const sub9 = OrganizationPocs.subscribeOrganizationPoc();
+  const sub10 = PointOfContacts.subscribePointOfContact();
+  const sub11 = OpportunitiesPocs.subscribeOpportunitiesPoc();
+  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready() && sub8.ready() && sub9.ready() && sub10.ready() && sub11.ready();
   //
   return {
     ready,
