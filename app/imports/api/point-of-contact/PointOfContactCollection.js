@@ -13,10 +13,10 @@ export const pointOfContactPublications = {
 class PointOfContactCollection extends BaseCollection {
   constructor() {
     super('PointOfContacts', new SimpleSchema({
+      email: { type: String, index: true, unique: true },
       firstName: String,
       lastName: String,
       phoneNumber: String,
-      email: String,
     }));
   }
 

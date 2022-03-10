@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Grid, Segment, Header, Loader } from 'semantic-ui-react';
-import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField } from 'uniforms-semantic';
+import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField, HiddenField } from 'uniforms-semantic';
 import swal from 'sweetalert';
-// import { Meteor } from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -11,6 +11,10 @@ import { Redirect } from 'react-router-dom';
 import { useParams } from 'react-router';
 import SimpleSchema from 'simpl-schema';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
+import { Organizations } from '../../api/organization/OrganizationCollection';
+import { OpportunitiesPocs } from '../../api/opportunity/OpportunitiesPocCollection';
+import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
+import { PointOfContacts } from '../../api/point-of-contact/PointOfContactCollection';
 import { Categories } from '../../api/category/CategoryCollection';
 import { Ages } from '../../api/age/AgeCollection';
 import { Environments } from '../../api/environment/EnvironmentCollection';
@@ -20,6 +24,7 @@ import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollect
 import { defineMethod, removeItMethod, updateMethod } from '../../api/base/BaseCollection.methods';
 // import { PAGE_IDS } from '../utilities/PageIDs';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
+import RadioField from '../../forms/controllers/RadioField';
 
 export const schemaAge = ['Adults', 'Family-Friendly', 'Teens', 'Seniors'];
 export const schemaEnv = ['Indoors', 'Mixed', 'Outdoors', 'Virtual'];
@@ -29,8 +34,10 @@ export const schemaCat = ['Crisis/Disaster Relief', 'Food Insecurity', 'Environm
 ];
 
 // Create a schema to specify the structure of the data to appear in the form.
-const formSchema = new SimpleSchema({
-  owner: { type: String, optional: true },
+const formSchema = (pocSchema) => new SimpleSchema({
+  owner: { type: String, optional: true,
+    allowedValues: pocSchema, label: 'Point of Contact',
+  },
   title: { type: String, optional: true },
   cover: { type: String, optional: true },
   date: { type: String, optional: true },
@@ -45,7 +52,7 @@ const formSchema = new SimpleSchema({
 });
 
 /** Renders the Page for editing a document. */
-const EditOpportunity = ({ ready, _id }) => {
+const EditOpportunity = ({ ready, _id, username }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
   const getOpportunities = (oppID) => {
     const [opportunity] = Opportunities.find({ _id: oppID }).fetch();
@@ -56,29 +63,33 @@ const EditOpportunity = ({ ready, _id }) => {
   };
 
   // On submit, insert the data.
+  // Need to update opportunity, oppAge Env Cat, orgPOC, oppPoc.
   const submit = (data) => {
     const { owner, title, cover, date, location, description, age, environment, category } = data;
-    let tempCollection = _.pluck(OpportunitiesAges.find({ oppID: _id }).fetch(), 'ageID');
-    let oppID;
+    let getIDS;
     let definitionData;
     let collectionName = Opportunities.getCollectionName();
-    const updateData = { id: _id, owner, title, cover, date, location, description };
-    updateMethod.callPromise({ collectionName, updateData }).then(() => tempCollection.forEach(ageID => {
-      collectionName = OpportunitiesAges.getCollectionName();
-      oppID = _id;
-      const instance = { oppID, ageID };
-      removeItMethod.callPromise({ collectionName, instance });
-    }))
+    let updateData = { id: _id, owner, title, cover, date, location, description };
+    const orgID = Organizations.findDoc({ orgEmail: username })._id;
+    const pocID = PointOfContacts.findDoc({ email: owner })._id;
+    updateMethod.callPromise({ collectionName, updateData })
+      .then(() => {
+        getIDS = _.pluck(OpportunitiesAges.find({ oppID: _id }).fetch(), '_id');
+        getIDS.forEach(ID => {
+          collectionName = OpportunitiesAges.getCollectionName();
+          const instance = { _id: ID };
+          removeItMethod.callPromise({ collectionName, instance });
+        });
+      })
       .then(() => age.forEach(ages => {
         definitionData = { title: title, location: location, date: date, age: ages };
         defineMethod.callPromise({ collectionName, definitionData });
       }))
       .then(() => {
-        tempCollection = _.pluck(OpportunitiesEnvs.find({ oppID: _id }).fetch(), 'envID');
-        tempCollection.forEach(envID => {
-          oppID = _id;
+        getIDS = _.pluck(OpportunitiesEnvs.find({ oppID: _id }).fetch(), '_id');
+        getIDS.forEach(ID => {
           collectionName = OpportunitiesEnvs.getCollectionName();
-          const instance = { oppID, envID };
+          const instance = { _id: ID };
           removeItMethod.callPromise({ collectionName, instance });
         });
       })
@@ -87,11 +98,10 @@ const EditOpportunity = ({ ready, _id }) => {
         defineMethod.callPromise({ collectionName, definitionData });
       }))
       .then(() => {
-        tempCollection = _.pluck(OpportunitiesCats.find({ oppID: _id }).fetch(), 'catID');
-        tempCollection.forEach(catID => {
-          oppID = _id;
+        getIDS = _.pluck(OpportunitiesCats.find({ oppID: _id }).fetch(), '_id');
+        getIDS.forEach(ID => {
           collectionName = OpportunitiesCats.getCollectionName();
-          const instance = { oppID, catID };
+          const instance = { _id: ID };
           removeItMethod.callPromise({ collectionName, instance });
         });
       })
@@ -99,6 +109,16 @@ const EditOpportunity = ({ ready, _id }) => {
         definitionData = { title: title, location: location, date: date, category: categories };
         defineMethod.callPromise({ collectionName, definitionData });
       }))
+      .then(() => {
+        getIDS = OrganizationPocs.findDoc({ orgID, pocEmail: owner })._id;
+        collectionName = OrganizationPocs.getCollectionName();
+        updateData = { id: getIDS, email: owner, pocID };
+      })
+      .then(() => {
+        getIDS = OpportunitiesPocs.findDoc({ oppID: _id });
+        collectionName = OpportunitiesPocs.getCollectionName();
+        updateData = { id: getIDS._id, pocID, pocEmail: owner };
+      })
       .then(() => swal('Success', 'Opportunity edited successfully', 'success'))
       .catch(error => swal('Error', error.message, 'error'));
     setRedirectToReferer(true);
@@ -110,7 +130,9 @@ const EditOpportunity = ({ ready, _id }) => {
   }
 
   // For creating a form schema.
-  const bridge = new SimpleSchema2Bridge(formSchema);
+  const pocSchema = _.pluck(OrganizationPocs.find({ orgEmail: username }).fetch(), 'pocEmail');
+  const makeSchema = formSchema(pocSchema, username);
+  const bridge = new SimpleSchema2Bridge(makeSchema);
   // For pulling opportunity related to the _id
   const model = getOpportunities(_id);
 
@@ -121,7 +143,7 @@ const EditOpportunity = ({ ready, _id }) => {
         <Header as="h2" textAlign="center">Edit Opportunity</Header>
         <AutoForm model={model} schema={bridge} onSubmit={data => submit(data)}>
           <Segment>
-            <TextField name='owner'/>
+            <RadioField name='owner'/>
             <TextField name='title'/>
             <TextField name='cover'/>
             <TextField name='date'/>
@@ -140,14 +162,17 @@ const EditOpportunity = ({ ready, _id }) => {
 };
 
 EditOpportunity.propTypes = {
+  username: PropTypes.string,
   _id: PropTypes.string,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
-  // Ge the documentID from the URL field.
+  // Get the username of current user.
+  const username = Meteor.user().username;
+  // Get the documentID from the URL field.
   const { _id } = useParams();
-  // Get access to opportunity documents.
+  // Gives access to opportunity documents
   const sub1 = Opportunities.subscribeOpportunity();
   // Get access to oppAge documents.
   const sub2 = OpportunitiesAges.subscribeOpportunitiesAge();
@@ -161,10 +186,15 @@ export default withTracker(() => {
   const sub6 = Categories.subscribeCategory();
   // Get access to environment documents.
   const sub7 = Environments.subscribeEnvironment();
+  const sub8 = Organizations.subscribeOrganization();
+  const sub9 = OpportunitiesPocs.subscribeOpportunitiesPoc();
+  const sub10 = OrganizationPocs.subscribeOrganizationPoc();
+  const sub11 = PointOfContacts.subscribePointOfContact();
   // Determine if the subscription is ready
-  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready();
+  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready() && sub8.ready() && sub9.ready() && sub10.ready() && sub11.ready();
   //
   return {
+    username,
     _id,
     ready,
   };

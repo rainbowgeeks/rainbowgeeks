@@ -7,6 +7,8 @@ import { Organizations } from '../organization/OrganizationCollection';
 import { Opportunities } from '../opportunity/OpportunityCollection';
 import { PointOfContacts } from '../point-of-contact/PointOfContactCollection';
 import { Categories } from '../category/CategoryCollection';
+import { OpportunitiesPocs } from '../opportunity/OpportunitiesPocCollection';
+import { OrganizationPocs } from '../organization/OrganizationPocCollection';
 import { Ages } from '../age/AgeCollection';
 import { Environments } from '../environment/EnvironmentCollection';
 import { OpportunitiesAges } from '../opportunity/OpportunitiesAgeCollection';
@@ -170,6 +172,26 @@ class UserCollection {
    */
   isOpportunitiesCatReferenced(user) {
     return OpportunitiesCats.find({ owner: user }).fetch().length > 0;
+  }
+
+  /**
+   * Returns true if user is referenced by other "public" entities. Specifically user owns Age.
+   * Used to determine if user can be deleted.
+   * @param user
+   * @return {boolean}
+   */
+  isOpportunitiesPocReferenced(user) {
+    return OpportunitiesPocs.find({ owner: user }).fetch().length > 0;
+  }
+
+  /**
+   * Returns true if user is referenced by other "public" entities. Specifically user owns Age.
+   * Used to determine if user can be deleted.
+   * @param user
+   * @return {boolean}
+   */
+  isOrganizationsPocReferenced(user) {
+    return OrganizationPocs.find({ owner: user }).fetch().length > 0;
   }
 
   /**

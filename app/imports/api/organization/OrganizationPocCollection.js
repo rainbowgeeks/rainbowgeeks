@@ -17,6 +17,7 @@ class OrganizationPocCollection extends BaseCollection {
     super('OrganizationPocs', new SimpleSchema({
       orgID: String,
       pocID: String,
+      orgEmail: String,
       pocEmail: String,
     }));
   }
@@ -28,18 +29,21 @@ class OrganizationPocCollection extends BaseCollection {
    * @param pocEmail the email of the poc in the item.
    * @return {String} the docID of the new document.
    */
-  define({ email, organizationName }) {
-    const org = Organizations.findDoc({ organizationName });
+  define({ email, orgEmail }) {
+    const org = Organizations.findDoc({ orgEmail });
     const poc = PointOfContacts.findDoc({ email });
     const orgID = org._id;
     const pocID = poc._id;
-
-    const docID = this._collection.insert({
+    const docID = this.findOne({ pocEmail: email, orgEmail });
+    if (docID) {
+      return docID._id;
+    }
+    return this._collection.insert({
       orgID,
       pocID,
       pocEmail: email,
+      orgEmail: orgEmail,
     });
-    return docID;
   }
 
   /**

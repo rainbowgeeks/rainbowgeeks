@@ -40,10 +40,9 @@ function addCategories(categories) {
   Categories.define({ category: categories });
 }
 
-function addPointOfContact(pointOfContact, organizationName) {
-  const { firstName, lastName, phoneNumber, email } = pointOfContact;
+function addPointOfContact({ firstName, lastName, phoneNumber, email }, orgEmail) {
   PointOfContacts.define({ firstName, lastName, phoneNumber, email });
-  OrganizationPocs.define({ email: email, organizationName });
+  OrganizationPocs.define({ email: email, orgEmail });
 }
 
 function addOpportunity({ owner, title, cover, location, date, description, age, environment, category }) {
@@ -61,7 +60,7 @@ function addOpportunity({ owner, title, cover, location, date, description, age,
 function addOrganization({ organizationName, missionStatement, organizationDescription, orgEmail, pointOfContacts }) {
   console.log(` Adding Organization: ${organizationName}`);
   Organizations.define({ organizationName: organizationName, missionStatement, description: organizationDescription, orgEmail });
-  pointOfContacts.map(pointOfContact => addPointOfContact(pointOfContact, organizationName));
+  pointOfContacts.map(pointOfContact => addPointOfContact(pointOfContact, orgEmail));
 }
 
 if (Organizations.count() === 0) {
