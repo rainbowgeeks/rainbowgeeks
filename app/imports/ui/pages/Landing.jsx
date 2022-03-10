@@ -7,7 +7,7 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 /** A simple static component to render some text for the landing page. */
 const Landing = () => (
   <div id={PAGE_IDS.LANDING}>
-    <div className="grad-background">
+    <div className="grad-background" fluid>
       <Container>
         <Image className="logo-center" src='https://cdn.discordapp.com/attachments/441780757967405067/943848010306183208/VAlogo.png'></Image>
         <h1 className="h1">
@@ -22,7 +22,7 @@ const Landing = () => (
     <Grid className="landingBot" columns="2">
       <h1 className="h1Bot">Dozens of Opportunities for Organizations and Volunteers</h1>
       <Grid.Column>
-        <Container>
+        <Container fluid>
           <h2 className="h2Bot">
             Take a look at the various organizations Volunteer Ally works with, each with unique volunteer opportunities offering various dates, times, and locations.
           </h2>
@@ -41,7 +41,7 @@ const Landing = () => (
         <Image src='https://cdn.discordapp.com/attachments/441780757967405067/943854340714676284/unknown.png'></Image>
       </Grid.Column>
     </Grid>
-    <Container textAlign="center">
+    <Container textAlign="center" fluid>
       <Link to="/org-library">
         <Button className={'ui footer button'} size={'massive'}>Check Out Our Latest Opportunities</Button>
       </Link>
