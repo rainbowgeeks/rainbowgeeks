@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { Container, Grid, Header, Segment, Card, Loader, Tab } from 'semantic-ui-react';
-import { AutoForm, TextField, SelectField, SubmitField } from 'uniforms-semantic';
+import { AutoForm, SubmitField, ErrorsField } from 'uniforms-semantic';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema from 'simpl-schema';
 import { _ } from 'meteor/underscore';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import GoogleMap from '../components/GoogleMap';
-import CategoryOpp from '../components/CategoryOpp';
+import CategoryOpportunity from '../components/CategoryOpportunity';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
-import { Organizations } from '../../api/organization/OrganizationCollection';
-import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
-import { OpportunitiesPocs } from '../../api/opportunity/OpportunitiesPocCollection';
-import { PointOfContacts } from '../../api/point-of-contact/PointOfContactCollection';
 import { Categories } from '../../api/category/CategoryCollection';
 import { Environments } from '../../api/environment/EnvironmentCollection';
 import { Ages } from '../../api/age/AgeCollection';
@@ -21,7 +17,9 @@ import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollect
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import Opportunity from '../components/Opportunity';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
+import RadioField from '../../forms/controllers/RadioField';
 import Footer from '../components/Footer';
+import { PAGE_IDS } from '../utilities/PageIDs';
 
 export const opportunityOrder = ['Upcoming', 'Latest', 'Nearby', 'A-Z'];
 export const opportunityDay = ['One Term', 'Short Term', 'Long Term'];
@@ -35,11 +33,9 @@ export const schemaCat = {
 
 // Create a Schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
-  names: { type: String, optional: true },
   orders: {
     type: String, optional: true,
     allowedValues: opportunityOrder,
-    defaultValue: opportunityOrder[0],
   },
   age: {
     type: Array, optional: true,
@@ -56,11 +52,6 @@ const formSchema = new SimpleSchema({
   'environment.$': {
     type: String,
     allowedValues: schemaEnv,
-  },
-  times: {
-    type: String, optional: true,
-    allowedValues: opportunityDay,
-    defaultValue: opportunityDay[0],
   },
 });
 //
@@ -85,7 +76,7 @@ const FilterOpportunities = ({ ready }) => {
       const IDS = _.pluck(getIDS, 'oppID').filter(ID => ID !== ('' || undefined));
       opportunity = _.uniq(IDS);
     } else {
-      opportunity = _.uniq(_.pluck(Opportunities.find({}).fetch(), '_id'));
+      opportunity = _.pluck(Opportunities.find({}).fetch(), '_id');
     }
     return opportunity.map(opportunities => makeOpportunities(opportunities));
   };
@@ -107,12 +98,11 @@ const FilterOpportunities = ({ ready }) => {
       render: () => <Tab.Pane attached={false}>
         <AutoForm schema={bridge} onSubmit={data => setFilterParam(data)}>
           <Segment>
-            <TextField name='names'/>
-            <SelectField name='orders'/>
+            <RadioField name='orders'/>
             <MultiSelectField name='age'/>
             <MultiSelectField name='environment'/>
-            <SelectField name='times'/>
             <SubmitField value='Submit'/>
+            <ErrorsField/>
           </Segment>
         </AutoForm>
       </Tab.Pane>,
@@ -120,12 +110,12 @@ const FilterOpportunities = ({ ready }) => {
     {
       menuItem: 'Category',
       // eslint-disable-next-line react/display-name
-      render: () => <Tab.Pane attached={false}><CategoryOpp/></Tab.Pane>,
+      render: () => <Tab.Pane attached={false}><CategoryOpportunity/></Tab.Pane>,
     },
   ];
 
   return ((ready) ? (
-    <Container fluid style={gridHeigth}>
+    <Container id={PAGE_IDS.FILTER_OPPORTUNITIES} fluid style={gridHeigth}>
       <Header as="h1" textAlign="center">Browse Opportunity</Header>
       <Grid columns={3} centered celled column='equals'>
         <Grid.Column width={4}>
@@ -184,11 +174,7 @@ export default withTracker(() => {
   // Get access to environment documents.
   const sub7 = Environments.subscribeEnvironment();
   // Determine if the subscription is ready
-  const sub8 = Organizations.subscribeOrganization();
-  const sub9 = OrganizationPocs.subscribeOrganizationPoc();
-  const sub10 = PointOfContacts.subscribePointOfContact();
-  const sub11 = OpportunitiesPocs.subscribeOpportunitiesPoc();
-  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready() && sub8.ready() && sub9.ready() && sub10.ready() && sub11.ready();
+  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready();
   //
   return {
     ready,

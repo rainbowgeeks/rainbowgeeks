@@ -6,8 +6,8 @@ import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
-import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import { PAGE_IDS } from '../utilities/PageIDs';
 
 const OpportunityPage = ({ event, ready }) => {
   const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };

@@ -45,7 +45,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
   /**
    * Updates the given document.
    * @param docID the id of the document to update.
-   * @param ageOD the new ageID (optional).
+   * @param ageID the new ageID (optional).
    */
   update(docID, { ageID, age }) {
     const updateData = {};
@@ -80,7 +80,7 @@ class OpportunitiesAgeCollection extends BaseCollection {
        * This subscription publishes documents regarding the organization.
        */
       Meteor.publish(opportunitiesAgePublications.opportunitiesAge, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();
@@ -131,15 +131,15 @@ class OpportunitiesAgeCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID  in a format appropriate to the restoreOne or define function.
    * @param docID.
-   * @return {{title, owner, cover, age }}
+   * @return {{ oppID, ageID, age }}
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);
-    const title = doc.title;
-    const owner = doc.owner;
+    const oppID = doc.oppID;
+    const ageID = doc.ageID;
     const age = doc.age;
 
-    return { title, owner, age };
+    return { oppID, ageID, age };
   }
 }
 

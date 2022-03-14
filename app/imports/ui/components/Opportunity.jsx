@@ -3,10 +3,11 @@ import { Card, GridRow, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { withRouter } from 'react-router-dom';
+import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 /** Renders a single row in the List Stuff table. See pages/BrowseOpportunity.jsx. */
 const Opportunity = ({ opportunity }) => (
-  <Card fluid href={`#/event/${opportunity._id}`}>
+  <Card fluid href={`#/event/${opportunity._id}`} id={COMPONENT_IDS.LIST_OPPORTUNITIES}>
     <Card.Content style={{
       backgroundImage: `url("${opportunity.cover}")`,
     }}>

@@ -21,7 +21,7 @@ import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollect
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
 import { defineMethod } from '../../api/base/BaseCollection.methods';
-// import { PAGE_IDS } from '../utilities/PageIDs';
+import { PAGE_IDS } from '../utilities/PageIDs';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 import RadioField from '../../forms/controllers/RadioField';
 
@@ -98,7 +98,7 @@ const AddOpportunity = ({ ready, username }) => {
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   let fRef = null;
   return ((ready) ? (
-    <Grid container centered>
+    <Grid container id={PAGE_IDS.ADD_OPPORTUNITY} centered>
       <Grid.Column>
         <Header as="h2" textAlign="center">Add Opportunity</Header>
         <AutoForm ref={ref => {

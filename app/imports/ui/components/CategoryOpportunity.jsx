@@ -3,6 +3,7 @@ import { Card, Icon } from 'semantic-ui-react';
 import { _ } from 'meteor/underscore';
 import { withRouter } from 'react-router-dom';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
+import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 function categoryGroupCount(categories) {
   return _.countBy(categories, function (data) {
@@ -10,7 +11,7 @@ function categoryGroupCount(categories) {
   });
 }
 
-const CategoryOpp = () => {
+const CategoryOpportunity = () => {
   const temp = categoryGroupCount(Opportunities.find({}).fetch());
   const category = _.map(_.keys(temp), function (keys) {
     return {
@@ -20,7 +21,7 @@ const CategoryOpp = () => {
   });
   console.log(category);
   return (
-    <Card.Group>
+    <Card.Group id={COMPONENT_IDS.FILTER_OPPORTUNITIES_CATEGORY}>
       <Card fluid href='#'>
         <Card.Content>
           <Card.Header><Icon name='first aid'/></Card.Header>
@@ -96,4 +97,4 @@ const CategoryOpp = () => {
     </Card.Group>
   );
 };
-export default withRouter(CategoryOpp);
+export default withRouter(CategoryOpportunity);

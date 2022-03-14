@@ -19,7 +19,7 @@ class AgeCollection extends BaseCollection {
 
   /**
    * Defines a new age for a opportunity.
-   * @param age the age restriction of the opportunity.
+   * @param age the age filter for the opportunity.
    * @return {String} the docID of the new document.
    */
   define({ age }) {
@@ -35,7 +35,7 @@ class AgeCollection extends BaseCollection {
   /**
    * Updates the give document.
    * @param docId the id of the document to update.
-   * @param age the new age.
+   * @param age the new age of the opportunity.
    */
   update(docID, { age }) {
     const updateData = {};
@@ -68,7 +68,7 @@ class AgeCollection extends BaseCollection {
        * Publication for the any users age collection.
        */
       Meteor.publish(agePublications.age, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();

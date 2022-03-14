@@ -22,7 +22,7 @@ import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollect
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
 import { defineMethod, removeItMethod, updateMethod } from '../../api/base/BaseCollection.methods';
-// import { PAGE_IDS } from '../utilities/PageIDs';
+import { PAGE_IDS } from '../utilities/PageIDs';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 import RadioField from '../../forms/controllers/RadioField';
 
@@ -63,7 +63,6 @@ const EditOpportunity = ({ ready, _id, username }) => {
   };
 
   // On submit, insert the data.
-  // Need to update opportunity, oppAge Env Cat, orgPOC, oppPoc.
   const submit = (data) => {
     const { owner, title, cover, date, location, description, age, environment, category } = data;
     let getIDS;
@@ -119,8 +118,8 @@ const EditOpportunity = ({ ready, _id, username }) => {
         collectionName = OpportunitiesPocs.getCollectionName();
         updateData = { id: getIDS._id, pocID, pocEmail: owner };
       })
-      .then(() => swal('Success', 'Opportunity edited successfully', 'success'))
-      .catch(error => swal('Error', error.message, 'error'));
+      .catch(error => swal('Error', error.message, 'error'))
+      .then(() => swal('Success', 'Opportunity edited successfully', 'success'));
     setRedirectToReferer(true);
   };
 
@@ -138,7 +137,7 @@ const EditOpportunity = ({ ready, _id, username }) => {
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   return ((ready) ? (
-    <Grid container centered>
+    <Grid container id={PAGE_IDS.EDIT_OPPORTUNITY} centered>
       <Grid.Column>
         <Header as="h2" textAlign="center">Edit Opportunity</Header>
         <AutoForm model={model} schema={bridge} onSubmit={data => submit(data)}>

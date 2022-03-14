@@ -68,7 +68,7 @@ class CategoryCollection extends BaseCollection {
        * Publications for the entire collection for users.
        */
       Meteor.publish(categoryPublications.category, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();

@@ -1,6 +1,9 @@
 export const COMPONENT_IDS = {
+  // Component IDS for volunteer ally.
+  FILTER_OPPORTUNITIES_CATEGORY: 'filter-opportunities-category',
+  FILTER_OPPORTUNITIES_MAP: 'filter-opportunities-map',
+  MANAGE_OPPORTUNITY: 'manage-opportunity',
   NAVBAR_ADD_PROFILE: 'navbar-add-profile',
-
   NAVBAR_CURRENT_USER: 'navbar-current-user',
   NAVBAR_LANDING_PAGE: 'navbar-landing-page',
   NAVBAR_LOGIN_DROPDOWN: 'navbar-login-dropdown',
@@ -9,6 +12,7 @@ export const COMPONENT_IDS = {
   NAVBAR_MANAGE_DROPDOWN: 'navbar-manage-dropdown',
   NAVBAR_MANAGE_DROPDOWN_DATABASE: 'navbar-manage-dropdown-database',
   NAVBAR_SIGN_OUT: 'navbar-sign-out',
+  LIST_OPPORTUNITIES: 'list-opportunities',
   SIGN_IN_FORM_EMAIL: 'sign-in-form-email',
   SIGN_IN_FORM_PASSWORD: 'sign-in-form-password',
   SIGN_IN_FORM_SUBMIT: 'sign-in-form-submit',
@@ -22,8 +26,7 @@ export const COMPONENT_IDS = {
   NAVBAR_ADD_STUFF: 'navbar-add-stuff',
   NAVBAR_LIST_STUFF: 'navbar-list-stuff',
   NAVBAR_LIST_STUFF_ADMIN: 'navbar-list-stuff-admin',
-
-
+  // needed for volunteer ally.
   SIGN_UP_FORM_FIRST_NAME: 'sign-up-form-first-name',
   SIGN_UP_FORM_LAST_NAME: 'sign-up-form-last-name',
 };

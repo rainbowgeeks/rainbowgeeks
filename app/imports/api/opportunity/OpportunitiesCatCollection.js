@@ -131,15 +131,15 @@ class OpportunitiesCatCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID  in a format appropriate to the restoreOne or define function.
    * @param docID.
-   * @return {{title, owner, cover, category }}
+   * @return {{ oppID, catID, category }}
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);
-    const title = doc.title;
-    const owner = doc.owner;
+    const oppID = doc.oppID;
+    const catID = doc.catID;
     const category = doc.category;
 
-    return { title, owner, category };
+    return { oppID, catID, category };
   }
 }
 

@@ -2,11 +2,11 @@ import React from 'react';
 import { Button, Card, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 const ManageOpportunity = ({ manageOpportunity }) => {
-  console.log(manageOpportunity._id);
   return (
-    <Card>
+    <Card id={COMPONENT_IDS.MANAGE_OPPORTUNITY}>
       <Card.Content>
         <Card.Header>
           <Header>{manageOpportunity.title}</Header>

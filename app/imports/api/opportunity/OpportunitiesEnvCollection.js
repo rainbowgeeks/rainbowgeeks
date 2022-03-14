@@ -83,7 +83,7 @@ class OpportunitiesEnvCollection extends BaseCollection {
        * This subscription publishes entire collection associated with all users/public.
        */
       Meteor.publish(opportunitiesEnvironmentPublications.opportunitiesEnvironment, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();
@@ -134,15 +134,15 @@ class OpportunitiesEnvCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID  in a format appropriate to the restoreOne or define function.
    * @param docID.
-   * @return {{title, owner, cover, environment }}
+   * @return {{ oppID, envID, environment }}
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);
-    const title = doc.title;
-    const owner = doc.owner;
+    const oppID = doc.oppID;
+    const envID = doc.envID;
     const environment = doc.environment;
 
-    return { title, owner, environment };
+    return { oppID, envID, environment };
   }
 }
 
