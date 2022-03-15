@@ -24,6 +24,7 @@ const bridge = new SimpleSchema2Bridge(UserProfileData._schema);
 /** Renders the Page for editing a single profile document. */
 const EditProfile = ({ doc, ready }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
+  const [uploadFile, setUploadFile] = useState({});
   const submit = (data) => {
     const {
       firstName,
@@ -56,6 +57,15 @@ const EditProfile = ({ doc, ready }) => {
       });
   };
 
+  // Will be used to upload the image to mongo
+  const myImage = () => {
+    // this line prints out the file content
+    console.log(uploadFile);
+
+    // idea when click the submit button, store file into a state, then
+    // somehow get this state into the main submit
+  };
+
   const { from } = { from: { pathname: '/profile' } };
   if (redirectToReferer) {
     return <Redirect to={from} />;
@@ -65,6 +75,19 @@ const EditProfile = ({ doc, ready }) => {
     <Container id={PAGE_IDS.EDIT_PROFILE}>
       <Header as='h1' size='Large' textAlign='center'> UPDATE MY PROFILE </Header>
       <Divider/>
+
+      <Form onSubmit={myImage}>
+        <label htmlFor="file">Choose file to upload</label>
+        <input
+          type='file'
+          accept='image/*'
+          onChange={event => setUploadFile(event.target.files)}
+        />
+        <input
+          type='submit'
+        />
+      </Form>
+
       <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
         <Segment>
           <Header as="h3" textAlign="center">Update My Information</Header>
