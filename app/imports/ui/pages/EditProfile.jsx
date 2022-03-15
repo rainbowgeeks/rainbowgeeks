@@ -60,10 +60,10 @@ const EditProfile = ({ doc, ready }) => {
   // Will be used to upload the image to mongo
   const myImage = () => {
     // this line prints out the file content
-    console.log(uploadFile);
+    console.log(uploadFile); // curenntly uploadFile value = event.target.files
 
     // idea when click the submit button, store file into a state, then
-    // somehow get this state into the main submit
+    // somehow get this state's value into the main submit
   };
 
   const { from } = { from: { pathname: '/profile' } };
