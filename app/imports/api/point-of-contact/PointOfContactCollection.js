@@ -3,58 +3,65 @@ import SimpleSchema from 'simpl-schema';
 import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
-import { Opportunities } from './OpportunityCollection';
-import { Categories } from '../category/CategoryCollection';
 import { ROLE } from '../role/Role';
 
-export const opportunitiesCategoryPublications = {
-  opportunitiesCategory: 'OpportunitiesCategory',
-  opportunitiesCategoryAdmin: 'OpportunitiesCategoryAdmin',
+export const pointOfContactPublications = {
+  pointOfContact: 'PointOfContact',
+  pointOfContactAdmin: 'PointOfContactAdmin',
 };
 
-class OpportunitiesCatCollection extends BaseCollection {
+class PointOfContactCollection extends BaseCollection {
   constructor() {
-    super('OpportunitiesCats', new SimpleSchema({
-      oppID: String,
-      catID: String,
-      category: String,
+    super('PointOfContacts', new SimpleSchema({
+      email: { type: String, index: true, unique: true },
+      firstName: String,
+      lastName: String,
+      phoneNumber: String,
     }));
   }
 
   /**
    * Defines a new query collection.
-   * @param oppID the oppID of the item.
-   * @param catID the catID of the item.
-   * @param category the category of the item.
-   * @return {String} the docID of the document.
+   * @param firstName the first name of the user.
+   * @param lastName the last name of the user.
+   * @param phoneNumber the phone number of the user.
+   * @param email the email of the poc in the user.
+   * @return {String} the docID of the new document.
    */
-  define({ title, location, date, category }) {
-    const opp = Opportunities.findDoc({ title, location, date });
-    const cat = Categories.findDoc({ category });
-    const oppID = opp._id;
-    const catID = cat._id;
-
-    const docID = this._collection.insert({
-      oppID,
-      catID,
-      category,
+  define({ firstName, lastName, phoneNumber, email }) {
+    const docID = this.findOne({ email });
+    if (docID) {
+      return docID._id;
+    }
+    return this._collection.insert({
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
     });
-    return docID;
   }
 
   /**
    * Updates the given document.
    * @param docID the id of the document to update.
-   * @param catID the new catID (optional).
-   * @param category the new category (optional).
+   * @param firstName the new first name.
+   * @param lastName the new last name.
+   * @param phoneNumber the new phone number.
+   * @param email the new email.
    */
-  update(docID, { catID, category }) {
+  update(docID, { firstName, lastName, phoneNumber, email }) {
     const updateData = {};
-    if (catID) {
-      updateData.catID = catID;
+    if (firstName) {
+      updateData.firstName = firstName;
     }
-    if (category) {
-      updateData.category = category;
+    if (lastName) {
+      updateData.lastName = lastName;
+    }
+    if (phoneNumber) {
+      updateData.phoneNumber = phoneNumber;
+    }
+    if (email) {
+      updateData.email = email;
     }
     this._collection.update(docID, { $set: updateData });
   }
@@ -78,18 +85,19 @@ class OpportunitiesCatCollection extends BaseCollection {
     if (Meteor.isServer) {
       const instance = this;
       /**
-       * This subscription publishes all documents regarding Roles.
+       * This subscription publishes documents regarding the organization.
        */
-      Meteor.publish(opportunitiesCategoryPublications.opportunitiesCategory, function publish() {
+      Meteor.publish(pointOfContactPublications.pointOfContact, function publish() {
         if (this.userId) {
           return instance._collection.find();
         }
         return this.ready();
       });
+
       /**
        * This subscription publishes documents regarding the organization.
        */
-      Meteor.publish(opportunitiesCategoryPublications.opportunitiesCatAdmin, function publish() {
+      Meteor.publish(pointOfContactPublications.pointOfContactAdmin, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
           return instance._collection.find();
         }
@@ -99,11 +107,11 @@ class OpportunitiesCatCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for the documents.
+   * Subscription method for all documents.
    */
-  subscribeOpportunitiesCategory() {
+  subscribePointOfContact() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesCategoryPublications.opportunitiesCategory);
+      return Meteor.subscribe(pointOfContactPublications.pointOfContact);
     }
     return null;
   }
@@ -111,9 +119,9 @@ class OpportunitiesCatCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeOpportunitiesCategoryAdmin() {
+  subscribePointOfContactAdmin() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesCategoryPublications.opportunitiesCategoryAdmin);
+      return Meteor.subscribe(pointOfContactPublications.pointOfContactAdmin);
     }
     return null;
   }
@@ -131,16 +139,17 @@ class OpportunitiesCatCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID  in a format appropriate to the restoreOne or define function.
    * @param docID.
-   * @return {{title, owner, cover, category }}
+   * @return {{ firstName, lastName, phoneNumber, email }}
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);
-    const title = doc.title;
-    const owner = doc.owner;
-    const category = doc.category;
+    const firstName = doc.firstName;
+    const lastName = doc.lastName;
+    const phoneNumber = doc.phoneNumber;
+    const email = doc.email;
 
-    return { title, owner, category };
+    return { firstName, lastName, phoneNumber, email };
   }
 }
 
-export const OpportunitiesCats = new OpportunitiesCatCollection();
+export const PointOfContacts = new PointOfContactCollection();

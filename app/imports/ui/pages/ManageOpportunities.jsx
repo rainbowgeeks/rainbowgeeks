@@ -1,116 +1,83 @@
 import React from 'react';
-import { Loader, Container, Header, Input, List, Button, Item, Grid, Divider } from 'semantic-ui-react';
+import { Loader, Container, Header, Input, List, Card, Button, Grid, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Link } from 'react-router-dom';
+import { _ } from 'meteor/underscore';
+import { Opportunities } from '../../api/opportunity/OpportunityCollection';
+import { Organizations } from '../../api/organization/OrganizationCollection';
+import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
+import { OpportunitiesPocs } from '../../api/opportunity/OpportunitiesPocCollection';
+import { OrganizationProfiles } from '../../api/user/OrganizationProfileCollection';
+import ManageOpportunity from '../components/ManageOpportunity';
 import { PAGE_IDS } from '../utilities/PageIDs';
-import { Stuffs } from '../../api/stuff/StuffCollection';
 
-/** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const ManageOpportunities = ({ ready }) => ((ready) ? (
-  <Container id={PAGE_IDS.ORG_LIBRARY_PAGE}>
-    <Header as="h1" textAlign="center">Manage Opportunities</Header>
-    <Input fluid placeholder="Search Opportunities..."/>
-    <List horizontal style={{ paddingBottom: '20px' }}>
-      <List.Item>
-        <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small'>A-Z</Button>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small'>Category</Button>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small'>Age</Button>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small'>Environment</Button>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small'>Newest</Button>
-      </List.Item>
-    </List>
-    <Item.Group>
-      <Item>
-        <Item.Image size='tiny' src='/images/meteor-logo.png'/>
-        <Item.Content>
-          <Item.Header>Title</Item.Header>
-          <Item.Meta>
-            <span>date</span>
-            <span>address</span>
-          </Item.Meta>
-          <Item.Description>Description</Item.Description>
-          <Item.Extra>
-            <span>age</span>
-            <span>category</span>
-            <span>environment</span>
-            <Button floated='right' negative>Delete</Button>
-            <Button floated='right' positive>Edit</Button>
-          </Item.Extra>
-        </Item.Content>
-      </Item>
-
-      <Item>
-        <Item.Image size='tiny' src='/images/meteor-logo.png'/>
-        <Item.Content>
-          <Item.Header>Title</Item.Header>
-          <Item.Meta>
-            <span>date</span>
-            <span>address</span>
-          </Item.Meta>
-          <Item.Description>Description</Item.Description>
-          <Item.Extra>
-            <span>age</span>
-            <span>category</span>
-            <span>environment</span>
-            <Button floated='right' negative>Delete</Button>
-            <Button floated='right' positive>Edit</Button>
-          </Item.Extra>
-        </Item.Content>
-      </Item>
-
-      <Item>
-        <Item.Image size='tiny' src='/images/meteor-logo.png'/>
-        <Item.Content>
-          <Item.Header>Title</Item.Header>
-          <Item.Meta>
-            <span>date</span>
-            <span>address</span>
-          </Item.Meta>
-          <Item.Description>Description</Item.Description>
-          <Item.Extra>
-            <span>age</span>
-            <span>category</span>
-            <span>environment</span>
-            <Button floated='right' negative>Delete</Button>
-            <Button floated='right' positive>Edit</Button>
-          </Item.Extra>
-        </Item.Content>
-      </Item>
-    </Item.Group>
-    <Divider hidden/>
-    <Grid centered columns={1} padded>
-      <Button size="big" positive>Add Opportunity</Button>
-    </Grid>
-  </Container>
-) : <Loader active>Getting data</Loader>);
+/** Renders a table containing all of the Opportunities documents. */
+const ManageOpportunities = ({ ready, username }) => {
+  console.log(username);
+  const pocIDS = _.pluck(OrganizationPocs.find({ orgEmail: username }).fetch(), 'pocID');
+  console.log(pocIDS);
+  const getOppIDS = _.flatten(pocIDS.map(pocID => OpportunitiesPocs.find({ pocID: pocID }).fetch()));
+  const oppIDS = _.pluck(getOppIDS, 'oppID');
+  const getOpp = _.uniq(oppIDS).map(oppID => Opportunities.find({ _id: oppID }).fetch());
+  const opportunities = _.flatten(getOpp);
+  return ((ready) ? (
+    <Container id={PAGE_IDS.USER_LIBRARY_PAGE}>
+      <Header as="h1" textAlign="center">Manage Opportunities</Header>
+      <Input fluid placeholder="Search Profiles..."/>
+      <List horizontal style={{ paddingBottom: '20px' }}>
+        <List.Item>
+          <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
+        </List.Item>
+        <List.Item>
+          <Button compact size='small'>A-Z</Button>
+        </List.Item>
+        <List.Item>
+          <Button compact size='small'>Category</Button>
+        </List.Item>
+        <List.Item>
+          <Button compact size='small'>Newest</Button>
+        </List.Item>
+        <List.Item>
+          <Button compact size='small'>Popular</Button>
+        </List.Item>
+      </List>
+      <Card.Group stackable centered itemsPerRow={3}>
+        {opportunities.map(opportunity => <ManageOpportunity key={opportunity._id} manageOpportunity={opportunity}/>)}
+      </Card.Group>
+      <Divider hidden></Divider>
+      <Grid centered columns={1} padded>
+        <Link to={'/add-opp'}>
+          <Button size="big" positive>Add Opportunitiy</Button>
+        </Link>
+      </Grid>
+    </Container>
+  ) : <Loader active>Getting data</Loader>);
+};
 
 // Require an array of Stuff documents in the props.
 ManageOpportunities.propTypes = {
-  opportunities: PropTypes.array.isRequired,
+  username: PropTypes.string,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
-  // Get access to Stuff documents.
-  const subscription = Stuffs.subscribeStuffAdmin();
+  const { username } = Meteor.user();
+  // Get access to opportunity documents.
+  const sub1 = Opportunities.subscribeOpportunity();
+  // Get access to organization documents.
+  const sub2 = Organizations.subscribeOrganization();
+  // Get access to organization poc documents.
+  const sub3 = OrganizationPocs.subscribeOrganizationPoc();
+  // Get access to opportunities poc documents.
+  const sub4 = OpportunitiesPocs.subscribeOpportunitiesPoc();
   // Determine if the subscription is ready
-  const ready = subscription.ready();
-  // Get the Stuff documents and sort by owner then name
-  const stuffs = Stuffs.find({}, { sort: { owner: 1, name: 1 } }).fetch();
-  // console.log(stuffs, ready);
+  const sub5 = OrganizationProfiles.subscribe();
+  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready();
+  // Get the collections related to the organization.
   return {
-    stuffs,
+    username,
     ready,
   };
 })(ManageOpportunities);

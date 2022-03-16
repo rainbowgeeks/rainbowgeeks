@@ -4,40 +4,40 @@ import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { Opportunities } from './OpportunityCollection';
-import { Categories } from '../category/CategoryCollection';
+import { PointOfContacts } from '../point-of-contact/PointOfContactCollection';
 import { ROLE } from '../role/Role';
 
-export const opportunitiesCategoryPublications = {
-  opportunitiesCategory: 'OpportunitiesCategory',
-  opportunitiesCategoryAdmin: 'OpportunitiesCategoryAdmin',
+export const opportunitiesPocPublications = {
+  opportunitiesPoc: 'OpportunitiesPoc',
+  opportunitiesPocAdmin: 'OpportunitiesPocAdmin',
 };
 
-class OpportunitiesCatCollection extends BaseCollection {
+class OpportunitiesPocCollection extends BaseCollection {
   constructor() {
-    super('OpportunitiesCats', new SimpleSchema({
+    super('OpportunitiesPocs', new SimpleSchema({
       oppID: String,
-      catID: String,
-      category: String,
+      pocID: String,
+      pocEmail: String,
     }));
   }
 
   /**
    * Defines a new query collection.
    * @param oppID the oppID of the item.
-   * @param catID the catID of the item.
-   * @param category the category of the item.
-   * @return {String} the docID of the document.
+   * @param pocID the pocID of the item.
+   * @param pocEmail the email of the poc in the item.
+   * @return {String} the docID of the new document.
    */
-  define({ title, location, date, category }) {
+  define({ email, title, location, date }) {
     const opp = Opportunities.findDoc({ title, location, date });
-    const cat = Categories.findDoc({ category });
+    const poc = PointOfContacts.findDoc({ email });
     const oppID = opp._id;
-    const catID = cat._id;
+    const pocID = poc._id;
 
     const docID = this._collection.insert({
       oppID,
-      catID,
-      category,
+      pocID,
+      pocEmail: email,
     });
     return docID;
   }
@@ -45,16 +45,16 @@ class OpportunitiesCatCollection extends BaseCollection {
   /**
    * Updates the given document.
    * @param docID the id of the document to update.
-   * @param catID the new catID (optional).
-   * @param category the new category (optional).
+   * @param pocID the new pocID.
+   * @param email the new email.
    */
-  update(docID, { catID, category }) {
+  update(docID, { pocID, email }) {
     const updateData = {};
-    if (catID) {
-      updateData.catID = catID;
+    if (pocID) {
+      updateData.pocID = pocID;
     }
-    if (category) {
-      updateData.category = category;
+    if (email) {
+      updateData.email = email;
     }
     this._collection.update(docID, { $set: updateData });
   }
@@ -78,18 +78,19 @@ class OpportunitiesCatCollection extends BaseCollection {
     if (Meteor.isServer) {
       const instance = this;
       /**
-       * This subscription publishes all documents regarding Roles.
+       * This subscription publishes documents regarding the organization.
        */
-      Meteor.publish(opportunitiesCategoryPublications.opportunitiesCategory, function publish() {
+      Meteor.publish(opportunitiesPocPublications.opportunitiesPoc, function publish() {
         if (this.userId) {
           return instance._collection.find();
         }
         return this.ready();
       });
+
       /**
        * This subscription publishes documents regarding the organization.
        */
-      Meteor.publish(opportunitiesCategoryPublications.opportunitiesCatAdmin, function publish() {
+      Meteor.publish(opportunitiesPocPublications.opportunitiesPocAdmin, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
           return instance._collection.find();
         }
@@ -99,11 +100,11 @@ class OpportunitiesCatCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for the documents.
+   * Subscription method for all documents.
    */
-  subscribeOpportunitiesCategory() {
+  subscribeOpportunitiesPoc() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesCategoryPublications.opportunitiesCategory);
+      return Meteor.subscribe(opportunitiesPocPublications.opportunitiesPoc);
     }
     return null;
   }
@@ -111,9 +112,9 @@ class OpportunitiesCatCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeOpportunitiesCategoryAdmin() {
+  subscribeOpportunitiesPocAdmin() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesCategoryPublications.opportunitiesCategoryAdmin);
+      return Meteor.subscribe(opportunitiesPocPublications.opportunitiesPocAdmin);
     }
     return null;
   }
@@ -131,16 +132,16 @@ class OpportunitiesCatCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID  in a format appropriate to the restoreOne or define function.
    * @param docID.
-   * @return {{title, owner, cover, category }}
+   * @return {{ pocID, email }}
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);
-    const title = doc.title;
-    const owner = doc.owner;
-    const category = doc.category;
+    const oppID = doc.oppID;
+    const pocID = doc.pocID;
+    const email = doc.email;
 
-    return { title, owner, category };
+    return { oppID, pocID, email };
   }
 }
 
-export const OpportunitiesCats = new OpportunitiesCatCollection();
+export const OpportunitiesPocs = new OpportunitiesPocCollection();

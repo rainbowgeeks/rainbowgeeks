@@ -6,9 +6,7 @@ import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
 export const environmentPublications = {
-  environmentPublic: 'EnvironmentPublic',
-  environmentUser: 'EnvironmentUser',
-  environmentOrganization: 'EnvironmentOrganization',
+  environment: 'Environment',
   environmentAdmin: 'EnvironmentAdmin',
 };
 
@@ -69,33 +67,11 @@ class EnvironmentCollection extends BaseCollection {
       const instance = this;
 
       /**
-       * This subscription publishes for the public users to view.
+       * This subscription publishes for the entire collection for the user that is logged in.
        */
-      Meteor.publish(environmentPublications.environmentPublic, function publish() {
-        if (Meteor.isServer) {
+      Meteor.publish(environmentPublications.environment, function publish() {
+        if (this.userId) {
           return instance._collection.find();
-        }
-        return this.ready();
-      });
-
-      /**
-       * This subscription publishes for the user that it logged in.
-       */
-      Meteor.publish(environmentPublications.environmentUser, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ owner: username });
-        }
-        return this.ready();
-      });
-
-      /**
-       * This subscription publishes for the user that it logged in.
-       */
-      Meteor.publish(environmentPublications.environmentOrganization, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ owner: username });
         }
         return this.ready();
       });
@@ -113,37 +89,17 @@ class EnvironmentCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for stuff owned by the current user.
+   * Subscription method for user.
    */
-  subscribeEnvironmentPublic() {
+  subscribeEnvironment() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(environmentPublications.environmentPublic);
+      return Meteor.subscribe(environmentPublications.environment);
     }
     return null;
   }
 
   /**
-   * Subscription method for stuff owned by the current user.
-   */
-  subscribeEnvironmentUser() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(environmentPublications.environmentUser);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for stuff owned by the current user.
-   */
-  subscribeEnvironmentOrganization() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(environmentPublications.environmentOrganization);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for stuff owned by the current user.
+   * Subscription method for admin.
    */
   subscribeEnvironmentAdmin() {
     if (Meteor.isClient) {

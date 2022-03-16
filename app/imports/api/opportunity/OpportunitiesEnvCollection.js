@@ -1,37 +1,42 @@
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
-import { _ } from 'meteor/underscore';
 import { Roles } from 'meteor/alanning:roles';
 import { check } from 'meteor/check';
 import BaseCollection from '../base/BaseCollection';
+import { Opportunities } from './OpportunityCollection';
+import { Environments } from '../environment/EnvironmentCollection';
 import { ROLE } from '../role/Role';
 
-export const opportunitiesEnvPublications = {
-  opportunitiesEnvPublic: 'OpportunitiesEnvAll',
-  opportunitiesEnvUser: 'OpportunitiesEnvUser',
-  opportunitiesEnvOrganization: 'OpportunitiesEnvOrganization',
-  opportunitiesEnvAdmin: 'OpportunitiesEnvAdmin',
+export const opportunitiesEnvironmentPublications = {
+  opportunitiesEnvironment: 'OpportunitiesEnvironment',
+  opportunitiesEnvironmentAdmin: 'OpportunitiesEnvironmentAdmin',
 };
 
 class OpportunitiesEnvCollection extends BaseCollection {
   constructor() {
     super('OpportunitiesEnvs', new SimpleSchema({
-      title: String,
-      owner: String,
+      oppID: String,
+      envID: String,
       environment: String,
     }));
   }
 
   /**
    * Defines a new item.
-   * @param title the title of the item.
-   * @param environment the chosen environment.
+   * @param oppID the oppID of the item.
+   * @param envID the envID of the item.
+   * @param environment the environment of the item.
    * @return {String} the docID of the new document.
    */
-  define({ title, owner, environment }) {
+  define({ title, location, date, environment }) {
+    const opp = Opportunities.findDoc({ title, location, date });
+    const env = Environments.findDoc({ environment });
+    const oppID = opp._id;
+    const envID = env._id;
+
     const docID = this._collection.insert({
-      title,
-      owner,
+      oppID,
+      envID,
       environment,
     });
     return docID;
@@ -40,16 +45,13 @@ class OpportunitiesEnvCollection extends BaseCollection {
   /**
    * Updates the given document.
    * @param docID the id of the document to update.
-   * @param title the new title (optional).
-   * @param environment the new environment (optional).
+   * @param envID the new envID (optional).
+   * @param environment the new environment.
    */
-  update(docID, { title, owner, environment }) {
+  update(docID, { envID, environment }) {
     const updateData = {};
-    if (title) {
-      updateData.title = title;
-    }
-    if (owner) {
-      updateData.owner = owner;
+    if (envID) {
+      updateData.envID = envID;
     }
     if (environment) {
       updateData.environment = environment;
@@ -63,13 +65,9 @@ class OpportunitiesEnvCollection extends BaseCollection {
    * @returns true
    */
   removeIt(name) {
-    const ageID = _.pluck(this._collection.find(name).fetch(), 'title');
-    // eslint-disable-next-line no-shadow,no-restricted-syntax,no-unused-vars
-    for (const temp of ageID) {
-      const doc = this.findDoc(name);
-      check(doc, Object);
-      this._collection.remove(doc._id);
-    }
+    const doc = this.findDoc(name);
+    check(doc, Object);
+    this._collection.remove(doc._id);
     return true;
   }
 
@@ -84,30 +82,9 @@ class OpportunitiesEnvCollection extends BaseCollection {
       /**
        * This subscription publishes entire collection associated with all users/public.
        */
-      Meteor.publish(opportunitiesEnvPublications.opportunitiesEnvPublic, function publish() {
-        if (Meteor.isServer) {
+      Meteor.publish(opportunitiesEnvironmentPublications.opportunitiesEnvironment, function publish() {
+        if (this.userId) {
           return instance._collection.find();
-        }
-        return this.ready();
-      });
-
-      /**
-       * This subscription publishes only the documents associated with the logged in organization.
-       */
-      Meteor.publish(opportunitiesEnvPublications.opportunitiesEnvUser, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ owner: username });
-        }
-        return this.ready();
-      });
-
-      /**
-       * This subscription publishes only the documents associated with the logged in organization.
-       */
-      Meteor.publish(opportunitiesEnvPublications.opportunitiesEnvOrganization, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
-          return instance._collection.find({});
         }
         return this.ready();
       });
@@ -115,7 +92,7 @@ class OpportunitiesEnvCollection extends BaseCollection {
       /**
        * This subscription publishes entire collection associated with all users/public.
        */
-      Meteor.publish(opportunitiesEnvPublications.opportunitiesEnvAdmin, function publish() {
+      Meteor.publish(opportunitiesEnvironmentPublications.opportunitiesEnvironmentAdmin, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
           return instance._collection.find();
         }
@@ -125,11 +102,11 @@ class OpportunitiesEnvCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for documents owned by the current organization.
+   * Subscription method for documents owned by the current user.
    */
-  subscribeOpportunitiesEnvPublic() {
+  subscribeOpportunitiesEnvironment() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesEnvPublications.opportunitiesEnvPublic);
+      return Meteor.subscribe(opportunitiesEnvironmentPublications.opportunitiesEnvironment);
     }
     return null;
   }
@@ -137,29 +114,9 @@ class OpportunitiesEnvCollection extends BaseCollection {
   /**
    * Subscription method for entire documents to be displayed for users.
    */
-  subscribeOpportunitiesEnvUser() {
+  subscribeOpportunitiesEnvironmentAdmin() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesEnvPublications.opportunitiesEnvUser);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for entire documents to be displayed for users.
-   */
-  subscribeOpportunitiesEnvOrganization() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesEnvPublications.opportunitiesEnvOrganization);
-    }
-    return null;
-  }
-
-  /**
-   * Subscription method for entire documents to be displayed for users.
-   */
-  subscribeOpportunitiesEnvAdmin() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(opportunitiesEnvPublications.opportunitiesEnvAdmin);
+      return Meteor.subscribe(opportunitiesEnvironmentPublications.opportunitiesEnvironmentAdmin);
     }
     return null;
   }

@@ -6,9 +6,7 @@ import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
 
 export const agePublications = {
-  agePublic: 'AgePublic',
-  ageUser: 'AgeUser',
-  ageOrganization: 'AgeOrganization',
+  age: 'Age',
   ageAdmin: 'AgeAdmin',
 };
 
@@ -66,29 +64,19 @@ class AgeCollection extends BaseCollection {
     if (Meteor.isServer) {
       const instance = this;
 
-      Meteor.publish(agePublications.agePublic, function publish() {
-        if (Meteor.isServer) {
+      /**
+       * Publication for the any users age collection.
+       */
+      Meteor.publish(agePublications.age, function publish() {
+        if (this.userId) {
           return instance._collection.find();
         }
         return this.ready();
       });
 
-      Meteor.publish(agePublications.ageUser, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.USER)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ age: username });
-        }
-        return this.ready();
-      });
-
-      Meteor.publish(agePublications.ageOrganization, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, ROLE.ORGANIZATION)) {
-          const username = Meteor.users.findOne(this.userId).username;
-          return instance._collection.find({ age: username });
-        }
-        return this.ready();
-      });
-
+      /**
+       * Publications for the admin age collection.
+       */
       Meteor.publish(agePublications.ageAdmin, function publish() {
         if (this.userId && Roles.userIsInRole(this.userId, ROLE.ADMIN)) {
           return instance._collection.find();
@@ -99,37 +87,17 @@ class AgeCollection extends BaseCollection {
   }
 
   /**
-   * Subscription method for age owned by the current organization.
+   * Subscription method for age owned by the current user.
    */
-  subscribeAgePublic() {
+  subscribeAge() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(agePublications.agePublic);
+      return Meteor.subscribe(agePublications.age);
     }
     return null;
   }
 
   /**
-   * Subscriptions
-   */
-  subscribeAgeUser() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(agePublications.ageUser);
-    }
-    return null;
-  }
-
-  /**
-   * Subscriptions
-   */
-  subscribeAgeOrganization() {
-    if (Meteor.isClient) {
-      return Meteor.subscribe(agePublications.ageOrganization);
-    }
-    return null;
-  }
-
-  /**
-   * Subscriptions
+   * Subscriptions method for admin.
    */
   subscribeAgeAdmin() {
     if (Meteor.isClient) {
@@ -139,10 +107,10 @@ class AgeCollection extends BaseCollection {
   }
 
   /**
-   * Default implementation of assertValidRoleForMethod. Asserts that userId is logged in as an Admin or User.
+   * Default implementation of assertValidRoleForMethod. Asserts that userId is logged in as an Admin or Organization.
    * This is used in the define, update, and removeIt Meteor methods associated with each class.
    * @param userId The userId of the logged in user. Can be null or undefined
-   * @throws { Meteor.Error } If there is no logged in user, or the user is not an Admin or User.
+   * @throws { Meteor.Error } If there is no logged in user, or the user is not an Admin or Organization.
    */
   assertValidRoleForMethod(userId) {
     this.assertRole(userId, [ROLE.ORGANIZATION, ROLE.ADMIN]);

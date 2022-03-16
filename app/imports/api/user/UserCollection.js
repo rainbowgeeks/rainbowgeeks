@@ -3,8 +3,12 @@ import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import _ from 'lodash';
 import { Stuffs } from '../stuff/StuffCollection';
+import { Organizations } from '../organization/OrganizationCollection';
 import { Opportunities } from '../opportunity/OpportunityCollection';
+import { PointOfContacts } from '../point-of-contact/PointOfContactCollection';
 import { Categories } from '../category/CategoryCollection';
+import { OpportunitiesPocs } from '../opportunity/OpportunitiesPocCollection';
+import { OrganizationPocs } from '../organization/OrganizationPocCollection';
 import { Ages } from '../age/AgeCollection';
 import { Environments } from '../environment/EnvironmentCollection';
 import { OpportunitiesAges } from '../opportunity/OpportunitiesAgeCollection';
@@ -106,8 +110,8 @@ class UserCollection {
     return Stuffs.find({ owner: user }).fetch().length > 0;
   }
 
-  isUserProfileRefrenced(user) {
-    return UserProfileData.find( {owner: user}).fetch().length > 0;
+  isUserProfileReferenced(user) {
+    return UserProfileData.find({ owner: user }).fetch().length > 0;
   }
 
   /**
@@ -118,6 +122,16 @@ class UserCollection {
    */
   isOpportunityReferenced(user) {
     return Opportunities.find({ owner: user }).fetch().length > 0;
+  }
+
+  /**
+   * Returns true if user is referenced by other "public" entities. Specifically user owns Stuff.
+   * Used to determine if user can be deleted.
+   * @param user
+   * @return {boolean}
+   */
+  isPointOfContactsReferenced(user) {
+    return PointOfContacts.find({ owner: user }).fetch().length > 0;
   }
 
   /**
@@ -166,6 +180,26 @@ class UserCollection {
    * @param user
    * @return {boolean}
    */
+  isOpportunitiesPocReferenced(user) {
+    return OpportunitiesPocs.find({ owner: user }).fetch().length > 0;
+  }
+
+  /**
+   * Returns true if user is referenced by other "public" entities. Specifically user owns Age.
+   * Used to determine if user can be deleted.
+   * @param user
+   * @return {boolean}
+   */
+  isOrganizationsPocReferenced(user) {
+    return OrganizationPocs.find({ owner: user }).fetch().length > 0;
+  }
+
+  /**
+   * Returns true if user is referenced by other "public" entities. Specifically user owns Age.
+   * Used to determine if user can be deleted.
+   * @param user
+   * @return {boolean}
+   */
   isOpportunitiesAgeReferenced(user) {
     return OpportunitiesAges.find({ owner: user }).fetch().length > 0;
   }
@@ -178,6 +212,16 @@ class UserCollection {
    */
   isOpportunitiesEnvReferenced(user) {
     return OpportunitiesEnvs.find({ owner: user }).fetch().legnth > 0;
+  }
+
+  /**
+   * Returns true if user is referenced by other "public" entities. Specifically user owns Age.
+   * Used to determine if user can be deleted.
+   * @param user
+   * @return {boolean}
+   */
+  isOrganizationsReferenced(user) {
+    return Organizations.find({ owner: user }).fetch().legnth > 0;
   }
 
   /**

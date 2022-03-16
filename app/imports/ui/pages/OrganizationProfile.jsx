@@ -1,10 +1,12 @@
 import React from 'react';
 import { Container, Image, Grid, Divider, Label, Table, Button, Menu, Segment } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import NavBarDontUse from '../components/NavBarDontUse';
 import { PAGE_IDS } from '../utilities/PageIDs';
 
 const OrganizationProfile = () => (
   <Container id={PAGE_IDS.ORGANIZATION_PROFILE}>
+    <NavBarDontUse/>
     <Grid columns={3} container padded='vertically'>
       <Grid.Row>
         <Grid.Column textAlign='center' width={5}>
@@ -124,7 +126,7 @@ const OrganizationProfile = () => (
         <Grid.Column width={3}>
           <Menu vertical fluid>
             <Menu.Item header>Preferences</Menu.Item>
-            <Menu.Item as={NavLink} exact to="/manage-opps">Manage Events</Menu.Item>
+            <Menu.Item as={NavLink} exact to="/manage-opp">Manage Opportunities</Menu.Item>
             <Menu.Item>Manage Requests</Menu.Item>
             <Menu.Item>Analytics</Menu.Item>
           </Menu>

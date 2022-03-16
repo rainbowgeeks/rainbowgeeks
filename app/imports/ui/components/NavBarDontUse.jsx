@@ -1,66 +1,57 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
+import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, NavLink } from 'react-router-dom';
-import { Menu, Dropdown, Header } from 'semantic-ui-react';
+import { Menu, Header, Input } from 'semantic-ui-react';
 import { Roles } from 'meteor/alanning:roles';
 import { ROLE } from '../../api/role/Role';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
-/** The NavBarDontUse appears at the top of every page. Rendered by the App Layout component. */
-const NavBarDontUse = ({ currentUser }) => {
-  const menuStyle = { marginBottom: '10px' };
+/** The Navbar appears at the top of every page. Rendered by the App Layout component.
+ * Certain Navbar Components will only appear when appropriate authentication is inserted.
+ */
+const NavBar = ({ currentUser }) => {
+  const menuStyle = { paddingBottom: '50px' };
   return (
-    <Menu style={menuStyle} attached="top" borderless inverted>
-      <Menu.Item id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/">
-        <Header inverted as='h1'>MATRP</Header>
+    <Menu className={'navbar-menu-orrientation'} size={'tiny'} style={menuStyle} attached='top' borderless stackable>
+      <Menu.Item className={'large-font'} id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/" key="home1">
+        <Header as='h1'>VA</Header>
       </Menu.Item>
-      {currentUser ? (
-        [<Menu.Item id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/add" key='add'>Add Stuff</Menu.Item>,
-          <Menu.Item id={COMPONENT_IDS.NAVBAR_LIST_STUFF} as={NavLink} activeClassName="active" exact to="/list" key='list'>List Stuff</Menu.Item>]
-      ) : ''}
-      {Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN]) ? (
-        [<Menu.Item id={COMPONENT_IDS.NAVBAR_LIST_STUFF_ADMIN} as={NavLink} activeClassName="active" exact to="/admin" key='admin'>Admin</Menu.Item>,
-          <Dropdown id={COMPONENT_IDS.NAVBAR_MANAGE_DROPDOWN} item text="Manage" key="manage-dropdown">
-            <Dropdown.Menu>
-              <Dropdown.Item id={COMPONENT_IDS.NAVBAR_MANAGE_DROPDOWN_DATABASE} key="manage-database" as={NavLink} exact to="/manage-database" content="Database" />
-            </Dropdown.Menu>
-          </Dropdown>]
-      ) : ''}
-      <Menu.Item position="right">
-        {currentUser === '' ? (
-          <Dropdown id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN} text="Login" pointing="top right" icon={'user'}>
-            <Dropdown.Menu>
-              <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_IN} icon="user" text="Sign In" as={NavLink} exact to="/signin" />
-              <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_UP} icon="add user" text="Sign Up" as={NavLink} exact to="/signup" />
-            </Dropdown.Menu>
-          </Dropdown>
-        ) : (
-          <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} text={currentUser} pointing="top right" icon={'user'}>
-            <Dropdown.Menu>
-              <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign Out" as={NavLink} exact to="/signout" />
-            </Dropdown.Menu>
-          </Dropdown>
-        )}
+      <Menu.Item key="search">
+        <Input action={{ icon: 'search' }} placeholder='Search...'/>
+      </Menu.Item>
+      <Menu.Item key="home2" position={'right'} className={'large-font'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/">
+        Home
+      </Menu.Item>
+      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-profile" key='org-profile'>
+        My Profile
+      </Menu.Item>
+      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-opp" key='manage-opp'>
+        Manage Opportunities
+      </Menu.Item>
+      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter" key="filter">
+        Browse Opportunities</Menu.Item>,
+      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-library" key="org-library">
+        Organization Library </Menu.Item>,
+      <Menu.Item key='about' className={'large-font'} as={NavLink} activeClassName="active" exact to="/about">
+        About Us
       </Menu.Item>
     </Menu>
   );
 };
 
-// Declare the types of all properties.
-NavBarDontUse.propTypes =
-{
+NavBar.propTypes = {
   currentUser: PropTypes.string,
 };
 
-// withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+// withTracker connects Meteor data to React components.
 const NavBarContainer = withTracker(() => {
   const currentUser = Meteor.user() ? Meteor.user().username : '';
   return {
     currentUser,
   };
-})(NavBarDontUse);
+})(NavBar);
 
-// Enable ReactRouter for this component. https://reacttraining.com/react-router/web/api/withRouter
+// Enable ReactRouter for this component.
 export default withRouter(NavBarContainer);

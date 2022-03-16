@@ -20,9 +20,6 @@ const Opportunity = ({ opportunity }) => (
           Age: {_.map(opportunity.age, (age, index) => <Label key={index} size='tiny' color='teal'>{age}</Label>)}
         </GridRow>
         <GridRow>
-          Category: {_.map(opportunity.category, (category, index) => <Label key={index} size='tiny' color='teal'>{category}</Label>)}
-        </GridRow>
-        <GridRow>
           Environment: {_.map(opportunity.environment, (environment, index) => <Label key={index} size='tiny' color='teal'>{environment}</Label>)}
         </GridRow>
       </Card.Meta>
