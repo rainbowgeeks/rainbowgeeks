@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { func } from 'fast-check';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 import { Organizations } from '../../api/organization/OrganizationCollection';
 import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
@@ -12,6 +13,8 @@ import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollect
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
+import { Interest } from '../../api/user-interest/UserInterestCollection';
+import { ProfilePageInterest } from '../../api/profile/ProfilePageInterestCollection';
 /* eslint-disable no-console */
 
 // Initialize the database with a default data document.
@@ -34,6 +37,10 @@ function addAges(ages) {
 
 function addEnvironments(environments) {
   Environments.define({ environment: environments });
+}
+
+function addInterest(interest) {
+  Interest.define({ interest: interest });
 }
 
 function addCategories(categories) {
@@ -72,14 +79,18 @@ if (Organizations.count() === 0) {
   }
 }
 
-function addProfileData(profileData) {
-  console.log(` Adding: ${profileData.firstName} (${profileData.owner})`);
-  UserProfileData.define(profileData);
+function addProfileData({ owner, firstName, lastName, phoneNumber, interest, specialInterest, environmentalPref, availability, profileImage, aboutUser }) {
+
+  interest.map(interests => addInterest(interests));
+  console.log(` Adding: ${firstName} ${lastName} (${owner})`);
+  UserProfileData.define({ owner: owner, firstName, lastName, phoneNumber, specialInterest, environmentalPref, availability, profileImage, aboutUser });
+  interest.map(interests => ProfilePageInterest.define({ owner: owner, firstName: firstName, lastName: lastName, interest: interests }));
+
 }
 
 if (UserProfileData.count() === 0) {
   if (Meteor.settings.defaultProfileData) {
-    console.log('Creating default profile-users.');
-    Meteor.settings.defaultProfileData.map(profileData => addProfileData(profileData));
+    console.log('Creating default Users.');
+    Meteor.settings.defaultProfileData.map(userData => addProfileData(userData));
   }
 }

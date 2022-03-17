@@ -21,14 +21,6 @@ class ProfilePageCollection extends BaseCollection {
       firstName: String,
       lastName: String,
       phoneNumber: String,
-      interest: {
-        type: Array,
-        defaultValue: 'mis',
-      },
-      'interest.$': {
-        type: String,
-        allowedValues: profilePageInterest,
-      },
       specialInterest: String,
       environmentalPref: {
         type: Array,
@@ -65,13 +57,12 @@ class ProfilePageCollection extends BaseCollection {
    * @param aboutUser the information of the user
    * @returns the docID of the defined collection
    */
-  define({ owner, firstName, lastName, phoneNumber, interest, specialInterest, environmentalPref, availability, profileImage, aboutUser }) {
+  define({ owner, firstName, lastName, phoneNumber, specialInterest, environmentalPref, availability, profileImage, aboutUser }) {
     const docID = this._collection.insert({
       owner,
       firstName,
       lastName,
       phoneNumber,
-      interest,
       specialInterest,
       environmentalPref,
       availability,
@@ -81,7 +72,7 @@ class ProfilePageCollection extends BaseCollection {
     return docID;
   }
 
-  update(docID, { firstName, lastName, phoneNumber, aboutUser, specialInterest, environmentalPref, availability, interest }) {
+  update(docID, { firstName, lastName, phoneNumber, aboutUser, specialInterest, environmentalPref, availability }) {
     const updateUserData = {};
 
     if (firstName) {
@@ -104,9 +95,6 @@ class ProfilePageCollection extends BaseCollection {
     }
     if (availability) {
       updateUserData.availability = availability;
-    }
-    if (interest) {
-      updateUserData.interest = interest;
     }
     this._collection.update(docID, { $set: updateUserData });
   }
@@ -171,6 +159,30 @@ class ProfilePageCollection extends BaseCollection {
       return Meteor.subscribe(ProfilePagePublication.profileAll);
     }
     return null;
+  }
+
+  /**
+   * A stricter form of findOne, in that it throws an exception if the entity isn't found in the collection.
+   * @param { String | Object } name Either the docID, or an object selector, or the 'name' field value.
+   * @returns { Object } The document associated with name.
+   * @throws { Meteor.Error } If the document cannot be found.
+   */
+  findDoc(name) {
+    if (_.isNull(name) || _.isUndefined(name)) {
+      throw new Meteor.Error(`${name} is not a defined ${this.type}`);
+    }
+    const doc = (
+      this._collection.findOne(name)
+        || this._collection.findOne({ name })
+        || this._collection.findOne({ _id: name }));
+    if (!doc) {
+      if (typeof name !== 'string') {
+        throw new Meteor.Error(`${JSON.stringify(name)} is not a defined ${this._type}`, '', Error().stack);
+      } else {
+        throw new Meteor.Error(`${name} is not a defined ${this._type}`, '', Error().stack);
+      }
+    }
+    return doc;
   }
 
   /**
