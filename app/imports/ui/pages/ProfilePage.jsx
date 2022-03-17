@@ -24,17 +24,17 @@ import ProfilePageHeader from '../components/ProfilePageHeader';
 import { ProfilePageInterest } from '../../api/profile/ProfilePageInterestCollection';
 
 /** Renders the User's Profile. Profile Page is broken down into 4 components */
-const ProfilePage = ({ ready, test }) => ((ready) ? (
+const ProfilePage = ({ ready, userDocument }) => ((ready) ? (
   <Container id={PAGE_IDS.PROFILE_PAGE}>
-    {test.map((data) => <ProfilePageHeader key={data._id} linkData={data}/>)}
+    {userDocument.map((data) => <ProfilePageHeader key={data._id} linkData={data}/>)}
     <Container>
       <Divider/>
       <Grid columns={'three'} divided stackable>
         <Grid.Row>
           <Grid.Column>
-            {test.map((data) => <ProfilePageUserInformation key={data._id} aboutUser={data}/>)}
+            {userDocument.map((data) => <ProfilePageUserInformation key={data._id} aboutUser={data}/>)}
           </Grid.Column>
-          {test.map((data) => <ProfilePageAboutUser key={data._id} userInfo={data}/>)}
+          {userDocument.map((data) => <ProfilePageAboutUser key={data._id} userInfo={data}/>)}
           <Grid.Column>
             <Segment padded='very'>
               <Container textAlign={'center'}>
@@ -76,7 +76,7 @@ const ProfilePage = ({ ready, test }) => ((ready) ? (
 ) : <Loader active>Getting User Data!</Loader>);
 
 ProfilePage.propTypes = {
-  test: PropTypes.array.isRequired,
+  userDocument: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -87,16 +87,16 @@ export default withTracker(() => {
   const ready = subscription.ready() && userInterestSubscription.ready();
   const userData = UserProfileData.find({}, { sort: { lastName: 1 } }).fetch();
   const userInterest = ProfilePageInterest.find().fetch();
-  const interests = [];
+  const listInterests = [];
 
   userInterest.forEach(function (item) {
     if (item.profileID === userData[0]._id) {
-      interests.push(item.interest);
+      listInterests.push(item.interest);
     }
   });
-  const test = [{ ...userData[0], interests }];
+  const userDocument = [{ ...userData[0], listInterests }];
   return {
-    test,
+    userDocument,
     ready,
   };
 })(ProfilePage);
