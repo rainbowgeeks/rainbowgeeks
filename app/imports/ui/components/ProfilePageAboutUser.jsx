@@ -14,7 +14,7 @@ const ProfilePageAboutUser = ({ userInfo }) => (
       </Header>
       <Divider section/>
       <Container textAlign='center'>
-        {userInfo.interests.join(', ').toString()}
+        {userInfo.listInterests.join(', ').toString()}
       </Container>
     </Segment>
     <Segment>
@@ -60,7 +60,7 @@ ProfilePageAboutUser.propTypes = {
     specialInterest: PropTypes.string,
     environmentalPref: PropTypes.string,
     availability: PropTypes.string,
-    interests: PropTypes.array,
+    listInterests: PropTypes.array,
   }).isRequired,
 
 };
