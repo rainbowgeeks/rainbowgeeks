@@ -21,19 +21,20 @@ import ProfilePageUserInformation from '../components/ProfilePageUserInformation
 import ProfilePageAssociatedOrganization from '../components/ProfilePageAssociatedOrganization';
 import ProfilePageRecentEvent from '../components/ProfilePageRecentEvent';
 import ProfilePageHeader from '../components/ProfilePageHeader';
+import { ProfilePageInterest } from '../../api/profile/ProfilePageInterestCollection';
 
 /** Renders the User's Profile. Profile Page is broken down into 4 components */
-const ProfilePage = ({ ready, userData }) => ((ready) ? (
+const ProfilePage = ({ ready, test }) => ((ready) ? (
   <Container id={PAGE_IDS.PROFILE_PAGE}>
-    {userData.map((data) => <ProfilePageHeader key={data._id} linkData={data}/>)}
+    {test.map((data) => <ProfilePageHeader key={data._id} linkData={data}/>)}
     <Container>
       <Divider/>
       <Grid columns={'three'} divided stackable>
         <Grid.Row>
           <Grid.Column>
-            {userData.map((data) => <ProfilePageUserInformation key={data._id} aboutUser={data}/>)}
+            {test.map((data) => <ProfilePageUserInformation key={data._id} aboutUser={data}/>)}
           </Grid.Column>
-          {userData.map((data) => <ProfilePageAboutUser key={data._id} userInfo={data}/>)}
+          {test.map((data) => <ProfilePageAboutUser key={data._id} userInfo={data}/>)}
           <Grid.Column>
             <Segment padded='very'>
               <Container textAlign={'center'}>
@@ -75,17 +76,27 @@ const ProfilePage = ({ ready, userData }) => ((ready) ? (
 ) : <Loader active>Getting User Data!</Loader>);
 
 ProfilePage.propTypes = {
-  userData: PropTypes.array.isRequired,
+  test: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
   const subscription = UserProfileData.subscribeUserProfile();
-  const ready = subscription.ready();
+  const userInterestSubscription = ProfilePageInterest.subscribeProfileInterest();
+  const ready = subscription.ready() && userInterestSubscription.ready();
   const userData = UserProfileData.find({}, { sort: { lastName: 1 } }).fetch();
+  const userInterest = ProfilePageInterest.find().fetch();
+  const interests = [];
+
+  userInterest.forEach(function (item) {
+    if (item.profileID === userData[0]._id) {
+      interests.push(item.interest);
+    }
+  });
+  const test = [{ ...userData[0], interests }];
   return {
-    userData,
+    test,
     ready,
   };
 })(ProfilePage);

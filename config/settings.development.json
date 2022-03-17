@@ -20,7 +20,7 @@
   "defaultProfileData": [
     {
       "owner": "john@foo.com", "firstName": "John", "lastName": "Doe", "phoneNumber": "808-555-5555",
-      "interest": ["Int-3"],
+      "interest": ["Int-1", "Int-2", "Int-3"],
       "specialInterest": "Pets, Food-banks, Gaming",
       "environmentalPref": ["no-pref"],
       "availability": ["no-pref"],

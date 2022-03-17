@@ -47,7 +47,7 @@ class ProfilePageInterestCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeOpportunitiesInterest() {
+  subscribeProfileInterest() {
     if (Meteor.isClient) {
       return Meteor.subscribe(profilePageInterestPublication.profilePageInterest);
     }
@@ -57,7 +57,7 @@ class ProfilePageInterestCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeOpportunitiesInterestAdmin() {
+  subscribeProfileInterestAdmin() {
     if (Meteor.isClient) {
       return Meteor.subscribe(profilePageInterestPublication.profilePageInterestAdmin);
     }

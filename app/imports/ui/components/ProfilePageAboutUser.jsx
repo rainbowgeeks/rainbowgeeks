@@ -14,7 +14,7 @@ const ProfilePageAboutUser = ({ userInfo }) => (
       </Header>
       <Divider section/>
       <Container textAlign='center'>
-        {userInfo.interest.join(', ')}
+        {userInfo.interests.join(', ').toString()}
       </Container>
     </Segment>
     <Segment>
@@ -57,11 +57,12 @@ const ProfilePageAboutUser = ({ userInfo }) => (
 ProfilePageAboutUser.propTypes = {
   userInfo: PropTypes.shape({
     owner: PropTypes.string,
-    interest: PropTypes.string,
     specialInterest: PropTypes.string,
     environmentalPref: PropTypes.string,
     availability: PropTypes.string,
+    interests: PropTypes.array,
   }).isRequired,
+
 };
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
