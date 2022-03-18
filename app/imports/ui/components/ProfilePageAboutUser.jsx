@@ -36,7 +36,7 @@ const ProfilePageAboutUser = ({ userInfo }) => (
       </Header>
       <Divider section/>
       <Container textAlign='center'>
-        {userInfo.environmentalPref.join(', ')}
+        {userInfo.listEnviromentalPref.join(', ').toString()}
       </Container>
     </Segment>
     <Segment>
@@ -58,9 +58,9 @@ ProfilePageAboutUser.propTypes = {
   userInfo: PropTypes.shape({
     owner: PropTypes.string,
     specialInterest: PropTypes.string,
-    environmentalPref: PropTypes.string,
     availability: PropTypes.string,
     listInterests: PropTypes.array,
+    listEnviromentalPref: PropTypes.array,
   }).isRequired,
 
 };

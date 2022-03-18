@@ -47,7 +47,7 @@ class ProfilePageEnvironementPrefCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeProfileInterest() {
+  subscribeProfilePageEnvironmentPref() {
     if (Meteor.isClient) {
       return Meteor.subscribe(profilePageEnvironementPrefPublication.profilePageEnvironementPref);
     }
@@ -57,7 +57,7 @@ class ProfilePageEnvironementPrefCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeProfileInterestAdmin() {
+  subscribeProfilePageEnvironmentPrefAdmin() {
     if (Meteor.isClient) {
       return Meteor.subscribe(profilePageEnvironementPrefPublication.profilePageEnvironementPrefAdmin);
     }

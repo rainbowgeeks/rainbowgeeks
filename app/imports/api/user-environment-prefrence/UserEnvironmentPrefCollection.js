@@ -29,7 +29,7 @@ class UserEnvironmentPrefCollection extends BaseCollection {
 
   update(docID, { environmentPreference }) {
     const updateData = {};
-    if (environmentPref) {
+    if (environmentPreference) {
       updateData.environmentPreference = environmentPreference;
     }
     this._collection.update(docID, { $set: updateData });

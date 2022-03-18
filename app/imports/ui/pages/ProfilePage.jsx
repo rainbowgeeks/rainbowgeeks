@@ -22,6 +22,7 @@ import ProfilePageAssociatedOrganization from '../components/ProfilePageAssociat
 import ProfilePageRecentEvent from '../components/ProfilePageRecentEvent';
 import ProfilePageHeader from '../components/ProfilePageHeader';
 import { ProfilePageInterest } from '../../api/profile/ProfilePageInterestCollection';
+import { ProfilePageEnvironmentPref } from '../../api/profile/ProfilePageEnvironementPrefCollection';
 
 /** Renders the User's Profile. Profile Page is broken down into 4 components */
 const ProfilePage = ({ ready, userDocument }) => ((ready) ? (
@@ -46,7 +47,7 @@ const ProfilePage = ({ ready, userDocument }) => ((ready) ? (
             </Segment>
 
             <Divider section/>
-            <Header as='h3' textAlign='centered'>Recommended Organization</Header>
+            <Header as='h3' textAlign='center'>Recommended Organization</Header>
             <List>
               <ProfilePageAssociatedOrganization/>
               <ProfilePageAssociatedOrganization/>
@@ -84,17 +85,26 @@ ProfilePage.propTypes = {
 export default withTracker(() => {
   const subscription = UserProfileData.subscribeUserProfile();
   const userInterestSubscription = ProfilePageInterest.subscribeProfileInterest();
-  const ready = subscription.ready() && userInterestSubscription.ready();
+  const userEnvironmentalPreference = ProfilePageEnvironmentPref.subscribeProfilePageEnvironmentPref();
+  const ready = subscription.ready() && userInterestSubscription.ready() && userEnvironmentalPreference.ready();
   const userData = UserProfileData.find({}, { sort: { lastName: 1 } }).fetch();
   const userInterest = ProfilePageInterest.find().fetch();
+  const userEnviroment = ProfilePageEnvironmentPref.find().fetch();
   const listInterests = [];
+  const listEnviromentalPref = [];
 
   userInterest.forEach(function (item) {
     if (item.profileID === userData[0]._id) {
       listInterests.push(item.interest);
     }
   });
-  const userDocument = [{ ...userData[0], listInterests }];
+
+  userEnviroment.forEach(function (item) {
+    if (item.profileID === userData[0]._id) {
+      listEnviromentalPref.push(item.environmentPreference);
+    }
+  });
+  const userDocument = [{ ...userData[0], listInterests, listEnviromentalPref }];
   return {
     userDocument,
     ready,
