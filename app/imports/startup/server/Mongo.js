@@ -15,6 +15,8 @@ import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollect
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { Interest } from '../../api/user-interest/UserInterestCollection';
 import { ProfilePageInterest } from '../../api/profile/ProfilePageInterestCollection';
+import { EnvironmentalPref } from '../../api/user-environment-prefrence/UserEnvironmentPrefCollection';
+import { ProfilePageEnvironmentPref } from '../../api/profile/ProfilePageEnvironementPrefCollection';
 /* eslint-disable no-console */
 
 // Initialize the database with a default data document.
@@ -33,6 +35,11 @@ if (Stuffs.count() === 0) {
 
 function addAges(ages) {
   Ages.define({ age: ages });
+}
+
+function addEnvironmentPref(environmentPrefs) {
+  EnvironmentalPref.define({ environmentPreference: environmentPrefs });
+
 }
 
 function addEnvironments(environments) {
@@ -79,13 +86,19 @@ if (Organizations.count() === 0) {
   }
 }
 
-function addProfileData({ owner, firstName, lastName, phoneNumber, interest, specialInterest, environmentalPref, availability, profileImage, aboutUser }) {
+function addProfileData({ owner, firstName, lastName, phoneNumber, interest, specialInterest, environmentPreference, availability, profileImage, aboutUser }) {
 
   interest.map(interests => addInterest(interests));
-  console.log(` Adding: ${firstName} ${lastName} (${owner})`);
-  UserProfileData.define({ owner: owner, firstName, lastName, phoneNumber, specialInterest, environmentalPref, availability, profileImage, aboutUser });
-  interest.map(interests => ProfilePageInterest.define({ owner: owner, firstName: firstName, lastName: lastName, interest: interests }));
 
+  environmentPreference.map(environmentPreferences => addEnvironmentPref(environmentPreferences));
+
+  console.log(` Adding: ${firstName} ${lastName} (${owner})`);
+
+  UserProfileData.define({ owner: owner, firstName, lastName, phoneNumber, specialInterest, environmentPreference, availability, profileImage, aboutUser });
+
+  interest.map(interests => ProfilePageInterest.define({ owner: owner, firstName: firstName, lastName: lastName, interest: interests }));
+  environmentPreference.map(environmentPreferences => ProfilePageEnvironmentPref.define({ owner: owner, firstName: firstName, lastName: lastName, environmentPreference: environmentPreferences,
+  }));
 }
 
 if (UserProfileData.count() === 0) {

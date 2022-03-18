@@ -22,14 +22,6 @@ class ProfilePageCollection extends BaseCollection {
       lastName: String,
       phoneNumber: String,
       specialInterest: String,
-      environmentalPref: {
-        type: Array,
-        defaultValue: 'no-pref',
-      },
-      'environmentalPref.$': {
-        type: String,
-        allowedValues: profilePageEnvironmentalPref,
-      },
       availability: {
         type: Array,
         defaultValue: 'no-pref',
@@ -51,20 +43,18 @@ class ProfilePageCollection extends BaseCollection {
    * @param phoneNumber the phone number of the user
    * @param interest the interest of the user
    * @param specialInterest the additional interest of the user
-   * @param environmentalPref the environmental preference of the user
    * @param availability the availability of the user
    * @param profileImage the profile-image of the user
    * @param aboutUser the information of the user
    * @returns the docID of the defined collection
    */
-  define({ owner, firstName, lastName, phoneNumber, specialInterest, environmentalPref, availability, profileImage, aboutUser }) {
+  define({ owner, firstName, lastName, phoneNumber, specialInterest, availability, profileImage, aboutUser }) {
     const docID = this._collection.insert({
       owner,
       firstName,
       lastName,
       phoneNumber,
       specialInterest,
-      environmentalPref,
       availability,
       profileImage,
       aboutUser,
@@ -72,7 +62,7 @@ class ProfilePageCollection extends BaseCollection {
     return docID;
   }
 
-  update(docID, { firstName, lastName, phoneNumber, aboutUser, specialInterest, environmentalPref, availability }) {
+  update = (docID, { firstName, lastName, phoneNumber, aboutUser, specialInterest, availability }) => {
     const updateUserData = {};
 
     if (firstName) {
@@ -90,14 +80,11 @@ class ProfilePageCollection extends BaseCollection {
     if (specialInterest) {
       updateUserData.specialInterest = specialInterest;
     }
-    if (environmentalPref) {
-      updateUserData.environmentalPref = environmentalPref;
-    }
     if (availability) {
       updateUserData.availability = availability;
     }
     this._collection.update(docID, { $set: updateUserData });
-  }
+  };
 
   /**
    * Default publication method for entities.

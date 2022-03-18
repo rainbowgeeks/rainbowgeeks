@@ -17,6 +17,8 @@ import { OrganizationProfiles } from '../user/OrganizationProfileCollection';
 import { UserProfileData } from '../profile/ProfilePageCollection';
 import { Interest } from '../user-interest/UserInterestCollection';
 import { ProfilePageInterest } from '../profile/ProfilePageInterestCollection';
+import { EnvironmentalPref } from '../user-environment-prefrence/UserEnvironmentPrefCollection';
+import { ProfilePageEnvironmentPref } from '../profile/ProfilePageEnvironementPrefCollection';
 
 class MATRPClass {
   collections;
@@ -32,6 +34,7 @@ class MATRPClass {
       Ages,
       Categories,
       Environments,
+      EnvironmentalPref,
       Interest,
       Stuffs,
       Organizations,
@@ -46,6 +49,7 @@ class MATRPClass {
       UserProfileData,
       UserProfiles,
       ProfilePageInterest,
+      ProfilePageEnvironmentPref,
     ];
     /*
      * A list of collection class instances in the order required for them to be sequentially loaded from a file.
@@ -55,6 +59,7 @@ class MATRPClass {
       Ages,
       Categories,
       Environments,
+      EnvironmentalPref,
       Interest,
       Stuffs,
       Organizations,
@@ -69,6 +74,7 @@ class MATRPClass {
       UserProfileData,
       UserProfiles,
       ProfilePageInterest,
+      ProfilePageEnvironmentPref,
     ];
 
     /*
