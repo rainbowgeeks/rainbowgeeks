@@ -17,6 +17,8 @@ import { Interest } from '../../api/user-interest/UserInterestCollection';
 import { ProfilePageInterest } from '../../api/profile/ProfilePageInterestCollection';
 import { EnvironmentalPref } from '../../api/user-environment-prefrence/UserEnvironmentPrefCollection';
 import { ProfilePageEnvironmentPref } from '../../api/profile/ProfilePageEnvironementPrefCollection';
+import { Availability } from '../../api/user-availability/UserAvailabilityCollection';
+import { ProfilePageAvailability } from '../../api/profile/ProfilePageAvailabilityCollection';
 /* eslint-disable no-console */
 
 // Initialize the database with a default data document.
@@ -35,6 +37,10 @@ if (Stuffs.count() === 0) {
 
 function addAges(ages) {
   Ages.define({ age: ages });
+}
+
+function addAvailability(availability) {
+  Availability.define({ availability });
 }
 
 function addEnvironmentPref(environmentPrefs) {
@@ -92,6 +98,8 @@ function addProfileData({ owner, firstName, lastName, phoneNumber, interest, spe
 
   environmentPreference.map(environmentPreferences => addEnvironmentPref(environmentPreferences));
 
+  availability.map(availabilities => addAvailability(availabilities));
+
   console.log(` Adding: ${firstName} ${lastName} (${owner})`);
 
   UserProfileData.define({ owner: owner, firstName, lastName, phoneNumber, specialInterest, environmentPreference, availability, profileImage, aboutUser });
@@ -99,6 +107,7 @@ function addProfileData({ owner, firstName, lastName, phoneNumber, interest, spe
   interest.map(interests => ProfilePageInterest.define({ owner: owner, firstName: firstName, lastName: lastName, interest: interests }));
   environmentPreference.map(environmentPreferences => ProfilePageEnvironmentPref.define({ owner: owner, firstName: firstName, lastName: lastName, environmentPreference: environmentPreferences,
   }));
+  availability.map(availabilities => ProfilePageAvailability.define({ owner: owner, firstName: firstName, lastName: lastName, availability: availabilities }));
 }
 
 if (UserProfileData.count() === 0) {

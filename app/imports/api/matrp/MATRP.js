@@ -19,6 +19,8 @@ import { Interest } from '../user-interest/UserInterestCollection';
 import { ProfilePageInterest } from '../profile/ProfilePageInterestCollection';
 import { EnvironmentalPref } from '../user-environment-prefrence/UserEnvironmentPrefCollection';
 import { ProfilePageEnvironmentPref } from '../profile/ProfilePageEnvironementPrefCollection';
+import { Availability } from '../user-availability/UserAvailabilityCollection';
+import { ProfilePageAvailability } from '../profile/ProfilePageAvailabilityCollection';
 
 class MATRPClass {
   collections;
@@ -31,6 +33,7 @@ class MATRPClass {
     // list of all the MATRP collections
     this.collections = [
       AdminProfiles,
+      Availability,
       Ages,
       Categories,
       Environments,
@@ -50,12 +53,14 @@ class MATRPClass {
       UserProfiles,
       ProfilePageInterest,
       ProfilePageEnvironmentPref,
+      ProfilePageAvailability,
     ];
     /*
      * A list of collection class instances in the order required for them to be sequentially loaded from a file.
      */
     this.collectionLoadSequence = [
       AdminProfiles,
+      Availability,
       Ages,
       Categories,
       Environments,
@@ -75,6 +80,7 @@ class MATRPClass {
       UserProfiles,
       ProfilePageInterest,
       ProfilePageEnvironmentPref,
+      ProfilePageAvailability,
     ];
 
     /*
