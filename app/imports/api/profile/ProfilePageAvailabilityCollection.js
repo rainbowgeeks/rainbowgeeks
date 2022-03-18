@@ -47,7 +47,7 @@ class ProfilePageAvailabilityCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeProfilePageEnvironmentPref() {
+  subscribeProfilePageAvailability() {
     if (Meteor.isClient) {
       return Meteor.subscribe(profilePageAvailabilityPublication.profilePageAvailability);
     }
@@ -57,7 +57,7 @@ class ProfilePageAvailabilityCollection extends BaseCollection {
   /**
    * Subscription method for all documents.
    */
-  subscribeProfilePageEnvironmentPrefAdmin() {
+  subscribeProfilePageAvailabilityAdmin() {
     if (Meteor.isClient) {
       return Meteor.subscribe(profilePageAvailabilityPublication.profilePageAvailabilityAdmin);
     }

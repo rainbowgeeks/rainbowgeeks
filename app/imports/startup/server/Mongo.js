@@ -102,7 +102,7 @@ function addProfileData({ owner, firstName, lastName, phoneNumber, interest, spe
 
   console.log(` Adding: ${firstName} ${lastName} (${owner})`);
 
-  UserProfileData.define({ owner: owner, firstName, lastName, phoneNumber, specialInterest, environmentPreference, availability, profileImage, aboutUser });
+  UserProfileData.define({ owner: owner, firstName, lastName, phoneNumber, specialInterest, profileImage, aboutUser });
 
   interest.map(interests => ProfilePageInterest.define({ owner: owner, firstName: firstName, lastName: lastName, interest: interests }));
   environmentPreference.map(environmentPreferences => ProfilePageEnvironmentPref.define({ owner: owner, firstName: firstName, lastName: lastName, environmentPreference: environmentPreferences,

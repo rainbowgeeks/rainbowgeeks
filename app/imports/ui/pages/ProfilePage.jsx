@@ -23,6 +23,7 @@ import ProfilePageRecentEvent from '../components/ProfilePageRecentEvent';
 import ProfilePageHeader from '../components/ProfilePageHeader';
 import { ProfilePageInterest } from '../../api/profile/ProfilePageInterestCollection';
 import { ProfilePageEnvironmentPref } from '../../api/profile/ProfilePageEnvironementPrefCollection';
+import { ProfilePageAvailability } from '../../api/profile/ProfilePageAvailabilityCollection';
 
 /** Renders the User's Profile. Profile Page is broken down into 4 components */
 const ProfilePage = ({ ready, userDocument }) => ((ready) ? (
@@ -86,12 +87,15 @@ export default withTracker(() => {
   const subscription = UserProfileData.subscribeUserProfile();
   const userInterestSubscription = ProfilePageInterest.subscribeProfileInterest();
   const userEnvironmentalPreference = ProfilePageEnvironmentPref.subscribeProfilePageEnvironmentPref();
-  const ready = subscription.ready() && userInterestSubscription.ready() && userEnvironmentalPreference.ready();
+  const userAvailability = ProfilePageAvailability.subscribeProfilePageAvailability();
+  const ready = subscription.ready() && userInterestSubscription.ready() && userEnvironmentalPreference.ready() && userAvailability.ready();
   const userData = UserProfileData.find({}, { sort: { lastName: 1 } }).fetch();
   const userInterest = ProfilePageInterest.find().fetch();
   const userEnviroment = ProfilePageEnvironmentPref.find().fetch();
+  const userAvailabilties = ProfilePageAvailability.find().fetch();
   const listInterests = [];
   const listEnviromentalPref = [];
+  const listAvailability = [];
 
   userInterest.forEach(function (item) {
     if (item.profileID === userData[0]._id) {
@@ -104,7 +108,13 @@ export default withTracker(() => {
       listEnviromentalPref.push(item.environmentPreference);
     }
   });
-  const userDocument = [{ ...userData[0], listInterests, listEnviromentalPref }];
+
+  userAvailabilties.forEach(function (item) {
+    if (item.profileID === userData[0]._id) {
+      listAvailability.push(item.availability);
+    }
+  });
+  const userDocument = [{ ...userData[0], listInterests, listEnviromentalPref, listAvailability }];
   return {
     userDocument,
     ready,

@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 /** Renders the column to display about the user. See pages/ProfilePage.jsx. */
 const ProfilePageAboutUser = ({ userInfo }) => (
   <Grid.Column>
+    {console.log(userInfo)}
     <Segment>
       <Header as="h4">
         <Container textAlign='center'>
@@ -47,7 +48,7 @@ const ProfilePageAboutUser = ({ userInfo }) => (
       </Header>
       <Divider section/>
       <Container textAlign={'center'}>
-        {userInfo.availability.join(', ')}
+        {userInfo.listAvailability.join(', ').toString()}
       </Container>
     </Segment>
   </Grid.Column>
@@ -58,7 +59,7 @@ ProfilePageAboutUser.propTypes = {
   userInfo: PropTypes.shape({
     owner: PropTypes.string,
     specialInterest: PropTypes.string,
-    availability: PropTypes.string,
+    listAvailability: PropTypes.array,
     listInterests: PropTypes.array,
     listEnviromentalPref: PropTypes.array,
   }).isRequired,

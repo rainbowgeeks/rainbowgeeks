@@ -22,14 +22,6 @@ class ProfilePageCollection extends BaseCollection {
       lastName: String,
       phoneNumber: String,
       specialInterest: String,
-      availability: {
-        type: Array,
-        defaultValue: 'no-pref',
-      },
-      'availability.$': {
-        type: String,
-        allowedValues: profilePageAvailability,
-      },
       profileImage: String,
       aboutUser: String,
     }));
@@ -48,21 +40,20 @@ class ProfilePageCollection extends BaseCollection {
    * @param aboutUser the information of the user
    * @returns the docID of the defined collection
    */
-  define({ owner, firstName, lastName, phoneNumber, specialInterest, availability, profileImage, aboutUser }) {
+  define({ owner, firstName, lastName, phoneNumber, specialInterest, profileImage, aboutUser }) {
     const docID = this._collection.insert({
       owner,
       firstName,
       lastName,
       phoneNumber,
       specialInterest,
-      availability,
       profileImage,
       aboutUser,
     });
     return docID;
   }
 
-  update = (docID, { firstName, lastName, phoneNumber, aboutUser, specialInterest, availability }) => {
+  update = (docID, { firstName, lastName, phoneNumber, aboutUser, specialInterest }) => {
     const updateUserData = {};
 
     if (firstName) {
@@ -79,9 +70,6 @@ class ProfilePageCollection extends BaseCollection {
     }
     if (specialInterest) {
       updateUserData.specialInterest = specialInterest;
-    }
-    if (availability) {
-      updateUserData.availability = availability;
     }
     this._collection.update(docID, { $set: updateUserData });
   };
