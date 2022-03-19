@@ -5,31 +5,36 @@ import { _ } from 'meteor/underscore';
 import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/BrowseOpportunity.jsx. */
-const Opportunity = ({ opportunity }) => (
-  <Card fluid href={`#/event/${opportunity._id}`}>
-    <Card.Content style={{
-      backgroundImage: `url("${opportunity.cover}")`,
-    }}>
-      <Card.Header className={'card-content-spacing'}>Date: {opportunity.date}</Card.Header>
-      <Card.Header>{opportunity.title}</Card.Header>
-      <Card.Description className={'card-content-spacing'}>
-        Address:  {opportunity.location}
-      </Card.Description>
-      <Card.Meta>
-        <GridRow>
-          Age: {_.map(opportunity.age, (age, index) => <Label key={index} size='tiny' color='teal'>{age}</Label>)}
-        </GridRow>
-        <GridRow>
-          Environment: {_.map(opportunity.environment, (environment, index) => <Label key={index} size='tiny' color='teal'>{environment}</Label>)}
-        </GridRow>
-      </Card.Meta>
-    </Card.Content>
-    <Card.Content fluid='true' extra>
-      <br/>
-      <br/>
-    </Card.Content>
-  </Card>
-);
+const Opportunity = ({ opportunity }) => {
+  // eslint-disable-next-line no-unused-vars
+  let opp;
+
+  return (
+    <Card fluid href={`#/event/${opportunity._id}`}>
+      <Card.Content style={{
+        backgroundImage: `url("${opportunity.cover}")`,
+      }}>
+        <Card.Header className={'card-content-spacing'}>Date: {opportunity.date}</Card.Header>
+        <Card.Header>{opportunity.title}</Card.Header>
+        <Card.Description className={'card-content-spacing'}>
+          Address: {opportunity.location}
+        </Card.Description>
+        <Card.Meta>
+          <GridRow>
+            Age: {_.map(opportunity.age, (age, index) => <Label key={index} size='tiny' color='teal'>{age}</Label>)}
+          </GridRow>
+          <GridRow>
+            Environment: {_.map(opportunity.environment, (environment, index) => <Label key={index} size='tiny' color='teal'>{environment}</Label>)}
+          </GridRow>
+        </Card.Meta>
+      </Card.Content>
+      <Card.Content fluid='true' extra>
+        <br/>
+        <br/>
+      </Card.Content>
+    </Card>
+  );
+};
 
 // Require a document to be passed to this component.
 Opportunity.propTypes = {
