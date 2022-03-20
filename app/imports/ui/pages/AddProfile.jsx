@@ -6,7 +6,7 @@ import {
   SubmitField,
   TextField,
   LongTextField,
-  SelectField,
+  SelectField, HiddenField,
 } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
@@ -75,10 +75,10 @@ const AddProfile = () => {
             <Segment padded>
               <Form.Group widths='equal'>
                 <TextField name='firstName' showinline/>
-                <TextField name='owner'/>
+                <HiddenField name='owner' value='test'/>
                 <TextField name='lastName' />
                 <TextField name='phoneNumber' />
-                <TextField name='profileImage' placeholder='https://react.semantic-ui.com/images/avatar/large/matthew.png'/>
+                <HiddenField name='profileImage' value='https://react.semantic-ui.com/images/avatar/large/matthew.png'/>
               </Form.Group>
               <LongTextField name='aboutUser' placeholder='Edit About Me'/>
             </Segment>
