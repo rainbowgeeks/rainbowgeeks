@@ -7,34 +7,34 @@ const sortDat = (arry) => {
   const temp = [...arry];
   const order = { sun: 0, mon: 1, tues: 2, weds: 3, thurs: 4, fri: 5, sat: 6, weekends: 7, 'week-days': 8, 'no-pref': 9 };
   const reorder = ['', '', '', '', '', '', '', '', '', ''];
-  temp.forEach((item, index) => {
+  temp.forEach((item) => {
     switch (item) {
     case 'sun':
-      reorder[order.sun] = 'sun';
+      reorder[order.sun] = 'Sunday';
       break;
     case 'mon':
-      reorder[order.mon] = 'mon';
+      reorder[order.mon] = 'Monday';
       break;
     case 'tues':
-      reorder[order.tues] = 'tues';
+      reorder[order.tues] = 'Tuesday';
       break;
     case 'weds':
-      reorder[order.weds] = 'weds';
+      reorder[order.weds] = 'Wednesday';
       break;
     case 'thurs':
-      reorder[order.thurs] = 'thurs';
+      reorder[order.thurs] = 'Thursday';
       break;
     case 'fri':
-      reorder[order.fri] = 'fri';
+      reorder[order.fri] = 'Friday';
       break;
     case 'sat':
-      reorder[order.sat] = 'sat';
+      reorder[order.sat] = 'Saturday';
       break;
     case 'weekends':
-      reorder[order.weekends] = 'weekends';
+      reorder[order.weekends] = 'Weekends';
       break;
     case 'week-days':
-      reorder[order['week-days']] = 'week-days';
+      reorder[order['week-days']] = 'Week-days';
       break;
     case 'no-pref':
       reorder[order['no-pref']] = 'no-pref';
