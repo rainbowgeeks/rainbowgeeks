@@ -3,6 +3,49 @@ import { Container, Divider, Grid, Header, Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
+const sortDat = (arry) => {
+  const temp = [...arry];
+  const order = { sun: 0, mon: 1, tues: 2, weds: 3, thurs: 4, fri: 5, sat: 6, weekends: 7, 'week-days': 8, 'no-pref': 9 };
+  const reorder = ['', '', '', '', '', '', '', '', '', ''];
+  temp.forEach((item, index) => {
+    switch (item) {
+    case 'sun':
+      reorder[order.sun] = 'sun';
+      break;
+    case 'mon':
+      reorder[order.mon] = 'mon';
+      break;
+    case 'tues':
+      reorder[order.tues] = 'tues';
+      break;
+    case 'weds':
+      reorder[order.weds] = 'weds';
+      break;
+    case 'thurs':
+      reorder[order.thurs] = 'thurs';
+      break;
+    case 'fri':
+      reorder[order.fri] = 'fri';
+      break;
+    case 'sat':
+      reorder[order.sat] = 'sat';
+      break;
+    case 'weekends':
+      reorder[order.weekends] = 'weekends';
+      break;
+    case 'week-days':
+      reorder[order['week-days']] = 'week-days';
+      break;
+    case 'no-pref':
+      reorder[order['no-pref']] = 'no-pref';
+      break;
+    default:
+    }
+  });
+  const result = reorder.filter(element => element !== '');
+  return result.join(', ');
+};
+
 /** Renders the column to display about the user. See pages/ProfilePage.jsx. */
 const ProfilePageAboutUser = ({ userInfo }) => (
   <Grid.Column>
@@ -14,7 +57,7 @@ const ProfilePageAboutUser = ({ userInfo }) => (
       </Header>
       <Divider section/>
       <Container textAlign='center'>
-        {userInfo.interest.join(', ')}
+        {userInfo.interest.sort().join(', ')}
       </Container>
     </Segment>
     <Segment>
@@ -36,7 +79,7 @@ const ProfilePageAboutUser = ({ userInfo }) => (
       </Header>
       <Divider section/>
       <Container textAlign='center'>
-        {userInfo.environmentalPref.join(', ')}
+        {userInfo.environmentalPref.sort().join(', ')}
       </Container>
     </Segment>
     <Segment>
@@ -47,7 +90,9 @@ const ProfilePageAboutUser = ({ userInfo }) => (
       </Header>
       <Divider section/>
       <Container textAlign={'center'}>
-        {userInfo.availability.join(', ')}
+        {
+          sortDat(userInfo.availability)
+        }
       </Container>
     </Segment>
   </Grid.Column>
@@ -57,9 +102,9 @@ const ProfilePageAboutUser = ({ userInfo }) => (
 ProfilePageAboutUser.propTypes = {
   userInfo: PropTypes.shape({
     owner: PropTypes.string,
-    interest: PropTypes.string,
+    interest: PropTypes.array,
     specialInterest: PropTypes.string,
-    environmentalPref: PropTypes.string,
+    environmentalPref: PropTypes.array,
     availability: PropTypes.string,
   }).isRequired,
 };
