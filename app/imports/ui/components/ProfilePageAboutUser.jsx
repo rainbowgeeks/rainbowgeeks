@@ -3,10 +3,16 @@ import { Container, Divider, Grid, Header, Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-const sortDat = (arry) => {
+/** Sorts the array of day, in the following order { sun, mon, tues, weds, thurs, fri, sat, weekends, week-days }
+ * no-pref will be filtered out unless no Availability value selected or selected 'no-pref' only
+ * */
+const sortDate = (arry) => {
   const temp = [...arry];
   const order = { sun: 0, mon: 1, tues: 2, weds: 3, thurs: 4, fri: 5, sat: 6, weekends: 7, 'week-days': 8, 'no-pref': 9 };
   const reorder = ['', '', '', '', '', '', '', '', '', ''];
+  if (temp.length === 0 || (temp[0] === 'no-pref' && temp.length === 1)) {
+    return 'no-pref';
+  }
   temp.forEach((item) => {
     switch (item) {
     case 'sun':
@@ -43,7 +49,18 @@ const sortDat = (arry) => {
     }
   });
   const result = reorder.filter(element => element !== '');
-  return result.join(', ');
+  const removeNoPref = result.filter(element => element !== 'no-pref');
+  return removeNoPref.join(', ');
+};
+
+/** Filters out no pref if other options not selected */
+const showValue = (data) => {
+  const temp = [...data];
+  if (temp.length === 0 || (temp[0] === 'no-pref' && temp.length === 1)) {
+    return 'no-pref';
+  }
+  const result = temp.filter(element => element !== 'no-pref');
+  return result.sort().join(', ');
 };
 
 /** Renders the column to display about the user. See pages/ProfilePage.jsx. */
@@ -57,7 +74,7 @@ const ProfilePageAboutUser = ({ userInfo }) => (
       </Header>
       <Divider section/>
       <Container textAlign='center'>
-        {userInfo.interest.sort().join(', ')}
+        {showValue(userInfo.interest)}
       </Container>
     </Segment>
     <Segment>
@@ -79,7 +96,7 @@ const ProfilePageAboutUser = ({ userInfo }) => (
       </Header>
       <Divider section/>
       <Container textAlign='center'>
-        {userInfo.environmentalPref.sort().join(', ')}
+        {showValue(userInfo.environmentalPref)}
       </Container>
     </Segment>
     <Segment>
@@ -91,7 +108,7 @@ const ProfilePageAboutUser = ({ userInfo }) => (
       <Divider section/>
       <Container textAlign={'center'}>
         {
-          sortDat(userInfo.availability)
+          sortDate(userInfo.availability)
         }
       </Container>
     </Segment>
