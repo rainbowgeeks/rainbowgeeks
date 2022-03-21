@@ -77,13 +77,15 @@ const AddProfile = ({ userData }) => {
             <Header as="h2" textAlign="center">Profile Information</Header>
             <Segment padded>
               <Form.Group widths='equal'>
-                <TextField name='firstName' showinline label='First name' value={_.pluck(getUser, 'firstName').toString()}/>
-                <TextField name='lastName' label='Last name' value={_.pluck(getUser, 'lastName').toString()}/>
-                <TextField name='phoneNumber' />
+                <HiddenField name='firstName' showinline label='First name' value={_.pluck(getUser, 'firstName').toString()}/>
+                <HiddenField name='lastName' label='Last name' value={_.pluck(getUser, 'lastName').toString()}/>
                 <HiddenField name='owner' value={_.pluck(getUser, 'email').toString()}/>
                 <HiddenField name='profileImage' value='https://react.semantic-ui.com/images/avatar/large/matthew.png'/>
               </Form.Group>
-              <LongTextField name='aboutUser' label='About Me' placeholder='Enter a Brief Introduction of yourself'/>
+              <Form.Group widths='equal'>
+                <TextField name='phoneNumber' />
+                <LongTextField name='aboutUser' label='About Me' placeholder='Enter a Brief Introduction of yourself'/>
+              </Form.Group>
             </Segment>
           </Segment>
           <Segment>
