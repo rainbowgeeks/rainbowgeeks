@@ -54,7 +54,7 @@ const AddProfile = ({ userData }) => {
     defineMethod.callPromise({ collectionName, definitionData })
       .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
-        swal('Success', 'Item added successfully', 'success');
+        swal('Success', 'SuccessFully Created Profile', 'success');
         setRedirectToReferer(true);
         formRef.reset();
       });
@@ -77,22 +77,27 @@ const AddProfile = ({ userData }) => {
             <Header as="h2" textAlign="center">Profile Information</Header>
             <Segment padded>
               <Form.Group widths='equal'>
-                <TextField name='firstName' showinline placeholder={_.pluck(getUser, 'firstName').toString()} value={_.pluck(getUser, 'firstName').toString()}/>
-                <HiddenField name='owner' value={_.pluck(getUser, 'email').toString()}/>
-                <TextField name='lastName' value={_.pluck(getUser, 'lastName').toString()}/>
+                <TextField name='firstName' showinline label='First name' value={_.pluck(getUser, 'firstName').toString()}/>
+                <TextField name='lastName' label='Last name' value={_.pluck(getUser, 'lastName').toString()}/>
                 <TextField name='phoneNumber' />
+                <HiddenField name='owner' value={_.pluck(getUser, 'email').toString()}/>
                 <HiddenField name='profileImage' value='https://react.semantic-ui.com/images/avatar/large/matthew.png'/>
               </Form.Group>
-              <LongTextField name='aboutUser' placeholder='Edit About Me'/>
+              <LongTextField name='aboutUser' label='About Me' placeholder='Enter a Brief Introduction of yourself'/>
             </Segment>
           </Segment>
           <Segment>
             <Header as='h3' textAlign='center'>My Prefrence</Header>
             <Segment>
-              <TextField name='specialInterest'/>
-              <MultiSelectField name='interest'/>
-              <SelectField name='environmentalPref' checkboxes/>
-              <SelectField name='availability' checkboxes/>
+              <Form.Group widths={2}>
+                <LongTextField showinline name='specialInterest'/>
+                <MultiSelectField name='interest'/>
+              </Form.Group>
+              <Form.Group widths={2}>
+                <SelectField name='environmentalPref' inline checkboxes/>
+                <SelectField name='availability' inline checkboxes/>
+              </Form.Group>
+
             </Segment>
           </Segment>
           <Container textAlign='right'>
