@@ -1,13 +1,13 @@
 import React from 'react';
 import { Card, GridRow, Label } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/BrowseOpportunity.jsx. */
 const Opportunity = ({ opportunity }) => {
+  console.log(opportunity);
   // eslint-disable-next-line no-unused-vars
-  let opp;
 
   return (
     <Card fluid href={`#/event/${opportunity._id}`}>
@@ -32,13 +32,12 @@ const Opportunity = ({ opportunity }) => {
         <br/>
         <br/>
       </Card.Content>
-    </Card>
-  );
+    </Card>);
 };
 
 // Require a document to be passed to this component.
 Opportunity.propTypes = {
-  opportunity: PropTypes.object.isRequired,
+  opportunity: PropTypes.array.isRequired,
 };
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
