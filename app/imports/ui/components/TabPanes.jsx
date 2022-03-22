@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Grid, Header, Tab, Card } from 'semantic-ui-react';
+import { Grid, Header, Tab } from 'semantic-ui-react';
+import { AutoForm, SubmitField, ErrorsField } from 'uniforms-semantic';
 import PropTypes from 'prop-types';
+import SimpleSchema from 'simpl-schema';
+import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { withRouter } from 'react-router-dom';
 import { _ } from 'meteor/underscore';
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
@@ -8,11 +11,39 @@ import CategoryOpp from './CategoryOpp';
 import SearchOpp from './SearchOpp';
 import Opportunity from './Opportunity';
 import GoogleMap from './GoogleMap';
+import MultiSelectField from '../../forms/controllers/MultiSelectField';
+
+export const schemaAge = ['Adults', 'Family-Friendly', 'Teens', 'Seniors'];
+export const schemaEnv = ['Indoors', 'Mixed', 'Outdoors', 'Virtual'];
+
+// Create a Schema to specify the structure of the data to appear in the form.
+const formSchema = new SimpleSchema({
+  age: {
+    type: Array, optional: true,
+    label: 'Age Group',
+  },
+  'age.$': {
+    type: String,
+    allowedValues: schemaAge,
+  },
+  environment: {
+    type: Array, optional: true,
+    label: 'Environment',
+  },
+  'environment.$': {
+    type: String,
+    allowedValues: schemaEnv,
+  },
+});
 
 /** Renders a Tab for filter opportunities. */
 const TabPanes = ({ opportunities, categories }) => {
 
   const [data, setData] = useState([]);
+  const [filterParam, setFilterParam] = useState({
+    age: [],
+    environment: [],
+  });
   const getCategories = (category) => {
     const cat = category;
     const getOppID = _.pluck(OpportunitiesCats.find({ category: cat.name }).fetch(), 'oppID');
@@ -36,6 +67,7 @@ const TabPanes = ({ opportunities, categories }) => {
       </Tab.Pane>,
     },
   ];
+  const bridge = new SimpleSchema2Bridge(formSchema);
 
   return (
     <Grid celled columns={3}>
@@ -58,12 +90,16 @@ const TabPanes = ({ opportunities, categories }) => {
           className={'make-scrollable'}
           panes={panes}
         />
+        <AutoForm schema={bridge} onSubmit={value => setFilterParam(value)}>
+          <MultiSelectField name='age'/>
+          <MultiSelectField name='environment'/>
+          <SubmitField value='Submit'/>
+          <ErrorsField/>
+        </AutoForm>
       </Grid.Column>
       <Grid.Column width={5}>
-        <Card.Group className={'make-scrollable'} centered>
-          {(data.length > 0) ? data.map(d => <Opportunity key={d._id} opportunity={d}/>) :
-            opportunities.map(o => <Opportunity key={o._id} opportunity={o}/>)}
-        </Card.Group>
+        {(data.length !== 0) ? <Opportunity opportunity={data} filter={filterParam}/> :
+          <Opportunity opportunity={opportunities} filter={filterParam}/>}
       </Grid.Column>
       <Grid.Column width={7}>
         <div>

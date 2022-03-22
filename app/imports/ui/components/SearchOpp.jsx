@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useReducer, useCallback } from 'react';
-import { Search, Container, Input } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -10,13 +10,14 @@ import TabPanes from './TabPanes';
 const SearchOpp = ({ opportunities, getOpp }) => {
   const initialState = {
     loading: false,
-    results: [],
+    results: [opportunities],
     value: '',
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
     case 'CLEAN_QUERY':
+      getOpp(opportunities);
       return initialState;
     case 'START_SEARCH':
       return { ...state, loading: true, value: action.query };
@@ -32,7 +33,7 @@ const SearchOpp = ({ opportunities, getOpp }) => {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { loading } = state;
+  const { loading, value } = state;
 
   const timeoutRef = useRef();
   const handleSearchChange = useCallback((e, data) => {
@@ -58,11 +59,11 @@ const SearchOpp = ({ opportunities, getOpp }) => {
     clearTimeout(timeoutRef.current);
   }, []);
   return (
-    <Container>
-      <Input fluid icon='search'
-        loading={loading}
-        onChange={handleSearchChange}/>
-    </Container>
+    <Input fluid icon='search'
+      loading={loading}
+      onChange={handleSearchChange}
+      value={value}
+    />
   );
 };
 
