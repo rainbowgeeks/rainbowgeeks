@@ -14,6 +14,7 @@ class EnvironmentCollection extends BaseCollection {
   constructor() {
     super('Environments', new SimpleSchema({
       environment: { type: String, index: true, unique: true },
+      icon: String,
     }));
   }
 
@@ -29,6 +30,7 @@ class EnvironmentCollection extends BaseCollection {
     }
     return this._collection.insert({
       environment: environment,
+      icon: docID.icon,
     });
   }
 
