@@ -14,7 +14,43 @@ class CategoryCollection extends BaseCollection {
   constructor() {
     super('Categories', new SimpleSchema({
       category: { type: String, index: true, unique: true },
+      icon: String,
     }));
+  }
+
+  /**
+   * Method for getting icon
+   */
+  getIcon(name) {
+    let icon;
+    // eslint-disable-next-line default-case
+    switch (name) {
+    case 'Crisis/Disaster Relief':
+      icon = 'first aid';
+      break;
+    case 'Food Insecurity':
+      icon = 'food';
+      break;
+    case 'Environment':
+      icon = 'leaf';
+      break;
+    case 'Child/Family Support':
+      icon = 'child';
+      break;
+    case 'Education':
+      icon = 'graduation';
+      break;
+    case 'Ongoing Position':
+      icon = 'check square';
+      break;
+    case 'Animal Welfare/Rescue':
+      icon = 'paw';
+      break;
+    case 'Covid-19 Recovery':
+      icon = 'heartbeat';
+      break;
+    }
+    return { name, icon };
   }
 
   /**
@@ -29,6 +65,7 @@ class CategoryCollection extends BaseCollection {
     }
     return this._collection.insert({
       category: category,
+      icon: docID.icon,
     });
   }
 

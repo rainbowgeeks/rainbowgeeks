@@ -17,6 +17,7 @@
     { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
   ],
+
   "defaultProfileData": [
     {
       "owner": "john@foo.com", "firstName": "John", "lastName": "Doe", "phoneNumber": "808-555-5555",

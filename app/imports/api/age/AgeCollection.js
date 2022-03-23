@@ -14,6 +14,7 @@ class AgeCollection extends BaseCollection {
   constructor() {
     super('Ages', new SimpleSchema({
       age: { type: String, index: true, unique: true },
+      icon: String,
     }));
   }
 
@@ -29,6 +30,7 @@ class AgeCollection extends BaseCollection {
     }
     return this._collection.insert({
       age: age,
+      icon: docID.icon,
     });
   }
 
