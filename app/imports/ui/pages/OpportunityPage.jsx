@@ -17,7 +17,7 @@ import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
 
 const OpportunityPage = ({ _id, ready }) => {
-
+  // Method.
   const getEvent = (data) => {
     const opportunity = Opportunities.findOne({ _id: data });
     const pocEmail = opportunity.owner;
