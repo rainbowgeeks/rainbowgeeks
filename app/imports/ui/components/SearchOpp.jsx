@@ -10,7 +10,7 @@ import TabPanes from './TabPanes';
 const SearchOpp = ({ opportunities, getOpp }) => {
   const initialState = {
     loading: false,
-    results: [opportunities],
+    results: [],
     value: '',
   };
 
@@ -18,7 +18,7 @@ const SearchOpp = ({ opportunities, getOpp }) => {
     switch (action.type) {
     case 'CLEAN_QUERY':
       getOpp(opportunities);
-      return initialState;
+      return { ...state, loading: false, results: opportunities };
     case 'START_SEARCH':
       return { ...state, loading: true, value: action.query };
     case 'FINISH_SEARCH':
@@ -59,7 +59,8 @@ const SearchOpp = ({ opportunities, getOpp }) => {
     clearTimeout(timeoutRef.current);
   }, []);
   return (
-    <Input fluid icon='search'
+    <Input fluid
+      placeholder={'Search by Title'}
       loading={loading}
       onChange={handleSearchChange}
       value={value}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Header, Tab } from 'semantic-ui-react';
-import { AutoForm, SubmitField, ErrorsField } from 'uniforms-semantic';
+import { AutoForm, SubmitField } from 'uniforms-semantic';
 import PropTypes from 'prop-types';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -44,6 +44,11 @@ const TabPanes = ({ opportunities, categories }) => {
     age: [],
     environment: [],
   });
+  const submit = (value, formRef) => {
+    console.log(value);
+    setFilterParam(value);
+    formRef.reset();
+  };
   const getCategories = (category) => {
     const cat = category;
     const getOppID = _.pluck(OpportunitiesCats.find({ category: cat.name }).fetch(), 'oppID');
@@ -68,7 +73,7 @@ const TabPanes = ({ opportunities, categories }) => {
     },
   ];
   const bridge = new SimpleSchema2Bridge(formSchema);
-
+  let fRef = null;
   return (
     <Grid celled columns={3}>
       <Grid.Column width={4}>
@@ -79,9 +84,9 @@ const TabPanes = ({ opportunities, categories }) => {
         />
         <Tab
           menu={{
+            attached: true,
             secondary: true,
             tabular: true,
-            attached: false,
             style: {
               display: 'flex',
               justifyContent: 'center',
@@ -90,11 +95,11 @@ const TabPanes = ({ opportunities, categories }) => {
           className={'make-scrollable'}
           panes={panes}
         />
-        <AutoForm schema={bridge} onSubmit={value => setFilterParam(value)}>
+        <AutoForm ref={ref => { fRef = ref; }}
+          schema={bridge} onSubmit={value => submit(value, fRef)}>
           <MultiSelectField name='age'/>
           <MultiSelectField name='environment'/>
           <SubmitField value='Submit'/>
-          <ErrorsField/>
         </AutoForm>
       </Grid.Column>
       <Grid.Column width={5}>

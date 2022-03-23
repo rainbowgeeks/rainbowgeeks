@@ -10,24 +10,24 @@ const MakeCard = ({ listOpportunities }) => (
   <Card fluid href={`#/event/${listOpportunities._id}`}>
     <Card.Content style={{
       backgroundImage: `url("${listOpportunities.cover}")`,
+      backgroundPosition: 'left 40px top -10px',
     }}>
       <Card.Header className={'card-content-spacing'}>Date: {listOpportunities.date}</Card.Header>
       <Card.Header>{listOpportunities.title}</Card.Header>
-      <Card.Description className={'card-content-spacing'}>
+      <Card.Description style={{ marginTop: '10px' }}>
         Address: {listOpportunities.location}
       </Card.Description>
       <Card.Meta>
-        <GridRow>
+        <GridRow style={{ marginTop: '10px', marginBottom: '5px' }}>
           Age: {_.map(listOpportunities.age, (age, index) => <Label key={index} size='tiny' color='teal'>{age}</Label>)}
         </GridRow>
         <GridRow>
-          Environment: {_.map(listOpportunities.environment, (environment, index) => <Label key={index} size='tiny' color='teal'>{environment}</Label>)}
+         Environment: {_.map(listOpportunities.environment, (environment, index) => <Label key={index} size='tiny' color='teal'>{environment}</Label>)}
         </GridRow>
       </Card.Meta>
     </Card.Content>
     <Card.Content fluid='true' extra>
-      <br/>
-      <br/>
+      <Card.Header content={`${listOpportunities.organizationName}`}/>
     </Card.Content>
   </Card>
 );
@@ -40,9 +40,9 @@ function getOpp(id, opp) {
 }
 
 function filterOpp(opp, age, env) {
-  const ageID = age ? age.map(a => OpportunitiesAges.find({ age: a }).fetch()) : {};
-  const envID = env ? env.map(e => OpportunitiesEnvs.find({ environment: e }).fetch()) : {};
-  const getIDS = _.flatten(ageID.concat(envID));
+  const ageID = age ? age.map(a => OpportunitiesAges.find({ age: a }).fetch()) : '';
+  const envID = env ? env.map(e => OpportunitiesEnvs.find({ environment: e }).fetch()) : '';
+  const getIDS = ageID ? _.flatten(ageID.concat(envID)) : _.flatten(envID.concat(ageID));
   const IDS = _.pluck(getIDS, 'oppID').filter(ID => ID !== ('' || undefined));
   const opportunity = _.uniq(IDS);
   const makeOpportunities = opportunity.map(o => getOpp(o, opp));
@@ -65,7 +65,7 @@ const Opportunity = ({ opportunity, filter }) => {
 
 // Require a document to be passed to this component.
 Opportunity.propTypes = {
-  filter: PropTypes.object.isRequired,
+  filter: PropTypes.object,
   opportunity: PropTypes.array.isRequired,
 };
 
