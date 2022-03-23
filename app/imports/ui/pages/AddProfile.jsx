@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import _ from 'underscore';
 import { Grid, Segment, Header, Form, Container } from 'semantic-ui-react';
 import {
   AutoForm,
@@ -23,6 +24,7 @@ import { UserProfiles } from '../../api/user/UserProfileCollection';
 const bridge = new SimpleSchema2Bridge(UserProfileData._schema);
 
 /** Renders the Page for adding a document. */
+// eslint-disable-next-line react/prop-types
 const AddProfile = ({ userData }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
   const getUser = [...userData];
