@@ -61,8 +61,8 @@ const OpportunityPage = ({ _id, ready }) => {
                     <Segment.Inline>
                       <Icon size={'big'} name={'users'}/>
                       {event.environment.map((e, index) => <Label key={index}
-                                                                  style={{ paddingLeft: '5px', paddingTop: '5px' }}
-                                                                  size='medium' color='teal'>{e}</Label>)}
+                        style={{ paddingLeft: '5px', paddingTop: '5px' }}
+                        size='medium' color='teal'>{e}</Label>)}
                     </Segment.Inline>
                   </Table.Cell>
                 </Table.Row>
@@ -71,8 +71,8 @@ const OpportunityPage = ({ _id, ready }) => {
                     <Segment.Inline>
                       <Icon size={'big'} name={'map pin'}/>
                       {event.age.map((a, index) => <Label key={index}
-                                                          style={{ paddingLeft: '5px' }}
-                                                          size='medium' color='teal'>{a}</Label>)}
+                        style={{ paddingLeft: '5px' }}
+                        size='medium' color='teal'>{a}</Label>)}
                     </Segment.Inline>
                   </Table.Cell>
                 </Table.Row>

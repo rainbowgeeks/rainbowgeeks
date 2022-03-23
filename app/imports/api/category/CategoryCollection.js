@@ -14,7 +14,6 @@ class CategoryCollection extends BaseCollection {
   constructor() {
     super('Categories', new SimpleSchema({
       category: { type: String, index: true, unique: true },
-      icon: String,
     }));
   }
 
@@ -65,7 +64,6 @@ class CategoryCollection extends BaseCollection {
     }
     return this._collection.insert({
       category: category,
-      icon: docID.icon,
     });
   }
 
