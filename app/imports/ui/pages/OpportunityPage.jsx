@@ -61,8 +61,8 @@ const OpportunityPage = ({ _id, ready }) => {
                     <Segment.Inline>
                       <Icon size={'big'} name={'users'}/>
                       {event.environment.map((e, index) => <Label key={index}
-                                                                  style={{ paddingLeft: '5px', paddingTop: '5px' }}
-                                                                  size='medium' color='teal'>{e}</Label>)}
+                        style={{ paddingLeft: '5px', paddingTop: '5px' }}
+                        size='medium' color='teal'>{e}</Label>)}
                     </Segment.Inline>
                   </Table.Cell>
                 </Table.Row>
@@ -71,8 +71,8 @@ const OpportunityPage = ({ _id, ready }) => {
                     <Segment.Inline>
                       <Icon size={'big'} name={'map pin'}/>
                       {event.age.map((a, index) => <Label key={index}
-                                                          style={{ paddingLeft: '5px' }}
-                                                          size='medium' color='teal'>{a}</Label>)}
+                        style={{ paddingLeft: '5px' }}
+                        size='medium' color='teal'>{a}</Label>)}
                     </Segment.Inline>
                   </Table.Cell>
                 </Table.Row>
@@ -120,6 +120,39 @@ const OpportunityPage = ({ _id, ready }) => {
                 </Table.Row>
               </Table.Body>
             </Table>
+
+            <Table>
+              <Table.Header>
+                <Table.Row>
+                  <Table.Cell style={{ borderStyle: 'none' }}>
+                    <Header as='h3' icon='certificate' content='Opportunity Menu'/>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>
+                    <Header as='h5' icon='compass' content='Directions'/>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <Header as='h5' icon='mail' content='Send Email'/>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <Header as='h5' icon='bookmark' content='Bookmark'/>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <Header as='h5' icon='bullhorn' content='Report'/>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+
           </Grid.Column>
         </Grid.Row>
       </Grid>

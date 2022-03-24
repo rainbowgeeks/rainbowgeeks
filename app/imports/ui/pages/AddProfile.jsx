@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import _ from 'underscore';
+import { _ } from 'meteor/underscore';
 import { Grid, Segment, Header, Form, Container } from 'semantic-ui-react';
 import {
   AutoForm,
