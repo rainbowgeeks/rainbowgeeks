@@ -83,33 +83,28 @@ landing background
 }
 
 .h1Bot {
-  font-size:56px;
-  padding-top: 50px;
+  font-size: 40px;
+  padding: 150px;
   color: #007ba4;
   font-family: 'Actor', Sans-serif, serif;
   margin: auto;
 }
 
 .h2Bot {
-  font-size:24px;
-  padding-top: 20px;
-  line-height: 1.2;
+  font-size:20px;
+  padding: 0x;
   color: black;
   font-family: 'Actor', Sans-serif, serif;
-  padding-left: 500px;
-  padding-right: 100px;
 }
 
 .desc {
-  padding-left: 500px;
   font-size: 16px;
-  padding-right: 100px;
 }
 
 .ui.footer.button.bot{
   background-color: #007ba4;
   color: white;
-  margin-left: 500px;
+  margin-top: 20px;
 }
 
 .about {
