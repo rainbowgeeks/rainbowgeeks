@@ -144,6 +144,14 @@ landing background
   padding-bottom: 30px;
 }
 
+.volunteer-color {
+  color: #A6C36F;
+}
+
+.organization-color {
+  color: #C179B9;
+}
+
 .user-font-diff {
   font-size: 15px;
 }
