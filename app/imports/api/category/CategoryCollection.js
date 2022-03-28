@@ -17,9 +17,9 @@ class CategoryCollection extends BaseCollection {
     }));
   }
 
-  /**
-   * Method for getting icon
-   */
+  // /**
+  //  * Method for getting icon
+  //  */
   getIcon(name) {
     let icon;
     // eslint-disable-next-line default-case
@@ -49,7 +49,7 @@ class CategoryCollection extends BaseCollection {
       icon = 'heartbeat';
       break;
     }
-    return { name, icon };
+    return { icon };
   }
 
   /**
