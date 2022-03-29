@@ -1,76 +1,71 @@
-import React, { useEffect, useRef, useReducer, useCallback } from 'react';
-import { Input } from 'semantic-ui-react';
-import _ from 'lodash';
+import React from 'react';
+import { Segment, Input, Header } from 'semantic-ui-react';
+import { AutoForm, SubmitField } from 'uniforms-semantic';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-// eslint-disable-next-line no-unused-vars
-import TabPanes from './TabPanes';
+import SimpleSchema from 'simpl-schema';
+import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import MultiSelectField from '../../forms/controllers/MultiSelectField';
+
+export const schemaAge = ['Adults', 'Family-Friendly', 'Teens', 'Seniors'];
+export const schemaEnv = ['Indoors', 'Mixed', 'Outdoors', 'Virtual'];
+
+// Create a Schema to specify the structure of the data to appear in the form.
+const formSchema = new SimpleSchema({
+  age: {
+    type: Array, optional: true,
+    label: 'Age Group',
+  },
+  'age.$': {
+    type: String,
+    allowedValues: schemaAge,
+  },
+  environment: {
+    type: Array, optional: true,
+    label: 'Environment',
+  },
+  'environment.$': {
+    type: String,
+    allowedValues: schemaEnv,
+  },
+});
+
+const bridge = new SimpleSchema2Bridge(formSchema);
 
 /** Renders the search bar for TabPanes.jsx. */
-const SearchOpp = ({ opportunities, getOpp }) => {
-  const initialState = {
-    loading: false,
-    results: [],
-    value: '',
+const SearchOpp = ({ setKey, setAge, setEnv }) => {
+  const onSearch = (data) => {
+    if (data.length === 0) {
+      setAge([]); setEnv([]);
+    }
+    setKey({ key: data });
   };
-
-  const reducer = (state, action) => {
-    switch (action.type) {
-    case 'CLEAN_QUERY':
-      getOpp(opportunities);
-      return { ...state, loading: false, results: opportunities };
-    case 'START_SEARCH':
-      return { ...state, loading: true, value: action.query };
-    case 'FINISH_SEARCH':
-      getOpp(action.results);
-      return { ...state, loading: false, results: action.results };
-    case 'UPDATE_SELECTION':
-      return { ...state, value: action.selection };
-
-    default:
-      throw new Error();
+  const submit = (value) => {
+    const { age, environment } = value;
+    if (age) {
+      setAge(age);
+    }
+    if (environment) {
+      setEnv(environment);
     }
   };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { loading, value } = state;
-
-  const timeoutRef = useRef();
-  const handleSearchChange = useCallback((e, data) => {
-    clearTimeout(timeoutRef.current);
-    dispatch({ type: 'START_SEARCH', query: data.value });
-
-    timeoutRef.current = setTimeout(() => {
-      if (data.value.length === 0) {
-        dispatch({ type: 'CLEAN_QUERY' });
-        return;
-      }
-
-      const re = new RegExp(_.escapeRegExp(data.value), 'i');
-      const isMatch = (result) => re.test(result.title);
-
-      dispatch({
-        type: 'FINISH_SEARCH',
-        results: _.filter(opportunities, isMatch),
-      });
-    }, 300);
-  }, []);
-  useEffect(() => () => {
-    clearTimeout(timeoutRef.current);
-  }, []);
   return (
-    <Input fluid
-      placeholder={'Search by Title'}
-      loading={loading}
-      onChange={handleSearchChange}
-      value={value}
-    />
+    <Segment>
+      <Input fluid icon={'search'}
+        onChange={(data) => onSearch(data.target.value)}/>
+      <Header content={'Filter By'}/>
+      <AutoForm schema={bridge} onSubmit={value => submit(value)}>
+        <MultiSelectField name='age'/>
+        <MultiSelectField name='environment'/>
+        <SubmitField value='Submit'/>
+      </AutoForm>
+    </Segment>
   );
 };
-
 SearchOpp.propTypes = {
-  getOpp: PropTypes.func,
-  opportunities: PropTypes.array.isRequired,
+  setKey: PropTypes.func.isRequired,
+  setAge: PropTypes.func.isRequired,
+  setEnv: PropTypes.func.isRequired,
 };
 
 // Wrap the component in withRouter.

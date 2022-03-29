@@ -81,7 +81,7 @@ class OpportunitiesCatCollection extends BaseCollection {
        * This subscription publishes all documents regarding Roles.
        */
       Meteor.publish(opportunitiesCategoryPublications.opportunitiesCategory, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();
