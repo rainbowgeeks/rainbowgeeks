@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 const Opportunity = ({ opportunity }) => {
-  console.log(opportunity);
   return (
     <Card fluid href={`#/event/${opportunity._id}`}>
       <Card.Content style={{

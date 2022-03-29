@@ -35,29 +35,26 @@ const bridge = new SimpleSchema2Bridge(formSchema);
 /** Renders the search bar for TabPanes.jsx. */
 const SearchOpp = ({ setKey, setAge, setEnv }) => {
   const onSearch = (data) => {
-    setKey(data);
+    if (data.length === 0) {
+      setAge([]); setEnv([]);
+    }
+    setKey({ key: data });
   };
-  const submit = (value, formRef) => {
+  const submit = (value) => {
     const { age, environment } = value;
     if (age) {
       setAge(age);
-    } else {
-      setAge(setter);
     }
     if (environment) {
       setEnv(environment);
-    } else {
-      setEnv(setter);
     }
-    formRef.reset();
   };
-  let fRef = null;
   return (
     <Segment>
       <Input fluid icon={'search'}
         onChange={(data) => onSearch(data.target.value)}/>
       <Header content={'Filter By'}/>
-      <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={value => submit(value, fRef)}>
+      <AutoForm schema={bridge} onSubmit={value => submit(value)}>
         <MultiSelectField name='age'/>
         <MultiSelectField name='environment'/>
         <SubmitField value='Submit'/>

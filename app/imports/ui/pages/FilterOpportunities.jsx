@@ -15,7 +15,6 @@ import CategoryOpp from '../components/CategoryOpp';
 import SearchOpp from '../components/SearchOpp';
 import Opportunity from '../components/Opportunity';
 import GoogleMap from '../components/GoogleMap';
-
 //
 function getOpportunities(o) {
   const { _id: oppID } = o;
@@ -24,7 +23,6 @@ function getOpportunities(o) {
   const category = _.pluck(OpportunitiesCats.find({ oppID }).fetch(), 'category');
   return _.extend({}, o, { age, environment, category });
 }
-
 //
 function getCategories(c) {
   const getOppID = _.pluck(OpportunitiesCats.find({ category: c.category }).fetch(), 'oppID');
@@ -49,25 +47,54 @@ function filterByEnv(data, keyword) {
   return temp;
 }
 //
-//
-function searchByTorO(data, keyword) {
-  const temp = (keyword === '') ? data : data.filter((d) => {
-    if (d.title.toLowerCase().includes(keyword.toLowerCase())) return true;
+function filterBy(data, ageKey, envKey) {
+  const temp = data.filter((da) => {
+    if (da.age.some(d => ageKey.includes(d)) || da.environment.some(d => envKey.includes(d))) return true;
     return false;
   });
   return temp;
 }
 //
+function searchByTOorC(data, keyword) {
+  let temp = data;
+  if (keyword.key) {
+    temp = data.filter((d) => {
+      if (d.title.toLowerCase().includes(keyword.key.toLowerCase())) return true;
+      return false;
+    });
+  }
+  if (keyword.category) {
+    temp = data.filter((da) => {
+      if (da.category.includes(keyword.category)) return true;
+      return false;
+    });
+  }
+  return temp;
+}
 const FilterOpportunities = ({ ready, opportunities, categories }) => {
   //
   const makeOpportunities = opportunities.map(o => getOpportunities(o));
   const makeCategories = categories.map(c => getCategories(c));
   //
-  // const [condition, setCondition] = useState(false);
-  const [key, setKey] = useState('');
+  const [key, setKey] = useState({
+    key: '',
+    category: '',
+  });
   const [filterAge, setFilterAge] = useState([]);
   const [filterEnv, setFilterEnv] = useState([]);
-  const [filterCat, setFilterCat] = useState([]);
+  //
+  const conditionals = (data, ageKey, envKey) => {
+    if (ageKey.length > 0 && envKey.length > 0) {
+      return filterBy(data, ageKey, envKey);
+    }
+    if (ageKey.length > 0) {
+      return filterByAge(data, ageKey);
+    }
+    if (envKey.length > 0) {
+      return filterByEnv(data, envKey);
+    }
+    return data;
+  };
   //
   const panes = [
     {
@@ -81,16 +108,16 @@ const FilterOpportunities = ({ ready, opportunities, categories }) => {
       menuItem: 'Category',
       // eslint-disable-next-line react/display-name
       render: () => <Tab.Pane>
-        {makeCategories.map(mC => <CategoryOpp key={mC._id} category={mC} setCat={setFilterCat}/>)}
+        {makeCategories.map(mC => <CategoryOpp key={mC._id} category={mC} setKey={setKey}/>)}
       </Tab.Pane>,
     },
   ];
   //
   const gridHeigth = { paddingRight: '50px', paddingLeft: '50px' };
-  const data = (setKey.length > 0) ? searchByTorO(makeOpportunities, key) : makeOpportunities;
-  const dataByAge = (filterAge.length <= 0) ? data : filterByAge(data, filterAge);
-  const dataByEnv = (filterEnv.length <= 0) ? dataByAge : filterByEnv(dataByAge, filterAge);
-  console.log(dataByEnv);
+  const data = searchByTOorC(makeOpportunities, key);
+  const collection = conditionals(data, filterAge, filterEnv);
+  // const dataByAge = (filterAge.length <= 0) ? data : filterByAge(data, filterAge);
+  // const dataByEnv = (filterEnv.length <= 0) ? dataByAge : filterByEnv(dataByAge, filterAge);
   //
   return ((ready) ? (
     <Container fluid style={gridHeigth}>
@@ -112,7 +139,7 @@ const FilterOpportunities = ({ ready, opportunities, categories }) => {
         </Grid.Column>
         <Grid.Column width={5}>
           <Card.Group className={'make-scrollable'}>
-            {dataByEnv.map(opportunity => <Opportunity key={opportunity._id} opportunity={opportunity}/>)}
+            {collection.map(opportunity => <Opportunity key={opportunity._id} opportunity={opportunity}/>)}
           </Card.Group>
         </Grid.Column>
         <Grid.Column width={7}>
