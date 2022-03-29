@@ -92,7 +92,7 @@ landing background
 
 .h2Bot {
   font-size:20px;
-  padding: 0x;
+  padding: 0px;
   color: black;
   font-family: 'Actor', Sans-serif, serif;
 }
@@ -139,17 +139,20 @@ landing background
   padding-right: 350px;
 }
 
-.navbar-menu-orrientation {
-  padding-top: 30px;
+.navbar-menu-orientation {
+  padding-top: 20px;
   padding-bottom: 30px;
 }
 
 .volunteer-color {
   color: #A6C36F;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .organization-color {
   color: #C179B9;
+  font-size: 18px;
 }
 
 .user-font-diff {

@@ -7,7 +7,7 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 /** A simple static component to render some text for the landing page. */
 const Landing = () => (
   <div id={PAGE_IDS.LANDING}>
-    <div className="grad-background" fluid>
+    <div className="grad-background">
       <Container>
         <Image className="logo-center" src='https://cdn.discordapp.com/attachments/441780757967405067/943848010306183208/VAlogo.png'></Image>
         <h1 className="h1">
