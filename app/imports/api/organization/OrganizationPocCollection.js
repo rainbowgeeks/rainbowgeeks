@@ -26,14 +26,13 @@ class OrganizationPocCollection extends BaseCollection {
    * Defines a new query collection.
    * @param orgID the orgID of the item.
    * @param pocID the pocID of the item.
+   * @param orgEmail the organization email of the item.
    * @param pocEmail the email of the poc in the item.
    * @return {String} the docID of the new document.
    */
   define({ email, orgEmail }) {
-    const org = Organizations.findDoc({ orgEmail });
-    const poc = PointOfContacts.findDoc({ email });
-    const orgID = org._id;
-    const pocID = poc._id;
+    const orgID = Organizations.findDoc({ orgEmail })._id;
+    const pocID = PointOfContacts.findDoc({ email })._id;
     const docID = this.findOne({ pocEmail: email, orgEmail });
     if (docID) {
       return docID._id;
@@ -50,7 +49,6 @@ class OrganizationPocCollection extends BaseCollection {
    * Updates the given document.
    * @param docID the id of the document to update.
    * @param pocID the new pocID.
-   * @param oppID the new oppID
    * @param email the new email.
    */
   update(docID, { pocID, email }) {
@@ -86,7 +84,7 @@ class OrganizationPocCollection extends BaseCollection {
        * This subscription publishes documents regarding the organization.
        */
       Meteor.publish(organizationsPocPublications.organizationPoc, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();
@@ -137,15 +135,16 @@ class OrganizationPocCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID  in a format appropriate to the restoreOne or define function.
    * @param docID.
-   * @return {{ orgID, pocID, email }}
+   * @return {{ orgID, pocID, orgEmail, pocEmail }}
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);
     const orgID = doc.orgID;
     const pocID = doc.pocID;
-    const email = doc.email;
+    const orgEmail = doc.orgEmail;
+    const pocEmail = doc.pocEmail;
 
-    return { orgID, pocID, email };
+    return { orgID, pocID, orgEmail, pocEmail };
   }
 }
 

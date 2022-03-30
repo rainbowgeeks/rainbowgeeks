@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { Container, Grid, Header, Message, Segment } from 'semantic-ui-react';
@@ -25,23 +26,36 @@ const bridge = new SimpleSchema2Bridge(formSchema);
  */
 const Signup = ({ location }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
-
   /* Handle Signup submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (data, formRef) => {
-    signUpNewUserMethod.callPromise(data)
-      .catch(error => {
-        swal('Error', error.message, 'error');
-        console.error(error);
-      })
+    signUpNewUserMethod.callPromise(data).catch(() => {
+      formRef.reset();
+      swal({
+        title: 'Account Already Exists!',
+        icon: 'error',
+        timer: 15000,
+      });
+      setRedirectToReferer(false);
+    })
       .then(() => {
         formRef.reset();
-        swal({
-          title: 'Signed Up',
-          text: 'You now have an account. Next you need to login.',
-          icon: 'success',
-          timer: 1500,
+        Meteor.loginWithPassword(data.email, data.password, (err) => {
+          if (!err) {
+            swal({
+              title: 'Successfully Created Account!',
+              text: 'You now have an account. Next you need to create your profile.',
+              icon: 'success',
+              timer: 15000,
+            });
+            setRedirectToReferer(true);
+          } else {
+            swal({
+              title: 'Account Already Exists!',
+              icon: 'error',
+              timer: 1500,
+            });
+          }
         });
-        setRedirectToReferer(true);
       });
   };
 

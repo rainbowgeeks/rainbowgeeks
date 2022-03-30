@@ -29,11 +29,8 @@ class OpportunitiesPocCollection extends BaseCollection {
    * @return {String} the docID of the new document.
    */
   define({ email, title, location, date }) {
-    const opp = Opportunities.findDoc({ title, location, date });
-    const poc = PointOfContacts.findDoc({ email });
-    const oppID = opp._id;
-    const pocID = poc._id;
-
+    const oppID = Opportunities.findDoc({ title, location, date })._id;
+    const pocID = PointOfContacts.findDoc({ email })._id;
     const docID = this._collection.insert({
       oppID,
       pocID,
@@ -81,7 +78,7 @@ class OpportunitiesPocCollection extends BaseCollection {
        * This subscription publishes documents regarding the organization.
        */
       Meteor.publish(opportunitiesPocPublications.opportunitiesPoc, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();
@@ -132,7 +129,7 @@ class OpportunitiesPocCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID  in a format appropriate to the restoreOne or define function.
    * @param docID.
-   * @return {{ pocID, email }}
+   * @return {{ oppID, pocID, email }}
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);

@@ -1,133 +1,128 @@
 import React, { useState } from 'react';
-import { Container, Grid, Header, Segment, Card, Loader, Tab } from 'semantic-ui-react';
-import { AutoForm, TextField, SelectField, SubmitField } from 'uniforms-semantic';
+import { Container, Grid, Header, Loader, Tab, Card } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import SimpleSchema from 'simpl-schema';
 import { _ } from 'meteor/underscore';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import GoogleMap from '../components/GoogleMap';
-import CategoryOpp from '../components/CategoryOpp';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { Organizations } from '../../api/organization/OrganizationCollection';
-import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
-import { OpportunitiesPocs } from '../../api/opportunity/OpportunitiesPocCollection';
-import { PointOfContacts } from '../../api/point-of-contact/PointOfContactCollection';
 import { Categories } from '../../api/category/CategoryCollection';
-import { Environments } from '../../api/environment/EnvironmentCollection';
-import { Ages } from '../../api/age/AgeCollection';
 import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
-import Opportunity from '../components/Opportunity';
-import MultiSelectField from '../../forms/controllers/MultiSelectField';
+import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
 import Footer from '../components/Footer';
-
-export const opportunityOrder = ['Upcoming', 'Latest', 'Nearby', 'A-Z'];
-export const opportunityDay = ['One Term', 'Short Term', 'Long Term'];
-export const schemaAge = ['Adults', 'Family-Friendly', 'Teens', 'Seniors'];
-export const schemaEnv = ['Indoors', 'Mixed', 'Outdoors', 'Virtual'];
-export const schemaCat = {
-  crisisDisasterRelief: 'Crisis/Disaster Relief', foodInsecurity: 'Food Insecurity', ENVIRONMENT: 'Environment',
-  childFamilySupport: 'Child/Family Support', EDUCATION: 'Education', ongoingPositions: 'Ongoing Position',
-  animalWelfareRescue: 'Animal Welfare/ Rescue', covid19Recovery: 'Covid-19 Recovery',
-};
-
-// Create a Schema to specify the structure of the data to appear in the form.
-const formSchema = new SimpleSchema({
-  names: { type: String, optional: true },
-  orders: {
-    type: String, optional: true,
-    allowedValues: opportunityOrder,
-    defaultValue: opportunityOrder[0],
-  },
-  age: {
-    type: Array, optional: true,
-    label: 'Age Group',
-  },
-  'age.$': {
-    type: String,
-    allowedValues: schemaAge,
-  },
-  environment: {
-    type: Array, optional: true,
-    label: 'Environment',
-  },
-  'environment.$': {
-    type: String,
-    allowedValues: schemaEnv,
-  },
-  times: {
-    type: String, optional: true,
-    allowedValues: opportunityDay,
-    defaultValue: opportunityDay[0],
-  },
-});
+import CategoryOpp from '../components/CategoryOpp';
+import SearchOpp from '../components/SearchOpp';
+import Opportunity from '../components/Opportunity';
+import GoogleMap from '../components/GoogleMap';
 //
-const FilterOpportunities = ({ ready }) => {
-
-  const makeOpportunities = (_id) => {
-    const opportunity = Opportunities.findDoc({ _id });
-    const age = _.pluck(OpportunitiesAges.find({ oppID: _id }).fetch(), 'age');
-    const environment = _.pluck(OpportunitiesEnvs.find({ oppID: _id }).fetch(), 'environment');
-    return _.extend({}, opportunity, { age, environment });
-  };
-
-  const getOpportunities = (newOpp) => {
-    const { age, environment } = newOpp;
-    const ageLength = age ? age.length : 0;
-    const envLength = environment ? environment.length : 0;
-    let opportunity;
-    if (ageLength >= 1 || envLength >= 1) {
-      const ageID = age ? age.map(ages => OpportunitiesAges.find({ age: ages }).fetch()) : '';
-      const envID = environment ? environment.map(environments => OpportunitiesEnvs.find({ environment: environments }).fetch()) : '';
-      const getIDS = _.flatten(ageID.concat(envID));
-      const IDS = _.pluck(getIDS, 'oppID').filter(ID => ID !== ('' || undefined));
-      opportunity = _.uniq(IDS);
-    } else {
-      opportunity = _.uniq(_.pluck(Opportunities.find({}).fetch(), '_id'));
-    }
-    return opportunity.map(opportunities => makeOpportunities(opportunities));
-  };
-
-  const gridHeigth = { paddingRight: '50px', paddingLeft: '50px' };
-  const bridge = new SimpleSchema2Bridge(formSchema);
-
-  const [filterParam, setFilterParam] = useState({
-    age: '',
-    environment: '',
+function getOpportunities(o) {
+  const { _id: oppID } = o;
+  const age = _.pluck(OpportunitiesAges.find({ oppID }).fetch(), 'age');
+  const environment = _.pluck(OpportunitiesEnvs.find({ oppID }).fetch(), 'environment');
+  const category = _.pluck(OpportunitiesCats.find({ oppID }).fetch(), 'category');
+  return _.extend({}, o, { age, environment, category });
+}
+//
+function getCategories(c) {
+  const getOppID = _.pluck(OpportunitiesCats.find({ category: c.category }).fetch(), 'oppID');
+  const icon = Categories.getIcon(c.category);
+  const getTotal = { total: getOppID };
+  return _.extend({}, c, icon, getTotal);
+}
+//
+function filterByAge(data, keyword) {
+  const temp = data.filter((da) => {
+    if (da.age.some(d => keyword.includes(d))) return true;
+    return false;
   });
-
-  const newOpportunities = getOpportunities(filterParam);
-
+  return temp;
+}
+//
+function filterByEnv(data, keyword) {
+  const temp = data.filter((da) => {
+    if (da.environment.some(d => keyword.includes(d))) return true;
+    return false;
+  });
+  return temp;
+}
+//
+function filterBy(data, ageKey, envKey) {
+  const temp = data.filter((da) => {
+    if (da.age.some(d => ageKey.includes(d)) || da.environment.some(d => envKey.includes(d))) return true;
+    return false;
+  });
+  return temp;
+}
+//
+function searchByTOorC(data, keyword) {
+  let temp = data;
+  if (keyword.key) {
+    temp = data.filter((d) => {
+      if (d.title.toLowerCase().includes(keyword.key.toLowerCase())) return true;
+      return false;
+    });
+  }
+  if (keyword.category) {
+    temp = data.filter((da) => {
+      if (da.category.includes(keyword.category)) return true;
+      return false;
+    });
+  }
+  return temp;
+}
+const FilterOpportunities = ({ ready, opportunities, categories }) => {
+  //
+  const makeOpportunities = opportunities.map(o => getOpportunities(o));
+  const makeCategories = categories.map(c => getCategories(c));
+  //
+  const [key, setKey] = useState({
+    key: '',
+    category: '',
+  });
+  const [filterAge, setFilterAge] = useState([]);
+  const [filterEnv, setFilterEnv] = useState([]);
+  //
+  const conditionals = (data, ageKey, envKey) => {
+    if (ageKey.length > 0 && envKey.length > 0) {
+      return filterBy(data, ageKey, envKey);
+    }
+    if (ageKey.length > 0) {
+      return filterByAge(data, ageKey);
+    }
+    if (envKey.length > 0) {
+      return filterByEnv(data, envKey);
+    }
+    return data;
+  };
+  //
   const panes = [
     {
-      menuItem: 'Filter',
+      menuItem: 'Search',
       // eslint-disable-next-line react/display-name
-      render: () => <Tab.Pane attached={false}>
-        <AutoForm schema={bridge} onSubmit={data => setFilterParam(data)}>
-          <Segment>
-            <TextField name='names'/>
-            <SelectField name='orders'/>
-            <MultiSelectField name='age'/>
-            <MultiSelectField name='environment'/>
-            <SelectField name='times'/>
-            <SubmitField value='Submit'/>
-          </Segment>
-        </AutoForm>
+      render: () => <Tab.Pane>
+        <SearchOpp setKey={setKey} setAge={setFilterAge} setEnv={setFilterEnv}/>
       </Tab.Pane>,
     },
     {
       menuItem: 'Category',
       // eslint-disable-next-line react/display-name
-      render: () => <Tab.Pane attached={false}><CategoryOpp/></Tab.Pane>,
+      render: () => <Tab.Pane>
+        {makeCategories.map(mC => <CategoryOpp key={mC._id} category={mC} setKey={setKey}/>)}
+      </Tab.Pane>,
     },
   ];
-
+  //
+  const gridHeigth = { paddingRight: '50px', paddingLeft: '50px' };
+  const data = searchByTOorC(makeOpportunities, key);
+  const collection = conditionals(data, filterAge, filterEnv);
+  // const dataByAge = (filterAge.length <= 0) ? data : filterByAge(data, filterAge);
+  // const dataByEnv = (filterEnv.length <= 0) ? dataByAge : filterByEnv(dataByAge, filterAge);
+  //
   return ((ready) ? (
     <Container fluid style={gridHeigth}>
-      <Header as="h1" textAlign="center">Browse Opportunity</Header>
-      <Grid columns={3} centered celled column='equals'>
+      <Header as={'h1'} textAlign={'center'} content={'Browse Opportunities'}/>
+      <Grid celled columns={3}>
         <Grid.Column width={4}>
           <Header
             as="h2" textAlign="center"
@@ -136,61 +131,58 @@ const FilterOpportunities = ({ ready }) => {
           />
           <Tab
             menu={{
-              secondary: true,
-              tabular: true,
-              style: {
-                display: 'flex',
-                justifyContent: 'center',
-              },
+              pointing: true, secondary: true, tabular: true,
+              style: { display: 'flex', justifyContent: 'center' },
             }}
-            className={'make-scrollable'}
-            panes={panes}
+            className={'make-scrollable'} panes={panes}
           />
         </Grid.Column>
         <Grid.Column width={5}>
-          <Header as="h2" textAlign="center">Result</Header>
-          <Card.Group className={'make-scrollable'} centered>
-            {newOpportunities.map(opportunities => <Opportunity key={opportunities._id} opportunity={opportunities}/>)}
+          <Card.Group className={'make-scrollable'}>
+            {collection.map(opportunity => <Opportunity key={opportunity._id} opportunity={opportunity}/>)}
           </Card.Group>
         </Grid.Column>
         <Grid.Column width={7}>
-          <div><GoogleMap/></div>
+          <div>
+            <GoogleMap/>
+          </div>
         </Grid.Column>
       </Grid>
       <Footer/>
     </Container>
   ) : <Loader active>Getting Data</Loader>);
 };
-
 // Require an array of Stuff documents in the props.
 FilterOpportunities.propTypes = {
+  categories: PropTypes.array.isRequired,
+  opportunities: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
-
 //
 export default withTracker(() => {
+  // Get access to organization poc documents.
+  const sub7 = OrganizationPocs.subscribeOrganizationPoc();
   // Get access to opportunity documents.
   const sub1 = Opportunities.subscribeOpportunity();
   // Get access to oppAge documents.
   const sub2 = OpportunitiesAges.subscribeOpportunitiesAge();
   // Get access to oppEnvironment documents.
   const sub3 = OpportunitiesEnvs.subscribeOpportunitiesEnvironment();
-  // Get access to oppCategory documents
+  // Get access to opportunity opp Cat documents.
   const sub4 = OpportunitiesCats.subscribeOpportunitiesCategory();
-  // Get access to age documents..
-  const sub5 = Ages.subscribeAge();
+  // Get access to organization documents.
+  const sub5 = Organizations.subscribeOrganization();
   // Get access to category documents.
-  const sub6 = Categories.subscribeCategory();
-  // Get access to environment documents.
-  const sub7 = Environments.subscribeEnvironment();
+  const sub8 = Categories.subscribeCategory();
+  // Get all the categories
+  const categories = Categories.find({}).fetch();
+  // Get all the opportunities
+  const opportunities = Opportunities.find({}).fetch();
   // Determine if the subscription is ready
-  const sub8 = Organizations.subscribeOrganization();
-  const sub9 = OrganizationPocs.subscribeOrganizationPoc();
-  const sub10 = PointOfContacts.subscribePointOfContact();
-  const sub11 = OpportunitiesPocs.subscribeOpportunitiesPoc();
-  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready() && sub8.ready() && sub9.ready() && sub10.ready() && sub11.ready();
-  //
+  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub7.ready() && sub8.ready();
   return {
+    categories,
+    opportunities,
     ready,
   };
 })(FilterOpportunities);

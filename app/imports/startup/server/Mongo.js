@@ -27,24 +27,28 @@ if (Stuffs.count() === 0) {
     Meteor.settings.defaultData.map(data => addData(data));
   }
 }
-
+// Add new age to the collection if it already exist return docID.
 function addAges(ages) {
   Ages.define({ age: ages });
 }
-
+// Add new environment to the collection if it exist return docID.
 function addEnvironments(environments) {
   Environments.define({ environment: environments });
 }
-
+// Add new category to the collection return docID if it exist.
 function addCategories(categories) {
   Categories.define({ category: categories });
 }
-
+// Add new point of contact to POC collection and also add new point of contact related to.
+// an organization to the org poc collection.
 function addPointOfContact({ firstName, lastName, phoneNumber, email }, orgEmail) {
   PointOfContacts.define({ firstName, lastName, phoneNumber, email });
   OrganizationPocs.define({ email: email, orgEmail });
 }
 
+// add new opportunity to the collection
+// add point of contacts to related opportunities to the opp poc collection.
+// add age, category, environments related to an opportunity to the age, cat, envOPP collections.
 function addOpportunity({ owner, title, cover, location, date, description, age, environment, category }) {
   age.map(ages => addAges(ages));
   environment.map(environments => addEnvironments(environments));
@@ -56,13 +60,13 @@ function addOpportunity({ owner, title, cover, location, date, description, age,
   environment.map(environments => OpportunitiesEnvs.define({ title: title, location: location, date: date, environment: environments }));
   category.map(categories => OpportunitiesCats.define({ title: title, location: location, date: date, category: categories }));
 }
-
+// Add a organization to the org collection.
 function addOrganization({ organizationName, missionStatement, organizationDescription, orgEmail, pointOfContacts }) {
   console.log(` Adding Organization: ${organizationName}`);
   Organizations.define({ organizationName: organizationName, missionStatement, description: organizationDescription, orgEmail });
   pointOfContacts.map(pointOfContact => addPointOfContact(pointOfContact, orgEmail));
 }
-
+// Add new Organization and Opportunities if count is 0.
 if (Organizations.count() === 0) {
   if (Meteor.settings.defaultOrganizations && Meteor.settings.defaultOpportunities) {
     console.log('Creating default Organization.');

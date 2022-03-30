@@ -26,6 +26,9 @@ class OpportunityCollection extends BaseCollection {
    * Defines a new opportunitiy.
    * @param title the title of the opportunitiy.
    * @param owner the point of contact for the opportunity.
+   * @param cover the background image of the opportunity.
+   * @param location the location of the opportunity.
+   * @param date the date of the opportunity.
    * @param description the summary of the opportunitiy.
    * @return {String} the docID of the new opportunity.
    */
@@ -100,7 +103,7 @@ class OpportunityCollection extends BaseCollection {
        * This subscription publishes all documents regardless of Roles.
        */
       Meteor.publish(opportunityPublications.opportunity, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();

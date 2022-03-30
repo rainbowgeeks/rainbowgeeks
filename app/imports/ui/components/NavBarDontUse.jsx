@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Menu, Header, Input } from 'semantic-ui-react';
-import { Roles } from 'meteor/alanning:roles';
-import { ROLE } from '../../api/role/Role';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 /** The Navbar appears at the top of every page. Rendered by the App Layout component.
  * Certain Navbar Components will only appear when appropriate authentication is inserted.
  */
+// eslint-disable-next-line no-unused-vars
 const NavBar = ({ currentUser }) => {
   const menuStyle = { paddingBottom: '50px' };
   return (

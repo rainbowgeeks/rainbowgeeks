@@ -17,6 +17,41 @@ class CategoryCollection extends BaseCollection {
     }));
   }
 
+  // /**
+  //  * Method for getting icon
+  //  */
+  getIcon(name) {
+    let icon;
+    // eslint-disable-next-line default-case
+    switch (name) {
+    case 'Crisis/Disaster Relief':
+      icon = 'first aid';
+      break;
+    case 'Food Insecurity':
+      icon = 'food';
+      break;
+    case 'Environment':
+      icon = 'leaf';
+      break;
+    case 'Child/Family Support':
+      icon = 'child';
+      break;
+    case 'Education':
+      icon = 'graduation';
+      break;
+    case 'Ongoing Position':
+      icon = 'check square';
+      break;
+    case 'Animal Welfare/Rescue':
+      icon = 'paw';
+      break;
+    case 'Covid-19 Recovery':
+      icon = 'heartbeat';
+      break;
+    }
+    return { icon };
+  }
+
   /**
    * Defines a new category document.
    * @param category the new category document.
@@ -68,7 +103,7 @@ class CategoryCollection extends BaseCollection {
        * Publications for the entire collection for users.
        */
       Meteor.publish(categoryPublications.category, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();

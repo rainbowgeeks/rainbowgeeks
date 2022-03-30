@@ -1,6 +1,7 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import { withRouter } from 'react-router-dom';
+import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 const defaultProps = {
   center: {
@@ -12,7 +13,7 @@ const defaultProps = {
 
 const GoogleMap = () => (
   // Important! Always set the container height explicitly
-  <div className={'google-map-border'}>
+  <div id={COMPONENT_IDS.FILTER_OPPORTUNITIES_MAP} className={'google-map-border'}>
     <GoogleMapReact
       bootstrapURLKeys={{ key: '' }}
       defaultCenter={defaultProps.center}

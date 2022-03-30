@@ -70,7 +70,7 @@ class EnvironmentCollection extends BaseCollection {
        * This subscription publishes for the entire collection for the user that is logged in.
        */
       Meteor.publish(environmentPublications.environment, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();

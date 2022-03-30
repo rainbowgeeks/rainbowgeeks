@@ -47,9 +47,8 @@ class PointOfContactCollection extends BaseCollection {
    * @param firstName the new first name.
    * @param lastName the new last name.
    * @param phoneNumber the new phone number.
-   * @param email the new email.
    */
-  update(docID, { firstName, lastName, phoneNumber, email }) {
+  update(docID, { firstName, lastName, phoneNumber }) {
     const updateData = {};
     if (firstName) {
       updateData.firstName = firstName;
@@ -59,9 +58,6 @@ class PointOfContactCollection extends BaseCollection {
     }
     if (phoneNumber) {
       updateData.phoneNumber = phoneNumber;
-    }
-    if (email) {
-      updateData.email = email;
     }
     this._collection.update(docID, { $set: updateData });
   }
@@ -88,9 +84,7 @@ class PointOfContactCollection extends BaseCollection {
        * This subscription publishes documents regarding the organization.
        */
       Meteor.publish(pointOfContactPublications.pointOfContact, function publish() {
-        if (this.userId) {
-          return instance._collection.find();
-        }
+        instance._collection.find();
         return this.ready();
       });
 

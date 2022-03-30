@@ -76,7 +76,7 @@ class OrganizationCollection extends BaseCollection {
        * Publication for any users.
        */
       Meteor.publish(organizationPublications.organization, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();

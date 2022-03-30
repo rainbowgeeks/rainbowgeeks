@@ -81,7 +81,7 @@ class OpportunitiesCatCollection extends BaseCollection {
        * This subscription publishes all documents regarding Roles.
        */
       Meteor.publish(opportunitiesCategoryPublications.opportunitiesCategory, function publish() {
-        if (this.userId) {
+        if (Meteor.isServer) {
           return instance._collection.find();
         }
         return this.ready();
@@ -131,15 +131,15 @@ class OpportunitiesCatCollection extends BaseCollection {
   /**
    * Returns an object representing the definition of docID  in a format appropriate to the restoreOne or define function.
    * @param docID.
-   * @return {{title, owner, cover, category }}
+   * @return {{ oppID, catID, category }}
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);
-    const title = doc.title;
-    const owner = doc.owner;
+    const oppID = doc.oppID;
+    const catID = doc.catID;
     const category = doc.category;
 
-    return { title, owner, category };
+    return { oppID, catID, category };
   }
 }
 

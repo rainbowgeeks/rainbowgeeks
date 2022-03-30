@@ -2,22 +2,25 @@
 export const PAGE_IDS = {
 
   // Page ID's use for VolunterAlly App.
-  FILTER_OPPORTUNITIES: 'filter_opportunities',
+  ADD_OPPORTUNITY: 'add-opportunity',
   ADD_PROFILE: 'add-profile',
+  ADMIN_ANALYTICS: 'admin-analytics',
+  EDIT_PROFILE: 'edit-profile',
+  EDIT_OPPORTUNITY: 'edit-opportunity',
+  FILTER_OPPORTUNITIES: 'filter-opportunities',
   LANDING: 'landing',
+  LIST_USER_HOURS: 'list-hours',
   MANAGE_DATABASE: 'manage-database',
   NOT_FOUND: 'not-found',
   ORG_LIBRARY_PAGE: 'org-library-page',
-  USER_LIBRARY_PAGE: 'user-library-page',
+  ORGANIZATION_PROFILE: 'org-profile',
+  OPPORTUNITY_PAGE: 'opportunity-page',
   PROFILE_PAGE: 'profile-page',
-  EDIT_PROFILE: 'edit-profile',
-  USER_TRACK_HOURS: 'user-track-hours',
-  LIST_USER_HOURS: 'list-hours',
   SIGN_IN: 'sigin-in',
   SIGN_OUT: 'sign-out',
   SIGN_UP: 'sign-up',
-  ORGANIZATION_PROFILE: 'org-profile',
-  ADMIN_ANALYTICS: 'admin-analytics',
+  USER_LIBRARY_PAGE: 'user-library-page',
+  USER_TRACK_HOURS: 'user-track-hours',
 
   // Page ID's use for stuff collection probably will delete later.
   ADD_STUFF: 'add-stuff',
