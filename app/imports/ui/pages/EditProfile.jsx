@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Divider, Form, Header, Loader, Segment } from 'semantic-ui-react';
+import { Container, Divider, Form, Header, Image, Loader, Segment } from "semantic-ui-react";
 import {
   AutoForm,
   ErrorsField,
@@ -25,6 +25,8 @@ const bridge = new SimpleSchema2Bridge(UserProfileData._schema);
 const EditProfile = ({ doc, ready }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
   const [uploadFile, setUploadFile] = useState({});
+  const [currentImage, setNewImage] = useState('');
+  // eslint-disable-next-line no-undef
   const submit = (data) => {
     const {
       firstName,
@@ -35,8 +37,8 @@ const EditProfile = ({ doc, ready }) => {
       interest,
       environmentalPref,
       availability,
+      profileImage,
       _id } = data;
-
     const collectionName = UserProfileData.getCollectionName();
     const updateData = {
       id: _id,
@@ -48,6 +50,7 @@ const EditProfile = ({ doc, ready }) => {
       interest,
       environmentalPref,
       availability,
+      profileImage,
     };
     updateMethod.callPromise({ collectionName, updateData })
       .catch(error => swal('Error', error.message, 'error'))
@@ -57,10 +60,21 @@ const EditProfile = ({ doc, ready }) => {
       });
   };
 
-  // Will be used to upload the image to mongo
-  const myImage = () => {
-    // this line prints out the file content
-    console.log(uploadFile); // curenntly uploadFile value = event.target.files
+  const myImage = async () => {
+    console.log(uploadFile[0]); // curenntly uploadFile value = event.target.files
+    // eslint-disable-next-line no-undef
+    const formData = new FormData();
+    formData.append('file', uploadFile[0]);
+    formData.append('upload_preset', 'fjm4awsr');
+    formData.append('cload_name', 'dmgtqeajr');
+    // eslint-disable-next-line no-undef
+    await fetch('https://api.cloudinary.com/v1_1/dmgtqeajr/image/upload', {
+      method: 'POST',
+      body: formData,
+    }).then(respond => respond.json())
+      .then(data => {
+        setNewImage(data.secure_url);
+      });
 
     // idea when click the submit button, store file into a state, then
     // somehow get this state's value into the main submit
@@ -87,7 +101,6 @@ const EditProfile = ({ doc, ready }) => {
           type='submit'
         />
       </Form>
-
       <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
         <Segment>
           <Header as="h3" textAlign="center">Update My Information</Header>
@@ -96,6 +109,7 @@ const EditProfile = ({ doc, ready }) => {
               <TextField name='firstName' showinline/>
               <TextField name='lastName' />
               <TextField name='phoneNumber' />
+              <TextField name='profileImage' value={currentImage}/>
             </Form.Group>
             <LongTextField name='aboutUser' placeholder='Edit About Me'/>
           </Segment>
