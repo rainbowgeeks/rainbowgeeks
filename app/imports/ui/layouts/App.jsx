@@ -4,7 +4,6 @@ import { Meteor } from 'meteor/meteor';
 import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import NavBar from '../components/NavBar';
 import Landing from '../pages/Landing';
 import FilterOpportunities from '../pages/FilterOpportunities';
 import AdminProfile from '../pages/AdminProfile';
@@ -29,6 +28,7 @@ import UserTrackingHoursPage from '../pages/UserTrackingHoursPage';
 import AboutUs from '../pages/AboutUs';
 import AddOpportunity from '../pages/AddOpportunity';
 import EditOpportunity from '../pages/EditOpportunity';
+import NewNavBar from '../components/NewNavBar';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -36,7 +36,7 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <NavBar/>
+          <NewNavBar/>
           <Switch>
             <Route exact path="/" component={Landing}/>
             <Route path="/filter" component={FilterOpportunities}/>

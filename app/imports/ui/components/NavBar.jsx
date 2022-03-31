@@ -12,16 +12,16 @@ import { COMPONENT_IDS } from '../utilities/ComponentIDs';
  * Certain Navbar Components will only appear when appropriate authentication is inserted.
  */
 const NavBar = ({ currentUser }) => (
-  <Menu className={'navbar-menu-orientation'} size='large' borderless stackable>
+  <Menu className={'navbar-menu-orientation'} borderless stackable>
     {/* eslint-disable-next-line no-nested-ternary */}
     {Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN]) ? (
-      [<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-org" key="manage-org">
+      [<Menu.Item as={NavLink} activeClassName="active" exact to="/manage-org" key="manage-org">
           Manage Organization
       </Menu.Item>,
-      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-user" key="manage-user">
+      <Menu.Item as={NavLink} activeClassName="active" exact to="/manage-user" key="manage-user">
             Manage Users
       </Menu.Item>,
-      <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-opps" key='org-manage'>
+      <Menu.Item as={NavLink} activeClassName="active" exact to="/manage-opps" key='org-manage'>
           Manage Events
       </Menu.Item>]
     ) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ?
@@ -34,23 +34,23 @@ const NavBar = ({ currentUser }) => (
         </Menu.Item>
       </Menu.Menu>,
       ]) : [
-        <Menu.Item className={'large-font'} id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/" key="home1">
+        <Menu.Item id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/" key="home1">
           <Header as='h1'>VA</Header>
         </Menu.Item>,
         <Menu.Item key="search">
           <Input action={{ icon: 'search' }} placeholder='Search...' />
         </Menu.Item>,
-        <Menu.Item key="home2" position={'right'} className={'large-font'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/">
+        <Menu.Item key="home2" position={'right'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/">
             Home
         </Menu.Item>,
-        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter" key="filter">
+        <Menu.Item as={NavLink} activeClassName="active" exact to="/filter" key="filter">
         Browse Opportunities</Menu.Item>,
-        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-library" key="org-library">
+        <Menu.Item as={NavLink} activeClassName="active" exact to="/org-library" key="org-library">
           Organization Library </Menu.Item>,
-        <Menu.Item key='about' className={'large-font'} as={NavLink} activeClassName="active" exact to="/about">
+        <Menu.Item key='about' as={NavLink} activeClassName="active" exact to="/about">
           About Us
         </Menu.Item>]}
-    <Menu.Item className={'large-font'} position="right">
+    <Menu.Item position="right">
       {(currentUser !== '') && (currentUser) ? (
         <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} className={'user-font-diff'} text={currentUser} pointing="top right" icon={'user'}>
           <Dropdown.Menu>
