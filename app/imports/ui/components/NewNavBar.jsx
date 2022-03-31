@@ -12,7 +12,7 @@ import { COMPONENT_IDS } from '../utilities/ComponentIDs';
  * Certain Navbar Components will only appear when appropriate authentication is inserted.
  */
 const NewNavBar = ({ currentUser }) => (
-  <Menu className={'navbar-menu-orientation'} borderless stackable>
+  <Menu className={'navbar-menu-orientation'} borderless stackable size={'large'}>
     <Menu.Item id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/" key="home1">
       <Header as='h1'>VA</Header>
     </Menu.Item>
@@ -38,9 +38,15 @@ const NewNavBar = ({ currentUser }) => (
             <Dropdown.Menu>
               {/* eslint-disable-next-line no-nested-ternary */}
               {Roles.userIsInRole(Meteor.userId(), [ROLE.USER]) ? (
-                [<Dropdown.Item text="My OpportunityItem" key="/my-opportunity"/>,
-                  <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile" key="profile"/>]) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ? ([]) :
-                [<Dropdown.Item as={NavLink} text="Admin Profile" exact to="/admin" key="admin"/>]}
+                [
+                  <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile" key="profile"/>,
+                ]) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ? (
+                [
+                  <Dropdown.Item as={NavLink} text="My Profile" exact to="/org-profile" key="org-profile"/>,
+                ]) :
+                [
+                  <Dropdown.Item as={NavLink} text="Admin Profile" exact to="/admin" key="admin"/>,
+                ]}
 
               <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
             </Dropdown.Menu>
