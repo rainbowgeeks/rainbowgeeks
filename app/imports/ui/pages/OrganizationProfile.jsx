@@ -1,12 +1,10 @@
 import React from 'react';
-import { Container, Image, Grid, Divider, Label, Table, Button, Menu, Segment } from 'semantic-ui-react';
+import { Container, Image, Grid, Divider, Label, Table, Menu, Segment, Card, Header } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
-import NavBarDontUse from '../components/NavBarDontUse';
 import { PAGE_IDS } from '../utilities/PageIDs';
 
 const OrganizationProfile = () => (
   <Container id={PAGE_IDS.ORGANIZATION_PROFILE}>
-    <NavBarDontUse/>
     <Grid columns={3} container padded='vertically'>
       <Grid.Row>
         <Grid.Column textAlign='center' width={5}>
@@ -35,97 +33,82 @@ const OrganizationProfile = () => (
           <Table celled striped>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell colSpan='2'>User Account</Table.HeaderCell>
+                <Table.HeaderCell colSpan='4' textAlign={'center'}>Points of Contacts</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 
             <Table.Body>
               <Table.Row>
-                <Table.Cell>Username</Table.Cell>
-                <Table.Cell>
-                  johnd
-                  <Button compact floated='right'>Edit</Button>
-                </Table.Cell>
+                <Table.Cell>John Foo</Table.Cell>
+                <Table.Cell>john@foo.com</Table.Cell>
               </Table.Row>
               <Table.Row>
-                <Table.Cell>Password</Table.Cell>
-                <Table.Cell>
-                  ********
-                  <Button compact floated='right'>Edit</Button>
-                </Table.Cell>
+                <Table.Cell>John Foo</Table.Cell>
+                <Table.Cell>john@foo.com</Table.Cell>
               </Table.Row>
               <Table.Row>
-                <Table.Cell>Name</Table.Cell>
-                <Table.Cell>
-                  John Doe
-                  <Button compact floated='right'>Edit</Button>
-                </Table.Cell>
+                <Table.Cell>John Foo</Table.Cell>
+                <Table.Cell>john@foo.com</Table.Cell>
               </Table.Row>
               <Table.Row>
-                <Table.Cell>Email</Table.Cell>
-                <Table.Cell>
-                  johndoe@foo.com
-                  <Button compact floated='right'>Edit</Button>
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Address</Table.Cell>
-                <Table.Cell>
-                  1234 Dole Street
-                  <Button compact floated='right'>Edit</Button>
-                </Table.Cell>
+                <Table.Cell>John Foo</Table.Cell>
+                <Table.Cell>john@foo.com</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
+          <Card.Group stackable centered itemsPerRow={3}>
+            <Card>
+              <Card.Content>
+                <Card.Header>
+                  <Header>Opp title</Header>
+                </Card.Header>
+                <Card.Meta>
+                  <Header>Opp Date</Header>
+                </Card.Meta>
+              </Card.Content>
+              <Card.Content extra>
+                <Card.Description>
+                  <Header icon='user' content={'Point of Contact'}/>
+                </Card.Description>
+              </Card.Content>
+            </Card>
 
-          <Table celled striped>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell colSpan='2'>Organization</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              <Table.Row>
-                <Table.Cell>Username</Table.Cell>
-                <Table.Cell>
-                  volunteerally
-                  <Button compact floated='right'>Edit</Button>
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Password</Table.Cell>
-                <Table.Cell>
-                  ********
-                  <Button compact floated='right'>Edit</Button>
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Name</Table.Cell>
-                <Table.Cell>
-                  Volunteer Ally
-                  <Button compact floated='right'>Edit</Button>
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Email</Table.Cell>
-                <Table.Cell>
-                  org@foo.com
-                  <Button compact floated='right'>Edit</Button>
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Address</Table.Cell>
-                <Table.Cell>
-                  1234 Dole Street
-                  <Button compact floated='right'>Edit</Button>
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          </Table>
+            <Card>
+              <Card.Content>
+                <Card.Header>
+                  <Header>Opp title</Header>
+                </Card.Header>
+                <Card.Meta>
+                  <Header>Opp Date</Header>
+                </Card.Meta>
+              </Card.Content>
+              <Card.Content extra>
+                <Card.Description>
+                  <Header icon='user' content={'Point of Contact'}/>
+                </Card.Description>
+              </Card.Content>
+            </Card>
+
+            <Card>
+              <Card.Content>
+                <Card.Header>
+                  <Header>Opp title</Header>
+                </Card.Header>
+                <Card.Meta>
+                  <Header>Opp Date</Header>
+                </Card.Meta>
+              </Card.Content>
+              <Card.Content extra>
+                <Card.Description>
+                  <Header icon='user' content={'Point of Contact'}/>
+                </Card.Description>
+              </Card.Content>
+            </Card>
+          </Card.Group>
         </Grid.Column>
         <Grid.Column width={3}>
           <Menu vertical fluid>
-            <Menu.Item header>Preferences</Menu.Item>
+            <Menu.Item header>Settings</Menu.Item>
             <Menu.Item as={NavLink} exact to="/manage-opp">Manage Opportunities</Menu.Item>
             <Menu.Item>Manage Requests</Menu.Item>
             <Menu.Item>Analytics</Menu.Item>

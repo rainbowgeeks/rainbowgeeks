@@ -4,6 +4,8 @@ import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
+import { Opportunities } from './OpportunityCollection';
+import { Hours } from '../hours/HoursCollection';
 
 export const opportunityHoursPublications = {
   opportunityHour: 'OpportunityHour',
@@ -13,7 +15,7 @@ export const opportunityHoursPublications = {
 class OpportunityHoursCollection extends BaseCollection {
   constructor() {
     super('OpportunityHours', new SimpleSchema({
-      pocEmail: String,
+      oppID: String,
       volunteerEmail: String,
       hourID: String,
     }));
@@ -21,13 +23,17 @@ class OpportunityHoursCollection extends BaseCollection {
 
   /**
    * Defines a new user hours input
-   * @param pocEmail the new opportunity ID that relates to volunteer.
+   * @param oppID the new opportunity ID that relates to volunteer.
    * @param volunteerEmail the new volunteer ID.
    * @param hourID the new total hour for a opportunity.
    */
-  define({ pocEmail, volunteerEmail, hourID }) {
-    const docID = this._.collection.insert({
-      pocEmail,
+  define({ title, location, date, volunteerEmail, numberOfHours }) {
+    const opp = Opportunities.findDoc({ title, location, date });
+    const hour = Hours.findDoc({ numberOfHours });
+    const oppID = opp._id;
+    const hourID = hour._id;
+    const docID = this._collection.insert({
+      oppID,
       volunteerEmail,
       hourID,
     });
@@ -58,7 +64,7 @@ class OpportunityHoursCollection extends BaseCollection {
        */
       Meteor.publish(opportunityHoursPublications.opportunityHour, function publish() {
         if (Meteor.isServer) {
-          return instance._collectin.find();
+          return instance._collection.find();
         }
         return this.ready();
       });

@@ -118,8 +118,10 @@
       "age": ["Family-Friendly", "Adults"],
       "environment": ["Outdoors", "Mixed"],
       "category": ["Crisis/Disaster Relief", "Education"],
-      "OpportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 }
+      "opportunityVolunteerHours": [
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 5 }
       ]
     },
     {
@@ -132,8 +134,10 @@
       "age": ["Adults", "Teens", "Seniors"],
       "environment": ["Indoors"],
       "category": ["Crisis/Disaster Relief", "Education"],
-      "OpportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 }
+      "opportunityVolunteerHours": [
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 5 }
       ]
     },
     {
@@ -148,8 +152,10 @@
       "age": ["Adults", "Family-Friendly"],
       "environment": ["Indoors"],
       "category": ["Crisis/Disaster Relief", "Child/Family Support"],
-      "OpportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 }
+      "opportunityVolunteerHours": [
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 5 }
       ]
     },
     {
@@ -162,8 +168,10 @@
       "age": ["Adults"],
       "environment": ["Mixed", "Indoors"],
       "category": ["Crisis/Disaster Relief", "Environment", "Child/Family Support"],
-      "OpportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 }
+      "opportunityVolunteerHours": [
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 5 }
       ]
     },
     {
@@ -176,8 +184,10 @@
       "age": ["Adults", "Teens"],
       "environment": ["Outdoors", "Mixed"],
       "category": ["Child/Family Support", "Education"],
-      "OpportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 }
+      "opportunityVolunteerHours": [
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 5 }
       ]
     },
     {
@@ -190,8 +200,10 @@
       "age": ["Teens"],
       "environment": ["Indoors", "Virtual"],
       "category": ["Education", "Ongoing Position"],
-      "OpportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 }
+      "opportunityVolunteerHours": [
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 5 }
       ]
     },
     {
@@ -204,8 +216,10 @@
       "age": ["Seniors"],
       "environment": ["Outdoors"],
       "category": ["Education", "Covid-19 Recovery", "Food Insecurity"],
-      "OpportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 }
+      "opportunityVolunteerHours": [
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 5 }
       ]
     },
     {
@@ -220,8 +234,10 @@
       "age": ["Family-Friendly"],
       "environment": ["Outdoors"],
       "category": ["Environment", "Education"],
-      "OpportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 }
+      "opportunityVolunteerHours": [
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 5 }
       ]
     },
     {
@@ -234,8 +250,10 @@
       "age": ["Teens"],
       "environment": ["Outdoors"],
       "category": ["Environment", "Covid-19 Recovery"],
-      "OpportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 }
+      "opportunityVolunteerHours": [
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 5 }
       ]
     },
     {
@@ -248,8 +266,10 @@
       "age": ["Adults"],
       "environment": ["Mixed"],
       "category": ["Animal Welfare/Rescue"],
-      "OpportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 }
+      "opportunityVolunteerHours": [
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 5 }
       ]
     },
     {
@@ -262,8 +282,10 @@
       "age": ["Family-Friendly"],
       "environment": ["Outdoors"],
       "category": ["Education"],
-      "OpportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 }
+      "opportunityVolunteerHours": [
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 5 }
       ]
     }
   ],
