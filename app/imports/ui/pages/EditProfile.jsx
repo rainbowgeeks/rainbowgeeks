@@ -68,6 +68,15 @@ const EditProfile = ({ doc, ready }) => {
 
   const myImage = async () => {
     // eslint-disable-next-line no-undef
+    if (_.isEmpty(uploadFile)) {
+      swal({
+        title: 'No Image File Detected',
+        icon: 'error',
+        timer: 15000,
+      });
+      return;
+    }
+    // eslint-disable-next-line no-undef
     const formData = new FormData();
     formData.append('file', uploadFile[0]);
     formData.append('upload_preset', 'fjm4awsr');
