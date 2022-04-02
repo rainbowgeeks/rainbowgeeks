@@ -81,7 +81,7 @@ class ProfilePageCollection extends BaseCollection {
     return docID;
   }
 
-  update(docID, { firstName, lastName, phoneNumber, aboutUser, specialInterest, environmentalPref, availability, interest }) {
+  update(docID, { firstName, lastName, phoneNumber, aboutUser, specialInterest, environmentalPref, availability, interest, profileImage }) {
     const updateUserData = {};
 
     if (firstName) {
@@ -107,6 +107,9 @@ class ProfilePageCollection extends BaseCollection {
     }
     if (interest) {
       updateUserData.interest = interest;
+    }
+    if (profileImage) {
+      updateUserData.profileImage = profileImage;
     }
     this._collection.update(docID, { $set: updateUserData });
   }

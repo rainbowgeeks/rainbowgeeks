@@ -205,3 +205,10 @@ below is for org profile page responsiveness
 .card-content-spacing {
   margin-bottom: 30px;
 }
+
+
+/* Edit-profiel Page*/
+#submit-update-profile {
+  margin-top: 30px;
+  float: left
+}
