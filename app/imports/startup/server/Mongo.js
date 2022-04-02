@@ -12,6 +12,8 @@ import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollect
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
+import { Hours } from '../../api/hours/HoursCollection';
+import { OpportunityHours } from '../../api/opportunity/OpportunityHoursCollection';
 /* eslint-disable no-console */
 
 // Initialize the database with a default data document.
@@ -45,11 +47,15 @@ function addPointOfContact({ firstName, lastName, phoneNumber, email }, orgEmail
   PointOfContacts.define({ firstName, lastName, phoneNumber, email });
   OrganizationPocs.define({ email: email, orgEmail });
 }
+function addHours({ volunteerEmail, numberOfHours }, title, location, date) {
+  Hours.define({ numberOfHours });
+  OpportunityHours.define({ title, location, date, volunteerEmail, numberOfHours });
+}
 
 // add new opportunity to the collection
 // add point of contacts to related opportunities to the opp poc collection.
 // add age, category, environments related to an opportunity to the age, cat, envOPP collections.
-function addOpportunity({ owner, title, cover, location, date, description, age, environment, category }) {
+function addOpportunity({ owner, title, cover, location, date, description, age, environment, category, opportunityVolunteerHours }) {
   age.map(ages => addAges(ages));
   environment.map(environments => addEnvironments(environments));
   category.map(categories => addCategories(categories));
@@ -59,6 +65,7 @@ function addOpportunity({ owner, title, cover, location, date, description, age,
   age.map(ages => OpportunitiesAges.define({ title: title, location: location, date: date, age: ages }));
   environment.map(environments => OpportunitiesEnvs.define({ title: title, location: location, date: date, environment: environments }));
   category.map(categories => OpportunitiesCats.define({ title: title, location: location, date: date, category: categories }));
+  opportunityVolunteerHours.map(opportunityVolunteerHour => addHours(opportunityVolunteerHour, title, location, date));
 }
 // Add a organization to the org collection.
 function addOrganization({ organizationName, missionStatement, organizationDescription, orgEmail, pointOfContacts }) {

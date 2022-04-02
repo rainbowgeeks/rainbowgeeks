@@ -20,13 +20,14 @@ class HoursCollection extends BaseCollection {
   /**
    * Defines a new user hours input
    * @param numberOfHours the new total hour for a opportunity.
+   * @return {String} the docID of the new document.
    */
   define({ numberOfHours }) {
     const docID = this.findOne({ numberOfHours });
     if (docID) {
       return docID._id;
     }
-    return this._.collection.insert({
+    return this._collection.insert({
       numberOfHours,
     });
   }
@@ -48,7 +49,7 @@ class HoursCollection extends BaseCollection {
    * It publishes the entire collection for all users.
    */
   publish() {
-    if (Meteor.isServe) {
+    if (Meteor.isServer) {
       // get the collection instance.
       const instance = this;
       /**

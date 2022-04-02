@@ -12,65 +12,63 @@ import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollect
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import { Organizations } from '../../api/organization/OrganizationCollection';
 import { PointOfContacts } from '../../api/point-of-contact/PointOfContactCollection';
+import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
+import OpportunityPagePoc from '../components/OpportunityPagePoc';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
 
-const OpportunityPage = ({ _id, ready }) => {
+const makeOpportunity = (data) => {
+  const { _id: oppID, owner: email } = data;
+  const age = _.pluck(OpportunitiesAges.find({ oppID }).fetch(), 'age');
+  const environment = _.pluck(OpportunitiesEnvs.find({ oppID }).fetch(), 'environment');
+  const oppCat = _.pluck(OpportunitiesCats.find({ oppID }).fetch(), 'category');
+  const category = oppCat.map(c => Categories.getIcon(c));
+  console.log(category);
+  const poc = PointOfContacts.find({ email }).fetch();
+  const org = _.pluck(OrganizationPocs.find({ pocEmail: email }).fetch(), 'orgID');
+  const [organization] = org.map(o => Organizations.findDoc({ _id: o }).organizationName);
+  return _.extend({}, data, { age, environment }, { category }, { poc }, { organization });
+};
 
-  const getEvent = (data) => {
-    const opportunity = Opportunities.findOne({ _id: data });
-    const pocEmail = opportunity.owner;
-    const age = _.pluck(OpportunitiesAges.find({ oppID: data }).fetch(), 'age');
-    const environment = _.pluck(OpportunitiesEnvs.find({ oppID: data }).fetch(), 'environment');
-    const oppCat = _.pluck(OpportunitiesCats.find({ oppID: data }).fetch(), 'category');
-    const category = oppCat.map(c => Categories.getIcon(c));
-    const poc = PointOfContacts.findOne({ email: pocEmail });
-    const orgEmail = OrganizationPocs.findDoc({ pocEmail }).orgEmail;
-    const organization = Organizations.findDoc({ orgEmail });
-    const { organizationName } = organization;
-    return _.extend({}, opportunity, { age, environment, category }, { poc }, { organizationName });
-
-  };
-  const event = getEvent(_id);
+const OpportunityPage = ({ ready, opportunity }) => {
+  const [opp] = opportunity.map(o => makeOpportunity(o));
+  console.log(opp);
   const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
-  return (ready) ? (
+  return ((ready) ? (
     <Container id={PAGE_IDS.OPPORTUNITY_PAGE} style={{ paddingTop: '20px' }}>
       <Grid style={{
-        backgroundImage: `url('${event.cover}')`,
+        backgroundImage: `url('${opp.cover}')`,
         backgroundPosition: 'center',
       }}>
         <Grid.Column style={{ paddingTop: '300px' }}>
-          <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={`/edit-opp/${event._id}`}>
+          <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={`/edit-opp/${opp._id}`}>
             <Icon name='setting' size='large'/>
           </Link>
-          <Header as='h2' content={`${event.organizationName} : ${event.title}`}/>
-          <Header as='h2' content={`${event.date}`}/>
+          <Header as='h2' content={`${opp.organization} : ${opp.title}`}/>
+          <Header as='h2' content={`${opp.date}`}/>
         </Grid.Column>
       </Grid>
       <Grid container columns={2} style={gridHeigth}>
         <Grid.Row>
           <Grid.Column>
             <Header as='h3' icon='pencil alternate' content='Description' attached='top'/>
-            <Segment attached>{event.description}</Segment>
+            <Segment attached>{opp.description}</Segment>
 
             <Table>
               <Table.Body>
                 <Table.Row>
                   <Table.Cell style={{ borderStyle: 'none' }}>
-                    <Segment.Inline>
-                      <Icon size={'big'} name={'users'}/>
-                      {event.environment.map((e, index) => <Label key={index}
-                        style={{ paddingLeft: '5px', paddingTop: '5px' }}
-                        size='medium' color='teal'>{e}</Label>)}
-                    </Segment.Inline>
+                    <Icon size={'big'} name={'users'}/>
+                    {opp.environment.map((e, index) => <Label key={index}
+                      style={{ paddingLeft: '5px', paddingTop: '5px' }}
+                      size='medium' color='teal'>{e}</Label>)}
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell style={{ borderStyle: 'none' }}>
                     <Segment.Inline>
                       <Icon size={'big'} name={'map pin'}/>
-                      {event.age.map((a, index) => <Label key={index}
+                      {opp.age.map((a, index) => <Label key={index}
                         style={{ paddingLeft: '5px' }}
                         size='medium' color='teal'>{a}</Label>)}
                     </Segment.Inline>
@@ -84,7 +82,7 @@ const OpportunityPage = ({ _id, ready }) => {
                 <Table.Row>
                   <Table.Cell>
                     <Header icon={{ name: 'tags', size: 'big' }} content={'Categories'}/>
-                    {event.category.map((c, index) => <Label color={'teal'} key={index} size={'medium'} icon={c.icon} content={c.name}/>)}
+                    {opp.category.map((c, index) => <Label color={'teal'} key={index} size={'medium'} icon={c.icon} content={c.name}/>)}
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>
@@ -92,80 +90,21 @@ const OpportunityPage = ({ _id, ready }) => {
           </Grid.Column>
 
           <Grid.Column>
-            <Table>
-              <Table.Header>
-                <Table.Row>
-                  <Table.Cell style={{ borderStyle: 'none' }}>
-                    <Header as='h3' icon='address book outline' content='Contact Information'/>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Header>
-
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell style={{ borderStyle: 'none' }}>
-                    <Header
-                      as='h5' icon='user circle' content={`${event.poc.firstName} ${event.poc.lastName}`}/>
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell style={{ borderStyle: 'none' }}>
-                    <Header as='h5' icon='mail' content={`${event.owner}`}/>
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell style={{ borderStyle: 'none' }}>
-                    <Header as='h5' icon='phone' content={`${event.poc.phoneNumber}`}/>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
-
-            <Table>
-              <Table.Header>
-                <Table.Row>
-                  <Table.Cell style={{ borderStyle: 'none' }}>
-                    <Header as='h3' icon='certificate' content='Opportunity Menu'/>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell>
-                    <Header as='h5' icon='compass' content='Directions'/>
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>
-                    <Header as='h5' icon='mail' content='Send Email'/>
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>
-                    <Header as='h5' icon='bookmark' content='Bookmark'/>
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>
-                    <Header as='h5' icon='bullhorn' content='Report'/>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
-
+            {opp.poc.map(o => <OpportunityPagePoc key={o._id} poc={o}/>)}
           </Grid.Column>
         </Grid.Row>
       </Grid>
     </Container>
-  ) : <Loader active>Fetching Event</Loader>;
+  ) : <Loader active>Fetching Event</Loader>);
 };
 
 OpportunityPage.propTypes = {
-  _id: PropTypes.string.isRequired,
+  opportunity: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 const OpportunityPageContainer = withTracker(() => {
+  const { _id } = useParams();
   // Get access to opportunities documents
   const sub1 = Opportunities.subscribeOpportunity();
   // Get access to oppAge documents.
@@ -180,10 +119,11 @@ const OpportunityPageContainer = withTracker(() => {
   const sub6 = Organizations.subscribeOrganization();
   // Get access to organization poc documents.
   const sub7 = OrganizationPocs.subscribeOrganizationPoc();
+  // Get the Opportunity that match the _id
+  const opportunity = Opportunities.find({ _id }).fetch();
   const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready();
-  const { _id } = useParams();
   return {
-    _id,
+    opportunity,
     ready,
   };
 })(OpportunityPage);

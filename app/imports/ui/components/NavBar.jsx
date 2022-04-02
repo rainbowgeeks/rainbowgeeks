@@ -15,41 +15,55 @@ const NavBar = ({ currentUser }) => {
   const menuStyle = { paddingBottom: '50px' };
   return (
     <Menu className={'navbar-menu-orrientation'} size={'tiny'} style={menuStyle} attached='top' borderless stackable>
+
       {/* eslint-disable-next-line no-nested-ternary */}
       {Roles.userIsInRole(Meteor.userId(), [ROLE.ADMIN]) ? (
         [<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-org" key="manage-org">
-          Manage Organization
+            Manage Organization
         </Menu.Item>,
         <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-user" key="manage-user">
-            Manage Users
+              Manage Users
         </Menu.Item>,
         <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-opps" key='org-manage'>
-          Manage Events
+              Manage Events
         </Menu.Item>]
-      ) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ?
-        ([<Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-profile" key='org-profile'>
-        My Profile
-        </Menu.Item>,
-        <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-opp" key='manage-opp'>
-          Manage Opportunities
-        </Menu.Item>,
-        ]) : [
-          <Menu.Item className={'large-font'} id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/" key="home1">
+      ) :
+
+        Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ?
+          ([<Menu.Item className={'large-font'} as={NavLink} activeClassName="" exact to="/" key="home1">
+            <Header as='h1'>VA</Header>
+          </Menu.Item>,
+          <Menu.Item style={{ marginLeft: '24%', fontSize: '18px' }} as={NavLink} activeClassName="active" exact to="/org-profile" key='org-profile'>
+              My Profile
+          </Menu.Item>,
+          <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-opp" key='manage-opp'>
+              Manage Opportunities
+          </Menu.Item>,
+          <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter" key="filter">
+              Browse Opportunities
+          </Menu.Item>,
+          <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-hours" key="manage-hours">
+              Manage Hours
+          </Menu.Item>,
+          ]) :
+
+          [<Menu.Item className={'large-font'} id={COMPONENT_IDS.NAVBAR_LANDING_PAGE} as={NavLink} activeClassName="" exact to="/" key="home1">
             <Header as='h1'>VA</Header>
           </Menu.Item>,
           <Menu.Item key="search">
-            <Input action={{ icon: 'search' }} placeholder='Search...' />
+            <Input action={{ icon: 'search' }} placeholder='Search...'/>
           </Menu.Item>,
           <Menu.Item key="home2" position={'right'} className={'large-font'} id={COMPONENT_IDS.NAVBAR_ADD_STUFF} as={NavLink} activeClassName="active" exact to="/">
-            Home
+              Home
           </Menu.Item>,
           <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter" key="filter">
-        Browse Opportunities</Menu.Item>,
+              Browse Opportunities</Menu.Item>,
           <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-library" key="org-library">
-          Organization Library </Menu.Item>,
+              Organization Library </Menu.Item>,
           <Menu.Item key='about' className={'large-font'} as={NavLink} activeClassName="active" exact to="/about">
-          About Us
+              About Us
           </Menu.Item>]}
+
       <Menu.Item className={'large-font'} position="right">
         {(currentUser !== '') && (currentUser) ? (
           <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} className={'user-font-diff'} text={currentUser} pointing="top right" icon={'user'}>

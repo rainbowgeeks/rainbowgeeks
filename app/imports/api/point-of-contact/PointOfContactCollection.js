@@ -84,7 +84,9 @@ class PointOfContactCollection extends BaseCollection {
        * This subscription publishes documents regarding the organization.
        */
       Meteor.publish(pointOfContactPublications.pointOfContact, function publish() {
-        instance._collection.find();
+        if (Meteor.isServer) {
+          return instance._collection.find();
+        }
         return this.ready();
       });
 

@@ -15,6 +15,8 @@ import { OpportunitiesAges } from '../opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesEnvs } from '../opportunity/OpportunitiesEnvCollection';
 import { OpportunitiesCats } from '../opportunity/OpportunitiesCatCollection';
 import { UserProfileData } from '../profile/ProfilePageCollection';
+import { Hours } from '../hours/HoursCollection';
+import { OpportunityHours } from '../opportunity/OpportunityHoursCollection';
 
 /**
  * Represents a user, which is someone who has a Meteor account.
@@ -222,6 +224,26 @@ class UserCollection {
    */
   isOrganizationsReferenced(user) {
     return Organizations.find({ owner: user }).fetch().legnth > 0;
+  }
+
+  /**
+   * Returns true if user is referenced by other "public" entities. Specifically user owns Age.
+   * Used to determine if user can be deleted.
+   * @param user
+   * @return {boolean}
+   */
+  isHoursReferenced(user) {
+    return Hours.find({ owner: user }).fetch().legnth > 0;
+  }
+
+  /**
+   * Returns true if user is referenced by other "public" entities. Specifically user owns Age.
+   * Used to determine if user can be deleted.
+   * @param user
+   * @return {boolean}
+   */
+  isOpportunityHoursReferenced(user) {
+    return OpportunityHours.find({ owner: user }).fetch().legnth > 0;
   }
 
   /**

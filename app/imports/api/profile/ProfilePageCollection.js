@@ -123,6 +123,16 @@ class ProfilePageCollection extends BaseCollection {
       // get the UserProfile Collection instance.
       const instance = this;
       /**
+       * This subscription publishes for all the user documents.
+       */
+      Meteor.publish(ProfilePagePublication.profileAll, function publish() {
+        if (Meteor.isServer) {
+          return instance._collection.find();
+        }
+        return this.ready();
+      });
+
+      /**
        * This subscription publishes only the documents associated with the logged in users.
        */
       Meteor.publish(ProfilePagePublication.profile, function publish() {
@@ -183,7 +193,7 @@ class ProfilePageCollection extends BaseCollection {
    * @throws { Meteor.Error } If thereis no looged in user, or the user is not an Admin or User.
    */
   assertValidRoleForMethod(userId) {
-    this.assertRole(userId, [ROLE.USER, '']);
+    this.assertRole(userId, [ROLE.USER, ROLE.ADMIN]);
   }
 }
 

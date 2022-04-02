@@ -10,6 +10,8 @@ import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollect
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
+import { Hours } from '../../api/hours/HoursCollection';
+import { OpportunityHours } from '../../api/opportunity/OpportunityHoursCollection';
 import Footer from '../components/Footer';
 import CategoryOpp from '../components/CategoryOpp';
 import SearchOpp from '../components/SearchOpp';
@@ -55,22 +57,6 @@ function filterBy(data, ageKey, envKey) {
   return temp;
 }
 //
-function searchByTOorC(data, keyword) {
-  let temp = data;
-  if (keyword.key) {
-    temp = data.filter((d) => {
-      if (d.title.toLowerCase().includes(keyword.key.toLowerCase())) return true;
-      return false;
-    });
-  }
-  if (keyword.category) {
-    temp = data.filter((da) => {
-      if (da.category.includes(keyword.category)) return true;
-      return false;
-    });
-  }
-  return temp;
-}
 const FilterOpportunities = ({ ready, opportunities, categories }) => {
   //
   const makeOpportunities = opportunities.map(o => getOpportunities(o));
@@ -82,6 +68,24 @@ const FilterOpportunities = ({ ready, opportunities, categories }) => {
   });
   const [filterAge, setFilterAge] = useState([]);
   const [filterEnv, setFilterEnv] = useState([]);
+  //
+  const searchByTOorC = (data, keyword) => {
+    let temp = data;
+    if (keyword.key) {
+      temp = data.filter((d) => {
+        if (d.title.toLowerCase().includes(keyword.key.toLowerCase())) return true;
+        return false;
+      });
+    }
+    if (keyword.category) {
+      setFilterAge([]); setFilterEnv([]);
+      temp = data.filter((da) => {
+        if (da.category.includes(keyword.category)) return true;
+        return false;
+      });
+    }
+    return temp;
+  };
   //
   const conditionals = (data, ageKey, envKey) => {
     if (ageKey.length > 0 && envKey.length > 0) {

@@ -15,9 +15,7 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 
 /** Renders a table containing all of the Opportunities documents. */
 const ManageOpportunities = ({ ready, username }) => {
-  console.log(username);
   const pocIDS = _.pluck(OrganizationPocs.find({ orgEmail: username }).fetch(), 'pocID');
-  console.log(pocIDS);
   const getOppIDS = _.flatten(pocIDS.map(pocID => OpportunitiesPocs.find({ pocID: pocID }).fetch()));
   const oppIDS = _.pluck(getOppIDS, 'oppID');
   const getOpp = _.uniq(oppIDS).map(oppID => Opportunities.find({ _id: oppID }).fetch());
