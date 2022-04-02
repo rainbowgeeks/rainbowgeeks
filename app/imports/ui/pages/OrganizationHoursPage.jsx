@@ -1,92 +1,73 @@
 import React from 'react';
-import { Button, Container, Header, Input, List, Card, Dropdown } from 'semantic-ui-react';
+import { Table, Button, Loader } from 'semantic-ui-react';
+import { withTracker } from 'meteor/react-meteor-data';
+import { useParams } from 'react-router';
+import PropTypes from 'prop-types';
+import { _ } from 'meteor/underscore';
+import { OpportunityHours } from '../../api/opportunity/OpportunityHoursCollection';
+import { UserProfileData } from '../../api/profile/ProfilePageCollection';
+import { Hours } from '../../api/hours/HoursCollection';
+import HoursPage from '../components/HoursPage';
 
-const OrganizationHoursPage = () => (
-  <Container>
-    <Header as="h1" textAlign="center">Organization Hours Page</Header>
-    <Input fluid placeholder="Search Profiles..."/>
-    <List horizontal style={{ paddingBottom: '20px' }}>
-      <List.Item>
-        <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
-      </List.Item>
-      <List.Item>
-        <Dropdown text='Point Of Contact' pointing className='link item' button>
-          <Dropdown.Menu>
-            <Dropdown.Item>temp1@foo.com</Dropdown.Item>
-            <Dropdown.Item>temp2@foo.com</Dropdown.Item>
-            <Dropdown.Item>temp3@foo.com</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </List.Item>
-      <List.Item>
-        <Dropdown text='Date' pointing className='link item' button>
-          <Dropdown.Menu>
-            <Dropdown.Item>temp1@foo.com</Dropdown.Item>
-            <Dropdown.Item>temp2@foo.com</Dropdown.Item>
-            <Dropdown.Item>temp3@foo.com</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </List.Item>
-      <List.Item style={{ marginLeft: '480px' }}>
-        <Header as='h4' style={{ paddingTop: '8px' }}>Sort By: </Header>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small' style={{ margin: '1em .8em 0em 1em', padding: '.9em 1em .9em' }}>A-Z</Button>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small' style={{ margin: '1em .8em 0em 1m', padding: '.9em 1em .9em' }}>Category</Button>
-      </List.Item>
-    </List>
-    <Card.Group stackable centered itemsPerRow={3}>
-      <Card>
-        <Card.Content>
-          <Card.Header>
-            <Header>Opp title</Header>
-          </Card.Header>
-          <Card.Meta>
-            <Header>Opp Date</Header>
-          </Card.Meta>
-        </Card.Content>
-        <Card.Content extra>
-          <Card.Description>
-            <Header icon='user' content={'Point of Contact'}/>
-          </Card.Description>
-        </Card.Content>
-      </Card>
+const OrganizationHoursPage = ({ opportunityHours, ready }) => {
 
-      <Card>
-        <Card.Content>
-          <Card.Header>
-            <Header>Opp title</Header>
-          </Card.Header>
-          <Card.Meta>
-            <Header>Opp Date</Header>
-          </Card.Meta>
-        </Card.Content>
-        <Card.Content extra>
-          <Card.Description>
-            <Header icon='user' content={'Point of Contact'}/>
-          </Card.Description>
-        </Card.Content>
-      </Card>
+  const getHours = ({ oH }) => {
+    const { volunteerEmail, hourID } = oH;
+    const volunteer = UserProfileData.findOne({ owner: volunteerEmail });
+    const hour = Hours.findDoc({ _id: hourID });
+    const { _id, firstName, lastName } = volunteer;
+    const { numberOfHours } = hour;
+    return _.extend({}, { _id, firstName, lastName, numberOfHours, volunteerEmail });
+  };
+  const makeOppHours = opportunityHours.map(oH => getHours({ oH }));
+  console.log(makeOppHours);
+  return ((ready) ? (
+    <Table celled>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell></Table.HeaderCell>
+          <Table.HeaderCell>Volunteer Name</Table.HeaderCell>
+          <Table.HeaderCell>E-mail Address</Table.HeaderCell>
+          <Table.HeaderCell>Number of Hours</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {makeOppHours.map(mOH => <HoursPage key={mOH._id} opportunityHour={mOH}/>)}
+      </Table.Body>
 
-      <Card>
-        <Card.Content>
-          <Card.Header>
-            <Header>Opp title</Header>
-          </Card.Header>
-          <Card.Meta>
-            <Header>Opp Date</Header>
-          </Card.Meta>
-        </Card.Content>
-        <Card.Content extra>
-          <Card.Description>
-            <Header icon='user' content={'Point of Contact'}/>
-          </Card.Description>
-        </Card.Content>
-      </Card>
-    </Card.Group>
-  </Container>
-);
+      <Table.Footer fullWidth>
+        <Table.Row>
+          <Table.HeaderCell/>
+          <Table.HeaderCell colSpan='4'>
+            <Button floated='right' size='small'>Approve</Button>
+            <Button floated='right' size='small'>
+              Approve All
+            </Button>
+          </Table.HeaderCell>
+        </Table.Row>
+      </Table.Footer>
+    </Table>
+  ) : <Loader active>Loading Data</Loader>);
+};
+OrganizationHoursPage.propTypes = {
+  opportunityHours: PropTypes.array.isRequired,
+  ready: PropTypes.bool.isRequired,
+};
 
-export default (OrganizationHoursPage);
+export default withTracker(() => {
+  const { _id } = useParams();
+  // Get the Opportunity Hours documents
+  const sub1 = OpportunityHours.subscribeHour();
+  // Get the Hour documents
+  const sub2 = Hours.subscribeHour();
+  // Get the User Profile documents
+  const sub3 = UserProfileData.subscribeAllUser();
+  // Determine if all documents is ready
+  const ready = sub1.ready() && sub2.ready() && sub3.ready();
+  // Get the right documents
+  const opportunityHours = OpportunityHours.find({ oppID: _id }).fetch();
+  return {
+    opportunityHours,
+    ready,
+  };
+})(OrganizationHoursPage);

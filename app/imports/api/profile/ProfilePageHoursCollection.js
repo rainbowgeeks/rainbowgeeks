@@ -26,7 +26,7 @@ class ProfilePageHoursCollection extends BaseCollection {
    * @param numberOfHours the new total hour for a opportunity.
    */
   define({ oppID, volunteerID, numberOfHours }) {
-    const docID = this._.collection.insert({
+    const docID = this._collection.insert({
       oppID,
       volunteerID,
       numberOfHours,

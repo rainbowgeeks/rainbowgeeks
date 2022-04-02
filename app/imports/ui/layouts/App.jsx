@@ -29,8 +29,8 @@ import UserTrackingHoursPage from '../pages/UserTrackingHoursPage';
 import AboutUs from '../pages/AboutUs';
 import AddOpportunity from '../pages/AddOpportunity';
 import EditOpportunity from '../pages/EditOpportunity';
+import ManageHoursPage from '../pages/ManageHoursPage';
 import OrganizationHoursPage from '../pages/OrganizationHoursPage';
-import OpportunityHoursPage from '../pages/OpportunityHoursPage';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -59,8 +59,8 @@ class App extends React.Component {
             <OrganizationProtectedRoute path="/add-opp" component={AddOpportunity}/>
             <OrganizationProtectedRoute path="/manage-opp" component={ManageOpportunities}/>
             <OrganizationProtectedRoute path="/edit-opp/:_id" component={EditOpportunity}/>
-            <OrganizationProtectedRoute path="/org-hours" component={OrganizationHoursPage}/>
-            <OrganizationProtectedRoute path="/opp-hours/:_id" component={OpportunityHoursPage}/>
+            <OrganizationProtectedRoute path="/manage-hours" component={ManageHoursPage}/>
+            <OrganizationProtectedRoute path="/org-hours/:_id" component={OrganizationHoursPage}/>
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-org" component={ManageOrganizations}/>
             <AdminProtectedRoute path="/manage-user" component={ManageUsers}/>

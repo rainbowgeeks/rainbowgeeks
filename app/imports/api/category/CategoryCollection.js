@@ -49,7 +49,7 @@ class CategoryCollection extends BaseCollection {
       icon = 'heartbeat';
       break;
     }
-    return { icon };
+    return { name, icon };
   }
 
   /**

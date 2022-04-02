@@ -42,7 +42,7 @@ const NavBar = ({ currentUser }) => {
           <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/filter" key="filter">
               Browse Opportunities
           </Menu.Item>,
-          <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/org-hours" key="org-hours">
+          <Menu.Item className={'large-font'} as={NavLink} activeClassName="active" exact to="/manage-hours" key="manage-hours">
               Manage Hours
           </Menu.Item>,
           ]) :

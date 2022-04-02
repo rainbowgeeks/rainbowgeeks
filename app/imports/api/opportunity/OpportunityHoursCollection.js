@@ -83,7 +83,7 @@ class OpportunityHoursCollection extends BaseCollection {
   /**
    * Subscription method for hour collection.
    */
-  subscribeProfilePageHour() {
+  subscribeHour() {
     if (Meteor.isClient) {
       return Meteor.subscribe(opportunityHoursPublications.opportunityHour);
     }
@@ -93,7 +93,7 @@ class OpportunityHoursCollection extends BaseCollection {
   /**
    * Subscription method for admin hour collection.
    */
-  subscribeProfilePageHourAdmin() {
+  subscribeHourAdmin() {
     if (Meteor.isClient) {
       return Meteor.subscribe(opportunityHoursPublications.opportunityHourAdmin);
     }

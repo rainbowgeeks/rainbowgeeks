@@ -178,16 +178,12 @@ export default withTracker(() => {
   const sub5 = Organizations.subscribeOrganization();
   // Get access to category documents.
   const sub8 = Categories.subscribeCategory();
-  // Get access to category documents.
-  const sub9 = Hours.subscribeHour();
-  // Get access to category documents.
-  const sub10 = OpportunityHours.subscribeProfilePageHour();
   // Get all the categories
   const categories = Categories.find({}).fetch();
   // Get all the opportunities
   const opportunities = Opportunities.find({}).fetch();
   // Determine if the subscription is ready
-  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub7.ready() && sub8.ready() && sub9.ready() && sub10.ready();
+  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub7.ready() && sub8.ready();
   return {
     categories,
     opportunities,
