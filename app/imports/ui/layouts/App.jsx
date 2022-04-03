@@ -31,6 +31,7 @@ import AddOpportunity from '../pages/AddOpportunity';
 import EditOpportunity from '../pages/EditOpportunity';
 import ManageHoursPage from '../pages/ManageHoursPage';
 import OrganizationHoursPage from '../pages/OrganizationHoursPage';
+import UserSubmitEventHours from '../pages/UserSubmitEventHours';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -54,6 +55,7 @@ class App extends React.Component {
             <ProtectedRoute path="/edit-profile/:_id" component={EditProfile}/>
             <ProtectedRoute path="/edit" component={EditProfile}/>
             <ProtectedRoute path="/add2" component={AddProfile}/>
+            <ProtectedRoute path='/submit-hours' component={UserSubmitEventHours}/>
             <ProtectedRoute path="/org-library" component={OrganizationLibrary}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
             <OrganizationProtectedRoute path="/add-opp" component={AddOpportunity}/>

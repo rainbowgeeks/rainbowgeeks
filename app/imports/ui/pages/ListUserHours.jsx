@@ -7,7 +7,7 @@ import UserHours from '../components/UserHours';
  * Use <UserHours> to render each row. */
 const ListUserHours = () => (
   <Container id={PAGE_IDS.LIST_USER_HOURS}>
-    <Header as="h2" textAlign="center">List of Volunteer Activity</Header>
+    <Header as="h2" textAlign="center">List of Event Activity</Header>
     <Table celled>
       <Table.Header>
         <Table.Row>
@@ -21,6 +21,10 @@ const ListUserHours = () => (
           </Table.HeaderCell>
           <Table.HeaderCell>
             Date
+            <Icon name='sort'/>
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            Reservation Status
             <Icon name='sort'/>
           </Table.HeaderCell>
           <Table.HeaderCell>

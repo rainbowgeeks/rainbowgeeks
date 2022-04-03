@@ -21,6 +21,7 @@ export const PAGE_IDS = {
   SIGN_UP: 'sign-up',
   USER_LIBRARY_PAGE: 'user-library-page',
   USER_TRACK_HOURS: 'user-track-hours',
+  USER_SUBMIT_EVENT_HOURS: 'user-submit-event-hours',
 
   // Page ID's use for stuff collection probably will delete later.
   ADD_STUFF: 'add-stuff',

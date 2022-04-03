@@ -8,7 +8,8 @@ const UserHours = () => (
     <Table.Cell>Event id:55762</Table.Cell>
     <Table.Cell>Organization id:77621</Table.Cell>
     <Table.Cell>Date id:88923</Table.Cell>
-    <Table.Cell>5</Table.Cell>
+    <Table.Cell>Pending</Table.Cell>
+    <Table.Cell>0</Table.Cell>
   </Table.Row>
 );
 
