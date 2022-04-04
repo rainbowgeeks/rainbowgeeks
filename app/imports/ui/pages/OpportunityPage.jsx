@@ -14,8 +14,10 @@ import { Organizations } from '../../api/organization/OrganizationCollection';
 import { PointOfContacts } from '../../api/point-of-contact/PointOfContactCollection';
 import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
 import OpportunityPagePoc from '../components/OpportunityPagePoc';
+import OrgReservation from '../components/OrgReservation';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import GoogleMap from '../components/GoogleMap';
 
 const makeOpportunity = (data) => {
   const { _id: oppID, owner: email } = data;
@@ -23,7 +25,6 @@ const makeOpportunity = (data) => {
   const environment = _.pluck(OpportunitiesEnvs.find({ oppID }).fetch(), 'environment');
   const oppCat = _.pluck(OpportunitiesCats.find({ oppID }).fetch(), 'category');
   const category = oppCat.map(c => Categories.getIcon(c));
-  console.log(category);
   const poc = PointOfContacts.find({ email }).fetch();
   const org = _.pluck(OrganizationPocs.find({ pocEmail: email }).fetch(), 'orgID');
   const [organization] = org.map(o => Organizations.findDoc({ _id: o }).organizationName);
@@ -32,7 +33,6 @@ const makeOpportunity = (data) => {
 
 const OpportunityPage = ({ ready, opportunity }) => {
   const [opp] = opportunity.map(o => makeOpportunity(o));
-  console.log(opp);
   const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
   return ((ready) ? (
     <Container id={PAGE_IDS.OPPORTUNITY_PAGE} style={{ paddingTop: '20px' }}>
@@ -59,18 +59,14 @@ const OpportunityPage = ({ ready, opportunity }) => {
                 <Table.Row>
                   <Table.Cell style={{ borderStyle: 'none' }}>
                     <Icon size={'big'} name={'users'}/>
-                    {opp.environment.map((e, index) => <Label key={index}
-                      style={{ paddingLeft: '5px', paddingTop: '5px' }}
-                      size='medium' color='teal'>{e}</Label>)}
+                    {opp.environment.map((e, index) => <Label key={index} style={{ paddingLeft: '5px', paddingTop: '5px' }} size='medium' color='teal'>{e}</Label>)}
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell style={{ borderStyle: 'none' }}>
                     <Segment.Inline>
                       <Icon size={'big'} name={'map pin'}/>
-                      {opp.age.map((a, index) => <Label key={index}
-                        style={{ paddingLeft: '5px' }}
-                        size='medium' color='teal'>{a}</Label>)}
+                      {opp.age.map((a, index) => <Label key={index} style={{ paddingLeft: '5px' }} size='medium' color='teal'>{a}</Label>)}
                     </Segment.Inline>
                   </Table.Cell>
                 </Table.Row>
@@ -91,6 +87,7 @@ const OpportunityPage = ({ ready, opportunity }) => {
 
           <Grid.Column>
             {opp.poc.map(o => <OpportunityPagePoc key={o._id} poc={o}/>)}
+            <OrgReservation/>
           </Grid.Column>
         </Grid.Row>
       </Grid>
