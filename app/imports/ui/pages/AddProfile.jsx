@@ -37,7 +37,7 @@ const AddProfile = ({ userData }) => {
       specialInterest,
       profileImage,
       aboutUser,
-      acceptTerm,
+      acceptTermsOfCondition,
       dateOfBirth,
       homeAddress,
       city,
@@ -55,7 +55,7 @@ const AddProfile = ({ userData }) => {
       specialInterest,
       profileImage,
       aboutUser,
-      acceptTerm,
+      acceptTermsOfCondition,
       dateOfBirth,
       homeAddress,
       city,
@@ -122,10 +122,10 @@ const AddProfile = ({ userData }) => {
               <Divider/>
               <Container>
                 <p>
-                  By accepting now, you agree to VolunteeringAlly's
-                  <a href="https://volunteerally.org/privacy-policy"> Terms & Conditions</a> and <a href="https://volunteerally.org/privacy-policy"> Privacy Policy.</a>
+                  By accepting now, you agree to VolunteeringAlly&apos;s
+                  <a href="https://volunteerally.org/privacy-policy" target="_blank" rel="noreferrer"> Terms & Conditions</a> and <a href="https://volunteerally.org/privacy-policy" target="_blank" rel="noreferrer"> Privacy Policy.</a>
                 </p>
-                <SelectField name='acceptTerm' checkboxes allowedValues={['Accept']}/>
+                <SelectField name='acceptTermsOfCondition' checkboxes allowedValues={['Accept Terms & Conditions and Privacy Policy']}/>
               </Container>
 
               <Container textAlign='right'>

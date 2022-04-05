@@ -10,8 +10,6 @@ import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollect
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
-import { Hours } from '../../api/hours/HoursCollection';
-import { OpportunityHours } from '../../api/opportunity/OpportunityHoursCollection';
 import Footer from '../components/Footer';
 import CategoryOpp from '../components/CategoryOpp';
 import SearchOpp from '../components/SearchOpp';

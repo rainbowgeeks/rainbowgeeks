@@ -24,7 +24,7 @@ class ProfilePageCollection extends BaseCollection {
       specialInterest: String,
       profileImage: String,
       aboutUser: String,
-      acceptTerm: String,
+      acceptTermsOfCondition: String,
       dateOfBirth: Date,
       homeAddress: String,
       city: String,
@@ -66,7 +66,7 @@ class ProfilePageCollection extends BaseCollection {
    * @param specialInterest The owner's special interest
    * @param profileImage The owner's profile image URL
    * @param aboutUser The about the user
-   * @param acceptTerm The owner must accept the terms of conditions
+   * @param acceptTermsOfCondition The owner must accept the terms of conditions
    * @param dateOfBirth The date of birth of the owner
    * @param homeAddress The physical/mailing address of the owner
    * @param city The city.
@@ -77,7 +77,7 @@ class ProfilePageCollection extends BaseCollection {
    * @param availability The owner's availability
    * @returns the doc ID of this user's collection
    */
-  define({ owner, firstName, lastName, phoneNumber, specialInterest, profileImage, aboutUser, acceptTerm, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability }) {
+  define({ owner, firstName, lastName, phoneNumber, specialInterest, profileImage, aboutUser, acceptTermsOfCondition, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability }) {
     const docID = this._collection.insert({
       owner,
       firstName,
@@ -86,7 +86,7 @@ class ProfilePageCollection extends BaseCollection {
       specialInterest,
       profileImage,
       aboutUser,
-      acceptTerm,
+      acceptTermsOfCondition,
       dateOfBirth,
       homeAddress,
       city,
@@ -99,7 +99,7 @@ class ProfilePageCollection extends BaseCollection {
     return docID;
   }
 
-  update(docID, { firstName, lastName, phoneNumber, specialInterest, profileImage, aboutUser, acceptTerm, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability }) {
+  update(docID, { firstName, lastName, phoneNumber, specialInterest, profileImage, aboutUser, acceptTermsOfCondition, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability }) {
     const updateUserData = {};
 
     if (firstName) {
@@ -114,8 +114,8 @@ class ProfilePageCollection extends BaseCollection {
     if (aboutUser) {
       updateUserData.aboutUser = aboutUser;
     }
-    if (acceptTerm) {
-      updateUserData.acceptTerm = acceptTerm;
+    if (acceptTermsOfCondition) {
+      updateUserData.acceptTerm = acceptTermsOfCondition;
     }
     if (dateOfBirth) {
       updateUserData.dateOfBirth = dateOfBirth;
