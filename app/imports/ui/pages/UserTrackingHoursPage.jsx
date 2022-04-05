@@ -12,7 +12,7 @@ import ListUserHours from './ListUserHours';
 /** Renders the User's Profile. Profile Page is broken down into 4 components */
 const UserTrackingHoursPage = () => (
   <Container id={PAGE_IDS.USER_TRACK_HOURS}>
-    <Header as="h1" textAlign="centered">My Hours</Header>
+    <Header as="h1" textAlign="center">My Hours</Header>
     <Divider/>
     <Segment padded='very'>
       <ListUserHours/>
@@ -23,7 +23,7 @@ const UserTrackingHoursPage = () => (
         <Grid.Row>
           <Grid.Column>
             <Segment padded='very'>
-              <Header as='h2' textAlign='centered'>
+              <Header as='h2' textAlign='center'>
                 Number of Volunteer: 1
               </Header>
             </Segment>
@@ -31,7 +31,7 @@ const UserTrackingHoursPage = () => (
 
           <Grid.Column>
             <Segment padded='very'>
-              <Header as='h2' textAlign='centered'>
+              <Header as='h2' textAlign='center'>
                   Total Hours: 20
               </Header>
             </Segment>

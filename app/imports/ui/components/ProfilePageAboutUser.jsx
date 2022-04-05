@@ -122,7 +122,7 @@ ProfilePageAboutUser.propTypes = {
     interest: PropTypes.array,
     specialInterest: PropTypes.string,
     environmentalPref: PropTypes.array,
-    availability: PropTypes.string,
+    availability: PropTypes.array,
   }).isRequired,
 };
 

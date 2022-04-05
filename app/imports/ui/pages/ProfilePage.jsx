@@ -45,7 +45,7 @@ const ProfilePage = ({ ready, userData }) => ((ready) ? (
             </Segment>
 
             <Divider section/>
-            <Header as='h3' textAlign='centered'>Recommended Organization</Header>
+            <Header as='h3' textAlign='center'>Recommended Organization</Header>
             <List>
               <ProfilePageAssociatedOrganization/>
               <ProfilePageAssociatedOrganization/>
