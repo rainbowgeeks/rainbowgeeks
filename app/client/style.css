@@ -207,8 +207,8 @@ below is for org profile page responsiveness
 }
 
 
-/* Edit-profiel Page*/
-#submit-update-profile {
-  margin-top: 30px;
-  float: left
+/* Edit-profile Page*/
+#edit-profile-form {
+  padding-left: 230px;
+  padding-right: 230px;
 }
