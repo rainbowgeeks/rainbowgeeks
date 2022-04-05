@@ -24,7 +24,7 @@ class ProfilePageCollection extends BaseCollection {
       specialInterest: String,
       profileImage: String,
       aboutUser: String,
-      acceptTerm: Boolean,
+      acceptTerm: String,
       dateOfBirth: Date,
       homeAddress: String,
       city: String,
@@ -66,7 +66,7 @@ class ProfilePageCollection extends BaseCollection {
    * @param specialInterest The owner's special interest
    * @param profileImage The owner's profile image URL
    * @param aboutUser The about the user
-   * @param acceptTerm The boolean regarding the owner accepting the terms of conditions
+   * @param acceptTerm The owner must accept the terms of conditions
    * @param dateOfBirth The date of birth of the owner
    * @param homeAddress The physical/mailing address of the owner
    * @param city The city.

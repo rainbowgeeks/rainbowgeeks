@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Container, Divider, Form, Grid, Header, Loader, Segment } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Header, Loader, Segment } from 'semantic-ui-react';
 import {
   AutoForm,
   ErrorsField,
@@ -37,6 +37,10 @@ const EditProfile = ({ doc, ready }) => {
       interest,
       environmentalPref,
       availability,
+      homeAddress,
+      city,
+      state,
+      zip,
       _id } = data;
     const collectionName = UserProfileData.getCollectionName();
     const updateData = {
@@ -45,6 +49,10 @@ const EditProfile = ({ doc, ready }) => {
       lastName,
       phoneNumber,
       aboutUser,
+      homeAddress,
+      city,
+      state,
+      zip,
       specialInterest,
       interest,
       environmentalPref,
@@ -113,12 +121,12 @@ const EditProfile = ({ doc, ready }) => {
             <Segment>
               <Form onSubmit={myImage} widths={'equal'}>
                 <Form.Input
-                    size={'small'}
-                    label={'Input Image'}
-                    fluid
-                    type='file'
-                    accept='image/*'
-                    onChange={event => setUploadFile(event.target.files)}
+                  size={'small'}
+                  label={'Input Image'}
+                  fluid
+                  type='file'
+                  accept='image/*'
+                  onChange={event => setUploadFile(event.target.files)}
                 />
                 <Button type='submit'> Save </Button>
               </Form>
