@@ -7,24 +7,28 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 /** A simple static component to render some text for the landing page. */
 const Landing = () => (
   <div id={PAGE_IDS.LANDING}>
-    <div className="grad-background" fluid="true">
-      <Container>
-        <Image className="logo-center" src='https://cdn.discordapp.com/attachments/441780757967405067/943848010306183208/VAlogo.png'></Image>
-        <h1 className="h1">
-          A better way to volunteer.
-        </h1>
+    <Container fluid style={{
+      backgroundImage: 'url("https://cdn.discordapp.com/attachments/441780757967405067/943844389187358740/landingBackground.jpg")',
+      backgroundSize: 'cover',
+      textAlign: 'center',
+      marginTop: -13,
+      paddingBottom: 50,
+    }}>
+      <Image className="logo-center" src='https://cdn.discordapp.com/attachments/441780757967405067/943848010306183208/VAlogo.png'></Image>
+      <h1 className="h1">
+          A better way to volunteer
         <h2 className="h2">
             We connect passionate volunteers with charitable organizations in order to build community.
             Let us help you easily find service opportunities for organizations in your area of interest.
         </h2>
-      </Container>
-    </div>
+      </h1>
+    </Container>
     <Container fluid>
       <Grid container spacing={2} >
-        <Grid item="true" xs={12}>
+        <Grid item xs={12}>
           <h1 className="h1Bot" >Dozens of Opportunities for Organizations and Volunteers</h1>
         </Grid>
-        <Grid item="true" sm={6}>
+        <Grid item sm={6}>
           <Container fluid>
             <h2 className="h2Bot">
               <p>Take a look at the various<br/>
@@ -52,7 +56,7 @@ const Landing = () => (
             </Link>
           </Container>
         </Grid>
-        <Grid item="true" sm={1}>
+        <Grid item sm={1}>
           <Image src='https://cdn.discordapp.com/attachments/441780757967405067/943854340714676284/unknown.png'></Image>
         </Grid>
       </Grid>
