@@ -32,34 +32,65 @@ const NewNavBar = ({ currentUser }) => (
       About Us
     </Menu.Item>
     <Menu.Menu position="right">
-      <Menu.Item>
-        {(currentUser !== '') && (currentUser) ? (
-          <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} text={currentUser} pointing="top right" icon={'user'}>
-            <Dropdown.Menu>
-              {/* eslint-disable-next-line no-nested-ternary */}
-              {Roles.userIsInRole(Meteor.userId(), [ROLE.USER]) ? (
-                [
-                  <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile" key="profile"/>,
-                ]) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ? (
-                [
-                  <Dropdown.Item as={NavLink} text="My Profile" exact to="/org-profile" key="org-profile"/>,
-                ]) :
-                [
-                  <Dropdown.Item as={NavLink} text="Admin Profile" exact to="/admin" key="admin"/>,
-                ]}
-
-              <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
-            </Dropdown.Menu>
-          </Dropdown>
-        ) : (
-          <Dropdown id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN} text="Login" icon={'user'} simple item>
-            <Dropdown.Menu>
-              <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_IN} icon="user" text="Sign In" as={NavLink} exact to="/signin"/>
-              <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_UP} icon="add user" text="Sign Up" as={NavLink} exact to="/signup"/>
-            </Dropdown.Menu>
-          </Dropdown>
-        )}
-      </Menu.Item>
+      {/* eslint-disable-next-line no-nested-ternary */}
+      {Roles.userIsInRole(Meteor.userId(), [ROLE.USER]) ? (
+        [
+          <Menu.Item key="volunteer">
+            {(currentUser !== '') && (currentUser) ? (
+              <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} className={'volunteer-color'} text={currentUser} pointing="top right" icon={'user'}>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={NavLink} text="My Profile" exact to="/profile" key="profile"/>
+                  <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <Dropdown id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN} text="Login" icon={'user'} simple item>
+                <Dropdown.Menu>
+                  <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_IN} icon="user" text="Sign In" as={NavLink} exact to="/signin"/>
+                  <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_UP} icon="add user" text="Sign Up" as={NavLink} exact to="/signup"/>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+          </Menu.Item>,
+        ]) : Roles.userIsInRole(Meteor.userId(), [ROLE.ORGANIZATION]) ? (
+        [
+          <Menu.Item key="organization">
+            {(currentUser !== '') && (currentUser) ? (
+              <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} className={'organization-color'} text={currentUser} pointing="top right" icon={'user'}>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={NavLink} text="My Profile" exact to="/org-profile" key="org-profile"/>
+                  <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <Dropdown id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN} text="Login" icon={'user'} simple item>
+                <Dropdown.Menu>
+                  <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_IN} icon="user" text="Sign In" as={NavLink} exact to="/signin"/>
+                  <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_UP} icon="add user" text="Sign Up" as={NavLink} exact to="/signup"/>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+          </Menu.Item>,
+        ]) :
+        [
+          <Menu.Item key="admin">
+            {(currentUser !== '') && (currentUser) ? (
+              <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} text={currentUser} pointing="top right" icon={'user'}>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={NavLink} text="My Profile" exact to="/admin" key="admin-profile"/>
+                  <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <Dropdown id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN} text="Login" icon={'user'} simple item>
+                <Dropdown.Menu>
+                  <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_IN} icon="user" text="Sign In" as={NavLink} exact to="/signin"/>
+                  <Dropdown.Item id={COMPONENT_IDS.NAVBAR_LOGIN_DROPDOWN_SIGN_UP} icon="add user" text="Sign Up" as={NavLink} exact to="/signup"/>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+          </Menu.Item>,
+        ]}
     </Menu.Menu>
   </Menu>
 );

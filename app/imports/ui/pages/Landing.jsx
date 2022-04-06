@@ -10,9 +10,8 @@ const Landing = () => (
     <Container fluid style={{
       backgroundImage: 'url("https://cdn.discordapp.com/attachments/441780757967405067/943844389187358740/landingBackground.jpg")',
       backgroundSize: 'cover',
-      height: 1080,
-      marginTop: -14,
       textAlign: 'center',
+      marginTop: -13,
       paddingBottom: 50,
     }}>
       <Image className="logo-center" src='https://cdn.discordapp.com/attachments/441780757967405067/943848010306183208/VAlogo.png'></Image>
