@@ -17,18 +17,18 @@ const Landing = () => (
       <Image className="logo-center" src='https://cdn.discordapp.com/attachments/441780757967405067/943848010306183208/VAlogo.png'></Image>
       <h1 className="h1">
           A better way to volunteer
-        <h2 className="h2">
+      </h1>
+      <h2 className="h2">
             We connect passionate volunteers with charitable organizations in order to build community. Let us help you easily find<br/>
           service opportunities for organizations in your area of interest.
-        </h2>
-      </h1>
+      </h2>
     </Container>
     <Container fluid>
       <Grid container spacing={2} >
-        <Grid item xs={12}>
+        <Grid item="true" xs={12}>
           <h1 className="h1Bot" >Dozens of Opportunities for Organizations and Volunteers</h1>
         </Grid>
-        <Grid item sm={6}>
+        <Grid item="true" sm={6}>
           <Container fluid>
             <h2 className="h2Bot">
               <p>Take a look at the various<br/>
@@ -56,7 +56,7 @@ const Landing = () => (
             </Link>
           </Container>
         </Grid>
-        <Grid item sm={1}>
+        <Grid item="true" sm={1}>
           <Image src='https://cdn.discordapp.com/attachments/441780757967405067/943854340714676284/unknown.png'></Image>
         </Grid>
       </Grid>
