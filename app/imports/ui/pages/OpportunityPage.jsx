@@ -46,7 +46,6 @@ const OpportunityPage = ({ ready, opportunity }) => {
     const oppID = opp._id;
     volunteer = getUser(Meteor.user().username, oppID);
   }
-  console.log(volunteer);
   const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
   return ((ready) ? (
     <Container id={PAGE_IDS.OPPORTUNITY_PAGE} style={{ paddingTop: '20px' }}>
