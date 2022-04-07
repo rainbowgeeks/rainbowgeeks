@@ -3,6 +3,7 @@ import { Container, Grid, Header, Loader, Tab, Card } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
+import Map from 'react-map-gl';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { Organizations } from '../../api/organization/OrganizationCollection';
 import { Categories } from '../../api/category/CategoryCollection';
@@ -14,7 +15,21 @@ import Footer from '../components/Footer';
 import CategoryOpp from '../components/CategoryOpp';
 import SearchOpp from '../components/SearchOpp';
 import Opportunity from '../components/Opportunity';
-import GoogleMap from '../components/GoogleMap';
+
+//
+function MapBox() {
+  return <Map
+    initialViewState={{
+      longitude: -157.87429,
+      latitude: 21.45,
+      zoom: 9,
+    }}
+    class={'map-border'}
+    style={{ width: '100%', height: '50vh' }}
+    mapStyle="mapbox://styles/mapbox/streets-v9"
+    mapboxAccessToken="pk.eyJ1IjoibGlnZ21hIiwiYSI6ImNrdTZhdzJ5NDU4a3Eyd28yN200Y2hjcWYifQ.Srqhm05N6Silps_KAbRq4g"
+  />;
+}
 //
 function getOpportunities(o) {
   const { _id: oppID } = o;
@@ -145,7 +160,7 @@ const FilterOpportunities = ({ ready, opportunities, categories }) => {
         </Grid.Column>
         <Grid.Column width={7}>
           <div>
-            <GoogleMap/>
+            <MapBox/>
           </div>
         </Grid.Column>
       </Grid>
