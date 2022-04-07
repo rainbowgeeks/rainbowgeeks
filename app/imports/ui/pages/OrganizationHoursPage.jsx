@@ -20,7 +20,6 @@ const OrganizationHoursPage = ({ opportunityHours, ready }) => {
     return _.extend({}, { _id, firstName, lastName, numberOfHours, volunteerEmail });
   };
   const makeOppHours = opportunityHours.map(oH => getHours({ oH }));
-  console.log(makeOppHours);
   return ((ready) ? (
     <Table celled>
       <Table.Header>
