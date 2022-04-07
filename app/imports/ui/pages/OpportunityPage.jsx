@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Grid, Loader, Header, Segment, Table, Label, Icon } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, Link } from 'react-router-dom';
@@ -17,9 +17,11 @@ import OpportunityPagePoc from '../components/OpportunityPagePoc';
 import OrgReservation from '../components/OrgReservation';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
-import GoogleMap from '../components/GoogleMap';
 
+const [ping, setPing] = useState('');
+console.log(ping);
 const makeOpportunity = (data) => {
+  setPing('this');
   const { _id: oppID, owner: email } = data;
   const age = _.pluck(OpportunitiesAges.find({ oppID }).fetch(), 'age');
   const environment = _.pluck(OpportunitiesEnvs.find({ oppID }).fetch(), 'environment');
@@ -32,6 +34,7 @@ const makeOpportunity = (data) => {
 };
 
 const OpportunityPage = ({ ready, opportunity }) => {
+  setPing('that');
   const [opp] = opportunity.map(o => makeOpportunity(o));
   const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
   return ((ready) ? (
