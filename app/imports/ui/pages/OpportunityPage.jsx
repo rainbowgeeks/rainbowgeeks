@@ -21,7 +21,7 @@ import NeedRsvp from '../components/NeedRsvp';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
-
+// CHecking
 const makeOpportunity = (data) => {
   const { _id: oppID, owner: email } = data;
   const age = _.pluck(OpportunitiesAges.find({ oppID }).fetch(), 'age');
