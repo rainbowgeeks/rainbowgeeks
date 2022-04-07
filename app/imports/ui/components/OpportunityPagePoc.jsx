@@ -7,7 +7,7 @@ const OpportunityPagePoc = ({ poc }) => (
   <Table>
     <Table.Header>
       <Table.Row>
-        <Table.Cell style={{ borderStyle: 'none' }}>
+        <Table.Cell>
           <Header as='h3' icon='address book outline' content='Contact Information'/>
         </Table.Cell>
       </Table.Row>
