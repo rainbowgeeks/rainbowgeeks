@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import { Container, Grid, Loader, Header, Segment, Table, Label, Icon } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, Link } from 'react-router-dom';
@@ -13,9 +14,13 @@ import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollect
 import { Organizations } from '../../api/organization/OrganizationCollection';
 import { PointOfContacts } from '../../api/point-of-contact/PointOfContactCollection';
 import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
+import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import OpportunityPagePoc from '../components/OpportunityPagePoc';
+import OrgReservation from '../components/OrgReservation';
+import NeedRsvp from '../components/NeedRsvp';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
 
 const makeOpportunity = (data) => {
   const { _id: oppID, owner: email } = data;
@@ -23,16 +28,25 @@ const makeOpportunity = (data) => {
   const environment = _.pluck(OpportunitiesEnvs.find({ oppID }).fetch(), 'environment');
   const oppCat = _.pluck(OpportunitiesCats.find({ oppID }).fetch(), 'category');
   const category = oppCat.map(c => Categories.getIcon(c));
-  console.log(category);
   const poc = PointOfContacts.find({ email }).fetch();
   const org = _.pluck(OrganizationPocs.find({ pocEmail: email }).fetch(), 'orgID');
   const [organization] = org.map(o => Organizations.findDoc({ _id: o }).organizationName);
   return _.extend({}, data, { age, environment }, { category }, { poc }, { organization });
 };
 
+const getUser = (user, id) => {
+  const [name] = UserProfileData.find({ owner: user }).fetch();
+  return _.extend({}, name, { oppID: id });
+};
+
 const OpportunityPage = ({ ready, opportunity }) => {
   const [opp] = opportunity.map(o => makeOpportunity(o));
-  console.log(opp);
+  let volunteer;
+  if (Meteor.user()) {
+    const oppID = opp._id;
+    volunteer = getUser(Meteor.user().username, oppID);
+  }
+  console.log(volunteer);
   const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
   return ((ready) ? (
     <Container id={PAGE_IDS.OPPORTUNITY_PAGE} style={{ paddingTop: '20px' }}>
@@ -59,18 +73,14 @@ const OpportunityPage = ({ ready, opportunity }) => {
                 <Table.Row>
                   <Table.Cell style={{ borderStyle: 'none' }}>
                     <Icon size={'big'} name={'users'}/>
-                    {opp.environment.map((e, index) => <Label key={index}
-                      style={{ paddingLeft: '5px', paddingTop: '5px' }}
-                      size='medium' color='teal'>{e}</Label>)}
+                    {opp.environment.map((e, index) => <Label key={index} style={{ paddingLeft: '5px', paddingTop: '5px' }} size='medium' color='teal'>{e}</Label>)}
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell style={{ borderStyle: 'none' }}>
                     <Segment.Inline>
                       <Icon size={'big'} name={'map pin'}/>
-                      {opp.age.map((a, index) => <Label key={index}
-                        style={{ paddingLeft: '5px' }}
-                        size='medium' color='teal'>{a}</Label>)}
+                      {opp.age.map((a, index) => <Label key={index} style={{ paddingLeft: '5px' }} size='medium' color='teal'>{a}</Label>)}
                     </Segment.Inline>
                   </Table.Cell>
                 </Table.Row>
@@ -91,6 +101,7 @@ const OpportunityPage = ({ ready, opportunity }) => {
 
           <Grid.Column>
             {opp.poc.map(o => <OpportunityPagePoc key={o._id} poc={o}/>)}
+            {volunteer ? <OrgReservation rsvp={volunteer}/> : <NeedRsvp/>}
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -104,6 +115,7 @@ OpportunityPage.propTypes = {
 };
 
 const OpportunityPageContainer = withTracker(() => {
+  //
   const { _id } = useParams();
   // Get access to opportunities documents
   const sub1 = Opportunities.subscribeOpportunity();
@@ -119,9 +131,15 @@ const OpportunityPageContainer = withTracker(() => {
   const sub6 = Organizations.subscribeOrganization();
   // Get access to organization poc documents.
   const sub7 = OrganizationPocs.subscribeOrganizationPoc();
+  // Get access to User documents.
+  const sub8 = UserProfileData.subscribeAllUser();
+  // Get access to User documents.
+  const sub9 = OpportunityRsvps.subscribeRsvp();
   // Get the Opportunity that match the _id
   const opportunity = Opportunities.find({ _id }).fetch();
-  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready();
+  //
+  // Check if collections are ready
+  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready() && sub8.ready() && sub9.ready();
   return {
     opportunity,
     ready,
