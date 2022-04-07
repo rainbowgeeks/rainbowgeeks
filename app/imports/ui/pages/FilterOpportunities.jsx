@@ -76,7 +76,6 @@ const FilterOpportunities = ({ ready, opportunities, categories }) => {
       });
     }
     if (keyword.category) {
-      setFilterAge([]); setFilterEnv([]);
       temp = data.filter((da) => {
         if (da.category.includes(keyword.category)) return true;
         return false;

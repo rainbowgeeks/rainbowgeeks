@@ -9,6 +9,7 @@ import { Stuffs } from '../api/stuff/StuffCollection';
 import { ROLE } from '../api/role/Role';
 import { AdminProfiles } from '../api/user/AdminProfileCollection';
 import { UserProfiles } from '../api/user/UserProfileCollection';
+import { OrganizationProfiles } from '../api/user/OrganizationProfileCollection';
 
 export function withSubscriptions() {
   return new Promise((resolve => {
@@ -16,6 +17,7 @@ export function withSubscriptions() {
     AdminProfiles.subscribe();
     Stuffs.subscribeStuff();
     UserProfiles.subscribe();
+    OrganizationProfiles.subscribe();
     const poll = Meteor.setInterval(() => {
       if (DDP._allSubscriptionsReady()) {
         Meteor.clearInterval(poll);
@@ -79,6 +81,35 @@ export const defineTestUser = new ValidatedMethod({
     throw new Meteor.Error('Need to be in test mode to call this method.');
   },
 });
+
+/**
+ * Defines a test user.
+ * @type {ValidatedMethod}
+ */
+export const defineTestOrg = new ValidatedMethod({
+  name: 'Test.defineOrg',
+  mixins: [CallPromiseMixin],
+  validate: null,
+  run() {
+    // Only do this if in test or test-app.
+    if (Meteor.isTest || Meteor.isAppTest) {
+      const username = faker.internet.userName();
+      const email = faker.internet.email();
+      const password = faker.internet.password();
+      // console.log('defineTestUser', username, password);
+      const users = Accounts.createUser({
+        username,
+        email,
+        password,
+      });
+      Roles.createRole(ROLE.ORGANIZATION, { unlessExists: true });
+      Roles.addUsersToRoles([users], [ROLE.ORGANIZATION]);
+      return { username, email, password };
+    }
+    throw new Meteor.Error('Need to be in test mode to call this method.');
+  },
+});
+
 /**
  * Returns a Promise that resolves if one can successfully login with the passed credentials.
  * Credentials default to the standard admin username and password.
