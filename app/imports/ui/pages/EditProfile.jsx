@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Container, Divider, Form, Grid, Header, Loader, Segment } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Header, Loader, Segment } from 'semantic-ui-react';
 import {
   AutoForm,
   ErrorsField,
@@ -37,6 +37,10 @@ const EditProfile = ({ doc, ready }) => {
       interest,
       environmentalPref,
       availability,
+      homeAddress,
+      city,
+      state,
+      zip,
       _id } = data;
     const collectionName = UserProfileData.getCollectionName();
     const updateData = {
@@ -45,6 +49,10 @@ const EditProfile = ({ doc, ready }) => {
       lastName,
       phoneNumber,
       aboutUser,
+      homeAddress,
+      city,
+      state,
+      zip,
       specialInterest,
       interest,
       environmentalPref,
@@ -95,8 +103,6 @@ const EditProfile = ({ doc, ready }) => {
           timer: 15000,
         });
       });
-    // idea when click the submit button, store file into a state, then
-    // somehow get this state's value into the main submit
   };
 
   const { from } = { from: { pathname: '/profile' } };
@@ -109,39 +115,10 @@ const EditProfile = ({ doc, ready }) => {
       <Segment inverted color={'blue'}>
         <Header as='h1' size='large' textAlign='center'> UPDATE MY PROFILE </Header>
         <Divider/>
-        <Grid columns={2} relaxed='very'>
-          <Grid.Column>
-            <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
-              <Segment>
-                <Header as="h3" textAlign="center">Update My Information</Header>
-                <Segment padded>
-                  <Form.Group widths='equal'>
-                    <TextField name='firstName'/>
-                    <TextField name='lastName' />
-                  </Form.Group>
-                  <TextField name='phoneNumber' />
-                  <LongTextField name='aboutUser' placeholder='Edit About Me'/>
-                </Segment>
-              </Segment>
-              <Segment>
-                <Header as='h3' textAlign='center'>Update My Preferences</Header>
-                <Segment>
-                  <TextField name='specialInterest'/>
-                  <MultiSelectField name='interest'/>
-                  <SelectField name='environmentalPref' checkboxes/>
-                  <SelectField name='availability' checkboxes/>
-                </Segment>
-              </Segment>
-              <Container textAlign='right'>
-                <SubmitField id='submit-update-profile' value='Update Profile' />
-              </Container>
-              <ErrorsField />
-            </AutoForm>
-          </Grid.Column>
-          <Grid.Column>
+        <Container id='edit-profile-form'>
+          <Segment>
+            <Header as="h3" textAlign="center">Update my Profile Image</Header>
             <Segment>
-              <Header as="h3" textAlign="center">Update my Profile Image</Header>
-
               <Form onSubmit={myImage} widths={'equal'}>
                 <Form.Input
                   size={'small'}
@@ -154,8 +131,41 @@ const EditProfile = ({ doc, ready }) => {
                 <Button type='submit'> Save </Button>
               </Form>
             </Segment>
-          </Grid.Column>
-        </Grid>
+          </Segment>
+          <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
+            <Segment>
+              <Header as="h3" textAlign="center">Update My Information</Header>
+              <Segment>
+                <Form.Group widths='equal'>
+                  <TextField name='firstName'/>
+                  <TextField name='lastName' />
+                </Form.Group>
+                <TextField name='phoneNumber' />
+                <TextField name='homeAddress'/>
+                <Form.Group width='3'>
+                  <TextField name='city'/>
+                  <TextField name='state'/>
+                  <TextField name='zip'/>
+                </Form.Group>
+                <LongTextField name='aboutUser' placeholder='Edit About Me'/>
+              </Segment>
+            </Segment>
+            <Segment >
+              <Header as='h3' textAlign='center'>Update My Preferences</Header>
+              <Segment>
+                <TextField name='specialInterest'/>
+                <MultiSelectField name='interest'/>
+                <SelectField name='environmentalPref' checkboxes/>
+                <SelectField name='availability' checkboxes/>
+              </Segment>
+              <Container textAlign='right'>
+                <SubmitField value='Update Profile' />
+              </Container>
+              <ErrorsField />
+            </Segment>
+          </AutoForm>
+
+        </Container>
 
       </Segment>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Header, Icon } from 'semantic-ui-react';
+import { Grid, Header, Icon, Popup } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
@@ -11,9 +11,11 @@ const ProfilePageHeader = ({ linkData }) => (
       <Header as="h2" textAlign="right">My Profile Page </Header>
     </Grid.Column>
     <Grid.Column floated='right' width={1}>
-      <Link className={COMPONENT_IDS.LIST_PROFILE_EDIT} to={`/edit-profile/${linkData._id}`}>
-        <Icon name='setting' size='large'/>
-      </Link>
+      <Popup content='Edit My Profile' trigger={
+        <Link className={COMPONENT_IDS.LIST_PROFILE_EDIT} to={`/edit-profile/${linkData._id}`}>
+          <Icon name='setting' size='large'/>
+        </Link>}
+      />
     </Grid.Column>
   </Grid>
 );

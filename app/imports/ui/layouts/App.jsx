@@ -4,7 +4,6 @@ import { Meteor } from 'meteor/meteor';
 import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import NavBar from '../components/NavBar';
 import Landing from '../pages/Landing';
 import FilterOpportunities from '../pages/FilterOpportunities';
 import AdminProfile from '../pages/AdminProfile';
@@ -29,9 +28,7 @@ import UserTrackingHoursPage from '../pages/UserTrackingHoursPage';
 import AboutUs from '../pages/AboutUs';
 import AddOpportunity from '../pages/AddOpportunity';
 import EditOpportunity from '../pages/EditOpportunity';
-import ManageHoursPage from '../pages/ManageHoursPage';
-import OrganizationHoursPage from '../pages/OrganizationHoursPage';
-import UserSubmitEventHours from '../pages/UserSubmitEventHours';
+import NewNavBar from '../components/NewNavBar';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -39,7 +36,7 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <NavBar/>
+          <NewNavBar/>
           <Switch>
             <Route exact path="/" component={Landing}/>
             <Route path="/filter" component={FilterOpportunities}/>
@@ -55,14 +52,11 @@ class App extends React.Component {
             <ProtectedRoute path="/edit-profile/:_id" component={EditProfile}/>
             <ProtectedRoute path="/edit" component={EditProfile}/>
             <ProtectedRoute path="/add2" component={AddProfile}/>
-            <ProtectedRoute path='/submit-hours' component={UserSubmitEventHours}/>
             <ProtectedRoute path="/org-library" component={OrganizationLibrary}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
             <OrganizationProtectedRoute path="/add-opp" component={AddOpportunity}/>
             <OrganizationProtectedRoute path="/manage-opp" component={ManageOpportunities}/>
             <OrganizationProtectedRoute path="/edit-opp/:_id" component={EditOpportunity}/>
-            <OrganizationProtectedRoute path="/manage-hours" component={ManageHoursPage}/>
-            <OrganizationProtectedRoute path="/org-hours/:_id" component={OrganizationHoursPage}/>
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-org" component={ManageOrganizations}/>
             <AdminProtectedRoute path="/manage-user" component={ManageUsers}/>

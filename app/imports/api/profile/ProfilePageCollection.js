@@ -6,8 +6,8 @@ import { ROLE } from '../role/Role';
 
 export const profilePageAvailability = ['mon', 'tues', 'weds', 'thurs', 'fri', 'sat', 'sun', 'week-days', 'weekends',
   'no-pref'];
-export const profilePageEnvironmentalPref = ['on-campus', 'at-home', 'no-pref'];
-export const profilePageInterest = ['Int-1', 'Int-2', 'Int-3', 'Int-3', 'mis'];
+export const profilePageEnvironmentalPref = ['Outdoors', 'Virtual', 'Mixed', 'no-pref', 'Indoors'];
+export const profilePageInterest = ['Education', 'Animal Welfare/Rescue', 'Covid-19 Recovery', 'Child/Family Support', 'Environment', 'Food Insecurity', 'Ongoing Position', 'Crisis/Disaster Relief', 'no-pref'];
 export const ProfilePagePublication = {
   profile: 'Profile',
   profileAll: 'ProfileAll',
@@ -21,15 +21,23 @@ class ProfilePageCollection extends BaseCollection {
       firstName: String,
       lastName: String,
       phoneNumber: String,
+      specialInterest: String,
+      profileImage: String,
+      aboutUser: String,
+      acceptTerm: String,
+      dateOfBirth: Date,
+      homeAddress: String,
+      city: String,
+      state: String,
+      zip: String,
       interest: {
         type: Array,
-        defaultValue: 'mis',
+        defaultValue: 'no-pref',
       },
       'interest.$': {
         type: String,
         allowedValues: profilePageInterest,
       },
-      specialInterest: String,
       environmentalPref: {
         type: Array,
         defaultValue: 'no-pref',
@@ -46,42 +54,52 @@ class ProfilePageCollection extends BaseCollection {
         type: String,
         allowedValues: profilePageAvailability,
       },
-      profileImage: String,
-      aboutUser: String,
     }));
   }
 
   /**
-   * Defines a new profile data
-   * @param owner the owner of the profile data
-   * @param firstName the first name of the user
-   * @param lastName the last name of the user
-   * @param phoneNumber the phone number of the user
-   * @param interest the interest of the user
-   * @param specialInterest the additional interest of the user
-   * @param environmentalPref the environmental preference of the user
-   * @param availability the availability of the user
-   * @param profileImage the profile-image of the user
-   * @param aboutUser the information of the user
-   * @returns the docID of the defined collection
+   *
+   * @param owner Contains the email of the owner of this profile account.
+   * @param firstName The first name of the owner.
+   * @param lastName The last name of the owner.
+   * @param phoneNumber The phone number of the owner
+   * @param specialInterest The owner's special interest
+   * @param profileImage The owner's profile image URL
+   * @param aboutUser The about the user
+   * @param acceptTerm The owner must accept the terms of conditions
+   * @param dateOfBirth The date of birth of the owner
+   * @param homeAddress The physical/mailing address of the owner
+   * @param city The city.
+   * @param state The state.
+   * @param zip The zip code-area
+   * @param interest The owner's interest of volunteering
+   * @param environmentalPref The owner's environmental preference
+   * @param availability The owner's availability
+   * @returns the doc ID of this user's collection
    */
-  define({ owner, firstName, lastName, phoneNumber, interest, specialInterest, environmentalPref, availability, profileImage, aboutUser }) {
+  define({ owner, firstName, lastName, phoneNumber, specialInterest, profileImage, aboutUser, acceptTerm, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability }) {
     const docID = this._collection.insert({
       owner,
       firstName,
       lastName,
       phoneNumber,
-      interest,
       specialInterest,
-      environmentalPref,
-      availability,
       profileImage,
       aboutUser,
+      acceptTerm,
+      dateOfBirth,
+      homeAddress,
+      city,
+      state,
+      zip,
+      interest,
+      environmentalPref,
+      availability,
     });
     return docID;
   }
 
-  update(docID, { firstName, lastName, phoneNumber, aboutUser, specialInterest, environmentalPref, availability, interest, profileImage }) {
+  update(docID, { firstName, lastName, phoneNumber, specialInterest, profileImage, aboutUser, acceptTerm, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability }) {
     const updateUserData = {};
 
     if (firstName) {
@@ -95,6 +113,24 @@ class ProfilePageCollection extends BaseCollection {
     }
     if (aboutUser) {
       updateUserData.aboutUser = aboutUser;
+    }
+    if (acceptTerm) {
+      updateUserData.acceptTerm = acceptTerm;
+    }
+    if (dateOfBirth) {
+      updateUserData.dateOfBirth = dateOfBirth;
+    }
+    if (homeAddress) {
+      updateUserData.homeAddress = homeAddress;
+    }
+    if (city) {
+      updateUserData.city = city;
+    }
+    if (state) {
+      updateUserData.state = state;
+    }
+    if (zip) {
+      updateUserData.zip = zip;
     }
     if (specialInterest) {
       updateUserData.specialInterest = specialInterest;
