@@ -122,7 +122,8 @@ const AddProfile = ({ userData }) => {
               <Divider/>
               <Container>
                 <p>
-                  By accepting now, you agree to VolunteeringAlly's
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
+                  By accepting now, you agree to Volunteer Ally's
                   <a href="https://volunteerally.org/privacy-policy"> Terms & Conditions</a> and <a href="https://volunteerally.org/privacy-policy"> Privacy Policy.</a>
                 </p>
                 <SelectField name='acceptTerm' checkboxes allowedValues={['Accept']}/>
