@@ -18,8 +18,8 @@ const Landing = () => (
       <h1 className="h1">
           A better way to volunteer
         <h2 className="h2">
-            We connect passionate volunteers with charitable organizations in order to build community.
-            Let us help you easily find service opportunities for organizations in your area of interest.
+            We connect passionate volunteers with charitable organizations in order to build community. Let us help you easily find<br/>
+          service opportunities for organizations in your area of interest.
         </h2>
       </h1>
     </Container>
