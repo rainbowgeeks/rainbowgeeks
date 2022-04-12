@@ -9,9 +9,10 @@ import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { Hours } from '../../api/hours/HoursCollection';
 import HoursPage from '../components/HoursPage';
 
-const getHours = ({ oH }) => {
+const getHours = (oH) => {
   const { volunteerEmail, hourID } = oH;
   const volunteer = UserProfileData.findOne({ owner: volunteerEmail });
+  console.log(volunteer);
   const hour = Hours.findDoc({ _id: hourID });
   const { _id, firstName, lastName } = volunteer;
   const { numberOfHours } = hour;
@@ -21,7 +22,7 @@ const getHours = ({ oH }) => {
 const OrganizationHoursPage = ({ opportunityHours, ready }) => {
   let makeOppHours;
   if (opportunityHours) {
-    makeOppHours = opportunityHours.map(oH => getHours({ oH }));
+    makeOppHours = opportunityHours.map(oH => getHours(oH));
   }
   return ((ready) ? (
     <Table celled>
