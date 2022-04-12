@@ -59,6 +59,8 @@ const NewNavBar = ({ currentUser }) => (
               <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} className={'organization-color'} text={currentUser} pointing="top right" icon={'user'}>
                 <Dropdown.Menu>
                   <Dropdown.Item as={NavLink} text="My Profile" exact to="/org-profile" key="org-profile"/>
+                  <Dropdown.Item as={NavLink} text="Manage Hours" exact to="/manage-hours" key="manage-hours"/>
+                  <Dropdown.Item as={NavLink} text="Manage Opportunities" exact to="/manage-opp" key="manage-opp"/>
                   <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
                 </Dropdown.Menu>
               </Dropdown>
@@ -78,6 +80,9 @@ const NewNavBar = ({ currentUser }) => (
               <Dropdown id={COMPONENT_IDS.NAVBAR_CURRENT_USER} text={currentUser} pointing="top right" icon={'user'}>
                 <Dropdown.Menu>
                   <Dropdown.Item as={NavLink} text="My Profile" exact to="/admin" key="admin-profile"/>
+                  <Dropdown.Item as={NavLink} text="Manage Users" exact to="/manage-user" key="manage-user"/>
+                  <Dropdown.Item as={NavLink} text="Manage Organizations" exact to="/manage-org" key="manage-org"/>
+                  <Dropdown.Item as={NavLink} text="Manage Opportunities" exact to="/manage-opps" key="manage-opps"/>
                   <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
                 </Dropdown.Menu>
               </Dropdown>

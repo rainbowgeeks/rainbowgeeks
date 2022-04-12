@@ -17,10 +17,11 @@ import { OrganizationPocs } from '../../api/organization/OrganizationPocCollecti
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import OpportunityPagePoc from '../components/OpportunityPagePoc';
 import OrgReservation from '../components/OrgReservation';
+import NeedRsvp from '../components/NeedRsvp';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
-
+// CHecking
 const makeOpportunity = (data) => {
   const { _id: oppID, owner: email } = data;
   const age = _.pluck(OpportunitiesAges.find({ oppID }).fetch(), 'age');
@@ -33,11 +34,18 @@ const makeOpportunity = (data) => {
   return _.extend({}, data, { age, environment }, { category }, { poc }, { organization });
 };
 
-const OpportunityPage = ({ ready, opportunity, username }) => {
-  const [name] = UserProfileData.find({ owner: username }).fetch();
+const getUser = (user, id) => {
+  const [name] = UserProfileData.find({ owner: user }).fetch();
+  return _.extend({}, name, { oppID: id });
+};
+
+const OpportunityPage = ({ ready, opportunity }) => {
   const [opp] = opportunity.map(o => makeOpportunity(o));
-  const oppID = opp._id;
-  const volunteer = _.extend({}, name, { oppID });
+  let volunteer;
+  if (Meteor.user()) {
+    const oppID = opp._id;
+    volunteer = getUser(Meteor.user().username, oppID);
+  }
   const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
   return ((ready) ? (
     <Container id={PAGE_IDS.OPPORTUNITY_PAGE} style={{ paddingTop: '20px' }}>
@@ -92,7 +100,7 @@ const OpportunityPage = ({ ready, opportunity, username }) => {
 
           <Grid.Column>
             {opp.poc.map(o => <OpportunityPagePoc key={o._id} poc={o}/>)}
-            <OrgReservation rsvp={volunteer}/>
+            {volunteer ? <OrgReservation rsvp={volunteer}/> : <NeedRsvp/>}
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -101,14 +109,11 @@ const OpportunityPage = ({ ready, opportunity, username }) => {
 };
 
 OpportunityPage.propTypes = {
-  username: PropTypes.string,
   opportunity: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 const OpportunityPageContainer = withTracker(() => {
-  // Get the username of current user.
-  const username = Meteor.user().username;
   //
   const { _id } = useParams();
   // Get access to opportunities documents
@@ -135,7 +140,6 @@ const OpportunityPageContainer = withTracker(() => {
   // Check if collections are ready
   const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready() && sub8.ready() && sub9.ready();
   return {
-    username,
     opportunity,
     ready,
   };

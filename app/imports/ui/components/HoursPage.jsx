@@ -15,7 +15,7 @@ const HoursPage = ({ opportunityHour }) => (
 );
 
 HoursPage.propTypes = {
-  opportunityHour: PropTypes.object.isRequired,
+  opportunityHour: PropTypes.object,
 };
 
 export default withRouter(HoursPage);

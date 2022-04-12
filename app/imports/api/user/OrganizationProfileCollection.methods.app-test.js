@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { expect } from 'chai';
 import faker from 'faker';
 import {
-  defineTestUser,
+  defineTestOrg,
   withLoggedInUser,
   withSubscriptions,
 } from '../../test-utilities/test-utilities';
@@ -15,7 +15,7 @@ import { OrganizationProfiles } from './OrganizationProfileCollection';
 if (Meteor.isClient) {
   describe('OrganizationProfileCollection Meteor Methods', function testSuite() {
     it('Can define, update, and removeIt', async function test1() {
-      const { username, password } = await defineTestUser.callPromise();
+      const { username, password } = await defineTestOrg.callPromise();
       await withLoggedInUser({ username, password });
       await withSubscriptions();
       const collectionName = OrganizationProfiles.getCollectionName();

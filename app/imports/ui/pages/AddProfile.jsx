@@ -122,8 +122,9 @@ const AddProfile = ({ userData }) => {
               <Divider/>
               <Container>
                 <p>
-                  By accepting now, you agree to VolunteeringAlly&apos;s
-                  <a href="https://volunteerally.org/privacy-policy" target="_blank" rel="noreferrer"> Terms & Conditions</a> and <a href="https://volunteerally.org/privacy-policy" target="_blank" rel="noreferrer"> Privacy Policy.</a>
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
+                  By accepting now, you agree to Volunteer Ally's
+                  <a href="https://volunteerally.org/privacy-policy"> Terms & Conditions</a> and <a href="https://volunteerally.org/privacy-policy"> Privacy Policy.</a>
                 </p>
                 <SelectField name='acceptTermsOfCondition' checkboxes allowedValues={['Accept Terms & Conditions and Privacy Policy']}/>
               </Container>

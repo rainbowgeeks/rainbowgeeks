@@ -5,6 +5,7 @@ import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Landing from '../pages/Landing';
+import Landing2 from '../pages/Landing2';
 import FilterOpportunities from '../pages/FilterOpportunities';
 import AdminProfile from '../pages/AdminProfile';
 import OrganizationLibrary from '../pages/OrganizationLibrary';
@@ -56,6 +57,7 @@ class App extends React.Component {
             <ProtectedRoute path="/add2" component={AddProfile}/>
             <ProtectedRoute path="/org-library" component={OrganizationLibrary}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
+            <ProtectedRoute path="/home" component={Landing2}/>
             <OrganizationProtectedRoute path="/add-opp" component={AddOpportunity}/>
             <OrganizationProtectedRoute path="/manage-hours" component={ManageHoursPage}/>
             <OrganizationProtectedRoute path="/org-hours/:_id" component={OrganizationHoursPage}/>

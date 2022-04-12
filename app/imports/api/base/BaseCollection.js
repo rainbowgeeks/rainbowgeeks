@@ -77,6 +77,7 @@ class BaseCollection {
    */
   findDoc(name) {
     if (_.isNull(name) || _.isUndefined(name)) {
+      console.log('error1');
       throw new Meteor.Error(`${name} is not a defined ${this.type}`);
     }
     const doc = (
@@ -85,8 +86,10 @@ class BaseCollection {
       || this._collection.findOne({ _id: name }));
     if (!doc) {
       if (typeof name !== 'string') {
+        console.log('error2');
         throw new Meteor.Error(`${JSON.stringify(name)} is not a defined ${this._type}`, '', Error().stack);
       } else {
+        console.log('error3');
         throw new Meteor.Error(`${name} is not a defined ${this._type}`, '', Error().stack);
       }
     }
