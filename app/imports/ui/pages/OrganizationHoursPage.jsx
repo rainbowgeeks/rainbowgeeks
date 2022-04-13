@@ -21,7 +21,7 @@ const getHours = (oH) => {
 
 const OrganizationHoursPage = ({ opportunityHours, ready }) => {
   let makeOppHours;
-  if (opportunityHours) {
+  if (opportunityHours && ready) {
     makeOppHours = opportunityHours.map(oH => getHours(oH));
   }
   return ((ready) ? (
