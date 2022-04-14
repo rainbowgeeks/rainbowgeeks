@@ -8,9 +8,16 @@ import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
 import ManageHour from '../components/ManageHour';
 
+const getHours = (data) => {
+  const makeOpportunities = data.map(d => Opportunities.find({ owner: d }).fetch());
+  return _.flatten(makeOpportunities);
+};
+
 const ManageHoursPage = ({ pocEmail, ready }) => {
-  const makeOpportunities = pocEmail.map(pE => Opportunities.find({ owner: pE }).fetch());
-  const opportunities = _.flatten(makeOpportunities);
+  let opportunities;
+  if (pocEmail) {
+    opportunities = getHours(pocEmail);
+  }
   return ((ready) ? (
     <Container>
       <Header as="h1" textAlign="center">Organization Hours Page</Header>

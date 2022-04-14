@@ -21,7 +21,7 @@ import NeedRsvp from '../components/NeedRsvp';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
-
+// CHecking
 const makeOpportunity = (data) => {
   const { _id: oppID, owner: email } = data;
   const age = _.pluck(OpportunitiesAges.find({ oppID }).fetch(), 'age');
@@ -46,7 +46,6 @@ const OpportunityPage = ({ ready, opportunity }) => {
     const oppID = opp._id;
     volunteer = getUser(Meteor.user().username, oppID);
   }
-  console.log(volunteer);
   const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
   return ((ready) ? (
     <Container id={PAGE_IDS.OPPORTUNITY_PAGE} style={{ paddingTop: '20px' }}>

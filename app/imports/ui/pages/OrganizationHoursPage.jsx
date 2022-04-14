@@ -9,18 +9,21 @@ import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { Hours } from '../../api/hours/HoursCollection';
 import HoursPage from '../components/HoursPage';
 
-const OrganizationHoursPage = ({ opportunityHours, ready }) => {
+const getHours = (oH) => {
+  const { volunteerEmail, hourID } = oH;
+  const volunteer = UserProfileData.findOne({ owner: volunteerEmail });
+  console.log(volunteer);
+  const hour = Hours.findDoc({ _id: hourID });
+  const { _id, firstName, lastName } = volunteer;
+  const { numberOfHours } = hour;
+  return _.extend({}, { _id, firstName, lastName, numberOfHours, volunteerEmail });
+};
 
-  const getHours = ({ oH }) => {
-    const { volunteerEmail, hourID } = oH;
-    const volunteer = UserProfileData.findOne({ owner: volunteerEmail });
-    const hour = Hours.findDoc({ _id: hourID });
-    const { _id, firstName, lastName } = volunteer;
-    const { numberOfHours } = hour;
-    return _.extend({}, { _id, firstName, lastName, numberOfHours, volunteerEmail });
-  };
-  const makeOppHours = opportunityHours.map(oH => getHours({ oH }));
-  console.log(makeOppHours);
+const OrganizationHoursPage = ({ opportunityHours, ready }) => {
+  let makeOppHours;
+  if (opportunityHours && ready) {
+    makeOppHours = opportunityHours.map(oH => getHours(oH));
+  }
   return ((ready) ? (
     <Table celled>
       <Table.Header>
@@ -32,7 +35,7 @@ const OrganizationHoursPage = ({ opportunityHours, ready }) => {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {makeOppHours.map(mOH => <HoursPage key={mOH._id} opportunityHour={mOH}/>)}
+        {makeOppHours ? makeOppHours.map(mOH => <HoursPage key={mOH._id} opportunityHour={mOH}/>) : <Loader active>Loading Data</Loader>}
       </Table.Body>
 
       <Table.Footer fullWidth>

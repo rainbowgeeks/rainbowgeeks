@@ -22,7 +22,7 @@ const ManageHour = ({ opportunityHour }) => (
 );
 
 ManageHour.propTypes = {
-  opportunityHour: PropTypes.object.isRequired,
+  opportunityHour: PropTypes.object,
 };
 
 export default withRouter(ManageHour);

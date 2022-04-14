@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Container, Grid, Image } from 'semantic-ui-react';
+import { Button, Container, Grid, Image, Header } from 'semantic-ui-react';
 import Footer from '../components/Footer';
 import { PAGE_IDS } from '../utilities/PageIDs';
 
@@ -67,6 +67,7 @@ const Landing = () => (
       </Link>
     </Container>
     <Footer/>
+    <Header textAlign={'center'}>V.2</Header>
   </div>
 );
 
