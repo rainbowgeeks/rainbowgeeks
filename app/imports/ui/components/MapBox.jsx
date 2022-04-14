@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Map, { Source, Layer } from 'react-map-gl';
-
-import { withRouter } from 'react-router-dom';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
+import { withRouter } from 'react-router-dom';
 
 const geojson = {
   type: 'FeatureCollection',
@@ -23,16 +22,13 @@ const layerStyle = {
 function App() {
   const [viewport, setViewport] = React.useState();
   return (
-    <Map
-      initialViewState={{
-        longitude: -122.4,
-        latitude: 37.8,
-        zoom: 14,
-      }}>
+    <Map initialViewState={{
+      longitude: -122.45,
+      latitude: 37.78,
+      zoom: 14,
+    }}>
       <Source id="my-data" type="geojson" data={geojson}>
-      style={{ width: 100, height: 100 }}
-      mapStyle="mapbox://styles/mapbox/streets-v9"
-        <Layer {...layerStyle}/>
+        <Layer {...layerStyle} />
       </Source>
     </Map>
   );
