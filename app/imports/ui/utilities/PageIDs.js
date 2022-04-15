@@ -5,6 +5,7 @@ export const PAGE_IDS = {
   ADD_OPPORTUNITY: 'add-opportunity',
   ADD_PROFILE: 'add-profile',
   ADMIN_ANALYTICS: 'admin-analytics',
+  CONFIRM_HOURS: 'confirm-hours',
   EDIT_PROFILE: 'edit-profile',
   EDIT_OPPORTUNITY: 'edit-opportunity',
   FILTER_OPPORTUNITIES: 'filter-opportunities',
