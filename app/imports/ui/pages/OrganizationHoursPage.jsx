@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Loader, Checkbox } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { useParams } from 'react-router';
 import PropTypes from 'prop-types';
@@ -15,7 +15,8 @@ const getHours = (oH) => {
   const hour = Hours.findDoc({ _id: hourID });
   const { firstName, lastName } = volunteer;
   const { numberOfHours } = hour;
-  return _.extend({}, { _id, firstName, lastName, numberOfHours, volunteerEmail });
+  const selected = false;
+  return _.extend({}, { _id, firstName, lastName, numberOfHours, volunteerEmail, selected });
 };
 
 const OrganizationHoursPage = ({ opportunityHours, ready }) => {
@@ -24,19 +25,7 @@ const OrganizationHoursPage = ({ opportunityHours, ready }) => {
     makeOppHours = opportunityHours.map(oH => getHours(oH));
   }
   return ((ready) ? (
-    <Table celled>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell></Table.HeaderCell>
-          <Table.HeaderCell>Volunteer Name</Table.HeaderCell>
-          <Table.HeaderCell>E-mail Address</Table.HeaderCell>
-          <Table.HeaderCell>Number of Hours</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {makeOppHours.map(mOH => <HoursPage key={mOH._id} opportunityHour={mOH}/>)}
-      </Table.Body>
-    </Table>
+    <HoursPage opportunityHour={makeOppHours}/>
   ) : <Loader active>Loading Data</Loader>);
 };
 OrganizationHoursPage.propTypes = {
