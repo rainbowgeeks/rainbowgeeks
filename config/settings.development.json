@@ -180,7 +180,7 @@
       "environment": ["Indoors"],
       "category": ["Crisis/Disaster Relief", "Child/Family Support"],
       "opportunityVolunteerHours": [
-        { "volunteerEmail": "john@foo.com", "numberOfHours": 25 },
+        { "volunteerEmail": "john@foo.com", "numberOfHours": 5 },
         { "volunteerEmail": "robin@foo.com", "numberOfHours": 5 },
         { "volunteerEmail": "perkin@foo.com", "numberOfHours": 7 }
       ]

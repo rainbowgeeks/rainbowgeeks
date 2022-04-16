@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Loader } from 'semantic-ui-react';
+import { Table, Button, Loader, Checkbox } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { useParams } from 'react-router';
 import PropTypes from 'prop-types';
@@ -10,11 +10,10 @@ import { Hours } from '../../api/hours/HoursCollection';
 import HoursPage from '../components/HoursPage';
 
 const getHours = (oH) => {
-  const { volunteerEmail, hourID } = oH;
+  const { _id, volunteerEmail, hourID } = oH;
   const volunteer = UserProfileData.findOne({ owner: volunteerEmail });
-  console.log(volunteer);
   const hour = Hours.findDoc({ _id: hourID });
-  const { _id, firstName, lastName } = volunteer;
+  const { firstName, lastName } = volunteer;
   const { numberOfHours } = hour;
   return _.extend({}, { _id, firstName, lastName, numberOfHours, volunteerEmail });
 };
@@ -35,20 +34,8 @@ const OrganizationHoursPage = ({ opportunityHours, ready }) => {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {makeOppHours ? makeOppHours.map(mOH => <HoursPage key={mOH._id} opportunityHour={mOH}/>) : <Loader active>Loading Data</Loader>}
+        {makeOppHours.map(mOH => <HoursPage key={mOH._id} opportunityHour={mOH}/>)}
       </Table.Body>
-
-      <Table.Footer fullWidth>
-        <Table.Row>
-          <Table.HeaderCell/>
-          <Table.HeaderCell colSpan='4'>
-            <Button floated='right' size='small'>Approve</Button>
-            <Button floated='right' size='small'>
-              Approve All
-            </Button>
-          </Table.HeaderCell>
-        </Table.Row>
-      </Table.Footer>
     </Table>
   ) : <Loader active>Loading Data</Loader>);
 };
