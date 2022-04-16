@@ -4,26 +4,31 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
-const ConfirmHoursCard = () => (
+const ConfirmHoursCard = ({ linkData }) => (
   <Card>
     <Card.Content>
       <Image
         floated='right'
         size='large'
-        src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
+        src={linkData.profileImage}
       />
-      <Card.Header>Steve Sanders</Card.Header>
-      <Card.Meta>Friends of Elliot</Card.Meta>
-      <Card.Description>
-                Steve wants to add you to the group <strong>best friends</strong>
+      <Card.Header>{linkData.firstName} {linkData.lastName}</Card.Header>
+      <Card.Meta textAlign='center'><strong>Volunteer Event: {linkData.oppID}</strong></Card.Meta>
+      <Card.Meta>Interest: {linkData.interest}</Card.Meta>
+      <Card.Meta>Environmental Preference: {linkData.environmentalPref}</Card.Meta>
+      <Card.Meta>Availability: {linkData.availability}</Card.Meta>
+      <Card.Meta>Phone Number: {linkData.phoneNumber}</Card.Meta>
+      <Card.Meta>Email: {linkData.owner}</Card.Meta>
+      <Card.Description textAlign='center'>
+        {linkData.firstName} {linkData.lastName} wants to volunteer for {linkData.oppID}.
       </Card.Description>
     </Card.Content>
     <Card.Content extra>
       <div className='ui two buttons'>
-        <Button basic color='green'>
+        <Button positive>
                     Approve
         </Button>
-        <Button basic color='red'>
+        <Button negative>
                     Decline
         </Button>
       </div>
@@ -33,7 +38,18 @@ const ConfirmHoursCard = () => (
 
 // Require a document to be passed to this component.
 ConfirmHoursCard.propTypes = {
-
+  linkData: PropTypes.shape({
+    _id: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    profileImage: PropTypes.string,
+    oppID: PropTypes.string,
+    interest: PropTypes.array,
+    environmentalPref: PropTypes.array,
+    availability: PropTypes.array,
+    phoneNumber: PropTypes.string,
+    owner: PropTypes.string,
+  }).isRequired,
 };
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
