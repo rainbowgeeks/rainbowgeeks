@@ -27,7 +27,7 @@ const ConfirmHoursCard = ({ linkData }) => {
 
   return (
     <Card centered>
-      <Card.Header textAlign='center'><strong>Volunteer Event: {linkData.oppID}</strong></Card.Header>
+      <Card.Header textAlign='center'><strong>Volunteer Event Request</strong></Card.Header>
       <Card.Content>
         <Image className='Confirm-Hours-Card-Image'
           src={linkData.profileImage}
@@ -43,7 +43,7 @@ const ConfirmHoursCard = ({ linkData }) => {
           </Segment>
         </Card>
         <Card.Description textAlign='center' as='h3'>
-          {linkData.firstName} {linkData.lastName} wants to volunteer for {linkData.oppID}.
+          {linkData.firstName} {linkData.lastName} wants to volunteer for {linkData.title}.
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
@@ -73,6 +73,7 @@ ConfirmHoursCard.propTypes = {
     availability: PropTypes.array,
     phoneNumber: PropTypes.string,
     owner: PropTypes.string,
+    title: PropTypes.string,
   }).isRequired,
 };
 

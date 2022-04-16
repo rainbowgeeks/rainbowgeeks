@@ -2,12 +2,13 @@ import React from 'react';
 import { Container, Header, Loader, Input, List, Button, Card, Icon } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { _ } from 'meteor/underscore';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import ConfirmHoursCard from '../components/ConfirmHoursCard';
 import Footer2 from '../components/Footer2';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
+import { Opportunities } from '../../api/opportunity/OpportunityCollection';
+import { Organizations } from '../../api/organization/OrganizationCollection';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ConfirmHoursPage = ({ ready, finalData }) => ((ready) ? (
@@ -23,7 +24,7 @@ const ConfirmHoursPage = ({ ready, finalData }) => ((ready) ? (
       </List.Item>
     </List>
     <Card.Group style={{ marginBottom: '8px' }} stackable itemsPerRow={3}>
-      {finalData.map((data) => <ConfirmHoursCard key={data.oppID} linkData={data}/>)}
+      {finalData.map((element) => <ConfirmHoursCard key={element.index} linkData={element}/>)}
     </Card.Group>
     <Button floated={'right'} icon labelPosition='right'>
       <Icon name='right arrow' />
@@ -41,38 +42,42 @@ ConfirmHoursPage.propTypes = {
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
-  // Subscribe to the collection we will need
   const volunteers = UserProfileData.subscribeAllUser();
   const rsvp = OpportunityRsvps.subscribeRsvp();
-  // Wait for the page subscribe to the collections
-  const ready = volunteers.ready() && rsvp.ready();
-  // fetch everything in the OpportunityRsvps collection
+  const opps = Opportunities.subscribeOpportunity();
+  const ready = volunteers.ready() && rsvp.ready() && opps.ready();
   const testRsv = OpportunityRsvps.find({}).fetch();
-  // a temporary variable to hold OpportunityRsvps plucked volunteer IDs
-  const data = [];
-  // the data to be passed when this is done
+  const testVol = UserProfileData.find({}).fetch();
+  const testOpps = Opportunities.find({}).fetch();
+  const tempData = [];
   const finalData = [];
-  // A temporary object to store result when combining profileCollection and OpportunityRsvps collection based on matching profile ID and volunteer ID
-  let temp = {};
-  // pluck the volunteer ID from rsvp, then store into getRsvp
-  const getRsvp = _.pluck(testRsv, 'volunteerID');
-  // for each element in the getRSVP array, add to the end of data array, the collections that contains the element at i=0 up to i=max
-  getRsvp.forEach(element => data.push(UserProfileData.findDoc(element)));
-  // for loop to combine the items in data that is containing an array of profileDatas
-  for (let x = 0; x < testRsv.length; x++) {
-    // if the item at testRsV[x].volunteerID is equal data[x]._id
-    if (testRsv[x].volunteerID === data[x]._id) {
-      // the logs just checks that They do match the ids
-      //console.log(testRsv[x]);
-      //console.log(data[x]);
-      // merge the two matching objects and store into temp
-      temp = Object.assign(testRsv[x], data[x]);
-      // add to array finalDAta
-      finalData.push(temp);
-    }
+  let tempDataObj = {};
+  let finalDataObj = {};
+  let index = 0;
+  if (ready) {
+    testRsv.forEach(function (element) {
+      for (let x = 0; x < testVol.length; x++) {
+        if (element.volunteerID === testVol[x]._id) {
+          tempDataObj = Object.assign(element, testVol[x]);
+          tempData.push(tempDataObj);
+        }
+      }
+    });
+    tempData.forEach(function (item) {
+      for (let x = 0; x < testOpps.length; x++) {
+        if (item.oppID === testOpps[x]._id) {
+          finalDataObj = Object.assign(item, testOpps[x]);
+          finalData.push(finalDataObj);
+        }
+      }
+    });
+    finalData.sort((a, b) => a.lastName - b.lastName);
+    console.log(finalData);
+    finalData.forEach(function (items) {
+      Object.assign(items, { index: index });
+      index++;
+    });
   }
-  // print the final result to pass to the confirmcard component
-  //console.log(finalData);
   return {
     ready,
     finalData,
