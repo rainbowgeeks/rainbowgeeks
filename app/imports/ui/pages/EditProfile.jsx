@@ -18,6 +18,7 @@ import MultiSelectField from '../../forms/controllers/MultiSelectField';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { updateMethod } from '../../api/base/BaseCollection.methods';
+import Footer2 from '../components/Footer2';
 
 const bridge = new SimpleSchema2Bridge(UserProfileData._schema);
 
@@ -166,9 +167,8 @@ const EditProfile = ({ doc, ready }) => {
           </AutoForm>
 
         </Container>
-
       </Segment>
-
+      <Footer2/>
     </Container>
   ) : <Loader active>Getting data</Loader>;
 };

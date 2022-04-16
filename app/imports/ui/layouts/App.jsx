@@ -49,13 +49,13 @@ class App extends React.Component {
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
             <Route path="/about" component={AboutUs}/>
-            <ProtectedRoute path="/profile" component={ProfilePage}/>
+            <ProfileUserProtectedRoute path="/profile" component={ProfilePage}/>
             <ProtectedRoute path="/add" component={AddProfile}/>
             <ProtectedRoute path="/track-hours" component={UserTrackingHoursPage}/>
-            <ProtectedRoute path="/confirm-volunteer" component={ConfirmVolunteersPage}/>
+            <OrganizationProtectedRoute path="/confirm-volunteer" component={ConfirmVolunteersPage}/>
             <ProtectedRoute path="/org-profile" component={OrganizationProfile}/>
             <ProtectedRoute path="/edit-profile/:_id" component={EditProfile}/>
-            <ProtectedRoute path="/edit" component={EditProfile}/>
+            <ProfileUserProtectedRoute path="/edit" component={EditProfile}/>
             <ProtectedRoute path="/add2" component={AddProfile}/>
             <ProtectedRoute path="/org-library" component={OrganizationLibrary}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
@@ -136,6 +136,20 @@ const OrganizationProtectedRoute = ({ component: Component, ...rest }) => (
   />
 );
 
+const ProfileUserProtectedRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) => {
+      const isLogged = Meteor.userId() !== null;
+      const isUser = Roles.userIsInRole(Meteor.userId(), ROLE.USER);
+      return (isLogged && isUser) ?
+        (<Component {...props} />) :
+        (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
+        );
+    }}
+  />
+);
+
 // Require a component and location to be passed to each ProtectedRoute.
 ProtectedRoute.propTypes = {
   component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -150,6 +164,12 @@ AdminProtectedRoute.propTypes = {
 
 // Require a component and location to be passed to each OrganizationProtectedRoute.
 OrganizationProtectedRoute.propTypes = {
+  component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  location: PropTypes.object,
+};
+
+// Require a component and location to be passed to each OrganizationProtectedRoute.
+ProfileUserProtectedRoute.propTypes = {
   component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   location: PropTypes.object,
 };

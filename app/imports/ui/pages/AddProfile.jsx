@@ -20,6 +20,7 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 import { UserProfiles } from '../../api/user/UserProfileCollection';
+import Footer2 from '../components/Footer2';
 
 const bridge = new SimpleSchema2Bridge(UserProfileData._schema);
 
@@ -138,6 +139,7 @@ const AddProfile = ({ userData }) => {
           </AutoForm>
         </Container>
       </Segment>
+      <Footer2/>
     </Container>
   );
 };

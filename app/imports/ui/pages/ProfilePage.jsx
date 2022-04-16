@@ -21,6 +21,7 @@ import ProfilePageUserInformation from '../components/ProfilePageUserInformation
 import ProfilePageAssociatedOrganization from '../components/ProfilePageAssociatedOrganization';
 import ProfilePageRecentEvent from '../components/ProfilePageRecentEvent';
 import ProfilePageHeader from '../components/ProfilePageHeader';
+import Footer2 from '../components/Footer2';
 
 /** Renders the User's Profile. Profile Page is broken down into 4 components */
 const ProfilePage = ({ ready, userData }) => ((ready) ? (
@@ -71,6 +72,7 @@ const ProfilePage = ({ ready, userData }) => ((ready) ? (
         </Grid.Row>
       </Grid>
     </Container>
+    <Footer2/>
   </Container>
 ) : <Loader active>Getting User Data!</Loader>);
 

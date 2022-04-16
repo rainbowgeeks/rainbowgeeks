@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { Button, Card, Image, Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { showValue, sortDate } from './ProfilePageAboutUser';
 
-
 /** Renders a single Card Item in the ConfirmVolunteerCard, but it just confirms volunteer volunteering to the event. */
 const ConfirmVolunteerCard = ({ linkData }) => {
   const confirmation = [];
-  const [disablePosButton, setdisablePosButton]= useState(false);
-  const [disableNegButton, setdisableNegButton]= useState(false);
+  const [disablePosButton, setdisablePosButton] = useState(false);
+  const [disableNegButton, setdisableNegButton] = useState(false);
   const [datas, setDatas] = useState([]);
   const Confirming = (data) => {
     setdisablePosButton(true);
@@ -23,8 +22,6 @@ const ConfirmVolunteerCard = ({ linkData }) => {
 
   };
 
-
-
   return (
     <Card centered>
       <Card.Header textAlign='center'><strong>Volunteer Event Request</strong></Card.Header>
@@ -35,11 +32,11 @@ const ConfirmVolunteerCard = ({ linkData }) => {
         <Card.Header as='h1' textAlign='center'>{linkData.firstName} {linkData.lastName}</Card.Header>
         <Card centered>
           <Segment padded size='large'>
-              <Card.Meta as='h3'><strong>Interest:</strong> {showValue(linkData.interest)}</Card.Meta>
-              <Card.Meta><strong>Environmental Preference:</strong> {showValue(linkData.environmentalPref)}</Card.Meta>
+            <Card.Meta as='h3'><strong>Interest:</strong> {showValue(linkData.interest)}</Card.Meta>
+            <Card.Meta><strong>Environmental Preference:</strong> {showValue(linkData.environmentalPref)}</Card.Meta>
             <Card.Meta as='h3'><strong>Availability:</strong> {sortDate(linkData.availability)}</Card.Meta>
-              <Card.Meta as='h3'><strong>Phone Number:</strong> {linkData.phoneNumber}</Card.Meta>
-              <Card.Meta as='h3'><strong>Email:</strong> {linkData.volunteerEmail}</Card.Meta>
+            <Card.Meta as='h3'><strong>Phone Number:</strong> {linkData.phoneNumber}</Card.Meta>
+            <Card.Meta as='h3'><strong>Email:</strong> {linkData.volunteerEmail}</Card.Meta>
           </Segment>
         </Card>
         <Card.Description textAlign='center' as='h3'>
