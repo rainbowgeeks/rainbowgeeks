@@ -112,7 +112,7 @@ const OrganizationProfile = () => (
               Manage Hours
             </Menu.Item>
             <Menu.Item as={NavLink} exact to="/manage-opp">Manage Opportunities</Menu.Item>
-            <Menu.Item>Manage Requests</Menu.Item>
+            <Menu.Item as={NavLink} exact to={'/confirm-volunteer'}>Manage Requests</Menu.Item>
             <Menu.Item>Analytics</Menu.Item>
           </Menu>
         </Grid.Column>

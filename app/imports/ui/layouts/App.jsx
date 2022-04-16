@@ -32,7 +32,7 @@ import EditOpportunity from '../pages/EditOpportunity';
 import NewNavBar from '../components/NewNavBar';
 import ManageHoursPage from '../pages/ManageHoursPage';
 import OrganizationHoursPage from '../pages/OrganizationHoursPage';
-import ConfirmHoursPage from "../pages/ConfirmHoursPage";
+import ConfirmVolunteersPage from '../pages/ConfirmVolunteersPage';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -52,7 +52,7 @@ class App extends React.Component {
             <ProtectedRoute path="/profile" component={ProfilePage}/>
             <ProtectedRoute path="/add" component={AddProfile}/>
             <ProtectedRoute path="/track-hours" component={UserTrackingHoursPage}/>
-            <ProtectedRoute path="/confirm-volunteer" component={ConfirmHoursPage}/>
+            <ProtectedRoute path="/confirm-volunteer" component={ConfirmVolunteersPage}/>
             <ProtectedRoute path="/org-profile" component={OrganizationProfile}/>
             <ProtectedRoute path="/edit-profile/:_id" component={EditProfile}/>
             <ProtectedRoute path="/edit" component={EditProfile}/>

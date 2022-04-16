@@ -5,8 +5,8 @@ import { withRouter } from 'react-router-dom';
 import { showValue, sortDate } from './ProfilePageAboutUser';
 
 
-/** Renders a single Card Item in the ConfirmHoursCard, but it just confirms volunteer volunteering to the event. */
-const ConfirmHoursCard = ({ linkData }) => {
+/** Renders a single Card Item in the ConfirmVolunteerCard, but it just confirms volunteer volunteering to the event. */
+const ConfirmVolunteerCard = ({ linkData }) => {
   const confirmation = [];
   const [disablePosButton, setdisablePosButton]= useState(false);
   const [disableNegButton, setdisableNegButton]= useState(false);
@@ -39,7 +39,7 @@ const ConfirmHoursCard = ({ linkData }) => {
               <Card.Meta><strong>Environmental Preference:</strong> {showValue(linkData.environmentalPref)}</Card.Meta>
             <Card.Meta as='h3'><strong>Availability:</strong> {sortDate(linkData.availability)}</Card.Meta>
               <Card.Meta as='h3'><strong>Phone Number:</strong> {linkData.phoneNumber}</Card.Meta>
-              <Card.Meta as='h3'><strong>Email:</strong> {linkData.owner}</Card.Meta>
+              <Card.Meta as='h3'><strong>Email:</strong> {linkData.volunteerEmail}</Card.Meta>
           </Segment>
         </Card>
         <Card.Description textAlign='center' as='h3'>
@@ -61,7 +61,7 @@ const ConfirmHoursCard = ({ linkData }) => {
 };
 
 // Require a document to be passed to this component.
-ConfirmHoursCard.propTypes = {
+ConfirmVolunteerCard.propTypes = {
   linkData: PropTypes.shape({
     _id: PropTypes.string,
     firstName: PropTypes.string,
@@ -72,10 +72,10 @@ ConfirmHoursCard.propTypes = {
     environmentalPref: PropTypes.array,
     availability: PropTypes.array,
     phoneNumber: PropTypes.string,
-    owner: PropTypes.string,
+    volunteerEmail: PropTypes.string,
     title: PropTypes.string,
   }).isRequired,
 };
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
-export default withRouter(ConfirmHoursCard);
+export default withRouter(ConfirmVolunteerCard);

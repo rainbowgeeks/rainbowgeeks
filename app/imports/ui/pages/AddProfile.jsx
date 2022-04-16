@@ -84,7 +84,7 @@ const AddProfile = ({ userData }) => {
       <Segment inverted color={'blue'}>
         <Header as="h1" textAlign="center">Create My Profile</Header>
         <Divider/>
-        <Container id='edit-profile-form'>
+        <Container className='edit-profile-form'>
           <AutoForm ref={ref => {
             fRef = ref;
           }} schema={bridge}
@@ -100,7 +100,7 @@ const AddProfile = ({ userData }) => {
                     <HiddenField name='profileImage' value='https://react.semantic-ui.com/images/avatar/large/matthew.png'/>
                   </Form.Group>
                   <TextField name='homeAddress'/>
-                  <Form.Group width={3}>
+                  <Form.Group width={3} >
                     <TextField name='city'/>
                     <TextField name='state'/>
                     <TextField name='zip'/>
