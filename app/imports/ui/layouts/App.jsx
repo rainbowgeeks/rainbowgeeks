@@ -52,7 +52,7 @@ class App extends React.Component {
             <ProtectedRoute path="/profile" component={ProfilePage}/>
             <ProtectedRoute path="/add" component={AddProfile}/>
             <ProtectedRoute path="/track-hours" component={UserTrackingHoursPage}/>
-            <ProtectedRoute path="/confirm-hours" component={ConfirmHoursPage}/>
+            <ProtectedRoute path="/confirm-volunteer" component={ConfirmHoursPage}/>
             <ProtectedRoute path="/org-profile" component={OrganizationProfile}/>
             <ProtectedRoute path="/edit-profile/:_id" component={EditProfile}/>
             <ProtectedRoute path="/edit" component={EditProfile}/>
