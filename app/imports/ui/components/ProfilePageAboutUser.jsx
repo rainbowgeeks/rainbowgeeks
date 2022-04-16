@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 /** Sorts the array of day, in the following order { sun, mon, tues, weds, thurs, fri, sat, weekends, week-days }
  * no-pref will be filtered out unless no Availability value selected or selected 'no-pref' only
  * */
-const sortDate = (arry) => {
+export const sortDate = (arry) => {
   const temp = [...arry];
   const order = { sun: 0, mon: 1, tues: 2, weds: 3, thurs: 4, fri: 5, sat: 6, weekends: 7, 'week-days': 8, 'no-pref': 9 };
   const reorder = ['', '', '', '', '', '', '', '', '', ''];
@@ -54,7 +54,7 @@ const sortDate = (arry) => {
 };
 
 /** Filters out no pref if other options not selected */
-const showValue = (data) => {
+export const showValue = (data) => {
   const temp = [...data];
   if (temp.length === 0 || (temp[0] === 'no-pref' && temp.length === 1)) {
     return 'no-pref';

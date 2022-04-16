@@ -23,7 +23,7 @@ const ConfirmHoursPage = ({ ready, finalData }) => ((ready) ? (
         <Button compact size='small'>A-Z</Button>
       </List.Item>
     </List>
-    <Card.Group style={{ marginBottom: '8px' }} stackable itemsPerRow={4}>
+    <Card.Group style={{ marginBottom: '8px' }} stackable itemsPerRow={3}>
       {finalData.map((data) => <ConfirmHoursCard key={data.oppID} linkData={data}/>)}
     </Card.Group>
     <Button floated={'right'} icon labelPosition='right'>
