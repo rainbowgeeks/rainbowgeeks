@@ -63,8 +63,8 @@ export default withTracker(() => {
     // if the item at testRsV[x].volunteerID is equal data[x]._id
     if (testRsv[x].volunteerID === data[x]._id) {
       // the logs just checks that They do match the ids
-      console.log(testRsv[x]);
-      console.log(data[x]);
+      //console.log(testRsv[x]);
+      //console.log(data[x]);
       // merge the two matching objects and store into temp
       temp = Object.assign(testRsv[x], data[x]);
       // add to array finalDAta
@@ -72,7 +72,7 @@ export default withTracker(() => {
     }
   }
   // print the final result to pass to the confirmcard component
-  console.log(finalData);
+  //console.log(finalData);
   return {
     ready,
     finalData,
