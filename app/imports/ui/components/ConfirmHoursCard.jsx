@@ -6,20 +6,19 @@ import { withRouter } from 'react-router-dom';
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const ConfirmHoursCard = ({ linkData }) => (
   <Card>
+    <Card.Header textAlign='center'><strong>Volunteer Event: {linkData.oppID}</strong></Card.Header>
     <Card.Content>
-      <Image
-        floated='right'
-        size='large'
+      <Image className='Confirm-Hours-Card-Image'
         src={linkData.profileImage}
       />
       <Card.Header>{linkData.firstName} {linkData.lastName}</Card.Header>
-      <Card.Meta textAlign='center'><strong>Volunteer Event: {linkData.oppID}</strong></Card.Meta>
+
       <Card.Meta>Interest: {linkData.interest}</Card.Meta>
       <Card.Meta>Environmental Preference: {linkData.environmentalPref}</Card.Meta>
       <Card.Meta>Availability: {linkData.availability}</Card.Meta>
       <Card.Meta>Phone Number: {linkData.phoneNumber}</Card.Meta>
       <Card.Meta>Email: {linkData.owner}</Card.Meta>
-      <Card.Description textAlign='center'>
+      <Card.Description textAlign='center' as='h3'>
         {linkData.firstName} {linkData.lastName} wants to volunteer for {linkData.oppID}.
       </Card.Description>
     </Card.Content>

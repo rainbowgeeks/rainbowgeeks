@@ -8,6 +8,7 @@ import ConfirmHoursCard from '../components/ConfirmHoursCard';
 import Footer2 from '../components/Footer2';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
+import { Opportunities } from "../../api/opportunity/OpportunityCollection";
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ConfirmHoursPage = ({ ready, finalData }) => ((ready) ? (
@@ -45,12 +46,15 @@ export default withTracker(() => {
 
   const volunteers = UserProfileData.subscribeAllUser();
   const rsvp = OpportunityRsvps.subscribeRsvp();
-  const ready = volunteers.ready() && rsvp.ready();
+  const opps = Opportunities.subscribeOpportunity();
+  const ready = volunteers.ready() && rsvp.ready() && opps.ready();
   const testRsv = OpportunityRsvps.find({}).fetch();
+  const testOpps = Opportunities.find({}).fetch();
   const data = [];
   const finalData = [];
   let temp = {};
   const getRsvp = _.pluck(testRsv, 'volunteerID');
+  console.log(testOpps);
   getRsvp.forEach(element => data.push(UserProfileData.findDoc(element)));
   for (let x = 0; x < testRsv.length; x++) {
     if (testRsv[x].volunteerID === data[x]._id) {
