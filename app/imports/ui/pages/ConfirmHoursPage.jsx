@@ -8,7 +8,6 @@ import Footer2 from '../components/Footer2';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
-import { Organizations } from '../../api/organization/OrganizationCollection';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ConfirmHoursPage = ({ ready, finalData }) => ((ready) ? (
