@@ -8,7 +8,6 @@ import ConfirmHoursCard from '../components/ConfirmHoursCard';
 import Footer2 from '../components/Footer2';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
-import { Opportunities } from "../../api/opportunity/OpportunityCollection";
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ConfirmHoursPage = ({ ready, finalData }) => ((ready) ? (
@@ -42,31 +41,38 @@ ConfirmHoursPage.propTypes = {
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => {
-  // Get access to Stuff documents.
-
+  // Subscribe to the collection we will need
   const volunteers = UserProfileData.subscribeAllUser();
   const rsvp = OpportunityRsvps.subscribeRsvp();
-  const opps = Opportunities.subscribeOpportunity();
-  const ready = volunteers.ready() && rsvp.ready() && opps.ready();
+  // Wait for the page subscribe to the collections
+  const ready = volunteers.ready() && rsvp.ready();
+  // fetch everything in the OpportunityRsvps collection
   const testRsv = OpportunityRsvps.find({}).fetch();
-  const testOpps = Opportunities.find({}).fetch();
+  // a temporary variable to hold OpportunityRsvps plucked volunteer IDs
   const data = [];
+  // the data to be passed when this is done
   const finalData = [];
+  // A temporary object to store result when combining profileCollection and OpportunityRsvps collection based on matching profile ID and volunteer ID
   let temp = {};
+  // pluck the volunteer ID from rsvp, then store into getRsvp
   const getRsvp = _.pluck(testRsv, 'volunteerID');
-  console.log(testOpps);
+  // for each element in the getRSVP array, add to the end of data array, the collections that contains the element at i=0 up to i=max
   getRsvp.forEach(element => data.push(UserProfileData.findDoc(element)));
+  // for loop to combine the items in data that is containing an array of profileDatas
   for (let x = 0; x < testRsv.length; x++) {
+    // if the item at testRsV[x].volunteerID is equal data[x]._id
     if (testRsv[x].volunteerID === data[x]._id) {
+      // the logs just checks that They do match the ids
       console.log(testRsv[x]);
       console.log(data[x]);
+      // merge the two matching objects and store into temp
       temp = Object.assign(testRsv[x], data[x]);
+      // add to array finalDAta
       finalData.push(temp);
     }
   }
-
+  // print the final result to pass to the confirmcard component
   console.log(finalData);
-
   return {
     ready,
     finalData,
