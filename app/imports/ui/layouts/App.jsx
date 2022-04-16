@@ -130,7 +130,7 @@ const OrganizationProtectedRoute = ({ component: Component, ...rest }) => (
       const isOrganization = Roles.userIsInRole(Meteor.userId(), ROLE.ORGANIZATION);
       return (isLogged && isOrganization) ?
         (<Component {...props} />) :
-        (<Redirect to={{ pathname: '/not-found', state: { from: props.location } }}/>
+        (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
         );
     }}
   />
@@ -144,7 +144,7 @@ const ProfileUserProtectedRoute = ({ component: Component, ...rest }) => (
       const isUser = Roles.userIsInRole(Meteor.userId(), ROLE.USER);
       return (isLogged && isUser) ?
         (<Component {...props} />) :
-        (<Redirect to={{ pathname: '/not-found', state: { from: props.location } }}/>
+        (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
         );
     }}
   />
