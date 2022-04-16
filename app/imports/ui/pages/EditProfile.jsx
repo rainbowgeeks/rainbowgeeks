@@ -115,7 +115,7 @@ const EditProfile = ({ doc, ready }) => {
       <Segment inverted color={'blue'}>
         <Header as='h1' size='large' textAlign='center'> UPDATE MY PROFILE </Header>
         <Divider/>
-        <Container id='edit-profile-form'>
+        <Container className='edit-profile-form'>
           <Segment>
             <Header as="h3" textAlign="center">Update my Profile Image</Header>
             <Segment>
