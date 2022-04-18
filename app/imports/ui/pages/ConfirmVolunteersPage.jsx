@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Loader, Input, List, Button, Card, Icon } from 'semantic-ui-react';
+import { Container, Header, Loader, Input, List, Button, Card, Icon, Grid } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { PAGE_IDS } from '../utilities/PageIDs';
@@ -22,11 +22,22 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => ((ready) ? (
         <Button compact size='small'>A-Z</Button>
       </List.Item>
     </List>
-    <Card.Group style={{ marginBottom: '8px' }} stackable itemsPerRow={3}>
-      {finalData.map((data) => <ConfirmHoursCard key={data.index} linkData={data}/>)}
-    </Card.Group>
+    <Grid columns={3} stackable>
+      {finalData.map((data) => <Grid.Column style={{ marginBottom: '8px' }} key={data.index}>
+        <ConfirmHoursCard key={data.index} linkData={data}/>
+        <Container style={{ paddingLeft: '89px' }}>
+          <Button positive onClick={() => console.log(data)}>
+            Approve
+          </Button>
+          <Button negative onClick={() => console.log(data)}>
+            Decline
+          </Button>
+        </Container>
+      </Grid.Column>)}
+    </Grid>
+
     <Button floated={'right'} icon labelPosition='right'>
-      <Icon name='right arrow' />
+      <Icon name='right arrow'/>
           Confirm Volunteer Registration
     </Button>
     <Footer2/>

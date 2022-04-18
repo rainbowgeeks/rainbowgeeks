@@ -49,10 +49,10 @@ class App extends React.Component {
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
             <Route path="/about" component={AboutUs}/>
-            <ProfileUserProtectedRoute path="/profile" component={ProfilePage}/>
+            <ProtectedRoute path="/profile" component={ProfilePage}/>
             <ProtectedRoute path="/add" component={AddProfile}/>
             <ProtectedRoute path="/track-hours" component={UserTrackingHoursPage}/>
-            <OrganizationProtectedRoute path="/confirm-volunteer" component={ConfirmVolunteersPage}/>
+            <ProtectedRoute path="/confirm-volunteer" component={ConfirmVolunteersPage}/>
             <ProtectedRoute path="/org-profile" component={OrganizationProfile}/>
             <ProtectedRoute path="/edit-profile/:_id" component={EditProfile}/>
             <ProfileUserProtectedRoute path="/edit" component={EditProfile}/>
