@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Map, { Source, Layer } from 'react-map-gl';
-import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { withRouter } from 'react-router-dom';
+import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 
 const geojson = {
   type: 'FeatureCollection',
@@ -25,7 +25,7 @@ function App() {
     <Map initialViewState={{
       longitude: -122.45,
       latitude: 37.78,
-      zoom: 14,
+      zoom: 10,
     }}>
       <Source id="my-data" type="geojson" data={geojson}>
         <Layer {...layerStyle} />
