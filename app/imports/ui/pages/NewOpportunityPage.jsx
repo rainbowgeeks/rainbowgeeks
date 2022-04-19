@@ -55,10 +55,10 @@ const OpportunityPage = ({ ready, opportunity }) => {
       }}>
         <Grid.Column style={{ paddingTop: '300px' }}>
           <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={`/edit-opp/${opp._id}`}>
-            <Icon name='setting' size='large'/>
+            <Icon name='setting' size='large' color='black'/>
           </Link>
-          <Header as='h2' content={`${opp.organization} : ${opp.title}`}/>
-          <Header as='h2' content={`${opp.date}`}/>
+          <Header as='h1' content={`${opp.organization} : ${opp.title}`}/>
+          <Header as='h3' content={`${opp.date}`}/>
         </Grid.Column>
       </Grid>
       <Grid container columns={2} style={gridHeigth}>
