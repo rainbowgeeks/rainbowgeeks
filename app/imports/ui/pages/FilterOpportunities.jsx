@@ -15,19 +15,20 @@ import Footer from '../components/Footer';
 import CategoryOpp from '../components/CategoryOpp';
 import SearchOpp from '../components/SearchOpp';
 import Opportunity from '../components/Opportunity';
+import MapBox from '../components/MapBox';
 
 //
-function MapBox() {
-  return <Map
-    initialViewState={{
-      longitude: -157.87429,
-      latitude: 21.45,
-      zoom: 9,
-    }}
-    class={'map-border'}
-    style={{ width: '100%', height: '50vh' }}
-    mapStyle="mapbox://styles/mapbox/streets-v9"
-    mapboxAccessToken="pk.eyJ1IjoibGlnZ21hIiwiYSI6ImNrdTZhdzJ5NDU4a3Eyd28yN200Y2hjcWYifQ.Srqhm05N6Silps_KAbRq4g"
+function MyMap() {
+  return <MapBox
+    // initialViewState={{
+    //   longitude: -157.87429,
+    //   latitude: 21.45,
+    //   zoom: 9,
+    // }}
+    // class={'map-border'}
+    // style={{ width: '100%', height: '50vh' }}
+    // mapStyle="mapbox://styles/mapbox/streets-v9"
+    // mapboxAccessToken="pk.eyJ1IjoibGlnZ21hIiwiYSI6ImNrdTZhdzJ5NDU4a3Eyd28yN200Y2hjcWYifQ.Srqhm05N6Silps_KAbRq4g"
   />;
 }
 //
@@ -160,7 +161,7 @@ const FilterOpportunities = ({ ready, opportunities, categories }) => {
         </Grid.Column>
         <Grid.Column width={7}>
           <div>
-            <MapBox/>
+            <MyMap/>
           </div>
         </Grid.Column>
       </Grid>

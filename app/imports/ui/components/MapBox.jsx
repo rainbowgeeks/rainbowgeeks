@@ -30,6 +30,10 @@ function App() {
       <Source id="my-data" type="geojson" data={geojson}>
         <Layer {...layerStyle} />
       </Source>
+      class={'map-border'}
+      style={{ width: '100%', height: '50vh' }}
+      mapStyle="mapbox://styles/mapbox/streets-v9"
+      mapboxAccessToken="pk.eyJ1IjoibGlnZ21hIiwiYSI6ImNrdTZhdzJ5NDU4a3Eyd28yN200Y2hjcWYifQ.Srqhm05N6Silps_KAbRq4g"
     </Map>
   );
 }
