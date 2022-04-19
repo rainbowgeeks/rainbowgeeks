@@ -16,16 +16,19 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
 
   const confirming = (data) => {
     acceptData.push(data);
+    // console.log(acceptData.length);
   };
 
   const declining = (data) => {
     declineData.push(data);
-    console.log(declineData);
+    // console.log(declineData.length);
   };
 
   const finalConfirmation = (data) => {
-    console.log(data);
-  }
+    let sendData = data.filter(x => !declineData.includes(x));
+    console.log(sendData);
+    sendData = []; // reset data back to empty array
+  };
   return ((ready) ? (
     <Container id={PAGE_IDS.CONFIRM_HOURS}>
       <Header as="h2" textAlign="center">Confirm Hours</Header>
@@ -38,14 +41,16 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
           <Button compact size='small'>A-Z</Button>
         </List.Item>
       </List>
-      <Grid columns={3} stackable>
-        {finalData.map((data) => <Grid.Column style={{ marginBottom: '8px' }} key={data.index}>
+      <Grid columns={3} stackable style={{ marginBottom: '20px' }}>
+        {finalData.map((data) => <Grid.Column style={{ marginBottom: '8px' }} key={data.index} textAlign={'center'}>
           <ConfirmHoursCard key={data.index} linkData={data}/>
-          <Container style={{ paddingLeft: '90px', marginTop: '0px' }}>
-            <Button positive onClick={() => confirming(data)}>
+          <Container>
+            <Button positive icon labelPosition='right' onClick={() => confirming(data)}>
+              <Icon name={'check'}/>
             Approve
             </Button>
-            <Button negative onClick={() => declining(data)}>
+            <Button negative icon labelPosition='right' onClick={() => declining(data)}>
+              <Icon name={'x'}/>
             Decline
             </Button>
           </Container>
