@@ -24,7 +24,7 @@ import { ROLE } from '../../api/role/Role';
 import ProfilePage from '../pages/ProfilePage';
 import EditProfile from '../pages/EditProfile';
 import OrganizationProfile from '../pages/OrganizationProfile';
-import OpportunityPage from '../pages/OpportunityPage';
+import NewOpportunityPage from '../pages/NewOpportunityPage';
 import UserTrackingHoursPage from '../pages/UserTrackingHoursPage';
 import AboutUs from '../pages/AboutUs';
 import AddOpportunity from '../pages/AddOpportunity';
@@ -43,7 +43,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Landing}/>
             <Route path="/filter" component={FilterOpportunities}/>
-            <Route path="/event/:_id" component={OpportunityPage}/>
+            <Route path="/event/:_id" component={NewOpportunityPage}/>
             <Route path="/signin" component={Signin}/>
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
