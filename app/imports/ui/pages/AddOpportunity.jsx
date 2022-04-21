@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Segment, Header, Loader } from 'semantic-ui-react';
-import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField } from 'uniforms-semantic';
+import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField, DateField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
@@ -33,12 +33,12 @@ export const schemaCat = ['Crisis/Disaster Relief', 'Food Insecurity', 'Environm
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = (pocSchema) => new SimpleSchema({
-  owner: { type: String, optional: true,
-    allowedValues: pocSchema, label: 'Point of Contact',
+  owner: { type: String, allowedValues: pocSchema, label: 'Point of Contact',
   },
   title: String,
   cover: String,
-  date: String,
+  oppStart: Date,
+  oppEnd: Date,
   location: String,
   description: { type: String, optional: true },
   age: { type: Array, label: 'Age' },
@@ -54,9 +54,9 @@ const AddOpportunity = ({ ready, username }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { owner, title, cover, date, location, description, age, environment, category } = data;
+    const { owner, title, cover, oppStart, oppEnd, location, description, age, environment, category } = data;
     let collectionName = Opportunities.getCollectionName();
-    let definitionData = { owner: owner, title: title, cover: cover, date: date, location: location, description: description };
+    let definitionData = { owner: owner, title: title, cover: cover, oppStart: oppStart, oppEnd: oppEnd, location: location, description: description };
     defineMethod.callPromise({ collectionName, definitionData }).then(() => age.forEach(ages => {
       collectionName = OpportunitiesAges.getCollectionName();
       definitionData = { title: title, owner: owner, age: ages };
@@ -77,7 +77,7 @@ const AddOpportunity = ({ ready, username }) => {
       })
       .then(() => {
         collectionName = OpportunitiesPocs.getCollectionName();
-        definitionData = { email: owner, title, location, date };
+        definitionData = { email: owner, title, location };
         defineMethod.callPromise({ collectionName, definitionData });
       })
       .then(() => swal('Success', 'Opportunity added successfully', 'success'))
@@ -108,7 +108,8 @@ const AddOpportunity = ({ ready, username }) => {
             <RadioField name='owner'/>
             <TextField name='title'/>
             <TextField name='cover'/>
-            <TextField name='date'/>
+            <DateField name="oppStart"/>
+            <DateField name="oppEnd"/>
             <TextField name='location'/>
             <LongTextField name='description'/>
             <MultiSelectField name='age'/>

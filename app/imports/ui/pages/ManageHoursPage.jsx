@@ -15,7 +15,7 @@ const getHours = (data) => {
 
 const ManageHoursPage = ({ pocEmail, ready }) => {
   let opportunities;
-  if (pocEmail) {
+  if (pocEmail && ready) {
     opportunities = getHours(pocEmail);
   }
   return ((ready) ? (

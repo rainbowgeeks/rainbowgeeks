@@ -58,7 +58,7 @@ const OpportunityPage = ({ ready, opportunity }) => {
             <Icon name='setting' size='large'/>
           </Link>
           <Header as='h2' content={`${opp.organization} : ${opp.title}`}/>
-          <Header as='h2' content={`${opp.date}`}/>
+          <Header as='h2' content={`${opp.oppStart.toLocaleString('en-US')} - ${opp.oppEnd.toLocaleString('en-US')}`}/>
         </Grid.Column>
       </Grid>
       <Grid container columns={2} style={gridHeigth}>

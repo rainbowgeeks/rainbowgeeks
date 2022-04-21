@@ -17,7 +17,8 @@ class OpportunityCollection extends BaseCollection {
       owner: String,
       cover: String,
       location: String,
-      date: String,
+      oppStart: Date,
+      oppEnd: Date,
       description: String,
     }));
   }
@@ -32,13 +33,14 @@ class OpportunityCollection extends BaseCollection {
    * @param description the summary of the opportunitiy.
    * @return {String} the docID of the new opportunity.
    */
-  define({ title, owner, cover, location, date, description }) {
+  define({ title, owner, cover, location, oppStart, oppEnd, description }) {
     const docID = this._collection.insert({
       title,
       owner,
       cover,
       location,
-      date,
+      oppStart,
+      oppEnd,
       description,
     });
     return docID;
@@ -54,7 +56,7 @@ class OpportunityCollection extends BaseCollection {
    * @param date the new date of the opportunity.
    * @param description the new summary of the opportunity.
    */
-  update(docID, { title, owner, cover, location, date, description }) {
+  update(docID, { title, owner, cover, location, oppStart, oppEnd, description }) {
     const updateData = {};
     if (title) {
       updateData.title = title;
@@ -68,8 +70,11 @@ class OpportunityCollection extends BaseCollection {
     if (location) {
       updateData.location = location;
     }
-    if (date) {
-      updateData.date = date;
+    if (oppStart) {
+      updateData.oppStart = oppStart;
+    }
+    if (oppEnd) {
+      updateData.oppEnd = oppEnd;
     }
     if (description) {
       updateData.description = description;

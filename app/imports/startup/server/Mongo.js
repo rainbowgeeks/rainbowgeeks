@@ -47,25 +47,25 @@ function addPointOfContact({ firstName, lastName, phoneNumber, email }, orgEmail
   PointOfContacts.define({ firstName, lastName, phoneNumber, email });
   OrganizationPocs.define({ email: email, orgEmail });
 }
-function addHours({ volunteerEmail, numberOfHours }, title, location, date) {
+function addHours({ volunteerEmail, numberOfHours }, title, location) {
   Hours.define({ numberOfHours });
-  OpportunityHours.define({ title, location, date, volunteerEmail, numberOfHours });
+  OpportunityHours.define({ title, location, volunteerEmail, numberOfHours });
 }
 
 // add new opportunity to the collection
 // add point of contacts to related opportunities to the opp poc collection.
 // add age, category, environments related to an opportunity to the age, cat, envOPP collections.
-function addOpportunity({ owner, title, cover, location, date, description, age, environment, category, opportunityVolunteerHours }) {
+function addOpportunity({ owner, title, cover, location, oppStart, oppEnd, description, age, environment, category, opportunityVolunteerHours }) {
   age.map(ages => addAges(ages));
   environment.map(environments => addEnvironments(environments));
   category.map(categories => addCategories(categories));
   console.log(` Adding: ${title} (${owner})`);
-  Opportunities.define({ title: title, owner, cover, location, date, description });
-  OpportunitiesPocs.define({ email: owner, title, location, date });
-  age.map(ages => OpportunitiesAges.define({ title: title, location: location, date: date, age: ages }));
-  environment.map(environments => OpportunitiesEnvs.define({ title: title, location: location, date: date, environment: environments }));
-  category.map(categories => OpportunitiesCats.define({ title: title, location: location, date: date, category: categories }));
-  opportunityVolunteerHours.map(opportunityVolunteerHour => addHours(opportunityVolunteerHour, title, location, date));
+  Opportunities.define({ title: title, owner, cover, location, oppStart, oppEnd, description });
+  OpportunitiesPocs.define({ email: owner, title, location });
+  age.map(ages => OpportunitiesAges.define({ title: title, location: location, age: ages }));
+  environment.map(environments => OpportunitiesEnvs.define({ title: title, location: location, environment: environments }));
+  category.map(categories => OpportunitiesCats.define({ title: title, location: location, category: categories }));
+  opportunityVolunteerHours.map(opportunityVolunteerHour => addHours(opportunityVolunteerHour, title, location));
 }
 // Add a organization to the org collection.
 function addOrganization({ organizationName, missionStatement, organizationDescription, orgEmail, pointOfContacts }) {

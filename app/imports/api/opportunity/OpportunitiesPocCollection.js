@@ -28,8 +28,8 @@ class OpportunitiesPocCollection extends BaseCollection {
    * @param pocEmail the email of the poc in the item.
    * @return {String} the docID of the new document.
    */
-  define({ email, title, location, date }) {
-    const oppID = Opportunities.findDoc({ title, location, date })._id;
+  define({ email, title, location }) {
+    const oppID = Opportunities.findDoc({ title, location })._id;
     const pocID = PointOfContacts.findDoc({ email })._id;
     const docID = this._collection.insert({
       oppID,
