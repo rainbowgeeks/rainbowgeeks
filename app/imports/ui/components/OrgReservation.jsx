@@ -41,9 +41,9 @@ const OrgReservation = ({ rsvp }) => {
   const total = matchEnd - matchStart;
   const hours = getHours(total);
   const submit = (data, formRef, op) => {
-    const { first, last, phoneNumber, userEmail, userQuestion } = data;
+    const { first, last, phoneNumber, userEmail, numberOfHours, userQuestion } = data;
     const collectionName = OpportunityRsvps.getCollectionName();
-    const definitionData = { oppID: op, firstName: first, lastName: last, phoneNumber, email: userEmail, shortDesc: userQuestion };
+    const definitionData = { oppID: op, firstName: first, lastName: last, phoneNumber, numberOfHours: numberOfHours, userEmail: userEmail, shortDesc: userQuestion };
     defineMethod.callPromise({ collectionName, definitionData })
       .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
@@ -71,7 +71,7 @@ const OrgReservation = ({ rsvp }) => {
         </Form.Group>
         <SelectField name={'numberOfHours'}/>
         <TextField name={'phoneNumber'} showInlineError={true}/>
-        <TextField name={'userEmail'} showInlineError={true}/>
+        <TextField name={'userEmail'} showInlineError={true} disabled/>
         <LongTextField name={'userQuestion'} placeholder={'Any questions for the coordinator'} showInlineError={true}/>
         <SubmitField name={'Submit'}/>
         <ErrorsField/>
