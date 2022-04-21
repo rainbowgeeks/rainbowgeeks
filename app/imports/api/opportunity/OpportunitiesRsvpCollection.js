@@ -18,6 +18,7 @@ class OpportunityRsvpCollection extends BaseCollection {
       volunteerID: String,
       phoneNumber: String,
       shortDesc: { type: String, optional: true },
+      numberOfHours: Number,
     }));
   }
 

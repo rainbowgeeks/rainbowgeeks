@@ -28,8 +28,8 @@ class OpportunitiesEnvCollection extends BaseCollection {
    * @param environment the environment of the item.
    * @return {String} the docID of the new document.
    */
-  define({ title, location, date, environment }) {
-    const opp = Opportunities.findDoc({ title, location, date });
+  define({ title, location, environment }) {
+    const opp = Opportunities.findDoc({ title, location });
     const env = Environments.findDoc({ environment });
     const oppID = opp._id;
     const envID = env._id;

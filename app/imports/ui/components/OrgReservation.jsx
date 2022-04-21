@@ -1,27 +1,45 @@
 import React, { useState } from 'react';
 import { Segment, Form } from 'semantic-ui-react';
-import { AutoForm, TextField, LongTextField, SubmitField, ErrorsField } from 'uniforms-semantic';
+import { AutoForm, TextField, LongTextField, SubmitField, ErrorsField, SelectField, ListField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { Redirect, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// eslint-disable-next-line import/named
+import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
 import { defineMethod } from '../../api/base/BaseCollection.methods';
 
-const formSchema = (first, last, owner, oppID) => new SimpleSchema({
+const formSchema = (first, last, owner, total, oppID) => new SimpleSchema({
   firstName: { type: String, defaultValue: first, label: 'First' },
   lastName: { type: String, defaultValue: last, label: 'Last' },
+  numberOfHours: { type: Number, defaultValue: 1, allowedValues: total, label: 'Hours' },
   phoneNumber: { type: String, label: 'Phone' },
   userEmail: { type: String, defaultValue: owner, label: 'Email' },
   userQuestion: { type: String, label: 'Comments/Questions', optional: true },
   id: { type: String, defaultValue: oppID },
 });
 
+const getHours = (data) => {
+  const temp = [];
+  for (let i = 1; i <= data; i++) {
+    temp.push(i);
+  }
+  console.log(temp);
+  return temp;
+};
+
 const OrgReservation = ({ rsvp }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
   const { firstName, lastName, owner, oppID } = rsvp;
+  const { oppStart, oppEnd } = Opportunities.findDoc({ _id: oppID });
+  const matchStart = oppStart.toString().slice(16, 18);
+  const matchEnd = oppEnd.toString().slice(16, 18);
+  // const matchStart = start.slice(17, 24);
+  // const matchEnd = end.slice(17, 24);
+  // const matchEnd = oppEnd.match(regex);
+  const total = matchEnd - matchStart;
+  const hours = getHours(total);
   const submit = (data, formRef, op) => {
     const { first, last, phoneNumber, userEmail, userQuestion } = data;
     const collectionName = OpportunityRsvps.getCollectionName();
@@ -40,17 +58,18 @@ const OrgReservation = ({ rsvp }) => {
     return <Redirect to={from}/>;
   }
 
-  const bridge = new SimpleSchema2Bridge(formSchema(firstName, lastName, owner, oppID));
+  const bridge = new SimpleSchema2Bridge(formSchema(firstName, lastName, owner, hours, oppID));
   let fRef = null;
   return (
     <AutoForm ref={ref => {
       fRef = ref;
     }} schema={bridge} onSubmit={data => submit(data, fRef, oppID)}>
       <Segment>
-        <Form.Group>
+        <Form.Group widths={'equal'}>
           <TextField name={'firstName'} showInlineError={true}/>
           <TextField name={'lastName'} showInlineError={true}/>
         </Form.Group>
+        <SelectField name={'numberOfHours'}/>
         <TextField name={'phoneNumber'} showInlineError={true}/>
         <TextField name={'userEmail'} showInlineError={true}/>
         <LongTextField name={'userQuestion'} placeholder={'Any questions for the coordinator'} showInlineError={true}/>

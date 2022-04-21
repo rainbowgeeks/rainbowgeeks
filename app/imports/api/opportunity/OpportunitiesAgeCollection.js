@@ -28,8 +28,8 @@ class OpportunitiesAgeCollection extends BaseCollection {
    * @param age the ageID of the item.
    * @return {String} the docID of the new document.
    */
-  define({ title, location, date, age }) {
-    const opp = Opportunities.findDoc({ title, location, date });
+  define({ title, location, age }) {
+    const opp = Opportunities.findDoc({ title, location });
     const ages = Ages.findDoc({ age });
     const oppID = opp._id;
     const ageID = ages._id;

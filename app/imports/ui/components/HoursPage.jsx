@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Checkbox, Table } from 'semantic-ui-react';
+import { Checkbox, Table, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -66,7 +66,7 @@ const HoursPage = ({ opportunityHour }) => {
 };
 
 HoursPage.propTypes = {
-  opportunityHour: PropTypes.array,
+  opportunityHour: PropTypes.array.isRequired,
 };
 
 export default withRouter(HoursPage);

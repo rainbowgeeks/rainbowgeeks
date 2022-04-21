@@ -28,8 +28,8 @@ class OpportunitiesCatCollection extends BaseCollection {
    * @param category the category of the item.
    * @return {String} the docID of the document.
    */
-  define({ title, location, date, category }) {
-    const opp = Opportunities.findDoc({ title, location, date });
+  define({ title, location, category }) {
+    const opp = Opportunities.findDoc({ title, location });
     const cat = Categories.findDoc({ category });
     const oppID = opp._id;
     const catID = cat._id;

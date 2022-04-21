@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Segment, Header, Loader } from 'semantic-ui-react';
-import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField } from 'uniforms-semantic';
+import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField, DateField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
@@ -40,7 +40,8 @@ const formSchema = (pocSchema) => new SimpleSchema({
   },
   title: { type: String, optional: true },
   cover: { type: String, optional: true },
-  date: { type: String, optional: true },
+  oppStart: { type: Date, optional: true },
+  oppEnd: { type: Date, optional: true },
   location: { type: String, optional: true },
   description: { type: String, optional: true },
   age: { type: Array, label: 'Age' },
@@ -64,11 +65,11 @@ const EditOpportunity = ({ ready, _id, username }) => {
 
   // On submit, insert the data.
   const submit = (data) => {
-    const { owner, title, cover, date, location, description, age, environment, category } = data;
+    const { owner, title, cover, oppStart, oppEnd, location, description, age, environment, category } = data;
     let getIDS;
     let definitionData;
     let collectionName = Opportunities.getCollectionName();
-    let updateData = { id: _id, owner, title, cover, date, location, description };
+    let updateData = { id: _id, owner, title, cover, oppStart, oppEnd, location, description };
     const orgID = Organizations.findDoc({ orgEmail: username })._id;
     const pocID = PointOfContacts.findDoc({ email: owner })._id;
     updateMethod.callPromise({ collectionName, updateData })
@@ -81,7 +82,7 @@ const EditOpportunity = ({ ready, _id, username }) => {
         });
       })
       .then(() => age.forEach(ages => {
-        definitionData = { title: title, location: location, date: date, age: ages };
+        definitionData = { title: title, location: location, age: ages };
         defineMethod.callPromise({ collectionName, definitionData });
       }))
       .then(() => {
@@ -93,7 +94,7 @@ const EditOpportunity = ({ ready, _id, username }) => {
         });
       })
       .then(() => environment.forEach(environments => {
-        definitionData = { title: title, location: location, date: date, environment: environments };
+        definitionData = { title: title, location: location, environment: environments };
         defineMethod.callPromise({ collectionName, definitionData });
       }))
       .then(() => {
@@ -105,7 +106,7 @@ const EditOpportunity = ({ ready, _id, username }) => {
         });
       })
       .then(() => category.forEach(categories => {
-        definitionData = { title: title, location: location, date: date, category: categories };
+        definitionData = { title: title, location: location, category: categories };
         defineMethod.callPromise({ collectionName, definitionData });
       }))
       .then(() => {
@@ -145,7 +146,8 @@ const EditOpportunity = ({ ready, _id, username }) => {
             <RadioField name='owner'/>
             <TextField name='title'/>
             <TextField name='cover'/>
-            <TextField name='date'/>
+            <DateField name="oppStart"/>
+            <DateField name="oppEnd"/>
             <TextField name='location'/>
             <LongTextField name='description'/>
             <MultiSelectField name='age'/>
