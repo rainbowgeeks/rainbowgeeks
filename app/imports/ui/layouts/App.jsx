@@ -127,7 +127,9 @@ const OrganizationProtectedRoute = ({ component: Component, ...rest }) => (
     {...rest}
     render={(props) => {
       const isLogged = Meteor.userId() !== null;
+      console.log(Meteor.userId(), props);
       const isOrganization = Roles.userIsInRole(Meteor.userId(), ROLE.ORGANIZATION);
+      console.log(isOrganization);
       return (isLogged && isOrganization) ?
         (<Component {...props} />) :
         (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
