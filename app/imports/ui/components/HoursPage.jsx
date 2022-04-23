@@ -1,7 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Checkbox, Table, Button } from 'semantic-ui-react';
+import { Checkbox, Table, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import swal from 'sweetalert';
+import { _ } from 'meteor/underscore';
 import { withRouter } from 'react-router-dom';
+import { ProfilePageHours } from '../../api/profile/ProfilePageHoursCollection';
+import { Opportunities } from '../../api/opportunity/OpportunityCollection';
+import { defineMethod, updateMethod } from '../../api/base/BaseCollection.methods';
+
+const onSubmit = (data) => {
+  const { volunteerEmail, numberOfHours, oppID } = data;
+  const collectionName = ProfilePageHours.getCollectionName();
+  const definitionData = { volunteerEmail, numberOfHours, oppID };
+  defineMethod.callPromise({ collectionName, definitionData })
+    .catch(error => swal('Error', error.message, 'error'))
+    .then(() => {
+      swal('Success', 'SuccessFully Submitted VolunteerHours', 'success');
+    });
+  return oppID;
+};
 
 const HoursPage = ({ opportunityHour }) => {
   const [checkAll, setCheckAll] = useState(false);
@@ -20,25 +37,46 @@ const HoursPage = ({ opportunityHour }) => {
     }
   };
 
+  const submit = () => {
+    // console.log(collection, selectedUsers);
+    const newCollection = collection.filter((c) => {
+      if (selectedUsers.includes(c._id)) return true;
+      return false;
+    });
+    const temp = newCollection.map(nC => onSubmit(nC));
+    const oppID = _.uniq(temp);
+    console.log(oppID);
+    const collectionName = Opportunities.getCollectionName();
+    oppID.forEach((oID) => {
+      console.log(oID);
+      const updateData = { id: oID, checked: true };
+      updateMethod.callPromise({ collectionName, updateData })
+        .catch(error => swal('Error', error.message, 'error'));
+    });
+
+  };
+
   const handleClick = (data) => {
     const { id, checked } = data.target;
-    console.log(id);
+    // console.log(id);
     setSelectedUsers([...selectedUsers, id]);
     if (!checked) {
       setSelectedUsers(selectedUsers.filter(cH => cH !== id));
     }
   };
-  console.log(selectedUsers);
+  // console.log(selectedUsers);
   return (
     <Table celled>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>
+          <Table.HeaderCell collapsing>
             <Checkbox
               id="selectAll"
               onChange={handleClickAll}
               checked={checkAll}
+              style={{ marginRight: '20px', paddingTop: '2px' }}
             />
+            Check All
           </Table.HeaderCell>
           <Table.HeaderCell>Volunteer Name</Table.HeaderCell>
           <Table.HeaderCell>E-mail Address</Table.HeaderCell>
@@ -61,6 +99,17 @@ const HoursPage = ({ opportunityHour }) => {
           </Table.Row>
         ))}
       </Table.Body>
+      <Table.Footer fullWidth>
+        <Table.Row>
+          <Table.HeaderCell/>
+          <Table.HeaderCell colSpan='4'>
+            {/* eslint-disable-next-line no-shadow */}
+            <Form.Button floated='right' size='small' onClick={submit}>
+              Approve
+            </Form.Button>
+          </Table.HeaderCell>
+        </Table.Row>
+      </Table.Footer>
     </Table>
   );
 };

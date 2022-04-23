@@ -4,6 +4,7 @@ import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
+import { Hours } from '../hours/HoursCollection';
 
 export const profilePageHoursPublications = {
   profilePageHour: 'ProfilePageHour',
@@ -14,22 +15,26 @@ class ProfilePageHoursCollection extends BaseCollection {
   constructor() {
     super('ProfilePageHours', new SimpleSchema({
       oppID: String,
-      volunteerID: String,
-      hourID: Number,
+      volunteerEmail: String,
+      hourID: String,
+      confirmed: Boolean,
     }));
   }
 
   /**
    * Defines a new user hours input
    * @param oppID the new opportunity ID that relates to volunteer.
-   * @param volunteerID the new volunteer ID.
+   * @param volunteerEmail the new volunteer ID.
    * @param numberOfHours the new total hour for a opportunity.
    */
-  define({ oppID, volunteerID, numberOfHours }) {
+  define({ oppID, volunteerEmail, numberOfHours, confirmed }) {
+    const hour = Hours.findDoc({ numberOfHours });
+    const hourID = hour._id;
     const docID = this._collection.insert({
       oppID,
-      volunteerID,
-      numberOfHours,
+      volunteerEmail,
+      hourID,
+      confirmed,
     });
     return docID;
   }
@@ -58,7 +63,7 @@ class ProfilePageHoursCollection extends BaseCollection {
        */
       Meteor.publish(profilePageHoursPublications.profilePageHour, function publish() {
         if (Meteor.isServer) {
-          return instance._collectin.find();
+          return instance._collection.find();
         }
         return this.ready();
       });

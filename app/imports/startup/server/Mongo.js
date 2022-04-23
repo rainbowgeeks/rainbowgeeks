@@ -55,12 +55,12 @@ function addHours({ volunteerEmail, numberOfHours }, title, location) {
 // add new opportunity to the collection
 // add point of contacts to related opportunities to the opp poc collection.
 // add age, category, environments related to an opportunity to the age, cat, envOPP collections.
-function addOpportunity({ owner, title, cover, location, oppStart, oppEnd, description, age, environment, category, opportunityVolunteerHours }) {
+function addOpportunity({ owner, title, cover, location, oppStart, oppEnd, checked, description, age, environment, category, opportunityVolunteerHours }) {
   age.map(ages => addAges(ages));
   environment.map(environments => addEnvironments(environments));
   category.map(categories => addCategories(categories));
   console.log(` Adding: ${title} (${owner})`);
-  Opportunities.define({ title: title, owner, cover, location, oppStart, oppEnd, description });
+  Opportunities.define({ title: title, owner, cover, location, oppStart, oppEnd, checked, description });
   OpportunitiesPocs.define({ email: owner, title, location });
   age.map(ages => OpportunitiesAges.define({ title: title, location: location, age: ages }));
   environment.map(environments => OpportunitiesEnvs.define({ title: title, location: location, environment: environments }));

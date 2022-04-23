@@ -108,12 +108,15 @@ const OrganizationProfile = () => (
         </Grid.Column>
         <Grid.Column width={3}>
           <Menu vertical fluid>
+            <Menu.Item>Analytics</Menu.Item>
             <Menu.Item as={NavLink} activeClassName="active" exact to="/manage-hours" key="manage-hours">
               Manage Hours
             </Menu.Item>
             <Menu.Item as={NavLink} exact to="/manage-opp">Manage Opportunities</Menu.Item>
             <Menu.Item>Manage Requests</Menu.Item>
-            <Menu.Item>Analytics</Menu.Item>
+            <Menu.Item as={NavLink} activeClassName="active" exact to="/confirmed-hours" key="confirmed-hours">
+              View Volunteer Hours
+            </Menu.Item>
           </Menu>
         </Grid.Column>
       </Grid.Row>
