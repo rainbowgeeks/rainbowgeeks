@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Segment, Form } from 'semantic-ui-react';
-import { AutoForm, TextField, LongTextField, SubmitField, ErrorsField, SelectField, ListField } from 'uniforms-semantic';
+import { AutoForm, TextField, LongTextField, SubmitField, ErrorsField, SelectField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -68,8 +68,8 @@ const OrgReservation = ({ rsvp }) => {
     }} schema={bridge} onSubmit={data => submit(data, fRef, oppID)}>
       <Segment>
         <Form.Group widths={'equal'}>
-          <TextField name={'firstName'} showInlineError={true}/>
-          <TextField name={'lastName'} showInlineError={true}/>
+          <TextField name={'firstName'} showInlineError={true} disabled/>
+          <TextField name={'lastName'} showInlineError={true} disabled/>
         </Form.Group>
         <SelectField name={'numberOfHours'}/>
         <TextField name={'phoneNumber'} showInlineError={true}/>

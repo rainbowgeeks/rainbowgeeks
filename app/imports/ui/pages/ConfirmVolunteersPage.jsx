@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Header, Loader, Input, List, Button, Icon, Grid } from 'semantic-ui-react';
+import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
+import { Redirect } from 'react-router-dom';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import ConfirmHoursCard from '../components/ConfirmVolunteerCard';
 import Footer2 from '../components/Footer2';
@@ -10,27 +12,46 @@ import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
+import { OpportunityHours } from '../../api/opportunity/OpportunityHoursCollection';
+import { defineMethod } from '../../api/base/BaseCollection.methods';
 
 /** Renders a page containing all of the Users reserving for an event. Use <ConfirmVolunteerCard> to render each cards. */
 const ConfirmVolunteersPage = ({ ready, finalData }) => {
+  const [redirectToReferer, setRedirectToReferer] = useState(false);
   const acceptData = [];
   const declineData = [];
 
   const confirming = (data) => {
+    Object.assign(data, { disablePos: true });
+    Object.assign(data, { disableNeg: false });
     acceptData.push(data);
-    // console.log(acceptData.length);
   };
 
   const declining = (data) => {
+    Object.assign(data, { disableNeg: true });
+    Object.assign(data, { disablePos: false });
     declineData.push(data);
     console.log(declineData);
   };
 
   const finalConfirmation = (data) => {
-    let sendData = data.filter(x => !declineData.includes(x));
-    console.log(sendData);
-    sendData = []; // reset data back to empty array
+    data.forEach(function (item) {
+      const { title, location, volunteerEmail, numberOfHours } = item;
+      const definitionData = { title: title, location: location, volunteerEmail: volunteerEmail, numberOfHours: numberOfHours };
+      const collectionName = OpportunityHours.getCollectionName();
+      defineMethod.callPromise({ collectionName, definitionData })
+        .catch(error => swal('Error', error.message, 'error'))
+        .then(() => {
+          swal('Success', 'Successfully Confirmed Volunteers', 'success');
+          setRedirectToReferer(true);
+        });
+    });
+
   };
+  const { from } = { from: { pathname: '/org-profile' } };
+  if (redirectToReferer) {
+    return <Redirect to={from}/>;
+  }
   return ((ready) ? (
     <Container id={PAGE_IDS.CONFIRM_HOURS}>
       <Header as="h2" textAlign="center">Confirm Hours</Header>
@@ -47,11 +68,11 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
         {finalData.map((data) => <Grid.Column style={{ marginBottom: '8px' }} key={data.index} textAlign={'center'}>
           <ConfirmHoursCard key={data.index} linkData={data}/>
           <Container>
-            <Button positive icon labelPosition='right' onClick={() => confirming(data)}>
+            <Button positive icon labelPosition='right' disabled={data.disablePos} onClick={() => confirming(data)}>
               <Icon name={'check'}/>
             Approve
             </Button>
-            <Button negative icon labelPosition='right' onClick={() => declining(data)}>
+            <Button negative icon labelPosition='right' disabled={data.disableNeg} onClick={() => declining(data)}>
               <Icon name={'x'}/>
             Decline
             </Button>
@@ -90,12 +111,10 @@ export default withTracker(() => {
   const getAllOpportunitiesCollection = Opportunities.find({}).fetch();
   const getAllPocOpportunitiesCollection = OrganizationPocs.find({}).fetch();
   // temp stuff
-  console.log(getAllRsvpCollection);
   const tempData = [];
   let finalData = [];
   const lastData = [];
   let tempDataObj = {};
-  let finalDataObj = {};
   let index = 0;
 
   // begin when data is ready
@@ -114,7 +133,6 @@ export default withTracker(() => {
         }
       }
     });
-    console.log(tempData);
     // loop through each item of tempData
     tempData.forEach(function (item) {
       // for each item compare with each Opportunities collection and find matching oppID and Opportunities _.id
@@ -124,7 +142,7 @@ export default withTracker(() => {
           // combine current item with current Opportunities and store into finalDataObj
           Object.assign(item, getAllOpportunitiesCollection[x]);
           // push finalDataObj into finalData array
-          //finalData.push(finalDataObj);
+          // finalData.push(finalDataObj);
         }
       }
     });
@@ -146,7 +164,7 @@ export default withTracker(() => {
     });
   }
   // for each item in finalData
-   tempData.forEach(function (item) {
+  tempData.forEach(function (item) {
     // for each item compare with each OrganizationPocs collection and find matching contactOrganizerEmail and OrganizationPocs pocEmail
     for (let x = 0; x < getAllPocOpportunitiesCollection.length; x++) {
       // if match is found
@@ -155,10 +173,12 @@ export default withTracker(() => {
         const organizationEmail = getAllPocOpportunitiesCollection[x].orgEmail;
         // create a new object called orgEmail and merge into the current item
         Object.assign(item, { orgEmail: organizationEmail });
+        Object.assign(item, { disablePos: false });
+        Object.assign(item, { disableNeg: false });
+
       }
     }
   });
-
   // for each item in finalData look for matching orgEmail and current logged in user email
   tempData.forEach(function (item) {
     // if match is found
@@ -170,7 +190,7 @@ export default withTracker(() => {
 
   // overwrite the current data at finaldata with filtered data from lastData
   finalData = lastData;
-  //console.log(finalData);
+  // console.log(finalData);
   return {
     ready,
     finalData,
