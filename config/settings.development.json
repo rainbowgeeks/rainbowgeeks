@@ -7,7 +7,7 @@
     { "email": "alex@foo.com", "password": "changeme", "role": "USER", "firstName": "Alex", "lastName": "Smith" },
     { "email": "henry@foo.com", "password": "changeme", "role": "USER", "firstName": "Henry", "lastName": "Fox" },
     { "email": "norman@foo.com", "password": "changeme", "role": "USER", "firstName": "Norman", "lastName": "Johnson" },
-    { "email": "danniella@foo.com", "password": "changeme", "role": "USER", "firstName": "Danniella", "lastName": "Mcgowan" },
+    { "email": "daniella@foo.com", "password": "changeme", "role": "USER", "firstName": "Daniella", "lastName": "Mcgowan" },
     { "email": "natalie@foo.com", "password": "changeme", "role": "USER", "firstName": "Natalie", "lastName": "Andrew" },
     { "email": "karina@foo.com", "password": "changeme", "role": "USER", "firstName": "Karina", "lastName": "Scott" },
     { "email": "ruby@foo.com", "password": "changeme", "role": "USER", "firstName": "Ruby", "lastName": "Benitez" },
@@ -147,8 +147,8 @@
       "zip": "96818"
     },
     {
-      "owner": "danniella@foo.com",
-      "firstName": "Danniella",
+      "owner": "daniella@foo.com",
+      "firstName": "Daniella",
       "lastName": "Mcgowan",
       "phoneNumber": "808-000-9999",
       "specialInterest": "Pets, Food-banks",
