@@ -9,20 +9,29 @@ import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { Hours } from '../../api/hours/HoursCollection';
 import HoursPage from '../components/HoursPage';
 
-const getHours = (oH) => {
+const getHours = (oH, getUsers) => {
   const { _id, volunteerEmail, hourID } = oH;
-  const volunteer = UserProfileData.findOne({ owner: volunteerEmail });
+  let volunteer = {};
   const hour = Hours.findDoc({ _id: hourID });
+  console.log(oH);
+  getUsers.forEach(function (item) {
+    if (item.owner === volunteerEmail) {
+      volunteer = item;
+    }
+  });
+  console.log(volunteer);
+  console.log(hour);
   const { firstName, lastName } = volunteer;
   const { numberOfHours } = hour;
   const selected = false;
-  return _.extend({}, { _id, firstName, lastName, numberOfHours, volunteerEmail, selected });
+  const x = _.extend({}, { _id, firstName, lastName, numberOfHours, volunteerEmail, selected });
+  return x;
 };
 
-const OrganizationHoursPage = ({ opportunityHours, ready }) => {
+const OrganizationHoursPage = ({ opportunityHours, getUsers, ready }) => {
   let makeOppHours;
   if (opportunityHours && ready) {
-    makeOppHours = opportunityHours.map(oH => getHours(oH));
+    makeOppHours = opportunityHours.map(oH => getHours(oH, getUsers));
   }
   return ((ready) ? (
     <HoursPage opportunityHour={makeOppHours}/>
@@ -30,6 +39,7 @@ const OrganizationHoursPage = ({ opportunityHours, ready }) => {
 };
 OrganizationHoursPage.propTypes = {
   opportunityHours: PropTypes.array.isRequired,
+  getUsers: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -45,8 +55,10 @@ export default withTracker(() => {
   const ready = sub1.ready() && sub2.ready() && sub3.ready();
   // Get the right documents
   const opportunityHours = OpportunityHours.find({ oppID: _id }).fetch();
+  const getUsers = UserProfileData.find({}).fetch();
   return {
     opportunityHours,
+    getUsers,
     ready,
   };
 })(OrganizationHoursPage);
