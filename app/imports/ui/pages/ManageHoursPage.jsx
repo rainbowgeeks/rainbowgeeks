@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Container, Header, Input, List, Card, Dropdown, Loader, Grid } from 'semantic-ui-react';
+import { Button, Container, Header, Input, List, Card, Dropdown, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';

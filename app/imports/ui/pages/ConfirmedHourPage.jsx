@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loader } from 'semantic-ui-react';
+import { Loader, Container, Header } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { useParams } from 'react-router';
 import PropTypes from 'prop-types';
@@ -25,7 +25,10 @@ const ConfirmedHourPage = ({ opportunityHours, ready }) => {
     makeOppHours = opportunityHours.map(oH => getHours(oH));
   }
   return ((ready) ? (
-    <ConfirmHour opportunityHour={makeOppHours}/>
+    <Container>
+      <Header as={'h1'} content={'Confirmed Hours'} textAlign={'center'}/>
+      <ConfirmHour opportunityHour={makeOppHours}/>
+    </Container>
   ) : <Loader active>Loading Data</Loader>);
 };
 

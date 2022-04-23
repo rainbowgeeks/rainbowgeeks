@@ -3,7 +3,7 @@ import { Checkbox, Table, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { _ } from 'meteor/underscore';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { ProfilePageHours } from '../../api/profile/ProfilePageHoursCollection';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { defineMethod, updateMethod } from '../../api/base/BaseCollection.methods';
@@ -21,6 +21,7 @@ const onSubmit = (data) => {
 };
 
 const HoursPage = ({ opportunityHour }) => {
+  const [redirectToReferer, setRedirectToReferer] = useState(false);
   const [checkAll, setCheckAll] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [collection, setCollection] = useState([]);
@@ -45,16 +46,20 @@ const HoursPage = ({ opportunityHour }) => {
     });
     const temp = newCollection.map(nC => onSubmit(nC));
     const oppID = _.uniq(temp);
-    console.log(oppID);
     const collectionName = Opportunities.getCollectionName();
     oppID.forEach((oID) => {
-      console.log(oID);
+      // console.log(oID);
       const updateData = { id: oID, checked: true };
       updateMethod.callPromise({ collectionName, updateData })
         .catch(error => swal('Error', error.message, 'error'));
+      setRedirectToReferer(true);
     });
 
   };
+  const { from } = { from: { pathname: '/org-profile' } };
+  if (redirectToReferer) {
+    return <Redirect to={from}/>;
+  }
 
   const handleClick = (data) => {
     const { id, checked } = data.target;
