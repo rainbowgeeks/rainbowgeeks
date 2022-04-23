@@ -34,7 +34,6 @@ const OrganizationHoursPage = ({ opportunityHours, ready }) => {
 };
 OrganizationHoursPage.propTypes = {
   opportunityHours: PropTypes.array.isRequired,
-  getUsers: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
