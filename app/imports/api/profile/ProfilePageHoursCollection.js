@@ -17,7 +17,6 @@ class ProfilePageHoursCollection extends BaseCollection {
       oppID: String,
       volunteerEmail: String,
       hourID: String,
-      confirmed: Boolean,
     }));
   }
 
@@ -27,14 +26,13 @@ class ProfilePageHoursCollection extends BaseCollection {
    * @param volunteerEmail the new volunteer ID.
    * @param numberOfHours the new total hour for a opportunity.
    */
-  define({ oppID, volunteerEmail, numberOfHours, confirmed }) {
+  define({ oppID, volunteerEmail, numberOfHours }) {
     const hour = Hours.findDoc({ numberOfHours });
     const hourID = hour._id;
     const docID = this._collection.insert({
       oppID,
       volunteerEmail,
       hourID,
-      confirmed,
     });
     return docID;
   }
