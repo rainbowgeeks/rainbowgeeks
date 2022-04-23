@@ -19,6 +19,7 @@ class OpportunityCollection extends BaseCollection {
       location: String,
       oppStart: Date,
       oppEnd: Date,
+      checked: Boolean,
       description: String,
     }));
   }
@@ -33,7 +34,7 @@ class OpportunityCollection extends BaseCollection {
    * @param description the summary of the opportunitiy.
    * @return {String} the docID of the new opportunity.
    */
-  define({ title, owner, cover, location, oppStart, oppEnd, description }) {
+  define({ title, owner, cover, location, oppStart, oppEnd, checked, description }) {
     const docID = this._collection.insert({
       title,
       owner,
@@ -41,6 +42,7 @@ class OpportunityCollection extends BaseCollection {
       location,
       oppStart,
       oppEnd,
+      checked,
       description,
     });
     return docID;
@@ -54,9 +56,10 @@ class OpportunityCollection extends BaseCollection {
    * @param cover the new cover photo of the opportunity.
    * @param location the new location of the opportunity.
    * @param date the new date of the opportunity.
+   * @param checked check if opportunity hours is submitted
    * @param description the new summary of the opportunity.
    */
-  update(docID, { title, owner, cover, location, oppStart, oppEnd, description }) {
+  update(docID, { title, owner, cover, location, oppStart, oppEnd, checked, description }) {
     const updateData = {};
     if (title) {
       updateData.title = title;
@@ -75,6 +78,9 @@ class OpportunityCollection extends BaseCollection {
     }
     if (oppEnd) {
       updateData.oppEnd = oppEnd;
+    }
+    if (checked) {
+      updateData.checked = checked;
     }
     if (description) {
       updateData.description = description;
