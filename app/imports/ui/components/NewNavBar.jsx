@@ -61,6 +61,7 @@ const NewNavBar = ({ currentUser }) => (
                   <Dropdown.Item as={NavLink} text="My Profile" exact to="/org-profile" key="org-profile"/>
                   <Dropdown.Item as={NavLink} text="Manage Hours" exact to="/manage-hours" key="manage-hours"/>
                   <Dropdown.Item as={NavLink} text="Manage Opportunities" exact to="/manage-opp" key="manage-opp"/>
+                  <Dropdown.Item as={NavLink} text="View Volunteer Hours" exact to="/confirmed-hours" key="confirmed-hours"/>
                   <Dropdown.Item id={COMPONENT_IDS.NAVBAR_SIGN_OUT} icon="sign out" text="Sign out" as={NavLink} exact to="/signout"/>
                 </Dropdown.Menu>
               </Dropdown>

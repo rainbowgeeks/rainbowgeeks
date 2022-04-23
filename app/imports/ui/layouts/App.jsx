@@ -33,6 +33,9 @@ import NewNavBar from '../components/NewNavBar';
 import ManageHoursPage from '../pages/ManageHoursPage';
 import OrganizationHoursPage from '../pages/OrganizationHoursPage';
 import ConfirmVolunteersPage from '../pages/ConfirmVolunteersPage';
+import ConfirmedHourPage from '../pages/ConfirmedHourPage';
+import ManageConfirmHoursPage from '../pages/ManageConfirmHoursPage';
+
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -62,6 +65,8 @@ class App extends React.Component {
             <ProtectedRoute path="/home" component={Landing2}/>
             <OrganizationProtectedRoute path="/add-opp" component={AddOpportunity}/>
             <OrganizationProtectedRoute path="/manage-hours" component={ManageHoursPage}/>
+            <OrganizationProtectedRoute path="/confirmed-hours" component={ManageConfirmHoursPage}/>
+            <OrganizationProtectedRoute path="/list-confirmed-hours/:_id" component={ConfirmedHourPage}/>
             <OrganizationProtectedRoute path="/org-hours/:_id" component={OrganizationHoursPage}/>
             <OrganizationProtectedRoute path="/manage-opp" component={ManageOpportunities}/>
             <OrganizationProtectedRoute path="/edit-opp/:_id" component={EditOpportunity}/>

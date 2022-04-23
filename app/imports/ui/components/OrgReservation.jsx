@@ -13,7 +13,7 @@ import { defineMethod } from '../../api/base/BaseCollection.methods';
 const formSchema = (first, last, owner, total, oppID) => new SimpleSchema({
   firstName: { type: String, defaultValue: first, label: 'First' },
   lastName: { type: String, defaultValue: last, label: 'Last' },
-  numberOfHours: { type: Number, defaultValue: 1, allowedValues: total, label: 'Hours' },
+  numberOfHours: { type: Number, defaultValue: 1, allowedValues: total, label: 'How many hours would you like to volunteer?' },
   phoneNumber: { type: String, label: 'Phone' },
   userEmail: { type: String, defaultValue: owner, label: 'Email' },
   userQuestion: { type: String, label: 'Comments/Questions', optional: true },

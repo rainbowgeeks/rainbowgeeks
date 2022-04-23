@@ -6,20 +6,19 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
-import ManageHour from '../components/ManageHour';
+import ManageCHPage from '../components/ManageCHPage';
 
 const getHours = (data) => {
   const makeOpportunities = data.map(d => Opportunities.find({ owner: d }).fetch());
   const temp = _.flatten(makeOpportunities);
   const temp2 = temp.filter((t) => {
-    if (t.checked === false) return true;
+    if (t.checked === true) return true;
     return false;
   });
-  console.log(temp2);
   return temp2;
 };
 
-const ManageHoursPage = ({ pocEmail, ready }) => {
+const ManageConfirmHoursPage = ({ pocEmail, ready }) => {
   let opportunities;
   if (pocEmail && ready) {
     opportunities = getHours(pocEmail);
@@ -61,13 +60,13 @@ const ManageHoursPage = ({ pocEmail, ready }) => {
         </List.Item>
       </List>
       <Card.Group stackable centered itemsPerRow={3}>
-        {opportunities.map(opportunity => <ManageHour key={opportunity._id} opportunityHour={opportunity}/>)}
+        {opportunities.map(opportunity => <ManageCHPage key={opportunity._id} opportunityHour={opportunity}/>)}
       </Card.Group>
     </Container>
   ) : <Loader active>Loading Data</Loader>);
 };
 
-ManageHoursPage.propTypes = {
+ManageConfirmHoursPage.propTypes = {
   pocEmail: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
@@ -87,4 +86,4 @@ export default withTracker(() => {
     pocEmail,
     ready,
   };
-})(ManageHoursPage);
+})(ManageConfirmHoursPage);
