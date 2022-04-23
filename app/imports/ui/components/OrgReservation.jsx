@@ -41,9 +41,11 @@ const OrgReservation = ({ rsvp }) => {
   const total = matchEnd - matchStart;
   const hours = getHours(total);
   const submit = (data, formRef, op) => {
-    const { first, last, phoneNumber, userEmail, numberOfHours, userQuestion } = data;
+    const { firstName: first, lastName: last, phoneNumber, userEmail, numberOfHours, userQuestion } = data;
     const collectionName = OpportunityRsvps.getCollectionName();
-    const definitionData = { oppID: op, firstName: first, lastName: last, phoneNumber, numberOfHours: numberOfHours, userEmail: userEmail, shortDesc: userQuestion };
+    const definitionData = { oppID: op, firstName: first, lastName: last, phoneNumber, numberOfHours: numberOfHours, owner: userEmail, shortDesc: userQuestion };
+    console.log(definitionData);
+
     defineMethod.callPromise({ collectionName, definitionData })
       .catch(error => swal('Error', error.message, 'error'))
       .then(() => {

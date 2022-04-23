@@ -90,6 +90,7 @@ export default withTracker(() => {
   const getAllOpportunitiesCollection = Opportunities.find({}).fetch();
   const getAllPocOpportunitiesCollection = OrganizationPocs.find({}).fetch();
   // temp stuff
+  console.log(getAllRsvpCollection);
   const tempData = [];
   let finalData = [];
   const lastData = [];
@@ -113,6 +114,7 @@ export default withTracker(() => {
         }
       }
     });
+    console.log(tempData);
     // loop through each item of tempData
     tempData.forEach(function (item) {
       // for each item compare with each Opportunities collection and find matching oppID and Opportunities _.id
@@ -120,14 +122,14 @@ export default withTracker(() => {
         // if match is found
         if (item.oppID === getAllOpportunitiesCollection[x]._id) {
           // combine current item with current Opportunities and store into finalDataObj
-          finalDataObj = Object.assign(item, getAllOpportunitiesCollection[x]);
+          Object.assign(item, getAllOpportunitiesCollection[x]);
           // push finalDataObj into finalData array
-          finalData.push(finalDataObj);
+          //finalData.push(finalDataObj);
         }
       }
     });
     // Sort the current data stored into finalData by title
-    finalData.sort(function (a, b) {
+    tempData.sort(function (a, b) {
       const x = a.title.toLowerCase();
       const y = b.title.toLowerCase();
       if (x < y) { return -1; }
@@ -135,7 +137,7 @@ export default withTracker(() => {
       return 0;
     });
     // for each item in the finalData Array
-    finalData.forEach(function (items) {
+    tempData.forEach(function (items) {
       // add new field called contactOrganizerEmail with owner as its value, then remove owner field
       delete Object.assign(items, { contactOrganizerEmail: items.owner }).owner;
       // assign index field, this field will be the key
@@ -144,7 +146,7 @@ export default withTracker(() => {
     });
   }
   // for each item in finalData
-  finalData.forEach(function (item) {
+   tempData.forEach(function (item) {
     // for each item compare with each OrganizationPocs collection and find matching contactOrganizerEmail and OrganizationPocs pocEmail
     for (let x = 0; x < getAllPocOpportunitiesCollection.length; x++) {
       // if match is found
@@ -158,7 +160,7 @@ export default withTracker(() => {
   });
 
   // for each item in finalData look for matching orgEmail and current logged in user email
-  finalData.forEach(function (item) {
+  tempData.forEach(function (item) {
     // if match is found
     if (item.orgEmail === user.username) {
       // push the item into lastData
@@ -168,6 +170,7 @@ export default withTracker(() => {
 
   // overwrite the current data at finaldata with filtered data from lastData
   finalData = lastData;
+  //console.log(finalData);
   return {
     ready,
     finalData,
