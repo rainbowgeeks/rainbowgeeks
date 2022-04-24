@@ -35,7 +35,8 @@ import OrganizationHoursPage from '../pages/OrganizationHoursPage';
 import ConfirmVolunteersPage from '../pages/ConfirmVolunteersPage';
 import ConfirmedHourPage from '../pages/ConfirmedHourPage';
 import ManageConfirmHoursPage from '../pages/ManageConfirmHoursPage';
-
+import SignupOrg from '../pages/SignupOrg';
+import AddOrganization from '../pages/AddOrganization';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -49,7 +50,7 @@ class App extends React.Component {
             <Route path="/filter" component={FilterOpportunities}/>
             <Route path="/event/:_id" component={OpportunityPage}/>
             <Route path="/signin" component={Signin}/>
-            <Route path="/signup" component={Signup}/>
+            <Route path="/signup" component={SignupOrg}/>
             <Route path="/signout" component={Signout}/>
             <Route path="/about" component={AboutUs}/>
             <ProtectedRoute path="/profile" component={ProfilePage}/>
@@ -63,6 +64,7 @@ class App extends React.Component {
             <ProtectedRoute path="/org-library" component={OrganizationLibrary}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
             <ProtectedRoute path="/home" component={Landing2}/>
+            <OrganizationProtectedRoute path="/add-organization" component={AddOrganization}/>
             <OrganizationProtectedRoute path="/add-opp" component={AddOpportunity}/>
             <OrganizationProtectedRoute path="/manage-hours" component={ManageHoursPage}/>
             <OrganizationProtectedRoute path="/confirmed-hours" component={ManageConfirmHoursPage}/>

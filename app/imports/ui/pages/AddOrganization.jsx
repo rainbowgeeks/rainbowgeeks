@@ -22,8 +22,6 @@ const formSchema = new SimpleSchema({
   orgEmail: { type: String, label: 'Organization Email' },
 });
 
-const bridge = new SimpleSchema2Bridge(formSchema);
-
 /** Renders the Page for adding a document. */
 const AddOrganization = ({ ready, username }) => {
   console.log(username);
@@ -41,6 +39,7 @@ const AddOrganization = ({ ready, username }) => {
         setRedirectToReferer(true);
       });
   };
+  const bridge = new SimpleSchema2Bridge(formSchema, username);
 
   const { from } = { from: { pathname: '/org-profile' } };
   if (redirectToReferer) {
@@ -52,14 +51,14 @@ const AddOrganization = ({ ready, username }) => {
   return ((ready) ? (
     <Grid id={PAGE_IDS.ADD_ORGANIZATION} container centered>
       <Grid.Column>
-        <Header as="h2" textAlign="center">Add ORGANIZATION</Header>
+        <Header as="h2" textAlign="center">Organization Information</Header>
         <AutoForm ref={ref => {
           fRef = ref;
         }} schema={bridge} onSubmit={data => submit(data, fRef)}>
           <Segment inverted color={'blue'}>
             <Form.Group widths={'equal'}>
               <TextField name={'organizationName'}/>
-              <TextField name={'orgEmail'} placeholder={username} disabled/>
+              <TextField name={'orgEmail'} value={_.pluck(username, 'email').toString()}/>
             </Form.Group>
             <LongTextField name={'missionStatement'} placeholder={'Share your Organization\'s values'}/>
             <LongTextField name={'description'} placeholder={'What kind of work does your Organization do?'}/>
@@ -80,7 +79,6 @@ AddOrganization.propTypes = {
 export default withTracker(() => {
   const sub1 = OrganizationProfiles.subscribe();
   const userID = Meteor.userId();
-  console.log(userID);
   const username = OrganizationProfiles.find({ userID }).fetch();
   const ready = sub1.ready();
   return {
