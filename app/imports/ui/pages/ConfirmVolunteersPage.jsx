@@ -22,15 +22,20 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
   const declineData = [];
 
   const confirming = (data) => {
-    Object.assign(data, { disablePos: true });
-    Object.assign(data, { disableNeg: false });
+    // eslint-disable-next-line no-undef
+    document.getElementById(`posButton${data.index}`).disabled = true;
+    // eslint-disable-next-line no-undef
+    document.getElementById(`negButton${data.index}`).disabled = false;
     acceptData.push(data);
   };
 
   const declining = (data) => {
-    Object.assign(data, { disableNeg: true });
-    Object.assign(data, { disablePos: false });
     declineData.push(data);
+    // eslint-disable-next-line no-undef
+    document.getElementById(`negButton${data.index}`).disabled = true;
+    // eslint-disable-next-line no-undef
+    document.getElementById(`posButton${data.index}`).disabled = false;
+
     console.log(declineData);
   };
 
@@ -42,8 +47,10 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
       defineMethod.callPromise({ collectionName, definitionData })
         .catch(error => swal('Error', error.message, 'error'))
         .then(() => {
-          swal('Success', 'Successfully Confirmed Volunteers', 'success');
-          setRedirectToReferer(true);
+          if (data.indexOf(item) === data.length - 1) {
+            swal('Success', 'Successfully Confirmed Volunteers', 'success');
+            setRedirectToReferer(true);
+          }
         });
     });
 
@@ -68,11 +75,11 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
         {finalData.map((data) => <Grid.Column style={{ marginBottom: '8px' }} key={data.index} textAlign={'center'}>
           <ConfirmHoursCard key={data.index} linkData={data}/>
           <Container>
-            <Button positive icon labelPosition='right' disabled={data.disablePos} onClick={() => confirming(data)}>
+            <Button id={`posButton${data.index}`} positive icon labelPosition='right' onClick={() => confirming(data)}>
               <Icon name={'check'}/>
             Approve
             </Button>
-            <Button negative icon labelPosition='right' disabled={data.disableNeg} onClick={() => declining(data)}>
+            <Button id={`negButton${data.index}`} negative icon labelPosition='right' onClick={() => declining(data)}>
               <Icon name={'x'}/>
             Decline
             </Button>
