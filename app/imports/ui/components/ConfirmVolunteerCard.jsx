@@ -57,6 +57,12 @@ const ConfirmVolunteerCard = ({ linkData }) => (
               {linkData.DOB}
             </Card.Meta>
           </Card.Header>
+          <Card.Header as='h4' textAlign='left'>
+            Comment:
+            <Card.Meta as='h3'>
+              {linkData.shortDesc}
+            </Card.Meta>
+          </Card.Header>
         </Segment>
       </Card>
       <Card.Description textAlign='center' as='h3'>
@@ -82,6 +88,7 @@ ConfirmVolunteerCard.propTypes = {
     title: PropTypes.string,
     submittedPhoneNumber: PropTypes.string,
     DOB: PropTypes.string,
+    shortDesc: PropTypes.string,
   }).isRequired,
 };
 
