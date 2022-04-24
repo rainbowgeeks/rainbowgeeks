@@ -131,11 +131,13 @@ export default withTracker(() => {
   if (ready) {
     // loop through each element of OpportunityRsvps collection
     getAllRsvpCollection.forEach(function (element) {
+      delete Object.assign(element, { submittedPhoneNumber: element.phoneNumber }).phoneNumber;
       // for each element compare with each UserProfileData and find matching volunteerID and UserProfileData ._id
       for (let x = 0; x < getAllUserProfileCollection.length; x++) {
         if (element.volunteerID === getAllUserProfileCollection[x]._id) {
           // change owner key from UserProfileData[x] object to volunteerEmail
           Object.assign(getAllUserProfileCollection[x], { volunteerEmail: getAllUserProfileCollection[x].owner });
+          Object.assign(getAllUserProfileCollection[x], { DOB: getAllUserProfileCollection[x].dateOfBirth.toDateString() });
           // if match is found combine the current element and UserProfileData[x] into tempDataobj
           tempDataObj = Object.assign(element, getAllUserProfileCollection[x]);
           // push tempDataObj into tempData array
@@ -200,7 +202,7 @@ export default withTracker(() => {
 
   // overwrite the current data at finaldata with filtered data from lastData
   finalData = lastData;
-  // console.log(finalData);
+  console.log(finalData);
   return {
     ready,
     finalData,

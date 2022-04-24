@@ -6,7 +6,7 @@ import { showValue, sortDate } from './ProfilePageAboutUser';
 
 /** Renders a single Card Item in the ConfirmVolunteerCard, but it just confirms volunteer volunteering to the event. */
 const ConfirmVolunteerCard = ({ linkData }) => (
-  <Card centered>
+  <Card centered color={'blue'}>
     <Card.Header textAlign='center'><strong>Volunteer Event Request</strong></Card.Header>
     <Card.Content>
       <Image className='Confirm-Hours-Card-Image'
@@ -18,8 +18,10 @@ const ConfirmVolunteerCard = ({ linkData }) => (
           <Card.Meta as='h3'><strong>Interest:</strong> {showValue(linkData.interest)}</Card.Meta>
           <Card.Meta><strong>Environmental Preference:</strong> {showValue(linkData.environmentalPref)}</Card.Meta>
           <Card.Meta as='h3'><strong>Availability:</strong> {sortDate(linkData.availability)}</Card.Meta>
-          <Card.Meta as='h3'><strong>Phone Number:</strong> {linkData.phoneNumber}</Card.Meta>
+          <Card.Meta as='h3'><strong>Primary Phone Number:</strong> {linkData.phoneNumber}</Card.Meta>
+          <Card.Meta as='h3'><strong>Secondary Phone Number:</strong> {linkData.submittedPhoneNumber}</Card.Meta>
           <Card.Meta as='h3'><strong>Email:</strong> {linkData.volunteerEmail}</Card.Meta>
+          <Card.Meta as='h3'><strong>Date of Birth:</strong> {linkData.DOB}</Card.Meta>
         </Segment>
       </Card>
       <Card.Description textAlign='center' as='h3'>
@@ -43,6 +45,8 @@ ConfirmVolunteerCard.propTypes = {
     phoneNumber: PropTypes.string,
     volunteerEmail: PropTypes.string,
     title: PropTypes.string,
+    submittedPhoneNumber: PropTypes.string,
+    DOB: PropTypes.string,
   }).isRequired,
 };
 
