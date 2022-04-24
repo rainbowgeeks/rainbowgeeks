@@ -54,7 +54,7 @@ const ConfirmVolunteerCard = ({ linkData }) => (
           <Card.Header as='h4' textAlign='left'>
             Date of Birth:
             <Card.Meta as='h3'>
-              {linkData.phoneNumber}
+              {linkData.DOB}
             </Card.Meta>
           </Card.Header>
         </Segment>
