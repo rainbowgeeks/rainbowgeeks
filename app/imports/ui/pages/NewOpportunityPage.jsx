@@ -21,7 +21,7 @@ import NeedRsvp from '../components/NeedRsvp';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
-// CHecking
+// Checking
 const makeOpportunity = (data) => {
   const { _id: oppID, owner: email } = data;
   const age = _.pluck(OpportunitiesAges.find({ oppID }).fetch(), 'age');
@@ -46,7 +46,7 @@ const OpportunityPage = ({ ready, opportunity }) => {
     const oppID = opp._id;
     volunteer = getUser(Meteor.user().username, oppID);
   }
-  const gridHeigth = { paddingTop: '20px', paddingBottom: '50px' };
+  const gridHeight = { paddingTop: '20px', paddingBottom: '50px' };
   return ((ready) ? (
     <Container id={PAGE_IDS.OPPORTUNITY_PAGE} style={{ paddingTop: '20px' }}>
       <Grid style={{
@@ -55,13 +55,13 @@ const OpportunityPage = ({ ready, opportunity }) => {
       }}>
         <Grid.Column style={{ paddingTop: '300px' }}>
           <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={`/edit-opp/${opp._id}`}>
-            <Icon name='setting' size='large' color='black'/>
+            <Icon name='setting' size='large'/>
           </Link>
-          <Header as='h1' content={`${opp.organization} : ${opp.title}`}/>
-          <Header as='h3' content={`${opp.date}`}/>
+          <Header as='h2' content={`${opp.organization} : ${opp.title}`}/>
+          <Header as='h2' content={`${opp.oppStart.toLocaleString('en-US')} - ${opp.oppEnd.toLocaleString('en-US')}`}/>
         </Grid.Column>
       </Grid>
-      <Grid container columns={2} style={gridHeigth}>
+      <Grid container columns={2} style={gridHeight}>
         <Grid.Row>
           <Grid.Column>
             <Header as='h3' icon='pencil alternate' content='Description' attached='top'/>
