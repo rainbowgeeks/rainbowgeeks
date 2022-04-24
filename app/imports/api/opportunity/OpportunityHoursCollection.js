@@ -27,8 +27,8 @@ class OpportunityHoursCollection extends BaseCollection {
    * @param volunteerEmail the new volunteer ID.
    * @param hourID the new total hour for a opportunity.
    */
-  define({ title, location, date, volunteerEmail, numberOfHours }) {
-    const opp = Opportunities.findDoc({ title, location, date });
+  define({ title, location, volunteerEmail, numberOfHours }) {
+    const opp = Opportunities.findDoc({ title, location });
     const hour = Hours.findDoc({ numberOfHours });
     const oppID = opp._id;
     const hourID = hour._id;

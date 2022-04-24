@@ -18,6 +18,7 @@ import { UserProfileData } from '../profile/ProfilePageCollection';
 import { Hours } from '../hours/HoursCollection';
 import { OpportunityHours } from '../opportunity/OpportunityHoursCollection';
 import { OpportunityRsvps } from '../opportunity/OpportunitiesRsvpCollection';
+import { ProfilePageHours } from '../profile/ProfilePageHoursCollection';
 
 class MATRPClass {
   collections;
@@ -46,6 +47,7 @@ class MATRPClass {
       OpportunityRsvps,
       OrganizationProfiles,
       PointOfContacts,
+      ProfilePageHours,
       UserProfileData,
       UserProfiles,
     ];
@@ -70,6 +72,7 @@ class MATRPClass {
       OpportunityRsvps,
       OrganizationProfiles,
       PointOfContacts,
+      ProfilePageHours,
       UserProfileData,
       UserProfiles,
     ];

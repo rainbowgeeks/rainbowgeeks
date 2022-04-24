@@ -2,9 +2,9 @@ import React from 'react';
 import { Loader, Container, Header, Input, List, Button, Item, Grid, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+import { NavLink } from 'react-router-dom';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { Stuffs } from '../../api/stuff/StuffCollection';
-import { NavLink } from 'react-router-dom';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const OrgEvents = ({ ready }) => ((ready) ? (

@@ -213,7 +213,16 @@ below is for org profile page responsiveness
 
 
 /* Edit-profile Page*/
-#edit-profile-form {
-  padding-left: 230px;
-  padding-right: 230px;
+.edit-profile-form {
+  padding-left: 200px;
+  padding-right: 200px;
+}
+
+/* Confirm-Card Image*/
+.Confirm-Hours-Card-Image {
+  float: left;
+  width:  400px;
+  height: 300px;
+  object-fit: cover;
+  margin-bottom: 20px;
 }

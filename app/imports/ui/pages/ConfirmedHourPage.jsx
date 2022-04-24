@@ -4,12 +4,11 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { useParams } from 'react-router';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { OpportunityHours } from '../../api/opportunity/OpportunityHoursCollection';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { Hours } from '../../api/hours/HoursCollection';
 import { ProfilePageHours } from '../../api/profile/ProfilePageHoursCollection';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
-import HoursPage from '../components/HoursPage';
+import ConfirmHour from '../components/ConfirmHour';
 
 const getHours = (oH) => {
   const { _id, volunteerEmail, hourID, oppID } = oH;
@@ -20,21 +19,21 @@ const getHours = (oH) => {
   return _.extend({}, { _id, firstName, lastName, numberOfHours, volunteerEmail, oppID });
 };
 
-const OrganizationHoursPage = ({ opportunityHours, ready }) => {
+const ConfirmedHourPage = ({ opportunityHours, ready }) => {
   let makeOppHours;
   if (ready && opportunityHours) {
     makeOppHours = opportunityHours.map(oH => getHours(oH));
   }
   return ((ready) ? (
     <Container>
-      <Header as={'h1'} content={'Volunteer Hours'} textAlign={'center'}/>
-      <HoursPage opportunityHour={makeOppHours}/>
+      <Header as={'h1'} content={'Confirmed Hours'} textAlign={'center'}/>
+      <ConfirmHour opportunityHour={makeOppHours}/>
     </Container>
   ) : <Loader active>Loading Data</Loader>);
 };
-OrganizationHoursPage.propTypes = {
+
+ConfirmedHourPage.propTypes = {
   opportunityHours: PropTypes.array.isRequired,
-  getUsers: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -42,8 +41,6 @@ export default withTracker(() => {
   const { _id } = useParams();
   // Get the User Profile documents
   const sub3 = UserProfileData.subscribeAllUser();
-  // Get the Opportunity Hours documents
-  const sub1 = OpportunityHours.subscribeHour();
   // Get the Hour documents
   const sub2 = Hours.subscribeHour();
   // Get the User Profile documents
@@ -51,11 +48,11 @@ export default withTracker(() => {
   // Get the User Profile documents
   const sub5 = Opportunities.subscribeOpportunity();
   // Determine if all documents is ready
-  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready();
+  const ready = sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready();
   // Get the right documents
-  const opportunityHours = OpportunityHours.find({ oppID: _id }).fetch();
+  const opportunityHours = ProfilePageHours.find({ oppID: _id }).fetch();
   return {
     opportunityHours,
     ready,
   };
-})(OrganizationHoursPage);
+})(ConfirmedHourPage);

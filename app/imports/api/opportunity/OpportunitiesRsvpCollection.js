@@ -18,6 +18,7 @@ class OpportunityRsvpCollection extends BaseCollection {
       volunteerID: String,
       phoneNumber: String,
       shortDesc: { type: String, optional: true },
+      numberOfHours: Number,
     }));
   }
 
@@ -29,13 +30,14 @@ class OpportunityRsvpCollection extends BaseCollection {
    * @param shortDesc the question of the volunteer.
    * @return {String} the docID of the new Rsvp.
    */
-  define({ oppID, firstName, lastName, email, phoneNumber, shortDesc }) {
-    const user = UserProfileData.findDoc({ firstName, lastName, owner: email });
+  define({ oppID, firstName, lastName, userEmail, phoneNumber, numberOfHours, shortDesc }) {
+    const user = UserProfileData.findDoc({ firstName, lastName, owner: userEmail });
     const volunteerID = user._id;
     const docID = this._collection.insert({
       oppID,
       volunteerID,
       phoneNumber,
+      numberOfHours,
       shortDesc,
     });
     return docID;
