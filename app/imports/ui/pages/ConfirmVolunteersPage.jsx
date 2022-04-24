@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Header, Loader, Input, List, Button, Icon, Grid } from 'semantic-ui-react';
+import { Container, Header, Loader, Button, Icon, Grid, Divider } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -65,15 +65,7 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
   return ((ready) ? (
     <Container id={PAGE_IDS.CONFIRM_HOURS}>
       <Header as="h2" textAlign="center">Confirm Hours</Header>
-      <Input fluid placeholder="Search for Registered Volunteers..."/>
-      <List horizontal style={{ paddingBottom: '20px' }}>
-        <List.Item>
-          <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
-        </List.Item>
-        <List.Item>
-          <Button compact size='small'>A-Z</Button>
-        </List.Item>
-      </List>
+      <Divider/>
       <Grid columns={3} stackable style={{ marginBottom: '20px' }}>
         {finalData.map((data) => <Grid.Column style={{ marginBottom: '8px' }} key={data.index} textAlign={'center'}>
           <ConfirmHoursCard key={data.index} linkData={data}/>
@@ -202,7 +194,6 @@ export default withTracker(() => {
 
   // overwrite the current data at finaldata with filtered data from lastData
   finalData = lastData;
-  console.log(finalData);
   return {
     ready,
     finalData,

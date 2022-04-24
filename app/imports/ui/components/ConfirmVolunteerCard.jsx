@@ -15,13 +15,48 @@ const ConfirmVolunteerCard = ({ linkData }) => (
       <Card.Header as='h1' textAlign='center'>{linkData.firstName} {linkData.lastName}</Card.Header>
       <Card centered>
         <Segment padded size='large'>
-          <Card.Meta as='h3'><strong>Interest:</strong> {showValue(linkData.interest)}</Card.Meta>
-          <Card.Meta><strong>Environmental Preference:</strong> {showValue(linkData.environmentalPref)}</Card.Meta>
-          <Card.Meta as='h3'><strong>Availability:</strong> {sortDate(linkData.availability)}</Card.Meta>
-          <Card.Meta as='h3'><strong>Primary Phone Number:</strong> {linkData.phoneNumber}</Card.Meta>
-          <Card.Meta as='h3'><strong>Secondary Phone Number:</strong> {linkData.submittedPhoneNumber}</Card.Meta>
-          <Card.Meta as='h3'><strong>Email:</strong> {linkData.volunteerEmail}</Card.Meta>
-          <Card.Meta as='h3'><strong>Date of Birth:</strong> {linkData.DOB}</Card.Meta>
+          <Card.Header as='h4' textAlign='left'>
+              Interest:
+            <Card.Meta as='h3'>
+              {showValue(linkData.interest)}
+            </Card.Meta>
+          </Card.Header>
+          <Card.Header as='h4' textAlign='left'>
+            Environmental Preference:
+            <Card.Meta as='h3'>
+              {showValue(linkData.environmentalPref)}
+            </Card.Meta>
+          </Card.Header>
+          <Card.Header as='h4' textAlign='left'>
+            Availability:
+            <Card.Meta as='h3'>
+              {sortDate(linkData.availability)}
+            </Card.Meta>
+          </Card.Header>
+          <Card.Header as='h4' textAlign='left'>
+            Primary Phone Number:
+            <Card.Meta as='h3'>
+              {linkData.phoneNumber}
+            </Card.Meta>
+          </Card.Header>
+          <Card.Header as='h4' textAlign='left'>
+            Secondary Phone Number:
+            <Card.Meta as='h3'>
+              {linkData.submittedPhoneNumber}
+            </Card.Meta>
+          </Card.Header>
+          <Card.Header as='h4' textAlign='left'>
+            Email:
+            <Card.Meta as='h3'>
+              {linkData.phoneNumber}
+            </Card.Meta>
+          </Card.Header>
+          <Card.Header as='h4' textAlign='left'>
+            Date of Birth:
+            <Card.Meta as='h3'>
+              {linkData.phoneNumber}
+            </Card.Meta>
+          </Card.Header>
         </Segment>
       </Card>
       <Card.Description textAlign='center' as='h3'>
