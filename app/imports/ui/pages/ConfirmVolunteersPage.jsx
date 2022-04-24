@@ -19,9 +19,9 @@ import { defineMethod } from '../../api/base/BaseCollection.methods';
 const ConfirmVolunteersPage = ({ ready, finalData }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
   const acceptData = [];
-  const declineData = [];
 
   const confirming = (data) => {
+    Object.assign(data, { accepted: true });
     // eslint-disable-next-line no-undef
     document.getElementById(`posButton${data.index}`).disabled = true;
     // eslint-disable-next-line no-undef
@@ -30,17 +30,21 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
   };
 
   const declining = (data) => {
-    declineData.push(data);
+    Object.assign(data, { accepted: false });
     // eslint-disable-next-line no-undef
     document.getElementById(`negButton${data.index}`).disabled = true;
     // eslint-disable-next-line no-undef
     document.getElementById(`posButton${data.index}`).disabled = false;
-
-    console.log(declineData);
   };
 
   const finalConfirmation = (data) => {
-    data.forEach(function (item) {
+    const temp = [];
+    data.forEach(function (items) {
+      if (items.accepted === true) {
+        temp.push(items);
+      }
+    });
+    temp.forEach(function (item) {
       const { title, location, volunteerEmail, numberOfHours } = item;
       const definitionData = { title: title, location: location, volunteerEmail: volunteerEmail, numberOfHours: numberOfHours };
       const collectionName = OpportunityHours.getCollectionName();
@@ -53,7 +57,6 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
           }
         });
     });
-
   };
   const { from } = { from: { pathname: '/org-profile' } };
   if (redirectToReferer) {
