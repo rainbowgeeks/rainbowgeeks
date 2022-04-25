@@ -17,49 +17,49 @@ const ConfirmVolunteerCard = ({ linkData }) => (
         <Segment padded size='large'>
           <Card.Header as='h4' textAlign='left'>
               Interest:
-            <Card.Meta as='h3'>
+            <Card.Meta>
               {showValue(linkData.interest)}
             </Card.Meta>
           </Card.Header>
           <Card.Header as='h4' textAlign='left'>
             Environmental Preference:
-            <Card.Meta as='h3'>
+            <Card.Meta>
               {showValue(linkData.environmentalPref)}
             </Card.Meta>
           </Card.Header>
           <Card.Header as='h4' textAlign='left'>
             Availability:
-            <Card.Meta as='h3'>
+            <Card.Meta>
               {sortDate(linkData.availability)}
             </Card.Meta>
           </Card.Header>
           <Card.Header as='h4' textAlign='left'>
             Primary Phone Number:
-            <Card.Meta as='h3'>
+            <Card.Meta>
               {linkData.phoneNumber}
             </Card.Meta>
           </Card.Header>
           <Card.Header as='h4' textAlign='left'>
             Secondary Phone Number:
-            <Card.Meta as='h3'>
+            <Card.Meta>
               {linkData.submittedPhoneNumber}
             </Card.Meta>
           </Card.Header>
           <Card.Header as='h4' textAlign='left'>
             Email:
-            <Card.Meta as='h3'>
+            <Card.Meta>
               {linkData.phoneNumber}
             </Card.Meta>
           </Card.Header>
           <Card.Header as='h4' textAlign='left'>
             Date of Birth:
-            <Card.Meta as='h3'>
+            <Card.Meta>
               {linkData.DOB}
             </Card.Meta>
           </Card.Header>
           <Card.Header as='h4' textAlign='left'>
             Comment:
-            <Card.Meta as='h3'>
+            <Card.Meta>
               {linkData.shortDesc}
             </Card.Meta>
           </Card.Header>
