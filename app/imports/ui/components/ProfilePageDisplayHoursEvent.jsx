@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 const styling = { paddingBottom: '10px' };
 /** Renders the List of Organizations Associated with the User. See pages/ProfilePage.jsx. */
-const ProfilePageAssociatedOrganization = () => (
+const ProfilePageDisplayHoursEvent = () => (
   <List.Item>
     <Image avatar src='/images/red-cross.jpg'/>
     <List.Content>
@@ -23,4 +23,4 @@ const ProfilePageAssociatedOrganization = () => (
 // Require a document to be passed to this component.
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
-export default withRouter(ProfilePageAssociatedOrganization);
+export default withRouter(ProfilePageDisplayHoursEvent);
