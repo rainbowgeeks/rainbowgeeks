@@ -36,7 +36,6 @@ import ConfirmVolunteersPage from '../pages/ConfirmVolunteersPage';
 import ConfirmedHourPage from '../pages/ConfirmedHourPage';
 import ManageConfirmHoursPage from '../pages/ManageConfirmHoursPage';
 
-
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
   render() {

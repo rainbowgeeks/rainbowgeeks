@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Checkbox, Table, Form } from 'semantic-ui-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Checkbox, Table, Form, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { _ } from 'meteor/underscore';
+import { useReactToPrint } from 'react-to-print';
 import { Redirect, withRouter } from 'react-router-dom';
 import { ProfilePageHours } from '../../api/profile/ProfilePageHoursCollection';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
@@ -28,6 +29,11 @@ const HoursPage = ({ opportunityHour }) => {
   useEffect(() => {
     setCollection(opportunityHour);
   }, [collection]);
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   const handleClickAll = () => {
     console.log(!checkAll);
@@ -70,57 +76,61 @@ const HoursPage = ({ opportunityHour }) => {
     }
   };
   // console.log(selectedUsers);
+
   return (
-    <Table celled>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell collapsing>
-            <Checkbox
-              id="selectAll"
-              onChange={handleClickAll}
-              checked={checkAll}
-              style={{ marginRight: '20px', paddingTop: '2px' }}
-            />
-            Check All
-          </Table.HeaderCell>
-          <Table.HeaderCell>Volunteer Name</Table.HeaderCell>
-          <Table.HeaderCell>E-mail Address</Table.HeaderCell>
-          <Table.HeaderCell>Number of Hours</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {collection.map(c => (
-          <Table.Row key={c._id}>
-            <Table.Cell>
+    <div ref={componentRef}>
+      <Table celled>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell collapsing>
               <Checkbox
-                id={c._id}
-                onChange={handleClick}
-                checked={selectedUsers.includes(c._id)}
+                id="selectAll"
+                onChange={handleClickAll}
+                checked={checkAll}
+                style={{ marginRight: '20px', paddingTop: '2px' }}
               />
-            </Table.Cell>
-            <Table.Cell>{c.firstName} {c.lastName}</Table.Cell>
-            <Table.Cell>{c.volunteerEmail}</Table.Cell>
-            <Table.Cell>{c.numberOfHours} hours</Table.Cell>
+              Check All
+            </Table.HeaderCell>
+            <Table.HeaderCell>Volunteer Name</Table.HeaderCell>
+            <Table.HeaderCell>E-mail Address</Table.HeaderCell>
+            <Table.HeaderCell>Number of Hours</Table.HeaderCell>
           </Table.Row>
-        ))}
-      </Table.Body>
-      <Table.Footer fullWidth>
-        <Table.Row>
-          <Table.HeaderCell/>
-          <Table.HeaderCell colSpan='4'>
-            {/* eslint-disable-next-line no-shadow */}
-            <Form.Button floated='right' size='small' onClick={submit}>
-              Approve
-            </Form.Button>
-          </Table.HeaderCell>
-        </Table.Row>
-      </Table.Footer>
-    </Table>
+        </Table.Header>
+        <Table.Body>
+          {collection.map(c => (
+            <Table.Row key={c._id}>
+              <Table.Cell>
+                <Checkbox
+                  id={c._id}
+                  onChange={handleClick}
+                  checked={selectedUsers.includes(c._id)}
+                />
+              </Table.Cell>
+              <Table.Cell>{c.firstName} {c.lastName}</Table.Cell>
+              <Table.Cell>{c.volunteerEmail}</Table.Cell>
+              <Table.Cell>{c.numberOfHours} hours</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+        <Table.Footer fullWidth>
+          <Table.Row>
+            <Table.HeaderCell>
+              <Button onClick={handlePrint}> Export as PDF </Button>
+            </Table.HeaderCell>
+            <Table.HeaderCell colSpan='4'>
+              <Form.Button floated='right' size='small' onClick={submit}>
+                Approve
+              </Form.Button>
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
+      </Table>
+    </div>
   );
 };
 
 HoursPage.propTypes = {
-  opportunityHour: PropTypes.array.isRequired,
+  opportunityHour: PropTypes.array,
 };
 
 export default withRouter(HoursPage);
