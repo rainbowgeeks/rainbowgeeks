@@ -79,7 +79,7 @@ const OpportunityPage = ({ ready, opportunity }) => {
             </Modal>
           </Grid.Column>
 
-          <Grid.Column width={10}>
+          <Grid.Column width={12}>
             <Header as='h3' icon='pencil alternate' content='Description' attached='top'/>
             <Segment attached>{opp.description}</Segment>
 
