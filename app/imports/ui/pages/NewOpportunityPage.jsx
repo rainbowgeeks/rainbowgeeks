@@ -64,7 +64,22 @@ const OpportunityPage = ({ ready, opportunity }) => {
       </Grid>
       <Grid container columns={2} style={gridHeight}>
         <Grid.Row>
-          <Grid.Column>
+          <Grid.Column textAlign='center' width={4}>
+            {opp.poc.map(o => <OpportunityPagePoc key={o._id} poc={o}/>)}
+            <Modal
+              onClose={() => setOpen(false)}
+              onOpen={() => setOpen(true)}
+              open={open}
+              trigger={<Button>Sign Up</Button>}
+              closeIcon
+            >
+              <Modal.Content>
+                {volunteer ? <OrgReservation rsvp={volunteer}/> : <NeedRsvp/>}
+              </Modal.Content>
+            </Modal>
+          </Grid.Column>
+
+          <Grid.Column width={10}>
             <Header as='h3' icon='pencil alternate' content='Description' attached='top'/>
             <Segment attached>{opp.description}</Segment>
 
@@ -97,31 +112,6 @@ const OpportunityPage = ({ ready, opportunity }) => {
                 </Table.Row>
               </Table.Body>
             </Table>
-          </Grid.Column>
-
-          <Grid.Column>
-            {opp.poc.map(o => <OpportunityPagePoc key={o._id} poc={o}/>)}
-            <Modal
-              onClose={() => setOpen(false)}
-              onOpen={() => setOpen(true)}
-              open={open}
-              trigger={<Button>RSVP</Button>}
-            >
-              <Modal.Content>
-                {volunteer ? <OrgReservation rsvp={volunteer}/> : <NeedRsvp/>}
-              </Modal.Content>
-              <Modal.Actions>
-                <Button color='black' onClick={() => setOpen(false)}>
-                    Cancel
-                </Button>
-                <Button
-                  content="Sign Up"
-                  labelPosition='right'
-                  onClick={() => setOpen(false)}
-                  positive
-                />
-              </Modal.Actions>
-            </Modal>
           </Grid.Column>
         </Grid.Row>
       </Grid>
