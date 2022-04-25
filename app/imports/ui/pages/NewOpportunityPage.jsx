@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Grid, Loader, Header, Segment, Table, Label, Icon } from 'semantic-ui-react';
+import { Container, Grid, Loader, Header, Segment, Table, Label, Icon, Modal, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, Link } from 'react-router-dom';
 import { _ } from 'meteor/underscore';
@@ -47,6 +47,7 @@ const OpportunityPage = ({ ready, opportunity }) => {
     volunteer = getUser(Meteor.user().username, oppID);
   }
   const gridHeight = { paddingTop: '20px', paddingBottom: '50px' };
+  const [open, setOpen] = React.useState(false);
   return ((ready) ? (
     <Container id={PAGE_IDS.OPPORTUNITY_PAGE} style={{ paddingTop: '20px' }}>
       <Grid style={{
@@ -55,10 +56,10 @@ const OpportunityPage = ({ ready, opportunity }) => {
       }}>
         <Grid.Column style={{ paddingTop: '300px' }}>
           <Link className={COMPONENT_IDS.LIST_STUFF_EDIT} to={`/edit-opp/${opp._id}`}>
-            <Icon name='setting' size='large' inverted/>
+            <Icon color='black' name='setting' size='large'/>
           </Link>
           <Header as='h1' content={`${opp.organization} : ${opp.title}`}/>
-          <Header as='h2' content={`${opp.oppStart.toLocaleTimeString('en-US')} - ${opp.oppEnd.toLocaleTimeString('en-US')}`}/>
+          <Header as='h3' content={`${opp.oppStart.toDateString('en-US')}, ${opp.oppStart.toLocaleTimeString('en-US')} - ${opp.oppEnd.toLocaleTimeString('en-US')}`}/>
         </Grid.Column>
       </Grid>
       <Grid container columns={2} style={gridHeight}>
@@ -100,7 +101,27 @@ const OpportunityPage = ({ ready, opportunity }) => {
 
           <Grid.Column>
             {opp.poc.map(o => <OpportunityPagePoc key={o._id} poc={o}/>)}
-            {volunteer ? <OrgReservation rsvp={volunteer}/> : <NeedRsvp/>}
+            <Modal
+              onClose={() => setOpen(false)}
+              onOpen={() => setOpen(true)}
+              open={open}
+              trigger={<Button>RSVP</Button>}
+            >
+              <Modal.Content>
+                {volunteer ? <OrgReservation rsvp={volunteer}/> : <NeedRsvp/>}
+              </Modal.Content>
+              <Modal.Actions>
+                <Button color='black' onClick={() => setOpen(false)}>
+                    Cancel
+                </Button>
+                <Button
+                  content="Sign Up"
+                  labelPosition='right'
+                  onClick={() => setOpen(false)}
+                  positive
+                />
+              </Modal.Actions>
+            </Modal>
           </Grid.Column>
         </Grid.Row>
       </Grid>
