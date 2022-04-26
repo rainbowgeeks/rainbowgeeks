@@ -14,35 +14,34 @@ import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { ProfilePageHours } from '../../api/profile/ProfilePageHoursCollection';
 import { Hours } from '../../api/hours/HoursCollection';
 
-/** Renders the User's Profile hours detail. Profile Page is broken down into 4 components */
+/** Renders the User's Profile hours detail. */
 const UserTrackingHoursPage = ({ userHours, ready, totalHours }) => ((ready) ? (
   <Container id={PAGE_IDS.USER_TRACK_HOURS}>
     <Header as="h1" textAlign="center">My Hours</Header>
     <Divider/>
+    <Grid columns={'two'} divided stackable>
+      <Grid.Row>
+        <Grid.Column>
+          <Segment padded='very'>
+            <Header as='h2' textAlign='center'>
+              Number of Volunteer: {userHours.length}
+            </Header>
+          </Segment>
+        </Grid.Column>
+        <Grid.Column>
+          <Segment padded='very'>
+            <Header as='h2' textAlign='center'>
+              Total Hours: {totalHours}
+            </Header>
+          </Segment>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
     <Segment padded='very'>
       <ListUserHours/>
     </Segment>
     <Container>
       <Divider/>
-      <Grid columns={'two'} divided stackable>
-        <Grid.Row>
-          <Grid.Column>
-            <Segment padded='very'>
-              <Header as='h2' textAlign='center'>
-                Number of Volunteer: {userHours.length}
-              </Header>
-            </Segment>
-          </Grid.Column>
-
-          <Grid.Column>
-            <Segment padded='very'>
-              <Header as='h2' textAlign='center'>
-                  Total Hours: {totalHours}
-              </Header>
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
     </Container>
   </Container>
 ) : <Loader active>Getting User Data!</Loader>);
