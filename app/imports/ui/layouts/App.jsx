@@ -37,6 +37,7 @@ import ConfirmedHourPage from '../pages/ConfirmedHourPage';
 import ManageConfirmHoursPage from '../pages/ManageConfirmHoursPage';
 import SignupOrg from '../pages/SignupOrg';
 import AddOrganization from '../pages/AddOrganization';
+import GoogleAutocomplete from '../components/GoogleAutocomplete';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -46,7 +47,7 @@ class App extends React.Component {
         <div>
           <NewNavBar/>
           <Switch>
-            <Route exact path="/" component={Landing}/>
+            <Route exact path="/" component={GoogleAutocomplete}/>
             <Route path="/filter" component={FilterOpportunities}/>
             <Route path="/event/:_id" component={OpportunityPage}/>
             <Route path="/signin" component={Signin}/>

@@ -76,5 +76,4 @@ const MultiSelect = ({
     {!!(error && showInlineError) && <div className="ui red basic pointing label">{errorMessage}</div>}
   </div>
 );
-
 export default connectField(MultiSelect, { kind: 'leaf' });

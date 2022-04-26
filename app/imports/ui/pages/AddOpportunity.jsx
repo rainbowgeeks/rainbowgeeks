@@ -22,6 +22,7 @@ import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollect
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
 import { defineMethod } from '../../api/base/BaseCollection.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
+import GoogleSelect from '../../forms/controllers/GoogleSelectField';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 import RadioField from '../../forms/controllers/RadioField';
 
@@ -52,8 +53,14 @@ const formSchema = (pocSchema) => new SimpleSchema({
 /** Renders the Page for adding a document. */
 const AddOpportunity = ({ ready, username }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
+  const [address, setAddress] = useState('');
+  const [latLang, setLatLang] = useState({
+    lat: 0,
+    lang: 0,
+  });
   // On submit, insert the data.
   const submit = (data, formRef) => {
+    console.log(data);
     const { owner, title, cover, oppStart, oppEnd, location, description, age, environment, category } = data;
     let collectionName = Opportunities.getCollectionName();
     let definitionData = { owner: owner, title: title, cover: cover, oppStart: oppStart, oppEnd: oppEnd, location: location, description: description };
@@ -110,7 +117,7 @@ const AddOpportunity = ({ ready, username }) => {
             <TextField name='cover'/>
             <DateField name="oppStart"/>
             <DateField name="oppEnd"/>
-            <TextField name='location'/>
+            <GoogleSelect name='location'/>
             <LongTextField name='description'/>
             <MultiSelectField name='age'/>
             <MultiSelectField name='environment'/>
