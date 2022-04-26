@@ -24,9 +24,11 @@ import ProfilePageHeader from '../components/ProfilePageHeader';
 import Footer2 from '../components/Footer2';
 import { ProfilePageHours } from '../../api/profile/ProfilePageHoursCollection';
 import { Hours } from '../../api/hours/HoursCollection';
+import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 
 /** Renders the User's Profile. Profile Page is broken down into 4 components */
 const ProfilePage = ({ ready, userData, userHours }) => {
+  console.log(userHours);
   const getHours = (data) => {
     let hours = 0;
     if (data && ready) {
@@ -58,9 +60,9 @@ const ProfilePage = ({ ready, userData, userHours }) => {
               </Segment>
 
               <Divider section/>
-              <Header as='h3' textAlign='center'>Events</Header>
+              <Header as='h3' textAlign='center'>Passed Events</Header>
               <List>
-                {userHours.map((data) => <ProfilePageDisplayHoursEvent key={data._id}/>)}
+                {userHours.map((data) => <ProfilePageDisplayHoursEvent key={data._id} Events={data}/>)}
               </List>
               <Divider section/>
               <Card>
@@ -94,11 +96,13 @@ ProfilePage.propTypes = {
 export default withTracker(() => {
   const subscription = UserProfileData.subscribeUserProfile();
   const hoursSubscription = ProfilePageHours.subscribeProfilePageHour();
+  const subscribeOpportunity = Opportunities.subscribeOpportunity();
   const hours = Hours.subscribeHour();
-  const ready = hoursSubscription.ready() && subscription.ready() && hours.ready();
+  const ready = hoursSubscription.ready() && subscription.ready() && hours.ready() && subscribeOpportunity.ready();
   const userData = UserProfileData.find({}, { sort: { lastName: 1 } }).fetch();
   const userHourData = ProfilePageHours.find({}).fetch();
   const hoursData = Hours.find({}).fetch();
+  const opportunities = Opportunities.find({}).fetch();
   const userHours = [];
 
   if (ready) {
@@ -107,11 +111,19 @@ export default withTracker(() => {
         userHours.push(items);
       }
     });
-
+    Object.assign(userData[0], { numberOfOrgs: userHours.length });
     userHours.forEach(function (items) {
       for (let i = 0; i < hoursData.length; i++) {
         if (hoursData[i]._id === items.hourID) {
           Object.assign(items, { hours: hoursData[i].numberOfHours });
+        }
+      }
+      for (let i = 0; i < opportunities.length; i++) {
+        if (opportunities[i]._id === items.oppID) {
+          Object.assign(items, { eventTitle: opportunities[i].title });
+          Object.assign(items, { date: opportunities[i].oppStart.toDateString() });
+          Object.assign(items, { endDate: opportunities[i].oppEnd.toDateString() });
+          Object.assign(items, { imageCover: opportunities[i].cover });
         }
       }
     });

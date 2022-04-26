@@ -58,6 +58,12 @@ const ConfirmVolunteerCard = ({ linkData }) => (
             </Card.Meta>
           </Card.Header>
           <Card.Header as='h4' textAlign='left'>
+            Planned Hours:
+            <Card.Meta>
+              {linkData.numberOfHours}
+            </Card.Meta>
+          </Card.Header>
+          <Card.Header as='h4' textAlign='left'>
             Comment:
             <Card.Meta>
               {linkData.shortDesc}
@@ -89,6 +95,7 @@ ConfirmVolunteerCard.propTypes = {
     submittedPhoneNumber: PropTypes.string,
     DOB: PropTypes.string,
     shortDesc: PropTypes.string,
+    numberOfHours: PropTypes.number,
   }).isRequired,
 };
 
