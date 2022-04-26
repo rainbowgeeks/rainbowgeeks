@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Header,
@@ -7,7 +7,7 @@ import {
   Grid,
   Segment,
   List,
-  Divider, Loader,
+  Divider, Loader, Button,
 } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -28,7 +28,50 @@ import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 
 /** Renders the User's Profile. Profile Page is broken down into 4 components */
 const ProfilePage = ({ ready, userData, userHours }) => {
-  console.log(userHours);
+  const [myDatas, setMyDatas] = useState([]);
+  const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
+  const [prevButtonDisabled, setPrevButtonDisabled] = useState(true);
+  const [index, setIndex] = useState(4);
+  const [prevIndex, setPrevIndex] = useState(4);
+  let nums = index;
+  let prev = prevIndex;
+  const displayNextData = (data) => {
+    if (userHours && ready) {
+      prev = nums;
+      nums += 4;
+      if (nums >= data.length - 1) {
+        nums = data.length;
+        setNextButtonDisabled(true);
+        setPrevButtonDisabled(false);
+      } else {
+        setNextButtonDisabled(false);
+        setPrevButtonDisabled(false);
+      }
+      const copy = data.slice(prev, nums);
+      setIndex(nums);
+      setPrevIndex(prev);
+      setMyDatas(copy);
+    }
+  };
+  const displayPrevData = (data) => {
+    if (userHours && ready) {
+      nums = prev;
+      prev -= 4;
+      if (prev <= 0) {
+        prev = 0;
+        nums = 4;
+        setPrevButtonDisabled(true);
+        setNextButtonDisabled(false);
+      } else {
+        setPrevButtonDisabled(false);
+        setNextButtonDisabled(false);
+      }
+      const copy = data.slice(prev, nums);
+      setIndex(nums);
+      setPrevIndex(prev);
+      setMyDatas(copy);
+    }
+  };
   const getHours = (data) => {
     let hours = 0;
     if (data && ready) {
@@ -60,10 +103,20 @@ const ProfilePage = ({ ready, userData, userHours }) => {
               </Segment>
 
               <Divider section/>
-              <Header as='h3' textAlign='center'>Passed Events</Header>
-              <List>
-                {userHours.map((data) => <ProfilePageDisplayHoursEvent key={data._id} Events={data}/>)}
-              </List>
+              <Segment>
+                <Header as='h3' textAlign='center'>Passed Events</Header>
+                <List celled>
+                  {(myDatas.length > 0) ? myDatas.map((data) => <ProfilePageDisplayHoursEvent key={data._id} Events={data}/>) :
+                    userHours.slice(0, 4).map((data) => <ProfilePageDisplayHoursEvent key={data._id} Events={data}/>)}
+                  <List.Item>
+                    <List.Content>
+                      <Button floated='left' circular onClick={() => displayPrevData(userHours)} disabled={prevButtonDisabled}>Prev</Button>
+                      <Button floated='right' circular onClick={() => displayNextData(userHours)} disabled={nextButtonDisabled}>Next</Button>
+                    </List.Content>
+                  </List.Item>
+
+                </List>
+              </Segment>
               <Divider section/>
               <Card>
                 <Card.Content>
@@ -128,7 +181,6 @@ export default withTracker(() => {
       }
     });
   }
-
   return {
     userData,
     userHours,
