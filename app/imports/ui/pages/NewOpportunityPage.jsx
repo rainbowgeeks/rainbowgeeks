@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Grid, Loader, Header, Segment, Table, Label, Icon, Modal, Button } from 'semantic-ui-react';
+import { Container, Grid, Loader, Header, Segment, Table, Label, Icon, Modal, Button, SegmentInline } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, Link } from 'react-router-dom';
 import { _ } from 'meteor/underscore';
@@ -59,10 +59,11 @@ const OpportunityPage = ({ ready, opportunity }) => {
             <Icon color='black' name='setting' size='large'/>
           </Link>
           <Header as='h1' content={`${opp.organization} : ${opp.title}`}/>
-          <Header as='h3' content={`${opp.oppStart.toDateString('en-US')}, ${opp.oppStart.toLocaleTimeString('en-US')} - ${opp.oppEnd.toLocaleTimeString('en-US')}`}/>
+          <Header floated={'left'} as='h3' content={`${opp.oppStart.toDateString('en-US')}, ${opp.oppStart.toLocaleTimeString('en-US')} - ${opp.oppEnd.toLocaleTimeString('en-US')}`}/>
+          <Header floated={'right'} content={opp.category.map((c, index) => <Label color={'teal'} key={index} size={'medium'} icon={c.icon} content={c.name}/>)}/>
         </Grid.Column>
       </Grid>
-      <Grid container columns={2} style={gridHeight}>
+      <Grid container columns={3} style={gridHeight}>
         <Grid.Row>
           <Grid.Column textAlign='center' width={4}>
             {opp.poc.map(o => <OpportunityPagePoc key={o._id} poc={o}/>)}
@@ -79,40 +80,27 @@ const OpportunityPage = ({ ready, opportunity }) => {
             </Modal>
           </Grid.Column>
 
-          <Grid.Column width={12}>
-            <Header as='h3' icon='pencil alternate' content='Description' attached='top'/>
-            <Segment attached>{opp.description}</Segment>
-
-            <Table>
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell style={{ borderStyle: 'none' }}>
-                    <Icon size={'big'} name={'users'}/>
-                    {opp.environment.map((e, index) => <Label key={index} style={{ paddingLeft: '5px', paddingTop: '5px' }} size='medium' color='teal'>{e}</Label>)}
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell style={{ borderStyle: 'none' }}>
-                    <Segment.Inline>
-                      <Icon size={'big'} name={'map pin'}/>
-                      {opp.age.map((a, index) => <Label key={index} style={{ paddingLeft: '5px' }} size='medium' color='teal'>{a}</Label>)}
-                    </Segment.Inline>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
-
-            <Table>
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell>
-                    <Header icon={{ name: 'tags', size: 'big' }} content={'Categories'}/>
-                    {opp.category.map((c, index) => <Label color={'teal'} key={index} size={'medium'} icon={c.icon} content={c.name}/>)}
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
+          <Grid.Column width={8}>
+            <Grid.Row>
+              <Header as='h3' icon='pencil alternate' content='Description' attached='top'/>
+              <Segment attached>{opp.description}</Segment>
+            </Grid.Row>
+            <Grid.Row style={{ paddingTop: '20px' }}>
+              <Icon size={'big'} name={'map pin'}/>
+              {opp.environment.map((e, index) => <Label key={index} style={{ paddingLeft: '5px', paddingTop: '5px' }} size='medium' color='teal'>{e}</Label>)}
+              <Segment.Inline>
+                <Icon size={'big'} name={'users'}/>
+                {opp.age.map((a, index) => <Label key={index} style={{ paddingLeft: '5px' }} size='medium' color='teal'>{a}</Label>)}
+              </Segment.Inline>
+            </Grid.Row>
           </Grid.Column>
+
+         <Grid.Column textAlign={'center'} width={4}>
+            <Grid.Row>
+              <Header as='h4' content={'When: '`${opp.oppStart.toDateString('en-US')}, ${opp.oppStart.toLocaleTimeString('en-US')} - ${opp.oppEnd.toLocaleTimeString('en-US')}`}/>
+            </Grid.Row>
+         </Grid.Column>
+
         </Grid.Row>
       </Grid>
     </Container>
