@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { check } from 'meteor/check';
+import Geocode from 'react-geocode';
 import { Roles } from 'meteor/alanning:roles';
 import BaseCollection from '../base/BaseCollection';
 import { ROLE } from '../role/Role';
@@ -27,12 +28,15 @@ class LocationCollection extends BaseCollection {
    * @return {String} the docID of the opportunity location.
    */
   define({ address, lat, long }) {
-    const docID = this._collection.insert({
+    const docID = this.findOne({ address, lat, long });
+    if (docID) {
+      return docID._id;
+    }
+    return this._collection.insert({
       address,
       lat,
       long,
     });
-    return docID;
   }
 
   /**

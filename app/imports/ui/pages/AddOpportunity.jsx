@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Grid, Segment, Header, Loader } from 'semantic-ui-react';
-import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField, DateField } from 'uniforms-semantic';
+import { Grid, Segment, Header, Loader, Input } from 'semantic-ui-react';
+import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField, DateField, HiddenField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
@@ -9,6 +9,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Redirect } from 'react-router-dom';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import Geocode from 'react-geocode';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { Organizations } from '../../api/organization/OrganizationCollection';
 import { OpportunitiesPocs } from '../../api/opportunity/OpportunitiesPocCollection';
@@ -20,9 +22,9 @@ import { Environments } from '../../api/environment/EnvironmentCollection';
 import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollection';
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
+import { Locations } from '../../api/location/LocationCollection';
 import { defineMethod } from '../../api/base/BaseCollection.methods';
 import { PAGE_IDS } from '../utilities/PageIDs';
-import GoogleSelect from '../../forms/controllers/GoogleSelectField';
 import MultiSelectField from '../../forms/controllers/MultiSelectField';
 import RadioField from '../../forms/controllers/RadioField';
 
@@ -31,6 +33,12 @@ export const schemaEnv = ['Indoors', 'Mixed', 'Outdoors', 'Virtual'];
 export const schemaCat = ['Crisis/Disaster Relief', 'Food Insecurity', 'Environment',
   'Child/Family Support', 'Education', 'Ongoing Position',
   'Animal Welfare/ Rescue', 'Covid-19 Recovery'];
+
+// set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
+Geocode.setApiKey('AIzaSyA8P8TFj6VpzBM4dNJWayH6fi5zLU7qmOw');
+
+// set response language. Defaults to english.
+Geocode.setLanguage('en');
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = (pocSchema) => new SimpleSchema({
@@ -41,6 +49,7 @@ const formSchema = (pocSchema) => new SimpleSchema({
   oppStart: Date,
   oppEnd: Date,
   location: String,
+  checked: Boolean,
   description: { type: String, optional: true },
   age: { type: Array, label: 'Age' },
   'age.$': { type: String, allowedValues: schemaAge },
@@ -54,16 +63,18 @@ const formSchema = (pocSchema) => new SimpleSchema({
 const AddOpportunity = ({ ready, username }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
   const [address, setAddress] = useState('');
-  const [latLang, setLatLang] = useState({
-    lat: 0,
-    lang: 0,
-  });
+
+  const handleChange = (data) => {
+    setAddress(data);
+  };
+  const handleSelect = (data) => {
+    setAddress(data);
+  };
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    console.log(data);
-    const { owner, title, cover, oppStart, oppEnd, location, description, age, environment, category } = data;
+    const { owner, title, cover, oppStart, oppEnd, location, checked, description, age, environment, category } = data;
     let collectionName = Opportunities.getCollectionName();
-    let definitionData = { owner: owner, title: title, cover: cover, oppStart: oppStart, oppEnd: oppEnd, location: location, description: description };
+    let definitionData = { owner: owner, title: title, cover: cover, oppStart: oppStart, oppEnd: oppEnd, location: location, checked: checked, description: description };
     defineMethod.callPromise({ collectionName, definitionData }).then(() => age.forEach(ages => {
       collectionName = OpportunitiesAges.getCollectionName();
       definitionData = { title: title, owner: owner, age: ages };
@@ -86,6 +97,19 @@ const AddOpportunity = ({ ready, username }) => {
         collectionName = OpportunitiesPocs.getCollectionName();
         definitionData = { email: owner, title, location };
         defineMethod.callPromise({ collectionName, definitionData });
+      })
+      .then(() => {
+        Geocode.fromAddress(location).then(
+          (response) => {
+            const { lat, lng } = response.results[0].geometry.location;
+            collectionName = Locations.getCollectionName();
+            definitionData = { address: location, lat, long: lng };
+            defineMethod.callPromise({ collectionName, definitionData });
+          },
+          (error) => {
+            console.error(error);
+          },
+        );
       })
       .then(() => swal('Success', 'Opportunity added successfully', 'success'))
       .catch(error => swal('Error', error.message, 'error'));
@@ -117,11 +141,37 @@ const AddOpportunity = ({ ready, username }) => {
             <TextField name='cover'/>
             <DateField name="oppStart"/>
             <DateField name="oppEnd"/>
-            <GoogleSelect name='location'/>
+            <PlacesAutocomplete
+              value={address}
+              onChange={handleChange}
+              onSelect={handleSelect}
+            >
+              {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                <div>
+                  <Input
+                    {...getInputProps({
+                      placeholder: 'search...',
+                      className: 'location-search-input',
+                    })}
+                  />
+                  <div className="autocomplete-dropdown-container">
+                    {loading && <div>Loading...</div>}
+                    {suggestions.map(suggestion => (
+                      // eslint-disable-next-line react/jsx-key
+                      <div {...getSuggestionItemProps(suggestion)} key={suggestion.placeId}>
+                        <span>{suggestion.description}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </PlacesAutocomplete>
             <LongTextField name='description'/>
             <MultiSelectField name='age'/>
             <MultiSelectField name='environment'/>
             <MultiSelectField name='category'/>
+            <HiddenField name={'location'} value={address}/>
+            <HiddenField name={'checked'} value={false}/>
             <SubmitField value='Submit'/>
             <ErrorsField/>
           </Segment>
