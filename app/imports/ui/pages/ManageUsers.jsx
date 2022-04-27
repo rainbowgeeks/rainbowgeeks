@@ -58,6 +58,8 @@ export default withTracker(() => {
   if (ready) {
     users.forEach(function (items) {
       let total = 0;
+      Object.assign(items, { address: `${items.homeAddress}, ${items.city}, ${items.state}, ${items.zip}` });
+      Object.assign(items, { DOB: items.dateOfBirth.toDateString() });
       for (let i = 0; i < hours.length; i++) {
         if (hours[i].volunteerEmail === items.owner) {
           total += 1;
