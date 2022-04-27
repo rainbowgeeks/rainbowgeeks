@@ -13,12 +13,22 @@ import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollect
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
 import { OpportunityHours } from '../../api/opportunity/OpportunityHoursCollection';
-import { defineMethod } from '../../api/base/BaseCollection.methods';
+import { defineMethod, removeItMethod } from '../../api/base/BaseCollection.methods';
 
 /** Renders a page containing all of the Users reserving for an event. Use <ConfirmVolunteerCard> to render each cards. */
 const ConfirmVolunteersPage = ({ ready, finalData }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
-  const acceptData = [];
+  const receivedData = [];
+
+  const removeData = (obj) => {
+    const { rsvpID, oppID, volunteerID, submittedPhoneNumber, shortDesc, numberOfHours } = obj;
+    const collectionName = OpportunityRsvps.getCollectionName();
+    if (obj) {
+      const instance = { _id: rsvpID, oppID: oppID, volunteerID: volunteerID, phoneNumber: submittedPhoneNumber, shortDesc: shortDesc, numberOfHours: numberOfHours };
+      removeItMethod.callPromise({ collectionName, instance })
+        .catch(err => swal('Error', err.message, 'error'));
+    }
+  };
 
   const confirming = (data) => {
     Object.assign(data, { accepted: true });
@@ -26,7 +36,7 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
     document.getElementById(`posButton${data.index}`).disabled = true;
     // eslint-disable-next-line no-undef
     document.getElementById(`negButton${data.index}`).disabled = false;
-    acceptData.push(data);
+    receivedData.push(data);
   };
 
   const declining = (data) => {
@@ -35,29 +45,56 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
     document.getElementById(`negButton${data.index}`).disabled = true;
     // eslint-disable-next-line no-undef
     document.getElementById(`posButton${data.index}`).disabled = false;
+    receivedData.push(data);
   };
 
   const finalConfirmation = (data) => {
-    const temp = [];
-    data.forEach(function (items) {
+    const uniqData = [...new Set(data)];
+    const toAccept = [];
+    const toRemove = [];
+    uniqData.forEach(function (items) {
       if (items.accepted === true) {
-        temp.push(items);
+        toAccept.push(items);
+      } else {
+        toRemove.push(items);
       }
     });
-    temp.forEach(function (item) {
-      const { title, location, volunteerEmail, numberOfHours } = item;
-      const definitionData = { title: title, location: location, volunteerEmail: volunteerEmail, numberOfHours: numberOfHours };
+    toRemove.forEach(function (remove) {
+      const { rsvpID, oppID, volunteerID, submittedPhoneNumber, shortDesc, numberOfHours } = remove;
+      const instance = { _id: rsvpID, oppID: oppID, volunteerID: volunteerID, phoneNumber: submittedPhoneNumber, shortDesc: shortDesc, numberOfHours: numberOfHours };
+      const collectionName = OpportunityRsvps.getCollectionName();
+      removeItMethod.callPromise({ collectionName, instance })
+        .catch(err => swal('Error', err.message, 'error'));
+
+    });
+
+    toAccept.forEach(function (item) {
+      const {
+        title,
+        location,
+        volunteerEmail,
+        numberOfHours,
+      } = item;
+
+      const definitionData = {
+        title: title,
+        location: location,
+        volunteerEmail: volunteerEmail,
+        numberOfHours: numberOfHours,
+      };
       const collectionName = OpportunityHours.getCollectionName();
       defineMethod.callPromise({ collectionName, definitionData })
         .catch(error => swal('Error', error.message, 'error'))
         .then(() => {
-          if (data.indexOf(item) === data.length - 1) {
+          removeData(definitionData);
+          if (uniqData.indexOf(item) === uniqData.length - 1) {
             swal('Success', 'Successfully Confirmed Volunteers', 'success');
             setRedirectToReferer(true);
           }
         });
     });
   };
+
   const { from } = { from: { pathname: '/org-profile' } };
   if (redirectToReferer) {
     return <Redirect to={from}/>;
@@ -81,13 +118,13 @@ const ConfirmVolunteersPage = ({ ready, finalData }) => {
           </Container>
         </Grid.Column>)}
       </Grid>
-      <Button floated={'right'} icon labelPosition='right' onClick={() => finalConfirmation(acceptData)}>
+      <Button floated={'right'} icon labelPosition='right' onClick={() => finalConfirmation(receivedData)}>
         <Icon name='right arrow'/>
           Confirm Volunteer Registration
       </Button>
       <Footer2/>
     </Container>
-  ) : <Loader active>Getting User Data!</Loader>);
+  ) : <Loader active>Loading Volunteer Request!</Loader>);
 };
 
 // Require an array of Stuff documents in the props.
@@ -123,6 +160,7 @@ export default withTracker(() => {
   if (ready) {
     // loop through each element of OpportunityRsvps collection
     getAllRsvpCollection.forEach(function (element) {
+      delete Object.assign(element, { rsvpID: element._id })._id;
       delete Object.assign(element, { submittedPhoneNumber: element.phoneNumber }).phoneNumber;
       // for each element compare with each UserProfileData and find matching volunteerID and UserProfileData ._id
       for (let x = 0; x < getAllUserProfileCollection.length; x++) {

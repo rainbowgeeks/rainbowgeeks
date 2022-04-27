@@ -23,14 +23,8 @@ const ProfilePageUserInformation = ({ aboutUser }) => (
           </span>
         </Card.Meta>
         <Card.Meta style={cardMeta}>
-          <Icon name='calendar'/>
-          <span className='date'>Joined in 2022</span>
-        </Card.Meta>
-        <Card.Meta style={cardMeta}>
-          <a>
-            <Icon name='building'/>
-                Joined 6 Organizations
-          </a>
+          <Icon name='building'/>
+                Volunteered {aboutUser.numberOfOrgs} Organizations
         </Card.Meta>
       </Card.Content>
       <Card.Content extra>
@@ -49,6 +43,7 @@ ProfilePageUserInformation.propTypes = {
     lastName: PropTypes.string,
     aboutUser: PropTypes.string,
     profileImage: PropTypes.string,
+    numberOfOrgs: PropTypes.number,
   }).isRequired,
 };
 
