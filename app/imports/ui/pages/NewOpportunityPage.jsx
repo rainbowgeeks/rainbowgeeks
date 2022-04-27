@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Grid, Loader, Header, Segment, Table, Label, Icon, Modal, Button, SegmentInline } from 'semantic-ui-react';
+import { Container, Grid, Loader, Header, Segment, Label, Icon, Modal, Button, Divider } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, Link } from 'react-router-dom';
 import { _ } from 'meteor/underscore';
@@ -59,8 +59,7 @@ const OpportunityPage = ({ ready, opportunity }) => {
             <Icon color='black' name='setting' size='large'/>
           </Link>
           <Header as='h1' content={`${opp.organization} : ${opp.title}`}/>
-          <Header floated={'left'} as='h3' content={`${opp.oppStart.toDateString('en-US')}, ${opp.oppStart.toLocaleTimeString('en-US')} - ${opp.oppEnd.toLocaleTimeString('en-US')}`}/>
-          <Header floated={'right'} content={opp.category.map((c, index) => <Label color={'teal'} key={index} size={'medium'} icon={c.icon} content={c.name}/>)}/>
+          <Header floated={'left'} content={opp.category.map((c, index) => <Label color={'white'} key={index} size={'medium'} icon={c.icon} content={c.name}/>)}/>
         </Grid.Column>
       </Grid>
       <Grid container columns={3} style={gridHeight}>
@@ -80,27 +79,34 @@ const OpportunityPage = ({ ready, opportunity }) => {
             </Modal>
           </Grid.Column>
 
-          <Grid.Column width={8}>
+          <Grid.Column width={9}>
             <Grid.Row>
               <Header as='h3' icon='pencil alternate' content='Description' attached='top'/>
               <Segment attached>{opp.description}</Segment>
             </Grid.Row>
             <Grid.Row style={{ paddingTop: '20px' }}>
-              <Icon size={'big'} name={'map pin'}/>
+              <Icon size={'large'} name={'map pin'}/>
               {opp.environment.map((e, index) => <Label key={index} style={{ paddingLeft: '5px', paddingTop: '5px' }} size='medium' color='teal'>{e}</Label>)}
-              <Segment.Inline>
-                <Icon size={'big'} name={'users'}/>
+              <Segment.Inline style={{ paddingTop: '10px' }}>
+                <Icon size={'large'} name={'users'}/>
                 {opp.age.map((a, index) => <Label key={index} style={{ paddingLeft: '5px' }} size='medium' color='teal'>{a}</Label>)}
               </Segment.Inline>
             </Grid.Row>
           </Grid.Column>
 
-         <Grid.Column textAlign={'center'} width={4}>
+          <Grid.Column textAlign={'center'} width={3}>
             <Grid.Row>
-              <Header as='h4' content={'When: '`${opp.oppStart.toDateString('en-US')}, ${opp.oppStart.toLocaleTimeString('en-US')} - ${opp.oppEnd.toLocaleTimeString('en-US')}`}/>
+              <Header as='h4' style={{ marginBottom: 1.5 }} content='When:'/>
+              {opp.oppStart.toDateString('en-US')}
+              <Divider hidden fitted/>
+              {opp.oppStart.toLocaleTimeString('en-US')} - {opp.oppEnd.toLocaleTimeString('en-US')}
             </Grid.Row>
-         </Grid.Column>
-
+            <Divider hidden fitted/>
+            <Grid.Row>
+              <Header as='h4' content='Where:'/>
+              {opp.location}
+            </Grid.Row>
+          </Grid.Column>
         </Grid.Row>
       </Grid>
     </Container>
