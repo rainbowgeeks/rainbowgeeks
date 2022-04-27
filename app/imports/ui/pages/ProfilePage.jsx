@@ -72,6 +72,14 @@ const ProfilePage = ({ ready, userData, userHours }) => {
       setMyDatas(copy);
     }
   };
+  if (userData.length === 0) {
+    return (
+      <Container>
+        <Header textAlign={'center'}>
+        Account had Been Removed! Contact Admin for more information
+        </Header>
+      </Container>);
+  }
   const getHours = (data) => {
     let hours = 0;
     if (data && ready) {
@@ -152,34 +160,40 @@ export default withTracker(() => {
   const subscribeOpportunity = Opportunities.subscribeOpportunity();
   const hours = Hours.subscribeHour();
   const ready = hoursSubscription.ready() && subscription.ready() && hours.ready() && subscribeOpportunity.ready();
-  const userData = UserProfileData.find({}, { sort: { lastName: 1 } }).fetch();
+  let userData = UserProfileData.find({}, { sort: { lastName: 1 } }).fetch();
   const userHourData = ProfilePageHours.find({}).fetch();
   const hoursData = Hours.find({}).fetch();
   const opportunities = Opportunities.find({}).fetch();
-  const userHours = [];
+  let userHours = [];
 
   if (ready) {
-    userHourData.forEach(function (items) {
-      if (userData[0].owner === items.volunteerEmail) {
-        userHours.push(items);
-      }
-    });
-    Object.assign(userData[0], { numberOfOrgs: userHours.length });
-    userHours.forEach(function (items) {
-      for (let i = 0; i < hoursData.length; i++) {
-        if (hoursData[i]._id === items.hourID) {
-          Object.assign(items, { hours: hoursData[i].numberOfHours });
+    if (userData === 1) {
+      userHourData.forEach(function (items) {
+        if (userData[0].owner === items.volunteerEmail) {
+          userHours.push(items);
         }
-      }
-      for (let i = 0; i < opportunities.length; i++) {
-        if (opportunities[i]._id === items.oppID) {
-          Object.assign(items, { eventTitle: opportunities[i].title });
-          Object.assign(items, { date: opportunities[i].oppStart.toDateString() });
-          Object.assign(items, { endDate: opportunities[i].oppEnd.toDateString() });
-          Object.assign(items, { imageCover: opportunities[i].cover });
+      });
+      Object.assign(userData[0], { numberOfOrgs: userHours.length });
+      userHours.forEach(function (items) {
+        for (let i = 0; i < hoursData.length; i++) {
+          if (hoursData[i]._id === items.hourID) {
+            Object.assign(items, { hours: hoursData[i].numberOfHours });
+          }
         }
-      }
-    });
+        for (let i = 0; i < opportunities.length; i++) {
+          if (opportunities[i]._id === items.oppID) {
+            Object.assign(items, { eventTitle: opportunities[i].title });
+            Object.assign(items, { date: opportunities[i].oppStart.toDateString() });
+            Object.assign(items, { endDate: opportunities[i].oppEnd.toDateString() });
+            Object.assign(items, { imageCover: opportunities[i].cover });
+          }
+        }
+      });
+    } else if (userData === 1) {
+      userData = undefined;
+      userHours = undefined;
+    }
+
   }
   return {
     userData,

@@ -6,8 +6,8 @@ import { PAGE_IDS } from '../utilities/PageIDs';
 import AdminViewUsersCard from '../components/AdminViewUsersCard';
 import Footer2 from '../components/Footer2';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
-import { Hours } from "../../api/hours/HoursCollection";
-import { ProfilePageHours } from "../../api/profile/ProfilePageHoursCollection";
+import { ProfilePageHours } from '../../api/profile/ProfilePageHoursCollection';
+import { UserProfiles } from '../../api/user/UserProfileCollection';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ManageUsers = ({ ready, users }) => {
@@ -52,9 +52,11 @@ ManageUsers.propTypes = {
 export default withTracker(() => {
   const subscription = UserProfileData.subscribeAdminProfile();
   const subscribeHours = ProfilePageHours.subscribeProfilePageHourAdmin();
-  const ready = subscription.ready() && subscribeHours.ready();
+  const userAccountSubscribe = UserProfiles.subscribe();
+  const ready = subscription.ready() && subscribeHours.ready() && userAccountSubscribe.ready();
   const users = UserProfileData.find({}).fetch();
   const hours = ProfilePageHours.find({}).fetch();
+  const userOwner = UserProfiles.find({}).fetch();
   if (ready) {
     users.forEach(function (items) {
       let total = 0;
@@ -65,10 +67,16 @@ export default withTracker(() => {
           total += 1;
         }
       }
+      for (let i = 0; i < userOwner.length; i++) {
+        if (userOwner[i].email === items.owner) {
+          Object.assign(items, { getUserID: userOwner[i]._id });
+          Object.assign(items, { userID: userOwner[i].userID });
+        }
+      }
       Object.assign(items, { numberOfOrgs: total });
     });
   }
-  console.log(users);
+  console.log(userOwner, users);
   return {
     users,
     ready,

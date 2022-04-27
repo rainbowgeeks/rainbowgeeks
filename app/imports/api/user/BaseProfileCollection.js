@@ -125,6 +125,8 @@ class BaseProfileCollection extends BaseCollection {
    */
   removeIt(profileID) {
     // console.log('BaseProfileCollection.removeIt', profileID);
+    console.log(profileID);
+
     const profile = this._collection.findOne({ _id: profileID });
     const userID = profile.userID;
     if (!Users.isReferenced(userID)) {

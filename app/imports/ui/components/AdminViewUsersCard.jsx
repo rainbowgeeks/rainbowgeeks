@@ -2,11 +2,54 @@ import React from 'react';
 import { Button, Card, Icon, Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import swal from 'sweetalert';
 import { showValue, sortDate } from './ProfilePageAboutUser';
+import { UserProfileData } from '../../api/profile/ProfilePageCollection';
+import { removeItMethod } from '../../api/base/BaseCollection.methods';
 
 /** Renders a single Card Item in the ConfirmVolunteerCard, but it just confirms volunteer volunteering to the event. */
-const AdminViewUsersCard = ({ UserData }) => (
-  <Card color={'blue'}>
+const AdminViewUsersCard = ({ UserData }) => {
+
+  const removeAccount = (user) => {
+    swal({
+      title: `Are you sure You want to Delete ${user.firstName} ${user.lastName}?`,
+      text: 'Once deleted, you will not be able to recover this user',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        const { owner, firstName, lastName, phoneNumber, specialInterest, profileImage, aboutUser, acceptTerm, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability, _id } = user;
+        const collectionName = UserProfileData.getCollectionName();
+        if (user) {
+          const instance = { _id: _id, owner, firstName, lastName, phoneNumber, specialInterest, profileImage, acceptTerm, aboutUser, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability };
+          removeItMethod.callPromise({ collectionName, instance })
+            .catch(error => swal('Error', error.message, 'error'))
+            .then(() => {
+              swal(`${user.firstName} ${user.lastName}, had successfully been removed!`, { icon: 'success' });
+            });
+        }
+      }
+    });
+    /*
+    const { owner, firstName, lastName, phoneNumber, specialInterest, profileImage, aboutUser, acceptTerm, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability, _id, userID } = user;
+    let collectionName = UserProfileData.getCollectionName();
+    if (user) {
+      let instance = { _id: _id, owner, firstName, lastName, phoneNumber, specialInterest, profileImage,acceptTerm, aboutUser, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability };
+      removeItMethod.callPromise({ collectionName, instance })
+        .catch(error => swal('Error', error.message, 'error'))
+        .then(() => {
+          instance = { userID: userID };
+          collectionName = UserProfiles.getCollectionName();
+          removeItMethod.callPromise({ collectionName, instance })
+            .catch(errs => swal('Error', errs.message, 'error'));
+        });
+    }
+
+     */
+  };
+
+  return (<Card color={'blue'}>
     <Card.Content>
       <Image
         src={UserData.profileImage}
@@ -33,18 +76,25 @@ const AdminViewUsersCard = ({ UserData }) => (
     </Card.Content>
     <Card.Content extra>
       <a>
-        <Icon name='building outline' />
-        Number of Volunteers: {UserData.numberOfOrgs}
+        <Icon name='building outline'/>
+                    Number of Volunteers: {UserData.numberOfOrgs}
       </a>
     </Card.Content>
     <Card.Content extra>
       <Button.Group floated="right">
-        <Button positive>Edit</Button>
-        <Button negative>Remove</Button>
+        <Button positive icon labelPosition={'left'}>
+          <Icon name={'write'}/>
+                        Edit
+        </Button>
+        <Button negative icon labelPosition='right' onClick={() => removeAccount(UserData)}>
+          <Icon name={'trash'}/>
+                        Remove
+        </Button>
       </Button.Group>
     </Card.Content>
   </Card>
-);
+  );
+};
 
 // Require a document to be passed to this component.
 AdminViewUsersCard.propTypes = {
