@@ -128,15 +128,13 @@ landing background
   padding-top: 50px;
   color: #007ba4;
   font-family: 'Actor', Sans-serif, serif;
-  padding-left: 350px;
 }
 
 .h3About {
-  font-size:16px;
+  font-size:12px;
   color: #7a7a7a;
   font-family: 'Actor', Sans-serif, serif;
-  padding-left: 350px;
-  padding-right: 350px;
+  line-height: 1.5;
 }
 
 .navbar-menu-orientation {
