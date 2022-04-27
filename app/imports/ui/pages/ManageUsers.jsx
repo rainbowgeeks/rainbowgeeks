@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Loader, Container, Header, Input, List, Card, Button, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -12,7 +12,19 @@ import { UserProfiles } from '../../api/user/UserProfileCollection';
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ManageUsers = ({ ready, users }) => {
 
-  const stuff = 0;
+  const [obj, setObj] = useState([]);
+  const sortAlpha = (data) => {
+    if (data && ready) {
+      data.sort(function (a, b) {
+        const x = a.lastName.toLowerCase();
+        const y = b.lastName.toLowerCase();
+        if (x < y) { return -1; }
+        if (x > y) { return 1; }
+        return 0;
+      });
+      setObj(data);
+    }
+  };
 
   return ((ready) ? (
     <Container id={PAGE_IDS.USER_LIBRARY_PAGE}>
@@ -23,20 +35,12 @@ const ManageUsers = ({ ready, users }) => {
           <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
         </List.Item>
         <List.Item>
-          <Button compact size='small'>A-Z</Button>
-        </List.Item>
-        <List.Item>
-          <Button compact size='small'>Category</Button>
-        </List.Item>
-        <List.Item>
-          <Button compact size='small'>Newest</Button>
-        </List.Item>
-        <List.Item>
-          <Button compact size='small'>Popular</Button>
+          <Button compact size='small' onClick={() => sortAlpha(users)}>Last Names</Button>
         </List.Item>
       </List>
       <Card.Group stackable itemsPerRow={3}>
-        {users.map((data) => <AdminViewUsersCard key={data._id} UserData={data}/>) }
+        {(obj.length === users.length) ? obj.map((data) => <AdminViewUsersCard key={data._id} UserData={data}/>) :
+          users.map((data) => <AdminViewUsersCard key={data._id} UserData={data}/>)}
       </Card.Group>
       <Divider/>
       <Footer2/>

@@ -77,11 +77,11 @@ const AdminViewUsersCard = ({ UserData }) => {
     <Card.Content extra>
       <a>
         <Icon name='building outline'/>
-                    Number of Volunteers: {UserData.numberOfOrgs}
+        Number of Volunteers: {UserData.numberOfOrgs}
       </a>
     </Card.Content>
     <Card.Content extra>
-      <Button.Group floated="right">
+      <Button.Group floated="right" fluid>
         <Button positive icon labelPosition={'left'}>
           <Icon name={'write'}/>
                         Edit
