@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Segment, Form } from 'semantic-ui-react';
 import { AutoForm, TextField, LongTextField, SubmitField, ErrorsField, SelectField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
@@ -30,6 +30,7 @@ const getHours = (data) => {
 };
 
 const OrgReservation = ({ rsvp }) => {
+  const [redirectToReferer, setRedirectToReferer] = useState(false);
   const { firstName, lastName, owner, oppID } = rsvp;
   const { oppStart, oppEnd } = Opportunities.findDoc({ _id: oppID });
   const matchStart = oppStart.toString().slice(16, 18);
@@ -50,8 +51,14 @@ const OrgReservation = ({ rsvp }) => {
       .then(() => {
         swal('Success', 'You\'ve RSVP to this opportunity.\n\n Waiting on your Confirmation', 'success');
         formRef.reset();
+        setRedirectToReferer(true);
       });
   };
+
+  const { from } = { from: { pathname: '/profile' } };
+  if (redirectToReferer) {
+    return <Redirect to={from}/>;
+  }
 
   const bridge = new SimpleSchema2Bridge(formSchema(firstName, lastName, owner, hours, oppID));
   let fRef = null;

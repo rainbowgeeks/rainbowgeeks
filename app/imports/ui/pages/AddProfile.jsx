@@ -81,7 +81,7 @@ const AddProfile = ({ userData }) => {
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   let fRef = null;
   return (
-    <Container id={PAGE_IDS.ADD_PROFILE}>
+    <Container id={PAGE_IDS.ADD_PROFILE} container centered>
       <Segment inverted color={'blue'}>
         <Header as="h1" textAlign="center">Create My Profile</Header>
         <Divider/>
@@ -108,7 +108,7 @@ const AddProfile = ({ userData }) => {
                   </Form.Group>
                   <Form.Group width={2}>
                     <TextField name='phoneNumber' />
-                    <DateField name='dateOfBirth' type={'date'}/>
+                    <DateField name='dateOfBirth'/>
                   </Form.Group>
                   <LongTextField name='aboutUser' label='About Me' placeholder='Enter a Brief Introduction of yourself'/>
                 </Segment>

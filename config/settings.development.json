@@ -321,7 +321,7 @@
       "opportunityVolunteerHours": [
         { "volunteerEmail": "john@foo.com", "numberOfHours": 3 },
         { "volunteerEmail": "robin@foo.com", "numberOfHours": 15 },
-        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 11 },
+        { "volunteerEmail": "perkin@foo.com", "numberOfHours": 25 },
         { "volunteerEmail": "alex@foo.com", "numberOfHours": 5 },
         { "volunteerEmail": "henry@foo.com", "numberOfHours": 3 },
         { "volunteerEmail": "norman@foo.com", "numberOfHours": 2 },
