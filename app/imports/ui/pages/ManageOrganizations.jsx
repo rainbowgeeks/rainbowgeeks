@@ -1,110 +1,70 @@
 import React from 'react';
-import { Loader, Container, Header, Input, List, Card, Button, Image, Icon, Grid, Divider } from 'semantic-ui-react';
+import { Loader, Container, Header, Input, List, Card, Button, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PAGE_IDS } from '../utilities/PageIDs';
-import { Stuffs } from '../../api/stuff/StuffCollection';
+import { Organizations } from '../../api/organization/OrganizationCollection';
+import Footer2 from '../components/Footer2';
+import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
+import AdminViewOrganiazationCard from '../components/AdminViewOrganiazationCard';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const ManageOrganizations = ({ ready }) => ((ready) ? (
-  <Container id={PAGE_IDS.ORG_LIBRARY_PAGE}>
-    <Header as="h1" textAlign="center">Manage Organizations</Header>
-    <Input fluid placeholder="Search Organizations..."/>
-    <List horizontal style={{ paddingBottom: '20px' }}>
-      <List.Item>
-        <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small'>A-Z</Button>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small'>Category</Button>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small'>Newest</Button>
-      </List.Item>
-      <List.Item>
-        <Button compact size='small'>Popular</Button>
-      </List.Item>
-    </List>
-    <Card.Group stackable centered itemsPerRow={3}>
-      <Card>
-        <Image src='/images/meteor-logo.png' fluid wrapped ui={false} />
-        <Card.Content>
-          <Card.Header>Habitat For Humanity</Card.Header>
-          <Card.Meta>Housing Assistance</Card.Meta>
-        </Card.Content>
-        <Card.Content extra>
-          <a>
-            <Icon name='calendar alternate outline' />
-              10 Opportunities
-          </a>
-          <Button.Group floated="right" compact>
-            <Button positive>Edit</Button>
-            <Button negative>Delete</Button>
-          </Button.Group>
-        </Card.Content>
-      </Card>
+const ManageOrganizations = ({ ready, data }) => {
 
-      <Card>
-        <Image src='/images/meteor-logo.png' fluid wrapped ui={false} />
-        <Card.Content>
-          <Card.Header>American Red Cross</Card.Header>
-          <Card.Meta>Crisis/Disaster Relief, Family Support</Card.Meta>
-        </Card.Content>
-        <Card.Content extra>
-          <a>
-            <Icon name='calendar alternate outline' />
-              15 Opportunities
-          </a>
-          <Button.Group floated="right" compact>
-            <Button positive>Edit</Button>
-            <Button negative>Delete</Button>
-          </Button.Group>
-        </Card.Content>
-      </Card>
+  // this vairaible is just here to prevent es-lint
+  const stuffs = [];
 
-      <Card>
-        <Image src='/images/meteor-logo.png' fluid wrapped ui={false} />
-        <Card.Content>
-          <Card.Header>Salvation Army</Card.Header>
-          <Card.Meta>Crisis/Disaster Relief, Family Support</Card.Meta>
-        </Card.Content>
-        <Card.Content extra>
-          <a>
-            <Icon name='calendar alternate outline' />
-              20 Opportunities
-          </a>
-          <Button.Group floated="right" compact>
-            <Button positive>Edit</Button>
-            <Button negative>Delete</Button>
-          </Button.Group>
-        </Card.Content>
-      </Card>
-    </Card.Group>
-    <Divider hidden/>
-    <Grid centered columns={1} padded>
-      <Button size="big" positive>Add Organization</Button>
-    </Grid>
-  </Container>
-) : <Loader active>Getting data</Loader>);
+  return ((ready) ? (
+    <Container id={PAGE_IDS.ORG_LIBRARY_PAGE}>
+      <Header as="h1" textAlign="center">Manage Organizations</Header>
+      <Input fluid placeholder="Search Organizations..."/>
+      <List horizontal style={{ paddingBottom: '20px' }}>
+        <List.Item>
+          <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
+        </List.Item>
+        <List.Item>
+          <Button compact size='small'>A-Z</Button>
+        </List.Item>
+      </List>
+      <Card.Group stackable centered itemsPerRow={3}>
+        {data.map((orgDatas) => <AdminViewOrganiazationCard key={orgDatas._id} orgData={orgDatas}/>)}
+      </Card.Group>
+      <Divider hidden/>
+      <Footer2/>
+    </Container>
+  ) : <Loader active>Getting data</Loader>);
+};
 
 // Require an array of Stuff documents in the props.
 ManageOrganizations.propTypes = {
-  opportunities: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
   // Get access to Stuff documents.
-  const subscription = Stuffs.subscribeStuffAdmin();
+  const subscription = Organizations.subscribeOrganizationAdmin();
+  const pocSubscribe = OrganizationPocs.subscribeOrganizationPocAdmin();
   // Determine if the subscription is ready
-  const ready = subscription.ready();
+  const ready = subscription.ready() && pocSubscribe.ready();
   // Get the Stuff documents and sort by owner then name
-  const stuffs = Stuffs.find({}, { sort: { owner: 1, name: 1 } }).fetch();
-  // console.log(stuffs, ready);
+  const organizations = Organizations.find({}).fetch();
+  const pocOrganizations = OrganizationPocs.find({}).fetch();
+  const data = [];
+  if (ready) {
+    organizations.forEach(function (items) {
+      const temp = [];
+      for (let x = 0; x < pocOrganizations.length; x++) {
+        if (pocOrganizations[x].orgEmail === items.orgEmail) {
+          temp.push(pocOrganizations[x].pocEmail);
+        }
+      }
+      Object.assign(items, { pocEmails: [...temp] });
+      data.push(items);
+    });
+  }
   return {
-    stuffs,
+    data,
     ready,
   };
 })(ManageOrganizations);

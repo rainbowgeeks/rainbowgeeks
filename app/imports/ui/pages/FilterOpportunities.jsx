@@ -17,13 +17,18 @@ import SearchOpp from '../components/SearchOpp';
 import Opportunity from '../components/Opportunity';
 import GoogleMap from '../components/GoogleMap';
 //
+function getLocation(l) {
+  const { location } = l;
+  const latLng = Locations.findOne({ address: location });
+  return _.extend({}, latLng);
+}
+//
 function getOpportunities(o) {
-  const { _id: oppID, location } = o;
+  const { _id: oppID } = o;
   const age = _.pluck(OpportunitiesAges.find({ oppID }).fetch(), 'age');
   const environment = _.pluck(OpportunitiesEnvs.find({ oppID }).fetch(), 'environment');
   const category = _.pluck(OpportunitiesCats.find({ oppID }).fetch(), 'category');
-  const { lat, long } = Locations.findDoc({ address: location });
-  return _.extend({}, o, { age, environment, category, lat, long });
+  return _.extend({}, o, { age, environment, category });
 }
 //
 function getCategories(c) {
@@ -122,6 +127,11 @@ const FilterOpportunities = ({ ready, opportunities, categories }) => {
   const gridHeigth = { paddingRight: '50px', paddingLeft: '50px' };
   const data = searchByTOorC(makeOpportunities, key);
   const collection = conditionals(data, filterAge, filterEnv);
+  let mapAddress;
+  if (collection) {
+    mapAddress = collection.map(c => getLocation(c));
+  }
+  // console.log(mapAddress);
   // const dataByAge = (filterAge.length <= 0) ? data : filterByAge(data, filterAge);
   // const dataByEnv = (filterEnv.length <= 0) ? dataByAge : filterByEnv(dataByAge, filterAge);
   //
@@ -150,7 +160,7 @@ const FilterOpportunities = ({ ready, opportunities, categories }) => {
         </Grid.Column>
         <Grid.Column width={7}>
           <div>
-            <GoogleMap markers={collection}/>
+            <GoogleMap markers={mapAddress}/>
           </div>
         </Grid.Column>
       </Grid>

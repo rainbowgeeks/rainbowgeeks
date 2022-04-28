@@ -134,7 +134,7 @@ const AddOpportunity = ({ ready, username }) => {
             <DateField name="oppStart"/>
             <DateField name="oppEnd"/>
             <GooglePlacesAutocomplete
-              apiKey="AIzaSyA8P8TFj6VpzBM4dNJWayH6fi5zLU7qmOw"
+              apiKey="AIzaSyBDiD5UqNxunHW47TztQ5NlMl5UFsEy4Xc"
               selectProps={{
                 value,
                 onChange: setValue,
