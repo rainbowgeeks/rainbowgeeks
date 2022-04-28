@@ -86,7 +86,7 @@ class BaseCollection {
       || this._collection.findOne({ _id: name }));
     if (!doc) {
       if (typeof name !== 'string') {
-        console.log('error2');
+        console.log(name, 'error2');
         throw new Meteor.Error(`${JSON.stringify(name)} is not a defined ${this._type}`, '', Error().stack);
       } else {
         console.log('error3');
