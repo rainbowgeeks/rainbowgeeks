@@ -197,6 +197,12 @@ below is for org profile page responsiveness
   width: 100%;
 }
 
+.google-map-opportunity-border {
+  padding-top: 15px;
+  height: 30vh;
+  width: 100%;
+}
+
 /* Styling for Filter Opportunities Page. */
 .make-scrollable {
   overflow-y: auto;
@@ -223,4 +229,27 @@ below is for org profile page responsiveness
   height: 300px;
   object-fit: cover;
   margin-bottom: 20px;
+}
+
+.white-gray-border {
+  border-color: white;
+  border-width: 10px;
+  border-style: solid;
+  border-radius: 10px;
+}
+
+.circular-image {
+  width: 100px;
+  border-radius: 50%;
+}
+
+.bigger-font {
+  font-size: large;
+  font-family: monospace;
+}
+
+.slightly-smaller-font {
+  color: black;
+  font-size: small;
+  font-family: monospace;
 }

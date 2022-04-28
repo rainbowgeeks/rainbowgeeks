@@ -2,7 +2,7 @@ import React from 'react';
 import { Loader, Image, Label, Grid, Menu, Table, Icon, Divider, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 import { PAGE_IDS } from '../utilities/PageIDs';
 
@@ -86,7 +86,10 @@ const AdminProfile = ({ ready }) => ((ready) ? (
         <Menu.Item as={NavLink} exact to="/manage-org">Manage Organizations</Menu.Item>
         <Menu.Item as={NavLink} exact to="/manage-opps">Manage Opportunities</Menu.Item>
         <Menu.Item>Site Preferences</Menu.Item>
-        <Menu.Item as={NavLink} exact to="/admin-analytics">Analytics</Menu.Item>
+      </Menu>
+      <Menu vertical fluid>
+        <Menu.Item header>Admin Tools</Menu.Item>
+        <td onClick={()=> window.open("https://analytics.google.com/", "_blank")}><Menu.Item>Google Analytics</Menu.Item></td>
       </Menu>
     </Grid.Column>
   </Grid>

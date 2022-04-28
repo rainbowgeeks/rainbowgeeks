@@ -128,18 +128,6 @@ const ProfilePage = ({ ready, userData, userHours }) => {
                 </List>
               </Segment>
               <Divider section/>
-              <Card>
-                <Card.Content>
-                  <Card.Header>Recent Activity</Card.Header>
-                </Card.Content>
-                <Card.Content>
-                  <Feed>
-                    <ProfilePageRecentEvent/>
-                    <ProfilePageRecentEvent/>
-                    <ProfilePageRecentEvent/>
-                  </Feed>
-                </Card.Content>
-              </Card>
             </Grid.Column>
           </Grid.Row>
         </Grid>
