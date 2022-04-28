@@ -1,15 +1,16 @@
 import React from 'react';
-import { Button, Card, Icon, Image } from 'semantic-ui-react';
+import { Button, Card, Header, Icon, Image, Modal } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { showValue, sortDate } from './ProfilePageAboutUser';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { removeItMethod } from '../../api/base/BaseCollection.methods';
+import EditUserHoursAdmin from './EditUserHoursAdmin';
 
 /** Renders a single Card Item in the ConfirmVolunteerCard, but it just confirms volunteer volunteering to the event. */
 const AdminViewUsersCard = ({ UserData }) => {
-
+  const [open, setOpen] = React.useState(false);
   const removeAccount = (user) => {
     swal({
       title: `Are you sure You want to Delete ${user.firstName} ${user.lastName}?`,
@@ -31,22 +32,6 @@ const AdminViewUsersCard = ({ UserData }) => {
         }
       }
     });
-    /*
-    const { owner, firstName, lastName, phoneNumber, specialInterest, profileImage, aboutUser, acceptTerm, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability, _id, userID } = user;
-    let collectionName = UserProfileData.getCollectionName();
-    if (user) {
-      let instance = { _id: _id, owner, firstName, lastName, phoneNumber, specialInterest, profileImage,acceptTerm, aboutUser, dateOfBirth, homeAddress, city, state, zip, interest, environmentalPref, availability };
-      removeItMethod.callPromise({ collectionName, instance })
-        .catch(error => swal('Error', error.message, 'error'))
-        .then(() => {
-          instance = { userID: userID };
-          collectionName = UserProfiles.getCollectionName();
-          removeItMethod.callPromise({ collectionName, instance })
-            .catch(errs => swal('Error', errs.message, 'error'));
-        });
-    }
-
-     */
   };
 
   return (<Card color={'blue'}>
@@ -82,10 +67,35 @@ const AdminViewUsersCard = ({ UserData }) => {
     </Card.Content>
     <Card.Content extra>
       <Button.Group floated="right" fluid>
-        <Button positive icon labelPosition={'left'}>
-          <Icon name={'write'}/>
-                        Edit
-        </Button>
+        <Modal
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+          open={open}
+          size={'tiny'}
+          trigger={<Button positive icon labelPosition={'left'}>
+            <Icon name={'write'}/>
+              Edit
+          </Button>}
+        >
+          <Modal.Header textalign={'center'}>{UserData.firstName} {UserData.lastName}</Modal.Header>
+          <Modal.Content image scrolling>
+            <Image
+              src={UserData.profileImage}
+              size={'medium'}
+              wrapped
+            />
+            <Modal.Description>
+              <Header>Hours Log</Header>
+              {UserData.userEvents.map((data) => <EditUserHoursAdmin key={data._id} user={data}/>)}
+            </Modal.Description>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button color='grey' onClick={() => setOpen(false)}>
+              Close
+            </Button>
+          </Modal.Actions>
+        </Modal>
+
         <Button negative icon labelPosition='right' onClick={() => removeAccount(UserData)}>
           <Icon name={'trash'}/>
                         Remove
@@ -112,6 +122,8 @@ AdminViewUsersCard.propTypes = {
     environmentalPref: PropTypes.array,
     DOB: PropTypes.string,
     phoneNumber: PropTypes.string,
+    userEvents: PropTypes.array,
+    hoursData: PropTypes.array,
   }).isRequired,
 };
 

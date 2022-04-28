@@ -72,6 +72,7 @@ const ProfilePage = ({ ready, userData, userHours }) => {
       setMyDatas(copy);
     }
   };
+
   if (userData.length === 0) {
     return (
       <Container>
@@ -80,6 +81,7 @@ const ProfilePage = ({ ready, userData, userHours }) => {
         </Header>
       </Container>);
   }
+
   const getHours = (data) => {
     let hours = 0;
     if (data && ready) {
@@ -160,14 +162,14 @@ export default withTracker(() => {
   const subscribeOpportunity = Opportunities.subscribeOpportunity();
   const hours = Hours.subscribeHour();
   const ready = hoursSubscription.ready() && subscription.ready() && hours.ready() && subscribeOpportunity.ready();
-  let userData = UserProfileData.find({}, { sort: { lastName: 1 } }).fetch();
+  const userData = UserProfileData.find({}, { sort: { lastName: 1 } }).fetch();
   const userHourData = ProfilePageHours.find({}).fetch();
   const hoursData = Hours.find({}).fetch();
   const opportunities = Opportunities.find({}).fetch();
-  let userHours = [];
+  const userHours = [];
 
   if (ready) {
-    if (userData === 1) {
+    if (userData.length === 1) {
       userHourData.forEach(function (items) {
         if (userData[0].owner === items.volunteerEmail) {
           userHours.push(items);
@@ -189,11 +191,7 @@ export default withTracker(() => {
           }
         }
       });
-    } else if (userData === 1) {
-      userData = undefined;
-      userHours = undefined;
     }
-
   }
   return {
     userData,

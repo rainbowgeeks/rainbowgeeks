@@ -37,6 +37,20 @@ class ProfilePageHoursCollection extends BaseCollection {
     return docID;
   }
 
+  update(docID, { hourID, volunteerEmail, oppID }) {
+    const updateData = {};
+    if (hourID) {
+      updateData.hourID = hourID;
+    }
+    if (volunteerEmail) {
+      updateData.volunteerEmail = volunteerEmail;
+    }
+    if (oppID) {
+      updateData.oppID = oppID;
+    }
+    this._collection.update(docID, { $set: updateData });
+  }
+
   /**
    * A stricter form of remove that throws an error if the document or docID could not be found in this collection.
    * @param { String | Object } name A document or docID in this collection.

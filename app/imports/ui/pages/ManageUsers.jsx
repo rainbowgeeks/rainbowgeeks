@@ -8,6 +8,8 @@ import Footer2 from '../components/Footer2';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import { ProfilePageHours } from '../../api/profile/ProfilePageHoursCollection';
 import { UserProfiles } from '../../api/user/UserProfileCollection';
+import { Hours } from '../../api/hours/HoursCollection';
+import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ManageUsers = ({ ready, users }) => {
@@ -57,20 +59,38 @@ export default withTracker(() => {
   const subscription = UserProfileData.subscribeAdminProfile();
   const subscribeHours = ProfilePageHours.subscribeProfilePageHourAdmin();
   const userAccountSubscribe = UserProfiles.subscribe();
-  const ready = subscription.ready() && subscribeHours.ready() && userAccountSubscribe.ready();
+  const hoursSubscribe = Hours.subscribeHourAdmin();
+  const opportunitySubscribe = Opportunities.subscribeOpportunityAdmin();
+  const ready = subscription.ready() && subscribeHours.ready() && userAccountSubscribe.ready() && hoursSubscribe.ready() && opportunitySubscribe.ready();
   const users = UserProfileData.find({}).fetch();
   const hours = ProfilePageHours.find({}).fetch();
   const userOwner = UserProfiles.find({}).fetch();
+  const hourData = Hours.find({}).fetch();
+  const opps = Opportunities.find({}).fetch();
   if (ready) {
     users.forEach(function (items) {
       let total = 0;
+      const userHours = [];
       Object.assign(items, { address: `${items.homeAddress}, ${items.city}, ${items.state}, ${items.zip}` });
       Object.assign(items, { DOB: items.dateOfBirth.toDateString() });
+      Object.assign(items, { hoursData: [...hours] });
+
       for (let i = 0; i < hours.length; i++) {
         if (hours[i].volunteerEmail === items.owner) {
           total += 1;
+          userHours.push(hours[i]);
         }
       }
+      Object.assign(items, { userEvents: [...userHours] });
+      items.userEvents.forEach(function (data) {
+        Object.assign(data, { hoursData: [...hourData] });
+        for (let x = 0; x < opps.length; x++) {
+          if (opps[x]._id === data.oppID) {
+            Object.assign(data, { eventName: opps[x].title });
+
+          }
+        }
+      });
       for (let i = 0; i < userOwner.length; i++) {
         if (userOwner[i].email === items.owner) {
           Object.assign(items, { getUserID: userOwner[i]._id });
@@ -80,7 +100,6 @@ export default withTracker(() => {
       Object.assign(items, { numberOfOrgs: total });
     });
   }
-  console.log(userOwner, users);
   return {
     users,
     ready,
