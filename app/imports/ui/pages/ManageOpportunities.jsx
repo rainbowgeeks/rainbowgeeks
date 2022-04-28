@@ -23,24 +23,7 @@ const ManageOpportunities = ({ ready, username }) => {
   return ((ready) ? (
     <Container id={PAGE_IDS.USER_LIBRARY_PAGE}>
       <Header as="h1" textAlign="center">Manage Opportunities</Header>
-      <Input fluid placeholder="Search Profiles..."/>
-      <List horizontal style={{ paddingBottom: '20px' }}>
-        <List.Item>
-          <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
-        </List.Item>
-        <List.Item>
-          <Button compact size='small'>A-Z</Button>
-        </List.Item>
-        <List.Item>
-          <Button compact size='small'>Category</Button>
-        </List.Item>
-        <List.Item>
-          <Button compact size='small'>Newest</Button>
-        </List.Item>
-        <List.Item>
-          <Button compact size='small'>Popular</Button>
-        </List.Item>
-      </List>
+      <Divider/>
       <Card.Group stackable centered itemsPerRow={3}>
         {opportunities.map(opportunity => <ManageOpportunity key={opportunity._id} manageOpportunity={opportunity}/>)}
       </Card.Group>

@@ -54,10 +54,28 @@ class OrganizationCollection extends BaseCollection {
    * @param missionStatement the new mission statement(optional).
    * @param description the new description (optional).
    */
-  update(docID, { missionStatement, description }) {
+  update(docID, { missionStatement, description, orgEmail, orgImage, address, city, state, zip }) {
     const updateData = {};
     if (missionStatement) {
       updateData.missionStatement = missionStatement;
+    }
+    if (orgEmail) {
+      updateData.orgEmail = orgEmail;
+    }
+    if (orgImage) {
+      updateData.orgImage = orgImage;
+    }
+    if (address) {
+      updateData.address = address;
+    }
+    if (city) {
+      updateData.city = city;
+    }
+    if (state) {
+      updateData.state = state;
+    }
+    if (zip) {
+      updateData.zip = zip;
     }
     if (description) {
       updateData.description = description;

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Loader, Image, Label, Grid, Menu, Table, Icon, Divider, Button } from 'semantic-ui-react';
+import { Loader, Image, Label, Grid, Menu, Divider} from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { NavLink, Route } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Stuffs } from '../../api/stuff/StuffCollection';
 import { PAGE_IDS } from '../utilities/PageIDs';
 
@@ -14,71 +14,6 @@ const AdminProfile = ({ ready }) => ((ready) ? (
       <Divider hidden/>
       <Label size='big' circular>Administrator</Label>
     </Grid.Column>
-    <Grid.Column width={8}>
-      <Table celled striped>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell colSpan='2'>Account</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>Username</Table.Cell>
-            <Table.Cell>
-              johnd
-              <Button compact floated='right'>Edit</Button>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Password</Table.Cell>
-            <Table.Cell>
-              ********
-              <Button compact floated='right'>Edit</Button>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Name</Table.Cell>
-            <Table.Cell>
-              John Doe
-              <Button compact floated='right'>Edit</Button>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Email</Table.Cell>
-            <Table.Cell>
-              johndoe@foo.com
-              <Button compact floated='right'>Edit</Button>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Address</Table.Cell>
-            <Table.Cell>
-              1234 Dole Street
-              <Button compact floated='right'>Edit</Button>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              <Icon name='github' /> GitHub
-            </Table.Cell>
-            <Table.Cell>
-              johnd
-              <Button compact floated='right'>Edit</Button>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              <Icon name='twitter' /> Twitter
-            </Table.Cell>
-            <Table.Cell>
-              johnd
-              <Button compact floated='right'>Edit</Button>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
-    </Grid.Column>
     <Grid.Column width={3}>
       <Menu vertical fluid>
         <Menu.Item header>Site Contents</Menu.Item>
@@ -89,7 +24,7 @@ const AdminProfile = ({ ready }) => ((ready) ? (
       </Menu>
       <Menu vertical fluid>
         <Menu.Item header>Admin Tools</Menu.Item>
-        <td onClick={()=> window.open("https://analytics.google.com/", "_blank")}><Menu.Item>Google Analytics</Menu.Item></td>
+        <td onClick={() => window.open('https://analytics.google.com/', '_blank')}><Menu.Item>Google Analytics</Menu.Item></td>
       </Menu>
     </Grid.Column>
   </Grid>

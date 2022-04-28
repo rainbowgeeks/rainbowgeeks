@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Meteor } from 'meteor/meteor';
-import { Grid, Segment, Header, Form, Loader, Divider, Container, Button } from 'semantic-ui-react';
-import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField, HiddenField, SelectField } from 'uniforms-semantic';
+import { Segment, Header, Form, Loader, Divider, Container, Button } from 'semantic-ui-react';
+import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField} from 'uniforms-semantic';
 import swal from 'sweetalert';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
@@ -30,15 +29,17 @@ const formSchema = new SimpleSchema({
 
 /** Renders the Page for adding a document. */
 const EditOrganization = ({ ready, orgProfile }) => {
-  console.log(orgProfile);
   const [redirectToReferer, setRedirectToReferer] = useState(false);
   const [uploadFile, setUploadFile] = useState({});
   const [currentImage, setNewImage] = useState('');
   // On submit, insert the data.
-  const submit = (data, formRef) => {
-    const { organizationName, missionStatement, description, orgEmail, orgImage, city, state, zip, acceptTerm } = data;
+  const submit = (data) => {
+    const { organizationName, missionStatement, description, orgEmail, orgImage, city, state, zip, acceptTerm, _id } = data;
     const collectionName = Organizations.getCollectionName();
-    const updateData = { organizationName, missionStatement, description, orgEmail, orgImage, city, state, zip, acceptTerm };
+    const updateData = { id: _id, organizationName, missionStatement, description, orgEmail, orgImage, city, state, zip, acceptTerm };
+    if (currentImage !== '') {
+      updateData.orgImage = currentImage;
+    }
     updateMethod.callPromise({ collectionName, updateData })
       .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
@@ -114,7 +115,7 @@ const EditOrganization = ({ ready, orgProfile }) => {
           </Segment>
           <AutoForm ref={ref => {
             fRef = ref;
-          }} schema={bridge} model={orgProfile} onSubmit={data => submit(data, fRef)}>
+          }} schema={bridge} model={orgProfile} onSubmit={data => submit(data)}>
             <Segment>
               <Header as="h3" textAlign="center">Update My Information</Header>
               <Segment>
