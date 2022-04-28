@@ -25,16 +25,17 @@ const defaultProps = {
 };
 
 const GoogleMap = ({ markers }) => {
+  console.log('here');
   // console.log(markers);
   return (
     // Important! Always set the container height explicitly
     <div id={COMPONENT_IDS.FILTER_OPPORTUNITIES_MAP} className={'google-map-border'}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyA8P8TFj6VpzBM4dNJWayH6fi5zLU7qmOw' }}
+        bootstrapURLKeys={{ key: 'AIzaSyBDiD5UqNxunHW47TztQ5NlMl5UFsEy4Xc' }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
       >
-        {markers.map(m => <AddressPin key={m._id} lat={m.lat} lng={m.long} title={m.title}/>)}
+        {markers.map((m, index) => <AddressPin key={index} lat={m.lat} lng={m.long} title={m.title}/>)}
       </GoogleMapReact>
     </div>
   );
