@@ -6,6 +6,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { _ } from 'meteor/underscore';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
+import GoogleMapReact from 'google-map-react';
 import { Categories } from '../../api/category/CategoryCollection';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollection';
@@ -21,6 +22,13 @@ import NeedRsvp from '../components/NeedRsvp';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import { COMPONENT_IDS } from '../utilities/ComponentIDs';
 import { OpportunityRsvps } from '../../api/opportunity/OpportunitiesRsvpCollection';
+
+// eslint-disable-next-line react/jsx-no-undef
+const AddressPin = () => (
+  // console.log(pin);
+  <Icon name={'map pin'} size={'big'} color={'red'}></Icon>
+);
+
 // Checking
 const makeOpportunity = (data) => {
   const { _id: oppID, owner: email } = data;
@@ -37,6 +45,14 @@ const makeOpportunity = (data) => {
 const getUser = (user, id) => {
   const [name] = UserProfileData.find({ owner: user }).fetch();
   return _.extend({}, name, { oppID: id });
+};
+
+const defaultProps = {
+  center: {
+    lat: 21.460208193991974,
+    lng: -157.96690508208914,
+  },
+  zoom: 10,
 };
 
 const OpportunityPage = ({ ready, opportunity }) => {
@@ -83,14 +99,15 @@ const OpportunityPage = ({ ready, opportunity }) => {
             <Grid.Row>
               <Header as='h3' icon='pencil alternate' content='Description' attached='top'/>
               <Segment attached>{opp.description}</Segment>
-            </Grid.Row>
-            <Grid.Row style={{ paddingTop: '20px' }}>
-              <Icon size={'large'} name={'map pin'}/>
-              {opp.environment.map((e, index) => <Label key={index} style={{ paddingLeft: '5px', paddingTop: '5px' }} size='medium' color='teal'>{e}</Label>)}
-              <Segment.Inline style={{ paddingTop: '10px' }}>
-                <Icon size={'large'} name={'users'}/>
-                {opp.age.map((a, index) => <Label key={index} style={{ paddingLeft: '5px' }} size='medium' color='teal'>{a}</Label>)}
-              </Segment.Inline>
+              <div id={COMPONENT_IDS.FILTER_OPPORTUNITIES_MAP} className={'google-map-opportunity-border'}>
+                <GoogleMapReact
+                  bootstrapURLKeys={{ key: 'AIzaSyA8P8TFj6VpzBM4dNJWayH6fi5zLU7qmOw' }}
+                  defaultCenter={defaultProps.center}
+                  defaultZoom={defaultProps.zoom}
+                >
+                  <AddressPin key={opp._id} lat={opp.lat} lng={opp.long}/>
+                </GoogleMapReact>
+              </div>
             </Grid.Row>
           </Grid.Column>
 
@@ -105,6 +122,14 @@ const OpportunityPage = ({ ready, opportunity }) => {
             <Grid.Row>
               <Header as='h4' content='Where:'/>
               {opp.location}
+            </Grid.Row>
+            <Grid.Row style={{ paddingTop: '20px' }}>
+              <Icon size={'large'} name={'map pin'}/>
+              {opp.environment.map((e, index) => <Label key={index} style={{ paddingLeft: '5px', paddingTop: '5px' }} size='medium' color='teal'>{e}</Label>)}
+              <Segment.Inline style={{ paddingTop: '10px' }}>
+                <Icon size={'large'} name={'users'}/>
+                {opp.age.map((a, index) => <Label key={index} style={{ paddingLeft: '5px' }} size='medium' color='teal'>{a}</Label>)}
+              </Segment.Inline>
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>

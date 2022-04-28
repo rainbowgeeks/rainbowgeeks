@@ -40,6 +40,7 @@ import AddOrganization from '../pages/AddOrganization';
 import EditOrganization from '../pages/EditOrganization';
 import ManageOpportunitiesAdmin from '../pages/ManageOpportunitiesAdmin';
 
+
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
   render() {
