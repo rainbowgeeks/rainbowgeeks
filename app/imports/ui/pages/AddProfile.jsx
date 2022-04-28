@@ -81,7 +81,7 @@ const AddProfile = ({ userData }) => {
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   let fRef = null;
   return (
-    <Container id={PAGE_IDS.ADD_PROFILE} container centered>
+    <Container id={PAGE_IDS.ADD_PROFILE}>
       <Segment inverted color={'blue'}>
         <Header as="h1" textAlign="center">Create My Profile</Header>
         <Divider/>

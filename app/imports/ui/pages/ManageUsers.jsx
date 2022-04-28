@@ -31,7 +31,7 @@ const ManageUsers = ({ ready, users }) => {
   return ((ready) ? (
     <Container id={PAGE_IDS.USER_LIBRARY_PAGE}>
       <Header as="h1" textAlign="center">Manage Profiles</Header>
-      <Input fluid placeholder="Search Profiles..."/>
+      <Divider/>
       <List horizontal style={{ paddingBottom: '20px' }}>
         <List.Item>
           <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>
