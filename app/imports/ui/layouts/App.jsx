@@ -38,6 +38,7 @@ import ManageConfirmHoursPage from '../pages/ManageConfirmHoursPage';
 import SignupOrg from '../pages/SignupOrg';
 import AddOrganization from '../pages/AddOrganization';
 import EditOrganization from '../pages/EditOrganization';
+import ManageOpportunitiesAdmin from '../pages/ManageOpportunitiesAdmin';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -76,8 +77,8 @@ class App extends React.Component {
             <OrganizationProtectedRoute path="/edit-opp/:_id" component={EditOpportunity}/>
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-org" component={ManageOrganizations}/>
+            <AdminProtectedRoute path="/manage-opps" component={ManageOpportunitiesAdmin}/>
             <ProtectedRoute path="/manage-user" component={ManageUsers}/>
-            <AdminProtectedRoute path="/manage-opps" component={ManageOpportunities}/>
             <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
             <AdminProtectedRoute path="/admin-analytics" component={AdminAnalytics}/>
             <Route component={NotFound}/>
