@@ -37,7 +37,7 @@ import ConfirmedHourPage from '../pages/ConfirmedHourPage';
 import ManageConfirmHoursPage from '../pages/ManageConfirmHoursPage';
 import SignupOrg from '../pages/SignupOrg';
 import AddOrganization from '../pages/AddOrganization';
-import GoogleAutocomplete from '../components/GoogleAutocomplete';
+import EditOrganization from '../pages/EditOrganization';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -47,11 +47,11 @@ class App extends React.Component {
         <div>
           <NewNavBar/>
           <Switch>
-            <Route exact path="/" component={GoogleAutocomplete}/>
+            <Route exact path="/" component={Landing}/>
             <Route path="/filter" component={FilterOpportunities}/>
             <Route path="/event/:_id" component={NewOpportunityPage}/>
             <Route path="/signin" component={Signin}/>
-            <Route path="/signup" component={SignupOrg}/>
+            <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
             <Route path="/about" component={AboutUs}/>
             <ProtectedRoute path="/profile" component={ProfilePage}/>
@@ -66,6 +66,7 @@ class App extends React.Component {
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
             <ProtectedRoute path="/home" component={Landing2}/>
             <OrganizationProtectedRoute path="/add-organization" component={AddOrganization}/>
+            <OrganizationProtectedRoute path="/edit-organization/:_id" component={EditOrganization}/>
             <OrganizationProtectedRoute path="/add-opp" component={AddOpportunity}/>
             <OrganizationProtectedRoute path="/manage-hours" component={ManageHoursPage}/>
             <OrganizationProtectedRoute path="/confirmed-hours" component={ManageConfirmHoursPage}/>

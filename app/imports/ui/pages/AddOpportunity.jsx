@@ -9,7 +9,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Redirect } from 'react-router-dom';
-import PlacesAutocomplete from 'react-places-autocomplete';
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import Geocode from 'react-geocode';
 import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 import { Organizations } from '../../api/organization/OrganizationCollection';
@@ -62,14 +62,9 @@ const formSchema = (pocSchema) => new SimpleSchema({
 /** Renders the Page for adding a document. */
 const AddOpportunity = ({ ready, username }) => {
   const [redirectToReferer, setRedirectToReferer] = useState(false);
-  const [address, setAddress] = useState('');
+  const [value, setValue] = useState('');
+  console.log(value);
 
-  const handleChange = (data) => {
-    setAddress(data);
-  };
-  const handleSelect = (data) => {
-    setAddress(data);
-  };
   // On submit, insert the data.
   const submit = (data, formRef) => {
     const { owner, title, cover, oppStart, oppEnd, location, checked, description, age, environment, category } = data;
@@ -106,9 +101,6 @@ const AddOpportunity = ({ ready, username }) => {
             definitionData = { address: location, lat, long: lng };
             defineMethod.callPromise({ collectionName, definitionData });
           },
-          (error) => {
-            console.error(error);
-          },
         );
       })
       .then(() => swal('Success', 'Opportunity added successfully', 'success'))
@@ -117,7 +109,7 @@ const AddOpportunity = ({ ready, username }) => {
     setRedirectToReferer(true);
   };
 
-  const { from } = { from: { pathname: '/org-profile' } };
+  const { from } = { from: { pathname: '/manage-opp' } };
   if (redirectToReferer) {
     return <Redirect to={from}/>;
   }
@@ -141,36 +133,18 @@ const AddOpportunity = ({ ready, username }) => {
             <TextField name='cover'/>
             <DateField name="oppStart"/>
             <DateField name="oppEnd"/>
-            <PlacesAutocomplete
-              value={address}
-              onChange={handleChange}
-              onSelect={handleSelect}
-            >
-              {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                <div>
-                  <Input
-                    {...getInputProps({
-                      placeholder: 'search...',
-                      className: 'location-search-input',
-                    })}
-                  />
-                  <div className="autocomplete-dropdown-container">
-                    {loading && <div>Loading...</div>}
-                    {suggestions.map(suggestion => (
-                      // eslint-disable-next-line react/jsx-key
-                      <div {...getSuggestionItemProps(suggestion)} key={suggestion.placeId}>
-                        <span>{suggestion.description}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </PlacesAutocomplete>
+            <GooglePlacesAutocomplete
+              apiKey="AIzaSyA8P8TFj6VpzBM4dNJWayH6fi5zLU7qmOw"
+              selectProps={{
+                value,
+                onChange: setValue,
+              }}
+            />
             <LongTextField name='description'/>
             <MultiSelectField name='age'/>
             <MultiSelectField name='environment'/>
             <MultiSelectField name='category'/>
-            <HiddenField name={'location'} value={address}/>
+            <HiddenField name={'location'} value={value !== null && value !== undefined ? value.label : ''}/>
             <HiddenField name={'checked'} value={false}/>
             <SubmitField value='Submit'/>
             <ErrorsField/>
@@ -203,12 +177,18 @@ export default withTracker(() => {
   const sub6 = Categories.subscribeCategory();
   // Get access to environment documents.
   const sub7 = Environments.subscribeEnvironment();
+  // Get access to environments documents.
   const sub8 = Organizations.subscribeOrganization();
+  // Get access to Opp point of contacts documents.
   const sub9 = OpportunitiesPocs.subscribeOpportunitiesPoc();
+  // Get access to Org point of contacts documents.
   const sub10 = OrganizationPocs.subscribeOrganizationPoc();
+  // Get accces to Point of Contact documents.
   const sub11 = PointOfContacts.subscribePointOfContact();
+  // Get access to locations documents
+  const sub12 = Locations.subscribeLocation();
   // Determine if the subscription is ready
-  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready() && sub8.ready() && sub9.ready() && sub10.ready() && sub11.ready();
+  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready() && sub7.ready() && sub8.ready() && sub9.ready() && sub10.ready() && sub11.ready() && sub12.ready();
   //
   return {
     username,
