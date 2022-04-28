@@ -10,6 +10,7 @@ import { OpportunitiesAges } from '../../api/opportunity/OpportunitiesAgeCollect
 import { OpportunitiesEnvs } from '../../api/opportunity/OpportunitiesEnvCollection';
 import { OpportunitiesCats } from '../../api/opportunity/OpportunitiesCatCollection';
 import { OrganizationPocs } from '../../api/organization/OrganizationPocCollection';
+import { Locations } from '../../api/location/LocationCollection';
 import Footer from '../components/Footer';
 import CategoryOpp from '../components/CategoryOpp';
 import SearchOpp from '../components/SearchOpp';
@@ -17,11 +18,12 @@ import Opportunity from '../components/Opportunity';
 import GoogleMap from '../components/GoogleMap';
 //
 function getOpportunities(o) {
-  const { _id: oppID } = o;
+  const { _id: oppID, location } = o;
   const age = _.pluck(OpportunitiesAges.find({ oppID }).fetch(), 'age');
   const environment = _.pluck(OpportunitiesEnvs.find({ oppID }).fetch(), 'environment');
   const category = _.pluck(OpportunitiesCats.find({ oppID }).fetch(), 'category');
-  return _.extend({}, o, { age, environment, category });
+  const { lat, long } = Locations.findDoc({ address: location });
+  return _.extend({}, o, { age, environment, category, lat, long });
 }
 //
 function getCategories(c) {
@@ -57,7 +59,10 @@ function filterBy(data, ageKey, envKey) {
 //
 const FilterOpportunities = ({ ready, opportunities, categories }) => {
   //
-  const makeOpportunities = opportunities.map(o => getOpportunities(o));
+  let makeOpportunities;
+  if (ready && opportunities) {
+    makeOpportunities = opportunities.map(o => getOpportunities(o));
+  }
   const makeCategories = categories.map(c => getCategories(c));
   //
   const [key, setKey] = useState({
@@ -145,7 +150,7 @@ const FilterOpportunities = ({ ready, opportunities, categories }) => {
         </Grid.Column>
         <Grid.Column width={7}>
           <div>
-            <GoogleMap/>
+            <GoogleMap markers={collection}/>
           </div>
         </Grid.Column>
       </Grid>
@@ -175,12 +180,14 @@ export default withTracker(() => {
   const sub5 = Organizations.subscribeOrganization();
   // Get access to category documents.
   const sub8 = Categories.subscribeCategory();
+  // Get access to locations documents.
+  const sub9 = Locations.subscribeLocation();
   // Get all the categories
   const categories = Categories.find({}).fetch();
   // Get all the opportunities
   const opportunities = Opportunities.find({}).fetch();
   // Determine if the subscription is ready
-  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub7.ready() && sub8.ready();
+  const ready = sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub7.ready() && sub8.ready() && sub9.ready();
   return {
     categories,
     opportunities,

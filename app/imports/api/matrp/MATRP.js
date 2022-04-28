@@ -19,6 +19,7 @@ import { Hours } from '../hours/HoursCollection';
 import { OpportunityHours } from '../opportunity/OpportunityHoursCollection';
 import { OpportunityRsvps } from '../opportunity/OpportunitiesRsvpCollection';
 import { ProfilePageHours } from '../profile/ProfilePageHoursCollection';
+import { Locations } from '../location/LocationCollection';
 
 class MATRPClass {
   collections;
@@ -36,6 +37,7 @@ class MATRPClass {
       Environments,
       Hours,
       Stuffs,
+      Locations,
       Organizations,
       OrganizationPocs,
       Opportunities,
@@ -61,6 +63,7 @@ class MATRPClass {
       Environments,
       Hours,
       Stuffs,
+      Locations,
       Organizations,
       OrganizationPocs,
       Opportunities,

@@ -214,6 +214,12 @@
       "missionStatement": "The American Red Cross prevents and alleviates human suffering in the face of emergencies by mobilizing the power of volunteers and the generosity of donors.",
       "organizationDescription": "Red Cross volunteers and staff work to deliver vital services – from providing relief and support to those in crisis, to helping you be prepared to respond in emergencies.",
       "orgEmail": "americanredcross@foo.com",
+      "orgImage": "images/volunteerally.jpg",
+      "address": "1111 @ Some Fake Address",
+      "city": "Honolulu",
+      "state": "HI",
+      "zip": "96818",
+      "acceptTerm": "accept",
       "pointOfContacts": [
         { "firstName":  "Bary", "lastName":  "Faust", "phoneNumber": "808-123-1122", "email":  "bary@foo.com" },
         { "firstName":  "Blake", "lastName":  "Lee", "phoneNumber": "808-123-2233", "email":  "blake@foo.com" },
@@ -225,6 +231,12 @@
       "missionStatement": "The HUGS mission: To strengthen Hawaii's families and improve their quality of life as they face the emotional and financial hardships of caring for a seriously ill child.",
       "organizationDescription": "HUGS was founded in 1982 by a small group of volunteers at Unity Church on Oahu who recognized the many challenges and stressors that families with seriously ill children face. They noticed families who were constantly challenged financially, spiritually, emotionally, and by many other issues related to their child's condition. They felt families shouldn't have to go through this journey alone.",
       "orgEmail": "hugs@foo.com",
+      "orgImage": "images/volunteerally.jpg",
+      "address": "1111 @ Some Fake Address",
+      "city": "Honolulu",
+      "state": "HI",
+      "zip": "96818",
+      "acceptTerm": "accept",
       "pointOfContacts": [
         { "firstName":  "Mack", "lastName":  "Enchi", "phoneNumber": "808-123-4455", "email":  "mac@foo.com" }
       ]
@@ -234,6 +246,12 @@
       "missionStatement": "Everything happens for a reason.",
       "organizationDescription": "Here at Protect & Preserve Hawaii, we are driven by a single goal; to do our part in making the world a better place for all. Giving back to our lands and raising awareness through education in our communities. From mauka to makai, taking action towards sustainability through conservation efforts, and protecting Hawaii’s native ecosystem along with its cultural heritage. We strive to build productive relationships and make a positive impact with all of our pursuits.",
       "orgEmail": "paph@foo.com",
+      "orgImage": "images/volunteerally.jpg",
+      "address": "1111 @ Some Fake Address",
+      "city": "Honolulu",
+      "state": "HI",
+      "zip": "96818",
+      "acceptTerm": "accept",
       "pointOfContacts": [
         { "firstName":  "Cullen", "lastName":  "Darve", "phoneNumber": "808-123-5566", "email":  "cullen@foo.com" }
       ]
@@ -243,6 +261,12 @@
       "missionStatement": "Share the love and joy of reading aloud.",
       "organizationDescription": "Read To Me International has a simple yet profound mission and a few goals which guide it. It believes that as stakeholders and communities come together to address the literacy needs of children, they will realize the importance of reading aloud to children as a simple but effective way of raising children who value and love reading.",
       "orgEmail": "readtome@foo.com",
+      "orgImage": "images/volunteerally.jpg",
+      "address": "1111 @ Some Fake Address",
+      "city": "Honolulu",
+      "state": "HI",
+      "zip": "96818",
+      "acceptTerm": "accept",
       "pointOfContacts": [
         { "firstName":  "Felix", "lastName":  "Gray", "phoneNumber": "808-123-6677", "email":  "felix@foo.com" }
       ]
@@ -252,6 +276,12 @@
       "missionStatement": "Our mission is inspiring all people to live in unison with our planet through inclusive education focused on diverse ecosystems.",
       "organizationDescription": "Hawai’i Tropical Bioreserve & Garden was established as a Scientific & Educational nonprofit in 1984 with clear guidelines ensuring the land will never be sold or commercially developed. The Founders, Dan and Pauline Lutkenhouse contributed their undivided time and energy to establish the Garden.",
       "orgEmail": "htbg@foo.com",
+      "orgImage": "images/volunteerally.jpg",
+      "address": "1111 @ Some Fake Address",
+      "city": "Honolulu",
+      "state": "HI",
+      "zip": "96818",
+      "acceptTerm": "accept",
       "pointOfContacts": [
         { "firstName":  "Annabal", "lastName":  "Rizal", "phoneNumber": "808-123-7788", "email":  "annabal@foo.com" }
       ]
@@ -261,6 +291,12 @@
       "missionStatement": "The Hawaiian Humane Society is dedicated to promoting the human-animal bond and the humane treatment of all animals.",
       "organizationDescription": "Mahalo for your interest in joining our volunteer program! When you join the Hawaiian Humane ʻohana, you’re joining a community of volunteers and staff committed to providing love and support for the pets in our care. For more information, email Volunteer@hawaiianhumane.org.",
       "orgEmail": "hawaiihumane@foo.com",
+      "orgImage": "images/volunteerally.jpg",
+      "address": "1111 @ Some Fake Address",
+      "city": "Honolulu",
+      "state": "HI",
+      "zip": "96818",
+      "acceptTerm": "accept",
       "pointOfContacts": [
         { "firstName":  "Obadiah", "lastName":  "Colms", "phoneNumber": "808-123-8899", "email":  "obadiah@foo.com" },
         { "firstName":  "Jackie", "lastName":  "Chen", "phoneNumber": "808-123-9900", "email":  "jackie@foo.com" }
@@ -271,7 +307,9 @@
     {
       "title": "Disaster Response - Disaster Action Team",
       "cover": "images/volunteerally.jpg",
-      "location": "59-777 Pupukea Road, Haleiwa",
+      "location": "59-777 Pupukea Road, Haleiwa, HI, USA",
+      "lat": 21.64206959108492,
+      "long": -158.02799687506348,
       "oppStart": "Mon Jan 17 2022 09:09 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "oppEnd": "Mon Jan 17 2022 17:06 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "owner": "mattie@foo.com",
@@ -296,7 +334,9 @@
     {
       "title": "View & Power BI Applications Lead 18+",
       "cover": "images/volunteerally.jpg",
-      "location": "Honolulu County",
+      "location": "4155 Diamond Head Road, Honolulu, HI, USA",
+      "lat": 21.26701493230704,
+      "long": -157.79838470020442,
       "oppStart": "Tue Jan 10 2022 09:09:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "oppEnd": "Tue Jan 10 2022 17:06:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "owner": "blake@foo.com",
@@ -323,7 +363,9 @@
       "missionStatement": "",
       "organizationDescription": "",
       "cover": "images/volunteerally.jpg",
-      "location": "Honolulu County",
+      "location": "66-249 Kamehameha Highway, Haleiwa, HI, USA",
+      "lat": 21.586573001887956,
+      "long": -158.10340268670814,
       "oppStart": "Tue Mar 10 2022 09:09:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "oppEnd": "Tue Mar 10 2022 17:06:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "owner": "bary@foo.com",
@@ -348,7 +390,9 @@
     {
       "title": "Hurricane Evacuation Shelter Volunteers",
       "cover": "images/volunteerally.jpg",
-      "location": "Honolulu County",
+      "location": "59-777 Pupukea Road, Haleiwa, HI, USA",
+      "lat": 21.642159343706783,
+      "long": -158.02798614622787,
       "oppStart": "Sat Apr 10 2022 09:09:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "oppEnd": "Sat Apr 10 2022 18:06:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "owner": "mattie@foo.com",
@@ -373,7 +417,9 @@
     {
       "title": "Koa Memorial Garden",
       "cover": "images/volunteerally.jpg",
-      "location": "59-777 Pupukea Road, Haleiwa",
+      "location": "59-777 Pupukea Road, Haleiwa, HI, USA",
+      "lat": 21.642190806367818,
+      "long": -158.0278884153306,
       "oppStart": "Fri May 10 2022 09:09:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "oppEnd": "Fri May 10 2022 18:06:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "owner": "mac@foo.com",
@@ -398,7 +444,9 @@
     {
       "title": "Crafting activity set up and break down",
       "cover": "images/volunteerally.jpg",
-      "location": "4211 Waialae Avenue",
+      "location": "4211 Waialae Avenue, Honolulu, HI, USA",
+      "lat": 21.278322342379262,
+      "long": -157.78742750390265,
       "oppStart": "Sat May 10 2022 09:09:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "oppEnd": "Sat May 10 2022 17:06:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "owner": "cullen@foo.com",
@@ -423,7 +471,9 @@
     {
       "title": "SuperChill Saturday",
       "cover": "images/volunteerally.jpg",
-      "location": "591 Anolani Street",
+      "location": "591 Anolani Street, Honolulu, HI, USA",
+      "lat": 21.293831748857436,
+      "long": -157.74159710390254,
       "oppStart": "Sat Apr 10 2022 09:09:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "oppEnd": "Sat Apr 10 2022 17:06:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "owner": "felix@foo.com",
@@ -450,7 +500,9 @@
       "missionStatement": "",
       "organizationDescription": "",
       "cover": "images/volunteerally.jpg",
-      "location": "2746 Kalawao Street",
+      "location": "2746 Kalawao Street, Honolulu, HI, USA",
+      "lat": 21.300316392672972,
+      "long": -157.81286317321755,
       "oppStart": "Sat Jan 10 2022 09:09:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "oppEnd": "Sat Jan 10 2022 17:06:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "owner": "felix@foo.com",
@@ -475,7 +527,9 @@
     {
       "title": "Ho'omaluhia Botanical Garden",
       "cover": "images/volunteerally.jpg",
-      "location": "45-680 Luluku Rd. Kane'ohe",
+      "location": "45-680 Luluku Road, Kaneohe, HI, USA",
+      "lat": 21.394836392011154,
+      "long":  -157.80845344438112,
       "oppStart": "Sat Nov 10 2022 09:09:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "oppEnd": "Sat Nov 10 2022 17:06:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "owner": "annabal@foo.com",
@@ -500,7 +554,9 @@
     {
       "title": "Hawaiian Humane Society - Dog Walker",
       "cover": "images/volunteerally.jpg",
-      "location": "2700 Waialae Avenue",
+      "location": "2700 Waialae Avenue, Honolulu, HI, USA",
+      "lat": 21.29079568720511,
+      "long": -157.81838543273798,
       "oppStart": "Sat Jan 10 2022 09:09:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "oppEnd": "Sat Jan 10 2022 18:06:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "owner": "obadiah@foo.com",
@@ -525,7 +581,9 @@
     {
       "title": "Test Opportunity",
       "cover": "images/volunteerally.jpg",
-      "location": "921770b Kunia Road",
+      "location": "921770b Kunia Road, Waipahu, HI, USA",
+      "lat": 21.42325958790027,
+      "long": -158.05183973088756,
       "oppStart": "Sat Nov 10 2022 09:09:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "oppEnd": "Sat Nov 10 2022 18:06:54 GMT-1000 (Hawaii-Aleutian Standard Time)",
       "owner": "jackie@foo.com",

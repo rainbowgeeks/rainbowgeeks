@@ -17,6 +17,12 @@ class OrganizationCollection extends BaseCollection {
       missionStatement: String,
       description: String,
       orgEmail: String,
+      orgImage: String,
+      address: String,
+      city: String,
+      state: String,
+      zip: String,
+      acceptTerm: String,
     }));
   }
 
@@ -27,12 +33,18 @@ class OrganizationCollection extends BaseCollection {
    * @param description the description of the organization.
    * @return {String} the docID of the new opportunity.
    */
-  define({ organizationName, missionStatement, description, orgEmail }) {
+  define({ organizationName, missionStatement, description, orgEmail, orgImage, address, city, state, zip, acceptTerm }) {
     const docID = this._collection.insert({
       organizationName,
       missionStatement,
       description,
       orgEmail,
+      orgImage,
+      address,
+      city,
+      state,
+      zip,
+      acceptTerm,
     });
     return docID;
   }
