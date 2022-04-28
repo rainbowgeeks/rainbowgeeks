@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Segment, Header, Loader, Input } from 'semantic-ui-react';
+import { Grid, Segment, Header, Loader } from 'semantic-ui-react';
 import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField, DateField, HiddenField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import PropTypes from 'prop-types';
