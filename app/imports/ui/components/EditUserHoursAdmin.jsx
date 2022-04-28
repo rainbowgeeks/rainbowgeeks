@@ -16,7 +16,7 @@ import { Hours } from '../../api/hours/HoursCollection';
 import { ProfilePageHours } from '../../api/profile/ProfilePageHoursCollection';
 
 const formSchema = (numberOfHours) => new SimpleSchema({
-  numberOfHours: { type: Number, defaultValue: numberOfHours, label: 'Number of Hours', allowedValues: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
+  numberOfHours: { type: Number, defaultValue: numberOfHours, label: 'Number of Hours', allowedValues: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
 });
 
 const EditUserHoursAdmin = ({ user }) => {
@@ -44,7 +44,7 @@ const EditUserHoursAdmin = ({ user }) => {
       .catch(error => swal('Error', error.message, 'error'))
       .then(() => {
         swal({
-          title: 'Profile Had Successfully Been Updated',
+          title: 'User Hours Had Successfully Been Updated',
           icon: 'success',
           timer: 15000,
         });

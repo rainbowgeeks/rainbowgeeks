@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Loader, Container, Header, Input, List, Card, Button, Divider } from 'semantic-ui-react';
+import { Loader, Container, Header, List, Card, Button, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PAGE_IDS } from '../utilities/PageIDs';
@@ -31,7 +31,7 @@ const ManageUsers = ({ ready, users }) => {
   return ((ready) ? (
     <Container id={PAGE_IDS.USER_LIBRARY_PAGE}>
       <Header as="h1" textAlign="center">Manage Profiles</Header>
-      <Input fluid placeholder="Search Profiles..."/>
+      <Divider/>
       <List horizontal style={{ paddingBottom: '20px' }}>
         <List.Item>
           <Header as='h4' style={{ paddingTop: '8px', width: '70px' }}>Filter By: </Header>

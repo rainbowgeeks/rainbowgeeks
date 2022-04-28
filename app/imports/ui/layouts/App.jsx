@@ -35,7 +35,6 @@ import OrganizationHoursPage from '../pages/OrganizationHoursPage';
 import ConfirmVolunteersPage from '../pages/ConfirmVolunteersPage';
 import ConfirmedHourPage from '../pages/ConfirmedHourPage';
 import ManageConfirmHoursPage from '../pages/ManageConfirmHoursPage';
-import SignupOrg from '../pages/SignupOrg';
 import AddOrganization from '../pages/AddOrganization';
 import EditOrganization from '../pages/EditOrganization';
 
@@ -76,7 +75,7 @@ class App extends React.Component {
             <OrganizationProtectedRoute path="/edit-opp/:_id" component={EditOpportunity}/>
             <AdminProtectedRoute path="/admin" component={AdminProfile}/>
             <AdminProtectedRoute path="/manage-org" component={ManageOrganizations}/>
-            <ProtectedRoute path="/manage-user" component={ManageUsers}/>
+            <AdminProtectedRoute path="/manage-user" component={ManageUsers}/>
             <AdminProtectedRoute path="/manage-opps" component={ManageOpportunities}/>
             <AdminProtectedRoute path="/manage-database" component={ManageDatabase}/>
             <AdminProtectedRoute path="/admin-analytics" component={AdminAnalytics}/>

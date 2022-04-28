@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Container,
   Header,
   Grid,
   Segment,
-  Divider, Loader,
+  Divider, Loader, Button,
 } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { useReactToPrint } from 'react-to-print';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import ListUserHours from './ListUserHours';
 import { UserProfileData } from '../../api/profile/ProfilePageCollection';
@@ -15,36 +16,47 @@ import { ProfilePageHours } from '../../api/profile/ProfilePageHoursCollection';
 import { Hours } from '../../api/hours/HoursCollection';
 
 /** Renders the User's Profile hours detail. */
-const UserTrackingHoursPage = ({ userHours, ready, totalHours }) => ((ready) ? (
-  <Container id={PAGE_IDS.USER_TRACK_HOURS}>
-    <Header as="h1" textAlign="center">My Hours</Header>
-    <Divider/>
-    <Grid columns={'two'} divided stackable>
-      <Grid.Row>
-        <Grid.Column>
-          <Segment padded='very'>
-            <Header as='h2' textAlign='center'>
-              Number of Volunteer: {userHours.length}
-            </Header>
-          </Segment>
-        </Grid.Column>
-        <Grid.Column>
-          <Segment padded='very'>
-            <Header as='h2' textAlign='center'>
-              Total Hours: {totalHours}
-            </Header>
-          </Segment>
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
-    <Segment padded='very'>
-      <ListUserHours/>
-    </Segment>
-    <Container>
-      <Divider/>
-    </Container>
-  </Container>
-) : <Loader active>Getting User Data!</Loader>);
+const UserTrackingHoursPage = ({ userHours, ready, totalHours }) => {
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  return ((ready) ? (
+    <div ref={componentRef}>
+      <Container id={PAGE_IDS.USER_TRACK_HOURS}>
+        <Header as="h1" textAlign="center">My Hours</Header>
+        <Divider/>
+        <Grid columns={'two'} divided stackable>
+          <Grid.Row>
+            <Grid.Column>
+              <Segment padded='very'>
+                <Header as='h2' textAlign='center'>
+                  Number of Volunteer: {userHours.length}
+                </Header>
+              </Segment>
+            </Grid.Column>
+            <Grid.Column>
+              <Segment padded='very'>
+                <Header as='h2' textAlign='center'>
+                  Total Hours: {totalHours}
+                </Header>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <Segment padded='very'>
+          <ListUserHours/>
+        </Segment>
+        <Button onClick={handlePrint}> Export as PDF </Button>
+        <Container>
+          <Divider/>
+        </Container>
+      </Container>
+    </div>
+  ) : <Loader active>Getting User Data!</Loader>);
+};
 
 UserTrackingHoursPage.propTypes = {
   userHours: PropTypes.array.isRequired,

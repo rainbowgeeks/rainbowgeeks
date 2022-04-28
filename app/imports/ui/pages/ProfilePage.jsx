@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import {
   Container,
   Header,
-  Card,
-  Feed,
   Grid,
   Segment,
   List,
@@ -19,7 +17,6 @@ import { UserProfileData } from '../../api/profile/ProfilePageCollection';
 import ProfilePageAboutUser from '../components/ProfilePageAboutUser';
 import ProfilePageUserInformation from '../components/ProfilePageUserInformation';
 import ProfilePageDisplayHoursEvent from '../components/ProfilePageDisplayHoursEvent';
-import ProfilePageRecentEvent from '../components/ProfilePageRecentEvent';
 import ProfilePageHeader from '../components/ProfilePageHeader';
 import Footer2 from '../components/Footer2';
 import { ProfilePageHours } from '../../api/profile/ProfilePageHoursCollection';
@@ -128,18 +125,6 @@ const ProfilePage = ({ ready, userData, userHours }) => {
                 </List>
               </Segment>
               <Divider section/>
-              <Card>
-                <Card.Content>
-                  <Card.Header>Recent Activity</Card.Header>
-                </Card.Content>
-                <Card.Content>
-                  <Feed>
-                    <ProfilePageRecentEvent/>
-                    <ProfilePageRecentEvent/>
-                    <ProfilePageRecentEvent/>
-                  </Feed>
-                </Card.Content>
-              </Card>
             </Grid.Column>
           </Grid.Row>
         </Grid>
