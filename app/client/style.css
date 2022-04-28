@@ -197,6 +197,12 @@ below is for org profile page responsiveness
   width: 100%;
 }
 
+.google-map-opportunity-border {
+  padding-top: 15px;
+  height: 30vh;
+  width: 100%;
+}
+
 /* Styling for Filter Opportunities Page. */
 .make-scrollable {
   overflow-y: auto;

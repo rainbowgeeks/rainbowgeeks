@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
-import { Container, Image, Grid, Divider, Label, Table, Menu, Segment, Card, Header, Icon, Popup, Loader } from 'semantic-ui-react';
+import { Container, Image, Grid, Divider, Label, Table, Menu, Segment, Card, Header, Icon, Popup, Loader, Button, Modal } from 'semantic-ui-react';
 import { _ } from 'meteor/underscore';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -10,6 +10,8 @@ import { OrganizationPocs } from '../../api/organization/OrganizationPocCollecti
 import { PointOfContacts } from '../../api/point-of-contact/PointOfContactCollection';
 import { PAGE_IDS } from '../utilities/PageIDs';
 import OrganizationPocTable from '../components/OrganizationPocTable';
+import { OpportunitiesPocs } from '../../api/opportunity/OpportunitiesPocCollection';
+import { Opportunities } from '../../api/opportunity/OpportunityCollection';
 
 const getOrgProfile = (data) => {
   const { orgEmail } = data;
@@ -20,6 +22,7 @@ const getOrgProfile = (data) => {
 };
 
 const OrganizationProfile = ({ ready }) => {
+  const [open, setOpen] = useState(false);
   let orgProfile;
   if (ready) {
     const orgEmail = Meteor.user().username;
@@ -62,7 +65,20 @@ const OrganizationProfile = ({ ready }) => {
             <Table celled striped>
               <Table.Header>
                 <Table.Row>
-                  <Table.HeaderCell colSpan='4' textAlign={'center'}>Points of Contacts</Table.HeaderCell>
+                  <Table.HeaderCell textAlign={'center'}>Points of Contacts</Table.HeaderCell>
+                  <Table.HeaderCell colSpan={5}>
+
+                    <Modal
+                      onClose={() => setOpen(false)}
+                      onOpen={() => setOpen(true)}
+                      open={open}
+                      trigger={<Button color={'green'}>Add Point Of Contact</Button>}
+                    >
+                      <Modal.Content>
+                      </Modal.Content>
+                    </Modal>
+
+                  </Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
 
@@ -147,6 +163,8 @@ const OrganizationPageContainer = withTracker(() => {
   const sub1 = Organizations.subscribeOrganization();
   const sub2 = OrganizationPocs.subscribeOrganizationPoc();
   const sub3 = PointOfContacts.subscribePointOfContact();
+  const sub4 = Organizations.subscribeOrganization();
+  const sub5 = Opportunities.subscribeOpportunity();
   const ready = sub1.ready() && sub2.ready() && sub3.ready();
   return {
     ready,
